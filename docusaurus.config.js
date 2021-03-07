@@ -1,6 +1,6 @@
 module.exports = {
   title: "Experimenter Docs",
-  tagline: "Documentation hub for Experimenter/Nimbus",
+  tagline: "Documentation hub for Experimenter",
   url: "https://github.com/mozilla/experimenter-docs",
   baseUrl: "/experimenter-docs/",
   onBrokenLinks: "throw",
@@ -9,28 +9,39 @@ module.exports = {
   organizationName: "mozilla",
   projectName: "experimenter-docs",
   themeConfig: {
+    hideableSidebar: true,
+    colorMode: {
+      defaultMode: 'light',
+      disableSwitch: true,
+      respectPrefersColorScheme: true,
+    },
     navbar: {
       title: "Experimenter Docs",
       logo: {
         alt: "Experimenter Logo",
         src: "img/logo.svg",
+        srcDark: "img/logo-dark.svg",
       },
       items: [
         {
-          to: "docs/",
-          activeBasePath: "docs",
-          label: "Docs",
-          position: "left",
+          href: "https://experimenter.services.mozilla.com/nimbus/",
+          label: "Nimbus",
+          position: "right"
+        },
+        {
+          href: "https://mana.mozilla.org/wiki/display/FJT/Project+Nimbus",
+          label: "Mana",
+          position: "right"
         },
         {
           href: "https://github.com/mozilla/experimenter-docs",
-          label: "GitHub",
-          position: "right",
+          position: 'right',
+          className: 'header-github-link',
+          'aria-label': 'GitHub repository',
         },
       ],
     },
     footer: {
-      style: "dark",
       copyright: `Copyright © ${new Date().getFullYear()} Mozilla Corporation`,
     },
   },
@@ -39,9 +50,10 @@ module.exports = {
       "@docusaurus/preset-classic",
       {
         docs: {
+          routeBasePath: '/',
           sidebarPath: require.resolve("./sidebars.js"),
           editUrl:
-            "https://github.com/mozilla/experimenter-docs/edit/main/website/",
+            "https://github.com/mozilla/experimenter-docs/edit/main/",
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
