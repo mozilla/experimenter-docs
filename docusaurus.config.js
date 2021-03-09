@@ -44,6 +44,10 @@ module.exports = {
     footer: {
       copyright: `Copyright © ${new Date().getFullYear()} Mozilla Corporation`,
     },
+    algolia: {
+      apiKey: 'cce683dfea9772207408c2b161a22641',
+      indexName: 'experimenter',
+    },
   },
   presets: [
     [
