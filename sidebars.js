@@ -8,84 +8,92 @@ module.exports = {
         {
           type: "link",
           label: "Nimbus Onboarding",
-          href: "https://mana.mozilla.org/wiki/display/FJT/Nimbus+Onboarding#NimbusOnboarding-Branches",
+          href:
+            "https://mana.mozilla.org/wiki/display/FJT/Nimbus+Onboarding#NimbusOnboarding-Branches",
         },
         {
           type: "link",
           label: "How to Launch a Nimbus Experiment",
-          href: "https://mana.mozilla.org/wiki/display/FJT/How+to+Launch+a+Nimbus+Experiment",
+          href:
+            "https://mana.mozilla.org/wiki/display/FJT/How+to+Launch+a+Nimbus+Experiment",
         },
         {
           type: "link",
           label: "Nimbus Data Transfer Object",
-          href: "https://mana.mozilla.org/wiki/pages/viewpage.action?pageId=130920248"
+          href:
+            "https://mana.mozilla.org/wiki/pages/viewpage.action?pageId=130920248",
         },
         {
           type: "link",
           label: "Experiment Telemetry",
-          href: "https://mana.mozilla.org/wiki/display/FJT/Nimbus+Engineering#NimbusEngineering-ExperimentTelemetry"
+          href:
+            "https://mana.mozilla.org/wiki/display/FJT/Nimbus+Engineering#NimbusEngineering-ExperimentTelemetry",
         },
         {
           type: "link",
           label: "Lessons Learned",
-          href: "https://mana.mozilla.org/wiki/display/FJT/Lessons+Learned+-+Experiment+Incidents+and+Close+Calls",
-        },
-      ]
-    },
-    {
-      type: 'category',
-      label: 'Jetstream',
-      items: [
-        {
-          type: "link",
-          label: "GitHub Repo",
-          href: "https://github.com/mozilla/jetstream"
-        },
-        {
-          type: "link",
-          label: "Documentation",
-          href: "https://docs.telemetry.mozilla.org/datasets/jetstream.html"
+          href:
+            "https://mana.mozilla.org/wiki/display/FJT/Lessons+Learned+-+Experiment+Incidents+and+Close+Calls",
         },
       ],
     },
     {
-      type: 'category',
-      label: 'Experiment Owners',
+      type: "category",
+      label: "Jetstream",
+      items: [
+        {
+          type: "link",
+          label: "GitHub Repo",
+          href: "https://github.com/mozilla/jetstream",
+        },
+        {
+          type: "link",
+          label: "Documentation",
+          href: "https://docs.telemetry.mozilla.org/datasets/jetstream.html",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Experiment Owners",
       items: ["experiment-owners-root"],
     },
     {
-      type: 'category',
-      label: 'Fenix Engineers',
+      type: "category",
+      label: "Fenix Engineers",
       items: [
         "fenix-engineers-root",
         {
           type: "link",
           label: "Android API (proposal)",
-          href: "https://docs.google.com/document/d/1kchihPal0__A4VOAiPJarNuZXns5KhOHHfIeIzT6zfU/edit#",
+          href:
+            "https://docs.google.com/document/d/1kchihPal0__A4VOAiPJarNuZXns5KhOHHfIeIzT6zfU/edit#",
         },
       ],
     },
     {
-      type: 'category',
-      label: 'Desktop Engineers',
+      type: "category",
+      label: "Desktop Engineers",
       items: [
         "desktop-engineers-root",
         {
           type: "link",
           label: "Front-End Migration Guide",
-          href: "https://www.notion.so/Nimbus-Migration-Guide-for-Desktop-Front-End-Experiments-d36c21e505f84550aad1202897fc4ba3",
+          href:
+            "https://www.notion.so/Nimbus-Migration-Guide-for-Desktop-Front-End-Experiments-d36c21e505f84550aad1202897fc4ba3",
         },
         {
           type: "link",
           label: "SDK Docs (X-Man draft)",
-          href: "https://docs.google.com/document/d/1ev75pG0nAM1lz53WuPQkWqykUlZMmZRbx8wzvvn5DhU/edit",
+          href:
+            "https://docs.google.com/document/d/1ev75pG0nAM1lz53WuPQkWqykUlZMmZRbx8wzvvn5DhU/edit",
         },
       ],
     },
     {
-      type: 'category',
-      label: 'Data Scientists',
+      type: "category",
+      label: "Data Scientists",
       items: ["data-scientists-root"],
-    }
+    },
   ],
 };
