@@ -41,15 +41,11 @@ module.exports = {
       type: "category",
       label: "Jetstream",
       items: [
+        "jetstream/jetstream",
         {
           type: "link",
           label: "GitHub Repo",
           href: "https://github.com/mozilla/jetstream",
-        },
-        {
-          type: "link",
-          label: "Documentation",
-          href: "https://docs.telemetry.mozilla.org/datasets/jetstream.html",
         },
       ],
     },
