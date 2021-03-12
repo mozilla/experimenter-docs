@@ -1,6 +1,10 @@
 module.exports = {
   sidebar: [
-    "welcome",
+    {
+      type: "category",
+      label: "Welcome",
+      items: ["welcome", "contributing"],
+    },
     {
       type: "category",
       label: "Process",
@@ -39,6 +43,11 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Experiment Owners",
+      items: ["experiment-owners-root"],
+    },
+    {
+      type: "category",
       label: "Jetstream",
       items: [
         "jetstream/jetstream",
@@ -51,8 +60,20 @@ module.exports = {
     },
     {
       type: "category",
-      label: "Experiment Owners",
-      items: ["experiment-owners-root"],
+      label: "Data Scientists",
+      items: ["data-scientists-root"],
+    },
+    {
+      type: "category",
+      label: "Experimenter Engineers",
+      items: [
+        "experimenter-engineers-root",
+        {
+          type: "link",
+          label: "GitHub Repo",
+          href: "https://github.com/mozilla/experimenter",
+        },
+      ],
     },
     {
       type: "category",
@@ -85,11 +106,6 @@ module.exports = {
             "https://docs.google.com/document/d/1ev75pG0nAM1lz53WuPQkWqykUlZMmZRbx8wzvvn5DhU/edit",
         },
       ],
-    },
-    {
-      type: "category",
-      label: "Data Scientists",
-      items: ["data-scientists-root"],
     },
   ],
 };
