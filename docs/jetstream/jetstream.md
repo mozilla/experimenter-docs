@@ -1,6 +1,6 @@
 ---
 id: jetstream
-title: Jetstream
+title: Jetstream overview
 ---
 
 **[Jetstream]** is an analysis framework for experiments.
