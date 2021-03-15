@@ -4,8 +4,8 @@
   <ShortName>Experimenter Docs</ShortName>
   <Description>Search Experimenter Docs</Description>
   <InputEncoding>UTF-8</InputEncoding>
-  <Image width="16" height="16" type="image/x-icon">https://github.com/mozilla/experimenter-docs/img/favicon.ico</Image>
-  <Url type="text/html" method="get" template="https://github.com/mozilla/experimenter-docs/search?q={searchTerms}"/>
-  <Url type="application/opensearchdescription+xml" rel="self" template="https://github.com/mozilla/experimenter-docs/opensearch.xml" />
-  <moz:SearchForm>https://github.com/mozilla/experimenter-docs</moz:SearchForm>
+  <Image width="16" height="16" type="image/x-icon">https://github.com/mozilla/experimenter-docs/experimenter-docs/img/favicon.ico</Image>
+  <Url type="text/html" method="get" template="https://github.com/mozilla/experimenter-docs/experimenter-docs/search?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://github.com/mozilla/experimenter-docs/experimenter-docs/opensearch.xml" />
+  <moz:SearchForm>https://github.com/mozilla/experimenter-docs/experimenter-docs/</moz:SearchForm>
 </OpenSearchDescription>
