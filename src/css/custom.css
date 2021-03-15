@@ -12,6 +12,7 @@
 [data-theme="dark"]:root {
   --ifm-toc-border-color: #373737;
   --ifm-color-primary: #55a7ff;
+  --ifm-hr-border-color: var(--ifm-color-emphasis-300);
 }
 
 .main-wrapper {
@@ -53,4 +54,53 @@
   top: 2px;
   position: relative;
   margin-left: 10px;
+}
+
+.mb-16px {
+  margin-bottom: 16px;
+}
+
+.img-lg {
+  width: 500px;
+  max-width: 100%;
+}
+
+.img-xl {
+  width: 700px;
+  max-width: 100%;
+}
+
+.img-xs-right {
+  width: 225px;
+  margin-left: 24px;
+}
+
+.img-sm {
+  width: 300px;
+}
+
+.img-sm-right {
+  width: 300px;
+  margin-left: 24px;
+}
+
+.img-sm-left {
+  width: 300px;
+  margin-right: 24px;
+}
+
+.flex-lg {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Docusaurus desktop breakpoint */
+@media screen and (min-width: 997px) {
+  .flex-lg {
+    flex-direction: row;
+    align-items: flex-start; /* prevents vertical img stretch */
+  }
+  .order-2-lg {
+    order: 2;
+  }
 }

@@ -1,18 +1,23 @@
-## Experimenter Docs
+# ☁️ Documentation Hub for Nimbus & Experimenter Users
 
-This repo is the documentation hub for [Experimenter](https://github.com/mozilla/experimenter).
+Check out the docs at: **https://mozilla.github.io/experimenter-docs/**
 
-## Working on the docs
+## About
 
-Pages are written in Markdown, and can be found under [`/docs`](/docs).
+This repository is the documentation hub for [Experimenter](https://github.com/mozilla/experimenter). Its purpose is to be a single source of truth for and house user, developer, and data documentation.
 
-### Using GitHub
+The site is built using [Docusaurus v2](https://v2.docusaurus.io/) and is automatically deployed from the `main` branch to GitHub Pages using GitHub Actions.
 
-You do not necessarily need to clone or set up this repo locally if you just want to contribute to or change documentation.
+Relevant ADRs:
 
-If you wish to modify an existing page, navigate to its Markdown file and click the "Edit" pencil icon in the top-right of the content. You will be presented with a Markdown editor. Make and commit your changes.
+- [Use Docusaurus + GH Pages for the Nimbus User Doc Hub](https://github.com/mozilla/experimenter/blob/main/app/experimenter/docs/adrs/0005-doc-hub.md)
+- [Location for the new Experiment "Docs Hub" codebase + docs](https://github.com/mozilla/experimenter/blob/main/app/experimenter/docs/adrs/0006-doc-hub-repo.md)
 
-If you wish to add a new page, navigate to the directory where you wish to generate the new page and click the "Add File" button in the top right of the GitHub UI. From there you can create the page, add content, and commit it.
+## Contributing
+
+Pages are written in Markdown and can be found under [`docs/`](/docs).
+
+Check out [the Contributing page on GH pages](https://v2.docusaurus.io/) for helpful Docusaurus and GitHub UI tips to learn how to create a new document, edit an existing one, and/or how to adjust the sidebar. You don't have to check out the repository locally to contribute.
 
 ### Working locally
 
@@ -23,4 +28,4 @@ yarn install
 yarn start
 ```
 
-That should open a new browser window automatically, or you can manually browse to http://localhost:3000/ecosystem-platform/ to view the docs.
+That should open a new browser window automatically, or you can manually browse to http://localhost:3000/experimenter-docs/ to view the docs.
