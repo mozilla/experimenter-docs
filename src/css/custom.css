@@ -35,11 +35,11 @@
   height: 24px;
   display: flex;
   background-repeat: no-repeat;
-  background-image: url("/experimenter-docs/img/github.svg");
+  background-image: url("/img/github.svg");
 }
 
 [data-theme="dark"] .header-github-link::before {
-  background-image: url("/experimenter-docs/img/github-dark.svg");
+  background-image: url("/img/github-dark.svg");
 }
 
 .menu__list a[href^="http://"]:not([href*="localhost:3000"]):after,
@@ -47,7 +47,7 @@
 {
   content: "";
   background-repeat: no-repeat;
-  background-image: url("/experimenter-docs/img/external.svg");
+  background-image: url("/img/external.svg");
   display: block;
   min-width: 15px;
   height: 15px;
