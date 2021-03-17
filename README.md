@@ -2,6 +2,8 @@
 
 Check out the docs at: **https://mozilla.github.io/experimenter-docs/**
 
+**Please file issues for this repository in [Experimenter](https://github.com/mozilla/experimenter/issues) and add the `experimenter-docs` label.**
+
 ## About
 
 This repository is the documentation hub for [Experimenter](https://github.com/mozilla/experimenter). Its purpose is to be a single source of truth for and house user, developer, and data documentation.
