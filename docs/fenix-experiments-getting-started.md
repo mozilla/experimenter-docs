@@ -1,5 +1,5 @@
 ---
-id: fenix-engineers-root
+id: fenix-experiments-getting-started
 title: Implementing an experiment
 slug: /fenix-engineers
 ---
@@ -20,16 +20,15 @@ slug: /fenix-engineers
 ## Fenix setup
 
 1. Update [experiments.kt](https://github.com/mozilla-mobile/fenix/blob/master/app/src/main/java/org/mozilla/fenix/experiments/Experiments.kt) **Experiment** to include the featureID string as your experiment constant.
-2. Confirm [experiments.kt](https://github.com/mozilla-mobile/fenix/blob/master/app/src/main/java/org/mozilla/fenix/experiments/Experiments.kt) **ExperimentBranch** contains the branch names you intend to use or add them if you are using something other than the *control* and *treatment* default values.
-3. Initialize your experiment in the appropriate location and call **getExperimentBranch** to get your experiment.
+1. Confirm [experiments.kt](https://github.com/mozilla-mobile/fenix/blob/master/app/src/main/java/org/mozilla/fenix/experiments/Experiments.kt) **ExperimentBranch** contains the branch names you intend to use or add them if you are using something other than the *control* and *treatment* default values.
+1. Initialize your experiment in the appropriate location and call **getExperimentBranch** to get your experiment.
 
 ### Example
 
 This is an example of the configuration of a Fenix **Bookmarks A/B** experiment on the “**Bookmarks Icon**” (bookmark-icon) featureID using the **treatment** and **control** branches.
 
-**Experiments.kt**
 
-```
+```kt title="Experiments.kt"
 class Experiments {
     companion object {
         const val BOOKMARK_ICON = "bookmark-icon"
@@ -44,9 +43,8 @@ class ExperimentBranch {
 }
 ```
 
-**HomeMenu.kt**
+```kt title="HomeMenu.kt"
 
-```
 val experiments = context.components.analytics.experiments
         val bookmarksIcon = experiments.getExperimentBranch(Experiments.BOOKMARK_ICON)
             .let {
@@ -58,7 +56,7 @@ val experiments = context.components.analytics.experiments
 ```
 
 ## Local Testing
-1. Setup your local Fenix build to [point to the experimenter
+1. Setup your local Fenix build to point to the experimenter
  [staging url](https://github.com/mozilla-mobile/fenix#using-nimbus-servers-during-local-development).
 1. Build Fenix with the updated remote-settings configuration.
 1. Configure your experiment in the [experimenter nimbus staging site](https://stage.experimenter.nonprod.dataops.mozgcp.net/nimbus/).

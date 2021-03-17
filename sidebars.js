@@ -79,7 +79,7 @@ module.exports = {
       type: "category",
       label: "Fenix Engineers",
       items: [
-        "fenix-engineers-root",
+        "fenix-experiments-getting-started",
         {
           type: "link",
           label: "Android API (proposal)",
