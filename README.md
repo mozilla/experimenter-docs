@@ -17,11 +17,11 @@ Relevant ADRs:
 
 Pages are written in Markdown and can be found under [`docs/`](/docs).
 
-Check out [the Contributing page on GH pages](https://v2.docusaurus.io/) for helpful Docusaurus and GitHub UI tips to learn how to create a new document, edit an existing one, and/or how to adjust the sidebar. You don't have to check out the repository locally to contribute.
+Check out [the Contributing page](https://mozilla.github.io/experimenter-docs/contributing) for helpful Docusaurus and GitHub UI tips to learn how to create a new document, edit an existing one, and/or how to adjust the sidebar. You don't have to check out the repository locally to contribute.
 
 ### Working locally
 
-The site is built using [Docusaurus v2](https://v2.docusaurus.io/) and is automatically deployed from the `main` branch to GitHub Pages using GitHub Actions. To build and run it locally you can:
+To build and run this project locally, clone the repository and run:
 
 ```
 yarn install
