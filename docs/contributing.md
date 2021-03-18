@@ -6,7 +6,13 @@ slug: /contributing
 
 The Experimenter documentation hub is managed in the [mozilla/experimenter-docs](https://github.com/mozilla/experimenter-docs) repository. You will need a GitHub account to contribute, and if you are not already in the [Project Nimbus GitHub team](https://github.com/orgs/mozilla/teams/project-nimbus/members), you may need to request write access in the #nimbus-project Slack channel.
 
-This page will walk you through how to edit an existing document or create a new one, how to display docs in the sidebar where desired, and how to make these changes in GitHub.
+:::info
+
+Please file issues for this repository in [Experimenter](https://github.com/mozilla/experimenter/issues) and add the `experimenter-docs` label.
+
+:::
+
+This page will walk you through how to edit an existing document or create a new one, how to display docs in the sidebar where desired, and how to make these changes in GitHub. See the in-page header navigation bar on the right-hand side of this doc for handy quicklinks.
 
 Documents are written in Markdown (`.md`) files using [GitHub-flavored Markdown syntax](https://github.github.com/gfm/) and are compiled into static web pages. [MDX](https://mdxjs.com/) is also supported, meaning you may embed React components in content as needed. Additionally, Docusaurus offers [admonitions](https://v2.docusaurus.io/docs/markdown-features/admonitions) which can be useful when placing emphasis on pieces of documentation. Refer to Docusaurus [Markdown features](https://v2.docusaurus.io/docs/markdown-features) for more technical information about these Markdown pages.
 
@@ -15,7 +21,7 @@ If you need custom CSS styles, you can edit the `src/css/custom.css` file. Try t
 <div className="flex-lg">
 <div>
 
-**Notifications**
+### Configuring Your Notifications
 
 If you would like to subscribe to notifications for this repository, including for when someone requests doc changes with a pull request that you can potentially review and approve, be sure to "Watch" the repository by clicking on the repository's "Notification settings" menu and selecting "All Activity."
 
@@ -33,7 +39,7 @@ All documentation edits and additions will require a pull request into the `main
 
 [^1]: If you'd like to preview your sidebar changes or if you need to preview how a document containing MDX will build, you'll likely want to check into your branch and run `yarn start` to see the changes. Please reach out to the Experimenter team if you need help.
 
-### GitHub UI
+### Editing in the GitHub UI
 
 If you aren't familiar with using Git via the command line, we recommend using the GitHub user interface to make changes to docs. See [the GitHub UI Docs](https://docs.github.com/en/github/managing-files-in-a-repository/editing-files-in-your-repository) if you need further details than what's provided here.
 
@@ -55,11 +61,21 @@ If you also need to make updates to the sidebar, you will follow the GH UI link 
 
 After committing your changes, you'll be brought back to a pull request view comparing your new branch to `main`. You may need to edit the PR title, but if your files changed look good, click `Create pull request` and see the [Pull Request Workflow](#pull-request-workflow) section.
 
-#### Pull Request Workflow
+### Pull Request Workflow
 
-To make sure your pull request is reviewed, either request a specific reviewer to look at your PR, request the `mozilla/project-nimbus-team`, or ask the team in the #nimbus-project Slack channel to take a look.
+#### PR Template
 
-Automatic checks will run to ensure the project can build and deploy successfully with your changes and at least one reviewer will need to approve your PR. You may receive feedback or questions on your PR that you can address through editing the file in question locally or in the GH UI. When your PR is approved, you should go back to merge your own pull request in case you may want to make another edit before the pull request is merged or because you may get a non-blocking suggestion. If that happens, you can make the change and then merge the PR or simply merge the PR if you disagree with the comment.
+After clicking `Create pull request`, you will be presented with a pull request template specific to this repository.
+
+Edit the line `Closes: mozilla/experimenter#0000` where `experimenter` may need to be changed to reflect the repository where the GitHub issue lives and where `0000` should be changed to reflect the issue number. Delete this section if merging your pull request won't close an issue.
+
+Under "Permission Checklist," check the boxes applicable to your pull request that would make this process easier for you. If you have any specific requests regarding the checkboxes or anything else, please note them in the pull request.
+
+#### Reviewing and Merging
+
+To make sure your pull request is reviewed, either request a specific reviewer to look at your PR, request the `mozilla/project-nimbus-team`, or ask the team in the #nimbus-project Slack channel to take a look. Once you've created the pull request, automatic checks will run to ensure the project can build and deploy successfully with your changes, and at least one reviewer will need to approve your PR.
+
+You may receive feedback or questions on your PR that you can address through editing the file in question locally or in the GH UI. When your PR is approved, unless you granted permission to merge your PR once approved via an option in the PR template, you should go back to merge your own pull request in case you may want to make another edit before the pull request is merged or because you may get a non-blocking suggestion. If that happens, you can make the change and then merge the PR or simply merge the PR if you disagree with the comment.
 
 Once your PR is merged, you should see your changes reflected [at the URL this hub is housed at](https://mozilla.github.io/experimenter-docs/) in about 10 minutes.
 
