@@ -49,7 +49,7 @@ In the following sections, you'll find corresponding links to the GH UI directly
 
 You'll be brought to the GitHub editor page for that file. If you're creating a new document, you'll see a similar editor.
 
-When you're satisfied with your changes or new document, at the bottom of the page, enter a commit message and optional description. Be sure to have the option "Create a new branch" selected, the name of which can be anything, but **if you also need to make edits to the sidebar**, you'll want to keep the branch name in mind.
+When you're satisfied with your changes or new document, at the bottom of the page, enter a commit message and optional description. Be sure to have the option "Create a new branch" selected, the name of which can be anything, but **if you also need to make edits to the sidebar or add images**, you'll want to keep the branch name in mind.
 
 <img src="/experimenter-docs/img/contributing/commit-changes.png" alt="Commit changes" className="img-xl" />
 
@@ -116,6 +116,32 @@ Editing an existing doc is easy peasy. Click on the link above and choose the do
 Modifying the `title` property at the top of the document will update what the sidebar link displays.
 
 Note that if you change the ID also found at the top of the document, you will also need to update the matching string in `sidebars.js` (it's case-sensitive). See the ["Adding or Modifying Sidebar Links"](#adding-or-modifying-sidebar-links) section for more details as well as [Doc Edits + Sidebar Edits](#doc-edits--sidebar-edits) in the GH UI.
+
+## Adding Images
+
+:::note
+
+👉 [Click here to this in the GitHub UI](https://github.com/mozilla/experimenter-docs/upload/main/static/img/my-flying-nimbus) 👈
+
+:::
+
+Images for your documentation should be located at `static/img/your-doc-name/image-name.png`. To upload these in the GH UI, change `my-flying-nimbus` in the link given above to the name of your documentation which will reflect a new directory that holds the images for your doc. When you've finished uploading your images, follow the instructions in [Editing in the GH UI](#editing-in-the-github-ui) to commit this to a new branch or existing branch you've already committed documentation edits to. (Tip: if you've already made a doc change and use this link to commit image changes, make sure "main" in the URL is updated to your branch name!)
+
+Once you know the name of your image, you can insert the following in your documentation...
+
+```mdx title="my-flying-nimbus.md"
+<img
+  src="/experimenter-docs/img/my-flying-nimbus/image-name.png"
+  alt="changeme, alt text describing the image"
+  className="img-lg"
+/>
+```
+
+...where `my-flying-nimbus` is the name of the directory (and doc name) and `image-name` is the name of the image.
+
+**Unfortunately you won't be able to preview the image in the GitHub UI or custom styles you add to it.** To do this, you will have to follow the [repo front-page instructions](https://github.com/mozilla/experimenter-docs#working-locally) to run the project locally. This is recommended if you need to right-align or left-align an image, but if you just need to display an image at full-width, you can optionally check the box in the pull request template asking for the reviewer to check into your branch and look at it for you.
+
+You can add a `className` to the image, like `img-lg`, to adjust the size. [Click here](https://github.com/mozilla/experimenter-docs/blob/main/src/css/custom.css) to see our custom CSS file and [edit it in the GH UI here](https://github.com/mozilla/experimenter-docs/edit/main/src/css/custom.css).
 
 ## Add or Modify Sidebar Links
 
