@@ -1,4 +1,4 @@
-# ☁️ Documentation Hub for Nimbus & Experimenter Users
+# 🌩 Documentation Hub for Nimbus & Experimenter Users
 
 Check out the docs at: **https://mozilla.github.io/experimenter-docs/**
 
