@@ -93,18 +93,8 @@ module.exports = {
       label: "Desktop Engineers",
       items: [
         "desktop-engineers-root",
-        {
-          type: "link",
-          label: "Front-End Migration Guide",
-          href:
-            "https://www.notion.so/Nimbus-Migration-Guide-for-Desktop-Front-End-Experiments-d36c21e505f84550aad1202897fc4ba3",
-        },
-        {
-          type: "link",
-          label: "SDK Docs (X-Man draft)",
-          href:
-            "https://docs.google.com/document/d/1ev75pG0nAM1lz53WuPQkWqykUlZMmZRbx8wzvvn5DhU/edit",
-        },
+        "migration-guide-desktop-frontend",
+        "desktop-frontend-testing",
       ],
     },
   ],
