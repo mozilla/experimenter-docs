@@ -65,6 +65,7 @@ module.exports = {
       label: "Desktop Engineers",
       items: [
         "desktop-engineers-root",
+        "desktop-api",
         "migration-guide-desktop-frontend",
         "desktop-frontend-testing",
       ],

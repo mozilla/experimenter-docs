@@ -8,18 +8,17 @@ This guide will help you integrate `ExperimentAPI.jsm` in your Desktop front-end
 
 In order to use `ExperimentAPI.jsm` your code must be able to import `jsm`s in the parent process or a privileged child process.
 
-## Register a new feature
+## Create a new feautre
 
-A feature is just some area of code instrumented for experiments – it can be as small as a single function or as complex as a whole about: page. You need to choose an identifier for your feature (e.g. "aboutnewtab").
+Take a look a the [Desktop API guide](desktop-api) to register a new feature in the manifest. IF you are already using Firefox preferences to experiment using Normandy, you can add those as `fallbackPref`
 
-```javascript
-// In ExperimentAPI.jsm
-
+```js
+// in ExperimentAPI.jsm
 const MANIFEST = {
   // Our feature name
   aboutwelcome: {
     description: "The about:welcome page",
-    // Control if the feature is on or off
+    // This is a short-form for an "enabled" property
     enabledFallbackPref: "browser.aboutwelcome.enabled",
     variables: {
       // Additional (optional) values that we can control
@@ -37,50 +36,22 @@ pref("browser.aboutwelcome.enable", true);
 pref("skipFocus", false);
 ```
 
-> By setting fallback preferences for Nimbus features, you will be able to still run Normandy roll-outs and experiments while you are partially migrated. We do not recommend running Nimbus and Normandy experiments on the same feature/preference simultaneously.
+## Switch Services.prefs usages to NimbusFeatures
 
-## How to use an Experiment Feature
+Anywhere in the code your are using `Services.prefs` to get values, use `NimbusFeatures` instead:
 
-Import `ExperimentFeature` from `ExperimentAPI.jsm` and instantiate an instance
-
-```jsx
-XPCOMUtils.defineLazyGetter(this, "feature", () => {
-  const { ExperimentFeature } = ChromeUtils.import(
-    "resource://nimbus/ExperimentAPI.jsm",
-  );
-  // Here we use the same name we defined in the MANIFEST
-  return new ExperimentFeature("aboutwelcome");
-});
+```js
+Services.prefs.getBoolPref("browser.aboutwelcome.enabled");
 ```
 
-Access feature values:
+becomes
 
-```jsx
-if (feature.isEnabled()) {
-  // Do something!
-  // This is controllbed by the `enabledFallbackPref` defined in the MANIFEST
-}
-
-// props: { skipFocus: boolean }
-const props = feature.getValue();
-renderSomeUI(props);
+```js
+NimbusFeature.aboutwelcome.isEnabled();
 ```
 
-Defaults values inline:
+## Tests
 
-```jsx
-feature.isEnabled({ defaultValue: true });
-
-const { skipFocus } = feature.getValue() || {};
-```
-
-Listen to changes:
-
-```jsx
-// Listen to changes, including to fallback prefs.
-feature.on(() => {
-  updateUI(feature.getValue());
-});
-```
+If you've configured fallback preferences your tests should pass, but we recommend also using the the [Testing Guide](desktop-frontend-testing) to add tests for your feature that enroll experiment configurations.
 
 For more examples and usecases please see the [SDK Docs](https://docs.google.com/document/d/1ev75pG0nAM1lz53WuPQkWqykUlZMmZRbx8wzvvn5DhU/edit#heading=h.hvm8985z4f8s).
