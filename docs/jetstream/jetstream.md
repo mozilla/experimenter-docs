@@ -23,6 +23,13 @@ by contributing
 **experiment configurations** <!-- TODO: linkme -->
 to jetstream-config.
 
+Jetstream is not a monitoring platform,
+which means that Jetstream does not emit real-time results.
+The first interesting results will usually be available
+a week after the enrollment period ends.
+Typically, that means results will begin to appear 
+two weeks after the day the experiment launches.
+
 ## Analysis paradigm
 
 Experiments are analyzed using the concept of analysis windows. Analysis
