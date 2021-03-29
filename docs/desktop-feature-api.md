@@ -105,13 +105,11 @@ NimbusFeatures.myFeature.recordExposureEvent();
 
 ### `ready()`
 
-Stop listening for changes.
+Wait for the remote experiment and defaults stores to be synced before checking values.
 
 ```js
-NimbusFeatures.myFeature.onUpdate(aListener);
-
-// Later
-NimbusFeatures.myFeature.off(aListener);
+await NimbusFeatures.myFeature.ready();
+const { foo } = NimbusFeatures.myFeature.getValue();
 ```
 
 ### `onUpdate()`
