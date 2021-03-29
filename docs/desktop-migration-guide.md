@@ -1,7 +1,7 @@
 ---
-id: migration-guide-desktop-frontend
-title: Migration guide for Desktop Front-end
-slug: /migration-guide-desktop-frontend
+id: desktop-migration-guide
+title: Migration Guide (JS)
+slug: /desktop-migration-guide
 ---
 
 This guide will help you integrate `ExperimentAPI.jsm` in your Desktop front-end code to run Nimbus experiments, while still being able to use preferences for default values and local development.
@@ -10,7 +10,7 @@ In order to use `ExperimentAPI.jsm` your code must be able to import `jsm`s in t
 
 ## Create a new feautre
 
-Take a look a the [Desktop API guide](desktop-api) to register a new feature in the manifest. IF you are already using Firefox preferences to experiment using Normandy, you can add those as `fallbackPref`
+Take a look a the [Desktop Feature API docs](desktop-feature-api) to register a new feature in the manifest. If you are already using Firefox preferences to experiment using Normandy, you can add those as `fallbackPref`
 
 ```js
 // in ExperimentAPI.jsm

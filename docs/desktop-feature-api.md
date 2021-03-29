@@ -1,10 +1,10 @@
 ---
-id: desktop-api
+id: desktop-feature-api
 title: Nimbus Feature API (JS)
-slug: /desktop-reference-guide
+slug: /desktop-feature-api
 ---
 
-This guide will help you use the Nimbus Feature API in Desktop Firefox to run experiments, set values remotely, and manage user preferences. If you are familiar with Normandy and are trying to migrate a feature, you may want to check out the [Migration Guide for Pref Experiments](migration-guide-desktop-frontend).
+This guide will help you use the Nimbus Feature API in Desktop Firefox to run experiments, set values remotely, and manage user preferences. If you are familiar with Normandy and are trying to migrate a feature, you may want to check out the [Migration Guide for Pref Experiments](desktop-migration-guide).
 
 :::info
 Your code must be able to import `ExperimentAPI.jsm` in the parent process or a privileged child process. We do not currently support a C++/Rust API.
