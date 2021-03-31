@@ -10,6 +10,10 @@ If you want to set configurations for a feature remotely _outside of an experime
 This feature is still in the early stages of development. The first version will be available in Firefox 89.
 :::
 
+## How do roll-outs interact with experiments?
+
+If a user receives a remote default _and_ enrolls in an experiment, the Feature API will prefer the experiment configuration.
+
 ## Register your feature in Firefox
 
 To be able to use remote defaults, make sure you register your feature in `ExperimentAPI.jsm` and add variables you want to be able to set remotely. This process is identical to what you would do for running Nimbus Experiments, so if you've already done that, you don't need to make any changes in Firefox.
