@@ -14,7 +14,7 @@ module.exports = {
           type: "link",
           label: "Design Process",
           href:
-            "https://mana.mozilla.org/wiki/display/FIREFOX/Experiment+Design+Process",
+            "https://mana.mozilla.org/wiki/x/XdTNBw",
         },
         {
           type: "link",
