@@ -67,6 +67,7 @@ module.exports = {
         "desktop-engineers-root",
         "desktop-feature-api",
         "desktop-migration-guide",
+        "desktop-rollouts",
         "desktop-frontend-testing",
       ],
     },
