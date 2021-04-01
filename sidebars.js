@@ -75,6 +75,7 @@ module.exports = {
       label: "Core Nimbus Team",
       items: [
         "experimenter-engineers-root",
+        "android-feature-api",
         {
           type: "link",
           label: "GitHub Repo",
