@@ -9,6 +9,9 @@ module.exports = {
   organizationName: "mozilla",
   projectName: "experimenter-docs",
   themeConfig: {
+    prism: {
+      additionalLanguages: ["kotlin", "swift"]
+    },
     hideableSidebar: true,
     colorMode: {
       defaultMode: "light",
