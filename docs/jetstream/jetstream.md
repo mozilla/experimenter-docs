@@ -10,7 +10,7 @@ to produce the datasets that drive the results dashboards.
 
 Most investigation owners will not interact with Jetstream directly.
 Jetstream computes a default set of statistics for every experiment.
-Investigation owners can add additional metrics to a results dashboard by choosing
+Investigation owners can add additional [metrics] to a results dashboard by choosing
 **outcomes** <!-- TODO: linkme -->
 in Experimenter while designing an experiment.
 
@@ -65,3 +65,4 @@ is available in the Mozilla data docs.
 [jetstream]: https://github.com/mozilla/jetstream
 [jetstream-config]: https://github.com/mozilla/jetstream-config
 [jetstream-dtmo]: https://docs.telemetry.mozilla.org/datasets/jetstream.html
+[metrics]: metrics.md
