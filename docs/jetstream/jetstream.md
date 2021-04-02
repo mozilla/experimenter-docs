@@ -11,16 +11,14 @@ to produce the datasets that drive the results dashboards.
 Most investigation owners will not interact with Jetstream directly.
 Jetstream computes a default set of statistics for every experiment.
 Investigation owners can add additional [metrics] to a results dashboard by choosing
-**outcomes** <!-- TODO: linkme -->
-in Experimenter while designing an experiment.
+[outcome]s in Experimenter while designing an experiment.
 
 Data scientists can extend Jetstream with new outcomes by contributing
-**outcome definitions** <!-- TODO: linkme -->
+[outcome] definitions
 to the [jetstream-config] repository.
 
 Data scientists can also ask Jetstream to evaluate custom metrics for a particular experiment
-by contributing
-**experiment configurations** <!-- TODO: linkme -->
+by contributing [experiment configurations]
 to jetstream-config.
 
 Jetstream is not a monitoring platform,
@@ -62,7 +60,9 @@ are available in BigQuery.
 [Technical documentation][jetstream-dtmo]
 is available in the Mozilla data docs.
 
+[experiment configurations]: configuration.md
 [jetstream]: https://github.com/mozilla/jetstream
 [jetstream-config]: https://github.com/mozilla/jetstream-config
 [jetstream-dtmo]: https://docs.telemetry.mozilla.org/datasets/jetstream.html
 [metrics]: metrics.md
+[outcome]: outcomes.md
