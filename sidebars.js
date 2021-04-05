@@ -34,6 +34,10 @@ module.exports = {
       label: "Jetstream",
       items: [
         "jetstream/jetstream",
+        "jetstream/metrics",
+        "jetstream/statistics",
+        "jetstream/outcomes",
+        "jetstream/configuration",
         {
           type: "link",
           label: "GitHub Repo",
