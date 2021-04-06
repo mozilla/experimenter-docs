@@ -6,16 +6,27 @@ slug: /android-feature-api
 
 ## Manifest
 
-This should live in Fenix somewhere and be readable by the Android Feature API, probably yaml if it's easy
+This file should live in Fenix and be readable by the Android Feature API:
 
 ```yaml
-tab_bar:
-  description: "This is the bar that holds all the tabs",
+default_menu_message:
+  description: "A menu message that asks people to set to default",
   variables:
+    enabled:
+      type: "boolean",
+      # Optional
+      defaultValue: false
     icon:
       type: "string",
-      # Optional
-      defaultValue: "tab-bar-icon-default"
+      defaultValue: "firefox-logo"
+    position:
+      type: "int",
+      defaultValue: 4
+    text:
+      type: "string"
+      # Q: How do we do localized/unlocalized text here?
+      defaultValue: "Set as default browser"
+
 ```
 
 ## Experiment API (DTO)
@@ -56,9 +67,7 @@ pub struct Branch {
 
 pub struct FeatureConfig {
     pub feature_id: String,
-
-    // Or pub variables: String, if we merge these
-    pub enabled: String
+    pub enabled: Boolean,
     pub value: String
 
 }
@@ -68,11 +77,14 @@ pub fn get_branch_by_feature(feature_id: String) -> Option<Branch>
 
 Some important notes:
 
-- The SDK should only enroll a maximum of one experiment per feature at a time. It should prevent users from
+- The SDK should only enroll a maximum of one experiment per feature at a time.
 
 ## Android API
 
-The Android API calls `get_branch_by_feature` from the Rust SDK and parses the JSON
+The Android API:
+
+- reads the manifest to see which variables it expects
+- calls `get_branch_by_feature` from the Rust SDK and parses the JSON from `featureConfig.value`
 
 ### `get[type]Variable(variable)`
 
@@ -83,17 +95,26 @@ public @Nullable String getStringVariable(@Nonnull String variableName)
 public @Nullable String getJSONVariable(@Nonnull String variableName)
 ```
 
+Example:
+
+````kotlin
+// TODO: Discuss
+NimbusFeatures.defaultMenuMessage.getIntVariable("position")
+NimbusFeatures.defaultMenuMessage.variables.position
+NimbusFeatures.getIntVariable("default_menu_message", "position")
+``
+
 ### `isEnabled()`
 
 ```kotlin
 public @Nullable Boolean isEnabled()
-```
+````
 
 In Desktop this checks `featureConfig.enabled`, but I'd be fine with changing it to be synactic sugar for `getBoolVariable("enabled")`
 
 ### `getAllVariables()`
 
-TODO, do we need this for the first iteration?
+This is the equivalent of `getValue()` in Desktop. Do we need this for the first iteration?
 
 ### `recordExposureEvent()`
 
