@@ -10,7 +10,7 @@ If you want to set configurations for a feature remotely _outside of an experime
 This feature is still in the early stages of development. The first version will be available in Firefox 89.
 :::
 
-## How do roll-outs interact with experiments?
+## How do rollouts interact with experiments?
 
 If a user receives a remote default _and_ enrolls in an experiment, the Feature API will prefer the experiment configuration.
 
@@ -20,9 +20,9 @@ To be able to use remote defaults, make sure you register your feature in `Exper
 
 See the documentation for the [Nimbus Feature API](desktop-feature-api) for more details.
 
-## Roll-out a feature config
+## Rollout a feature config
 
-To roll-out changes to a feature, you will need to update (or create, if none exists) the record that matches your feature id in the `nimbus-desktop-defaults` remote settings collection:
+To rollout changes to a feature, you will need to update (or create, if none exists) the record that matches your feature id in the `nimbus-desktop-defaults` remote settings collection:
 
 ```js
 {
