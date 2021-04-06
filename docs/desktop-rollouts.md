@@ -13,7 +13,7 @@ This feature is still in the early stages of development. The first version will
 ## Caveats & Prerequisites
 
 - Because this feature is in the early stages of testing, it is only available to Experiment Reviewers and the UJET team
-- This feature is currently Desktop-only in
+- This feature is currently Desktop-only
 - You must have access to the `nimbus-desktop-defaults` remote settings collection to test/deploy changes
 
 ## Step 1 - Register your feature in Firefox
