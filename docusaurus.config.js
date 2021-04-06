@@ -10,7 +10,7 @@ module.exports = {
   projectName: "experimenter-docs",
   themeConfig: {
     prism: {
-      additionalLanguages: ["kotlin", "swift"]
+      additionalLanguages: ["kotlin", "swift", "rust"]
     },
     hideableSidebar: true,
     colorMode: {
