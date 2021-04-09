@@ -27,7 +27,15 @@ module.exports = {
     {
       type: "category",
       label: "Experiment Owners",
-      items: ["experiment-owners-root"],
+      items: [{
+        type: "link",
+        label: "Experimentation with Nimbus",
+        href: "https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws"
+      }, {
+        type: "link",
+        label: "Monitoring and Analyzing your Experiment",
+        href: "https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws/edit#heading=h.75kfit458h84"
+      }],
     },
     {
       type: "category",
