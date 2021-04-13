@@ -1,9 +1,9 @@
 Nimbus SDK Experiment States and Lifecycle
 
 
-### Authors: Ryan Kelly
-### Reviewers: Kate Hudson, Tim Smith
-### Status: Draft as of November 2020; see the [changelog](#heading=h.ws8z3kd9jkt0) for updates
+##### Authors: Ryan Kelly
+##### Reviewers: Kate Hudson, Tim Smith
+##### Status: Draft as of November 2020; see the [changelog](#heading=h.ws8z3kd9jkt0) for updates
 
 
 ## Introduction
@@ -69,7 +69,7 @@ Note that we are only interested in states that are observable by the client; th
 
 
 
-![drawing](/img/client-sdk-states-and-lifecycle/client-visible-publishing-workflow-states.svg)
+![drawing](/img/client-sdk-states-and-lifecycle/client-visible-publishing-workflow-states.png)
 
 
 #### The "Preparing" State
@@ -138,7 +138,7 @@ Each Nimbus client will also have its own local state for each experiment, based
 
 
 
-![drawing](https://docs.google.com/drawings/d/12345/export/png)
+![client-side local states](/img/client-sdk-states-and-lifecycle/client-side-local-states.png)
 
 
 #### The "Unknown" State
@@ -211,8 +211,8 @@ In this state, the client remembers that it was previously enrolled in an experi
 
 WasEnrolled experiments are shown in about:studies:
 
-![WasEnrolled shown in about:studies](/img/client-sdk-states-and-lifecycle/image2.png "WasEnrolled
-shown in about:studies")
+![WasEnrolled shown in about:studies](/img/client-sdk-states-and-lifecycle/WasEnrolled-in-about-studies.png
+"WasEnrolled shown in about:studies")
 
 
 It's also useful for analysis to have a period of observation (say 30 days?) after an experiment ends in which we still tag telemetry pings with the experiment branch info.
