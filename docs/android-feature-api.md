@@ -6,7 +6,13 @@ slug: /android-feature-api
 
 ## Manifest
 
-This file should live in Fenix and be readable by the Android Feature API:
+This file should live in Fenix and be readable by the Android Feature API.
+
+Note that:
+
+- Default values are required for Android/iOS
+- Valid `type`s are `boolean`, `string`, `int`, `drawable`
+- `choices` is optional
 
 ```yaml
 default_menu_message:
@@ -14,19 +20,20 @@ default_menu_message:
   variables:
     enabled:
       type: "boolean",
-      # Optional
+      # required
       defaultValue: false
     icon:
-      type: "string",
-      defaultValue: "firefox-logo"
+      type: "drawable",
+      choices:
+        - "firefox-logo", "firefox-logo-red"
+      defaultValue: "firefox-logo-red"
     position:
       type: "int",
       defaultValue: 4
     text:
       type: "string"
-      # Q: How do we do localized/unlocalized text here?
-      defaultValue: "Set as default browser"
-
+      # choices or free text
+      defaultValue: "Hello world"
 ```
 
 ## Experiment API (DTO)
@@ -39,87 +46,79 @@ See [full documentation](https://mana.mozilla.org/wiki/pages/viewpage.action?pag
   "slug": "treatment-red-icon",
   // For bucketing
   "ratio": 1,
-  "feature": {
+  "features": [
+    {
     // Should match manifest entry
     "featureId": "tab_bar"
-
-    // I'd be open to switching this to "variables", but this is the current format
     "enabled": false,
+
+    // This contains a subset of the variables defined in the manifest entry
     "value": {
-      "icon": "red-icon-123"
+      "icon": "red-icon-123",
+      "text": "Hello world"
     }
-  }
+  }]
 }
 
 ```
 
 ## SDK API
 
-The SDK exposes a "get branch by feature" method, which returns a value only if an experiment is enrolled
-for a given feature id. `value` is returned as stringified JSON; the Rust SDK has no knowledge of feature or application-specific types.
+The SDK exposes a `get_feature_config_variables` method, which return a value only if an experiment is enrolled
+for a given feature id. The return type is a `String`; the Rust SDK has no knowledge of feature or application-specific types.
 
 ```rust
 pub struct Branch {
     pub slug: String,
     pub ratio: i32,
-    pub feature: FeatureConfig,
+
+    // To support multiple features:
+    pub features: Vec<FeatureConfig>
 }
 
 pub struct FeatureConfig {
     pub feature_id: String,
     pub enabled: Boolean,
+    // This is where all the variables are, it will be parsed foreign language side
     pub value: String
-
 }
 
-pub fn get_branch_by_feature(feature_id: String) -> Option<Branch>
+// returns FeatureConfig.value
+pub fn get_feature_config_variables(feature_id: String) -> Option<String>
 ```
 
-Some important notes:
+Notes:
 
-- The SDK should only enroll a maximum of one experiment per feature at a time.
+- The SDK should only enroll a maximum of one experiment per feature at a time and should enforce this at enrollment time.
 
 ## Android API
 
-The Android API:
+### NimbusFeatures.getVariables(featureId)
 
-- reads the manifest to see which variables it expects
-- calls `get_branch_by_feature` from the Rust SDK and parses the JSON from `featureConfig.value`
-
-### `get[type]Variable(variable)`
-
-```kotlin
-public @Nullable Boolean getBoolVariable(@Nonnull String variableName)
-public @Nullable Int getIntVariable(@Nonnull String variableName)
-public @Nullable String getStringVariable(@Nonnull String variableName)
-public @Nullable String getJSONVariable(@Nonnull String variableName)
-```
+- Returns a `NimbusFeatureConfig` instance
+- Calls `get_feature_config_variables` from the Rust SDK, parses the JSON
+- Exposes methods for getting variables of supported types (`boolean`, `string`, `int`)
+- Should not allow feature ids or variable names that aren't defined in the manifest
 
 Example:
 
-````kotlin
-// TODO: Discuss
-NimbusFeatures.defaultMenuMessage.getIntVariable("position")
-NimbusFeatures.defaultMenuMessage.variables.position
-NimbusFeatures.getIntVariable("default_menu_message", "position")
-``
-
-### `isEnabled()`
-
 ```kotlin
-public @Nullable Boolean isEnabled()
-````
+NimbusFeatures.getVariables("default_menu_message").getInt("position")
+NimbusFeatures.getVariables("default_menu_message").getBool("enabled")
+```
 
-In Desktop this checks `featureConfig.enabled`, but I'd be fine with changing it to be synactic sugar for `getBoolVariable("enabled")`
-
-### `getAllVariables()`
-
-This is the equivalent of `getValue()` in Desktop. Do we need this for the first iteration?
-
-### `recordExposureEvent()`
+### `recordExposureEvent(featureId)`
 
 Use this to manually send an exposure event.
 
 ```kotlin
-NimbusFeatures.myFeature.recordExposureEvent();
+NimbusFeatures.recordExposureEvent("default_menu_message")
 ```
+
+## Enhancements (Later)
+
+- isEnabled
+- Figure out localized strings
+- More application-specific types like colours etc.
+- Generating types from the manifest (probably later)
+- Rust API
