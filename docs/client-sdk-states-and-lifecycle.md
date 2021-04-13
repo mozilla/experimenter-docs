@@ -87,7 +87,7 @@ Transitions:
 
 This is the first phase of an experiment going "live" and starting to show up in the user experience. It's indicated by the experiment being visible to clients in Remote Settings with _isEnrollmentPaused_ set to _false_.
 
-Clients that <span style="text-decoration:underline;">observe an experiment transition</span> to this state should check whether to enroll in the experiment (N.B. this includes a self-transition from **Enrolling** -> **Enrolling** that is accompanied by a change in the published experiment config, which might change enrollment decisions).
+Clients that _observe an experiment transition_ to this state should check whether to enroll in the experiment (N.B. this includes a self-transition from **Enrolling** -> **Enrolling** that is accompanied by a change in the published experiment config, which might change enrollment decisions).
 
 While the experiment is in this state, enrolled clients should activate the experiment treatment appropriate for their enrolled branch, and report telemetry about it.
 
