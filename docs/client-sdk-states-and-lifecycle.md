@@ -1,105 +1,21 @@
-<!-- Copy and paste the converted output. -->
-
-<!-----
-NEW: Check the "Suppress top comment" option to remove this info from the output.
-
-Conversion time: 6.197 seconds.
-
-
-Using this Markdown file:
-
-1. Paste this output into your source file.
-2. See the notes and action items below regarding this conversion run.
-3. Check the rendered output (headings, lists, code blocks, tables) for proper
-   formatting and use a linkchecker before you publish this page.
-
-Conversion notes:
-
-* Docs to Markdown version 1.0β29
-* Mon Apr 12 2021 18:13:13 GMT-0700 (PDT)
-* Source doc: Nimbus SDK Experiment States and Lifecycle
-
-ERROR:
-undefined internal link to this URL: "#heading=h.ws8z3kd9jkt0".link text: changelog
-?Did you generate a TOC?
-
-
-ERROR:
-undefined internal link to this URL: "#heading=h.3slezboqq4bp".link text: behaviour of API calls
-?Did you generate a TOC?
-
-
-ERROR:
-undefined internal link to this URL: "#heading=h.hil8zfujegbb".link text: server-side experiment state
-?Did you generate a TOC?
-
-
-ERROR:
-undefined internal link to this URL: "#heading=h.nvk1i8zf8aka".link text: local client state
-?Did you generate a TOC?
-
-
-ERROR:
-undefined internal link to this URL: "#heading=h.t2ql5e7zlslq".link text: emit telemetry
-?Did you generate a TOC?
-
-
-WARNING:
-Inline drawings not supported: look for ">>>>>  gd2md-html alert:  inline drawings..." in output.
-
-* This document has images: check for >>>>>  gd2md-html alert:  inline image link in generated source and store images to your server. NOTE: Images in exported zip file from Google Docs may not appear in  the same order as they do in your doc. Please check the images!
-
------>
-
-
-<p style="color: red; font-weight: bold">>>>>>  gd2md-html alert:  ERRORs: 5; WARNINGs: 1; ALERTS: 8.</p>
-<ul style="color: red; font-weight: bold"><li>See top comment block for details on ERRORs and WARNINGs. <li>In the converted Markdown or HTML, search for inline alerts that start with >>>>>  gd2md-html alert:  for specific instances that need correction.</ul>
-
-<p style="color: red; font-weight: bold">Links to alert messages:</p><a href="#gdcalert1">alert1</a>
-<a href="#gdcalert2">alert2</a>
-<a href="#gdcalert3">alert3</a>
-<a href="#gdcalert4">alert4</a>
-<a href="#gdcalert5">alert5</a>
-<a href="#gdcalert6">alert6</a>
-<a href="#gdcalert7">alert7</a>
-<a href="#gdcalert8">alert8</a>
-
-<p style="color: red; font-weight: bold">>>>>> PLEASE check and correct alert issues and delete this message and the inline alerts.<hr></p>
-
-
 Nimbus SDK Experiment States and Lifecycle
 
 
-### Authors: Ryan Kelly \
-Reviewers: Kate Hudson, Tim Smith \
-Status: Draft as of November 2020; see the
-
-<p id="gdcalert1" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: undefined internal link (link text: "changelog"). Did you generate a TOC? </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert2">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-[changelog](#heading=h.ws8z3kd9jkt0) for updates
+### Authors: Ryan Kelly
+### Reviewers: Kate Hudson, Tim Smith
+### Status: Draft as of November 2020; see the [changelog](#heading=h.ws8z3kd9jkt0) for updates
 
 
 ## Introduction
 
 This document provides a high-level overview of the lifecycle of a Nimbus experiment, from the point of view of the client SDK. It's an adjunct to the [Nimbus Experiment Publishing Lifecycle](https://docs.google.com/document/d/1RD-Ok9jYpa4cyyCAe-SO4xjITKN1ueh37WmN65u5BM4) doc and is intended to be short-lived; once reviewed its contents will be incorporated into the codebase documentation of the Nimbus SDK.
 
-The
-
-<p id="gdcalert2" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: undefined internal link (link text: "behaviour of API calls"). Did you generate a TOC? </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert3">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-[behaviour of API calls](#heading=h.3slezboqq4bp) to the Client SDK will depend on both the last observed
-
-<p id="gdcalert3" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: undefined internal link (link text: "server-side experiment state"). Did you generate a TOC? </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert4">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-[server-side experiment state](#heading=h.hil8zfujegbb), and the current
-
-<p id="gdcalert4" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: undefined internal link (link text: "local client state"). Did you generate a TOC? </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert5">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-[local client state](#heading=h.nvk1i8zf8aka), and the SDK will
-
-<p id="gdcalert5" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: undefined internal link (link text: "emit telemetry"). Did you generate a TOC? </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert6">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-[emit telemetry](#heading=h.t2ql5e7zlslq) based on the local state of each experiment.
+The [behaviour of API calls](#heading=h.3slezboqq4bp) to the Client SDK will
+depend on both the last observed [server-side experiment
+state](#heading=h.hil8zfujegbb), and the current [local client
+state](#heading=h.nvk1i8zf8aka), and the SDK will [emit
+telemetry](#heading=h.t2ql5e7zlslq) based on the local state of each
+experiment.
 
 I happen to think that these states could map nicely to some Rust Enums, but your mileage may vary.
 
@@ -153,10 +69,7 @@ Note that we are only interested in states that are observable by the client; th
 
 
 
-<p id="gdcalert6" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline drawings not supported directly from Docs. You may want to copy the inline drawing to a standalone drawing and export by reference. See <a href="https://github.com/evbacher/gd2md-html/wiki/Google-Drawings-by-reference">Google Drawings by reference</a> for details. The img URL below is a placeholder. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert7">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![drawing](https://docs.google.com/drawings/d/12345/export/png)
+![drawing](/img/client-sdk-states-and-lifecycle/client-visible-publishing-workflow-states.svg)
 
 
 #### The "Preparing" State
@@ -223,9 +136,6 @@ Errors:
 
 Each Nimbus client will also have its own local state for each experiment, based on the observed history of the server-side experiment states that it has read from the Remote Settings server. Transitions between the states are triggered by observing experiment config changes when querying the Remote Settings server, and by the passage of time on the client.
 
-
-
-<p id="gdcalert7" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline drawings not supported directly from Docs. You may want to copy the inline drawing to a standalone drawing and export by reference. See <a href="https://github.com/evbacher/gd2md-html/wiki/Google-Drawings-by-reference">Google Drawings by reference</a> for details. The img URL below is a placeholder. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert8">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
 
 
 ![drawing](https://docs.google.com/drawings/d/12345/export/png)
@@ -301,12 +211,8 @@ In this state, the client remembers that it was previously enrolled in an experi
 
 WasEnrolled experiments are shown in about:studies:
 
-
-
-<p id="gdcalert8" ><span style="color: red; font-weight: bold">>>>>>  gd2md-html alert: inline image link here (to images/image1.png). Store image on your image server and adjust path/filename/extension if necessary. </span><br>(<a href="#">Back to top</a>)(<a href="#gdcalert9">Next alert</a>)<br><span style="color: red; font-weight: bold">>>>>> </span></p>
-
-
-![alt_text](images/image1.png "image_tooltip")
+![WasEnrolled shown in about:studies](/img/client-sdk-states-and-lifecycle/image2.png "WasEnrolled
+shown in about:studies")
 
 
 It's also useful for analysis to have a period of observation (say 30 days?) after an experiment ends in which we still tag telemetry pings with the experiment branch info.
