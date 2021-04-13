@@ -4,36 +4,23 @@ title: Client SDK States & Lifecycle
 slug: /client-sdk-states-and-lifecycle
 ---
 
-TODO:
-* figure and deal with:
-  * mozilla confidential
-    * (ignore)
-  * what happens to "Nimbus Experiment Publish Lifecycle" adjunct
-
-  * remaining comments / feedback requests
-    * quote and request feedback on github
-  * intro paragraph
-    * ask reviewer
-* read
-
-
 Nimbus SDK Experiment States and Lifecycle
 
 
-##### Authors: Ryan Kelly
-##### Reviewers: Kate Hudson, Tim Smith
-##### Status: Draft as of November 2020; see the [changelog](#heading=h.ws8z3kd9jkt0) for updates
+###### Authors: Ryan Kelly
+###### Reviewers: Kate Hudson, Tim Smith
+###### Status: Draft as of November 2020; see the [changelog](#changelog) for updates
 
 
 ## Introduction
 
-This document provides a high-level overview of the lifecycle of a Nimbus experiment, from the point of view of the client SDK. It's an adjunct to the [Nimbus Experiment Publishing Lifecycle](https://docs.google.com/document/d/1RD-Ok9jYpa4cyyCAe-SO4xjITKN1ueh37WmN65u5BM4) doc and is intended to be short-lived; once reviewed its contents will be incorporated into the codebase documentation of the Nimbus SDK.
+This document provides a high-level overview of the lifecycle of a Nimbus experiment, from the point of view of the client SDK. It's in part an adjunct to the [Nimbus Experiment Publishing Lifecycle](https://github.com/mozilla/experimenter/tree/main/app/experimenter/kinto#experiment-states).
 
-The [behaviour of API calls](#heading=h.3slezboqq4bp) to the Client SDK will
+The [behaviour of API calls](#client-behaviors) to the Client SDK will
 depend on both the last observed [server-side experiment
-state](#heading=h.hil8zfujegbb), and the current [local client
-state](#heading=h.nvk1i8zf8aka), and the SDK will [emit
-telemetry](#heading=h.t2ql5e7zlslq) based on the local state of each
+state](#server-side-experiment-states), and the current [local client
+state](#client-side-experiment-states), and the SDK will [emit
+telemetry](#telemetry) based on the local state of each
 experiment.
 
 I happen to think that these states could map nicely to some Rust Enums, but your mileage may vary.
@@ -390,6 +377,8 @@ Nimbus will also emit Glean [events](https://mozilla.github.io/glean/book/user/m
 
 ## Changelog
 
+#### 2021-04-13 (dmose):
+ * Moved from [Google Doc](https://docs.google.com/document/d/18L3oNriwwLd5TZrM1SaHIfIJXmXqUkwNwQEPwVOTY6Q/edit#), converted to MDX format, and commited to DocsHub.
 
 #### 2020-11-18 (rfkelly):
 
