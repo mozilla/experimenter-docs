@@ -97,6 +97,7 @@ module.exports = {
       label: "Core Nimbus Team",
       items: [
         "android-feature-api",
+        "client-sdk-states-and-lifecycle",
         {
           type: "link",
           label: "Experimenter GH Repo",
