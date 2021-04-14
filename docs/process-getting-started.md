@@ -1,6 +1,6 @@
 ---
 id: process-getting-started
-title: Getting started
+title: Getting Started
 slug: /getting-started
 ---
 
