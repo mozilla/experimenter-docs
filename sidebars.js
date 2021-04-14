@@ -13,8 +13,7 @@ module.exports = {
         {
           type: "link",
           label: "Design Process",
-          href:
-            "https://mana.mozilla.org/wiki/x/XdTNBw",
+          href: "https://mana.mozilla.org/wiki/x/XdTNBw",
         },
         {
           type: "link",
@@ -27,15 +26,20 @@ module.exports = {
     {
       type: "category",
       label: "Experiment Owners",
-      items: [{
-        type: "link",
-        label: "Experimentation with Nimbus",
-        href: "https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws"
-      }, {
-        type: "link",
-        label: "Monitoring and Analyzing your Experiment",
-        href: "https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws/edit#heading=h.75kfit458h84"
-      }],
+      items: [
+        {
+          type: "link",
+          label: "Experimentation with Nimbus",
+          href:
+            "https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws",
+        },
+        {
+          type: "link",
+          label: "Monitoring and Analyzing your Experiment",
+          href:
+            "https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws/edit#heading=h.75kfit458h84",
+        },
+      ],
     },
     {
       type: "category",
@@ -76,7 +80,6 @@ module.exports = {
       type: "category",
       label: "Desktop Engineers",
       items: [
-        "desktop-engineers-root",
         "desktop-feature-api",
         "desktop-migration-guide",
         "desktop-rollouts",
@@ -87,11 +90,10 @@ module.exports = {
       type: "category",
       label: "Core Nimbus Team",
       items: [
-        "experimenter-engineers-root",
         "android-feature-api",
         {
           type: "link",
-          label: "GitHub Repo",
+          label: "Experimenter GH Repo",
           href: "https://github.com/mozilla/experimenter",
         },
         {
