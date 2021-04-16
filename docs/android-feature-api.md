@@ -102,6 +102,8 @@ nimbus.getVariables("default_menu_message").getBool("enabled")
 nimbus.getVariables("default_menu_message").getString("wahtever")
 ```
 
+Note that `getVariables` can take a second param `sendExposureEvent` that is `true` by default, which will send an exposure event when the function is called.
+
 ### `recordExposureEvent(featureId)`
 
 Use this to manually send an exposure event.
