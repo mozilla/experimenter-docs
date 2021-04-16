@@ -46,18 +46,16 @@ See [full documentation](https://mana.mozilla.org/wiki/pages/viewpage.action?pag
   "slug": "treatment-red-icon",
   // For bucketing
   "ratio": 1,
-  "features": [
-    {
+  "feature": {
     // Should match manifest entry
     "featureId": "tab_bar"
-    "enabled": false,
-
     // This contains a subset of the variables defined in the manifest entry
     "value": {
+      "enabled": true,
       "icon": "red-icon-123",
       "text": "Hello world"
     }
-  }]
+  }
 }
 
 ```
@@ -71,14 +69,11 @@ for a given feature id. The return type is a `String`; the Rust SDK has no knowl
 pub struct Branch {
     pub slug: String,
     pub ratio: i32,
-
-    // To support multiple features:
-    pub features: Vec<FeatureConfig>
+    pub feature: FeatureConfig
 }
 
 pub struct FeatureConfig {
     pub feature_id: String,
-    pub enabled: Boolean,
     // This is where all the variables are, it will be parsed foreign language side
     pub value: String
 }
@@ -93,18 +88,17 @@ Notes:
 
 ## Android API
 
-### NimbusFeatures.getVariables(featureId)
+### nimbus.getVariables(featureId)
 
-- Returns a `NimbusFeatureConfig` instance
 - Calls `get_feature_config_variables` from the Rust SDK, parses the JSON
 - Exposes methods for getting variables of supported types (`boolean`, `string`, `int`)
-- Should not allow feature ids or variable names that aren't defined in the manifest
 
 Example:
 
 ```kotlin
-NimbusFeatures.getVariables("default_menu_message").getInt("position")
-NimbusFeatures.getVariables("default_menu_message").getBool("enabled")
+nimbus.getVariables("default_menu_message").getInt("position")
+nimbus.getVariables("default_menu_message").getBool("enabled")
+nimbus.getVariables("default_menu_message").getString("wahtever")
 ```
 
 ### `recordExposureEvent(featureId)`
@@ -112,7 +106,7 @@ NimbusFeatures.getVariables("default_menu_message").getBool("enabled")
 Use this to manually send an exposure event.
 
 ```kotlin
-NimbusFeatures.recordExposureEvent("default_menu_message")
+nimbus.recordExposureEvent("default_menu_message")
 ```
 
 ## Enhancements (Later)
