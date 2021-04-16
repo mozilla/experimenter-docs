@@ -89,7 +89,7 @@ Notes:
 
 ## Android API
 
-### nimbus.getVariables(featureId)
+### nimbus.getVariables(featureId, sendExposureEvent)
 
 - Calls `get_feature_config_variables` from the Rust SDK, parses the JSON
 - Exposes methods for getting variables of supported types (`boolean`, `string`, `int`)
@@ -99,8 +99,11 @@ Example:
 ```kotlin
 nimbus.getVariables("default_menu_message").getInt("position")
 nimbus.getVariables("default_menu_message").getBool("enabled")
-nimbus.getVariables("default_menu_message").getString("wahtever")
+// In this example, we don't send an exposure event
+nimbus.getVariables("default_menu_message", false).getString("text")
 ```
+
+Note that `getVariables` can take a second param `sendExposureEvent` that is `true` by default, which will send an exposure event when the function is called.
 
 ### `recordExposureEvent(featureId)`
 
