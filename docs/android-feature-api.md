@@ -25,7 +25,8 @@ default_menu_message:
     icon:
       type: "drawable",
       choices:
-        - "firefox-logo", "firefox-logo-red"
+        - "firefox-logo"
+        - "firefox-logo-red"
       defaultValue: "firefox-logo-red"
     position:
       type: "int",
