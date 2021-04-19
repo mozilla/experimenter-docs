@@ -80,7 +80,7 @@ pub struct FeatureConfig {
 }
 
 // returns FeatureConfig.value
-pub fn get_feature_config_variables(feature_id: String) -> Option<String>
+pub fn get_feature_config_variables(feature_id: String) -> Result<Option<String>>
 ```
 
 Notes:
