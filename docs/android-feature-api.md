@@ -61,6 +61,8 @@ See [full documentation](https://mana.mozilla.org/wiki/pages/viewpage.action?pag
 
 ```
 
+Note: The DTO has an `enabled` property, but we will not be handling it here. Instead, we will expect `enabled` to be declared as a boolean variable.
+
 ## SDK API
 
 The SDK exposes a `get_feature_config_variables` method, which return a value only if an experiment is enrolled
@@ -80,7 +82,7 @@ pub struct FeatureConfig {
 }
 
 // returns FeatureConfig.value
-pub fn get_feature_config_variables(feature_id: String) -> Option<String>
+pub fn get_feature_config_variables(feature_id: String) -> Result<Option<String>>
 ```
 
 Notes:
