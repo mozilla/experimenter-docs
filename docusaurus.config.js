@@ -1,8 +1,8 @@
 module.exports = {
   title: "Experimenter Docs",
   tagline: "Documentation hub for Experimenter",
-  url: "https://github.com/mozilla/experimenter-docs",
-  baseUrl: "/experimenter-docs/",
+  url: "https://experimenter.info",
+  baseUrl: "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
