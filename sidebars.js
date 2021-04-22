@@ -84,6 +84,13 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Features",
+      items: [
+        "features/desktop/aboutwelcome"
+      ],
+    },
+    {
+      type: "category",
       label: "Core Nimbus Team",
       items: [
         "android-feature-api",
