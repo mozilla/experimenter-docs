@@ -3,13 +3,9 @@ module.exports = {
     {
       type: "category",
       label: "Welcome",
-      items: ["welcome", "contributing"],
-    },
-    {
-      type: "category",
-      label: "How to Run Experiments",
       items: [
-        "process-getting-started",
+        "welcome",
+        "contributing",
         {
           type: "link",
           label: "Design Process",
