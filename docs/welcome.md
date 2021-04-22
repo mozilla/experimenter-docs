@@ -13,21 +13,10 @@ This website is built using [Docusaurus](https://v2.docusaurus.io/).
 
 Want to edit one of these docs, add a new one, or modify the sidebar? Check out the [Contributing](/contributing) page.
 
-## Important links
+## Getting started
 
-In addition to the links in the sidebar here are some important links to have on hand:
+Want to run an experiment in Firefox? Here's what you should do first:
 
-| Link            |                                       |                              |
-| --------------- | ------------------------------------- | ---------------------------- |
-| Legacy Home     | [Production][legacy_home_prod]        | [Staging][legacy_home_stage] |
-| Nimbus Home     | [Production][nimbus_home_prod]        | [Staging][nimbus_home_stage] |
-| Remote Settings | [Production][rs_prod]                 | [Staging][rs_stage]          |
-| Storybook       | [Storybook Directory][storybook_prod] |                              |
-
-[legacy_home_prod]: https://experimenter.services.mozilla.com/
-[legacy_home_stage]: https://stage.experimenter.nonprod.dataops.mozgcp.net/
-[nimbus_home_prod]: https://experimenter.services.mozilla.com/nimbus
-[nimbus_home_stage]: https://stage.experimenter.nonprod.dataops.mozgcp.net/nimbus
-[storybook_prod]: https://storage.googleapis.com/mozilla-storybooks-experimenter/index.html
-[rs_prod]: https://settings-writer.prod.mozaws.net/v1/admin/
-[rs_stage]: https://settings-writer.stage.mozaws.net/v1/admin/
+- Follow the [Experiment Design Process](https://mana.mozilla.org/wiki/x/XdTNBw) to work with Data Science on your hypothesis and experiment design.
+- Go through onboarding to use the [Nimbus Console](https://mana.mozilla.org/wiki/display/FJT/Nimbus+Onboarding#NimbusOnboarding-Branches)
+- Reach out in `#ask-experimenter` if you have questions on Slack!
