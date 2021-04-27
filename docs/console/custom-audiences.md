@@ -14,7 +14,7 @@ They are:
 - Evaluated on clients via an expression language (`JEXL`)
 
 :::warning
-Right now, custom audiences that are Desktop-only still show up as an option for mobile experiments. This is a [known issue](https://jira.mozilla.com/browse/EXP-1242)
+Right now, Desktop-only audiences will appear as options for mobile experiments. This is a [known issue](https://jira.mozilla.com/browse/EXP-1242)
 :::
 
 ### How to add a new custom audience
