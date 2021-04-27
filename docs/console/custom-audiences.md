@@ -13,6 +13,10 @@ They are:
 - Specific to a particular application (Not all audiences can target all applications)
 - Evaluated on clients via an expression language (`JEXL`)
 
+:::warning
+Right now, custom audiences that are Desktop-only still show up as an option for mobile experiments. This is a [known issue](https://jira.mozilla.com/browse/EXP-1242)
+:::
+
 ### How to add a new custom audience
 
 Create a PR against [constants/nimbus.py](https://github.com/mozilla/experimenter/blob/main/app/experimenter/experiments/constants/nimbus.py) (see [this example](https://github.com/mozilla/experimenter/blob/main/app/experimenter/experiments/constants/nimbus.py). You will need to set up a local dev environment (make sure you `cp .env.sample .env`) and run `make makemigrations && make check` to generate a migration and run tests.
