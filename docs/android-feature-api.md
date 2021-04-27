@@ -10,9 +10,9 @@ This file should live in Fenix and be readable by the Android Feature API.
 
 Note that:
 
-- Default values are required for Android/iOS
 - Valid `type`s are `boolean`, `string`, `int`, `drawable`
 - `choices` is optional
+- In future releases we will support a `defaultValue`, but for the first iteration of the API this isn't a supported default.
 
 ```yaml
 default_menu_message:
@@ -20,21 +20,15 @@ default_menu_message:
   variables:
     enabled:
       type: "boolean",
-      # required
-      defaultValue: false
     icon:
       type: "drawable",
       choices:
         - "firefox-logo"
         - "firefox-logo-red"
-      defaultValue: "firefox-logo-red"
     position:
       type: "int",
-      defaultValue: 4
     text:
       type: "string"
-      # choices or free text
-      defaultValue: "Hello world"
 ```
 
 ## Experiment API (DTO)
@@ -61,7 +55,8 @@ See [full documentation](https://mana.mozilla.org/wiki/pages/viewpage.action?pag
 
 ```
 
-Note: The DTO has an `enabled` property, but we will not be handling it here. Instead, we will expect `enabled` to be declared as a boolean variable.
+Notes:
+The DTO has an `enabled` property, but we will not be handling it here. Instead, we will expect `enabled` to be declared as a boolean variable.
 
 ## SDK API
 
@@ -95,6 +90,7 @@ Notes:
 
 - Calls `get_feature_config_variables` from the Rust SDK, parses the JSON
 - Exposes methods for getting variables of supported types (`boolean`, `string`, `int`)
+- Returns `null` if a no value exists for the given `featureId` / `variable`
 
 Example:
 
@@ -120,5 +116,6 @@ nimbus.recordExposureEvent("default_menu_message")
 - isEnabled
 - Figure out localized strings
 - More application-specific types like colours etc.
-- Generating types from the manifest (probably later)
+- Defaults in the manifest
+- Generating types from the manifest
 - Rust API
