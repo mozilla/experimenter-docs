@@ -76,6 +76,13 @@ module.exports = {
     },
     {
       type: "category",
+      label: "Fenix Testing",
+      items: [
+        "android-frontend-testing",
+      ],
+    },
+    {
+      type: "category",
       label: "Desktop Engineers",
       items: [
         "desktop-feature-api",
