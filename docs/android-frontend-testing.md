@@ -91,16 +91,18 @@ These fields affect which OS, app and build the experiment is for. These should 
  * `appName`: pick `fenix` or `firefox_ios`
  * `appId`: The experimenter UI should help you select the right one.
  * `channel`: this must be `nightly` or `developer`. The experimenter UI should help you select the right one.
- * `feature_id`/`featureIds`: this is the identifier of the app feature under test. This should match what is hard coded into the App. Experimenter will put these in all the right places. If the feature id is 
+ * `feature_id`/`featureIds`: this is the identifier of the app feature under test. This should match what is hard coded into the App. Experimenter will put these in all the right places. If the feature id is not already listed, you can [add it here][experimenter-admin].
+
+[experiment-admin]: https://stage.experimenter.nonprod.dataops.mozgcp.net/admin/
 
 These fields affect segment the population for eligibility for the experiment, and which branch they'll be given.
 
  * `targeting`: Experimenter will help you generate this JEXL query string. If Nimbus evaluates this on a given device to `true`, then the device is eligible for the experiment. If your testing the app, then you 
- * `bucketConfig`: `start` `count` and `total`. Of the total eligible users, the proportion that will actually be enrolled in the experiment is given by `(count - start) / total`. For testing purposes, you should make `start = 0`, `count = 100000`, `total = 100000`, i.e. enroll 100% of eligible devices.
+ * `bucketConfig`: `start` `count` and `total`. Of the total eligible users, the proportion that will actually be enrolled in the experiment is given by `(count - start) / total`. For testing purposes, you should make `start = 0`, `count = 10000`, `total = 10000`, i.e. enroll 100% of eligible devices.
 
 If the device is enrolled in the experiment (i.e. is targeted as eligible, and in the experiment bucket), then it will be enrolled in to one of the two or more branches. Once enrolled it will not change branches.
 
- * `branch` -> `slug`: This should match what the branches that the app's feature responds to. In most cases, it will be `treatment` and `control`.
+ * `branch` -> `slug`: This should match the branches that the app's feature responds to. In most cases, it will be `treatment` and `control`.
  * `branch`->`ratio`: The `ratio` property of each branch, gives the proportion of the enrolled population wil get a particular branch. Tip: make your ratios add up to 100. In the above example, the `control` branch gets 60 out of every (60 + 40) enrollments, i.e. 60%.
 
 ## Changing between experiments
@@ -127,7 +129,7 @@ This local server should serve the file from the path: `/buckets/main/collection
 
 You should have one experiment per branch: 
 
- * they should  have `targeting` = `"true"`, `bucketConfig` to have `start` = `0` and `total` and `count` to be equal.
+ * they should  have `targeting` = `"true"`, `bucketConfig` to have `start` = `0`, `total = 10000` and `count = 10000`.
  * For the branch under test, set the branch `ratio` to `100` and the others to `0`.
  
 This will ensure that all clients that load the experiment will enroll in it and choose that exact branch.
