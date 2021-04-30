@@ -86,7 +86,7 @@ Transitions:
 
 
 
-*   To **Enrolling **state, by being made visible to clients in Remote Settings.
+*   To **Enrolling** state, by being made visible to clients in Remote Settings.
 
 
 #### The "Enrolling" State
@@ -102,7 +102,7 @@ Transitions:
 
 
 *   To **Running** state, when a Remote Settings update changes _isEnrollmentPaused_ to _true_.
-*   To **Enrolling **state, when a Remote Settings update changes other experiment parameters.
+*   To **Enrolling** state, when a Remote Settings update changes other experiment parameters.
 *   To **Ended** state, if the experiment ceases to be visible in Remote Settings.
 
 
@@ -116,8 +116,8 @@ Transitions:
 
 
 
-*   To **Enrolling **state, when a Remote Settings update changes _isEnrollmentPaused_ to _false_.
-*   To **Running **state, when a Remote Settings update changes other experiment parameters.
+*   To **Enrolling** state, when a Remote Settings update changes _isEnrollmentPaused_ to _false_.
+*   To **Running** state, when a Remote Settings update changes other experiment parameters.
 *   To **Ended** state, if the experiment ceases to be visible in Remote Settings.
 
 
@@ -155,7 +155,7 @@ Transitions:
 
 
 
-*   To **Enrolled **state,  by observing the experiment in Remote Settings for the first time, the experiment being in **Enrolling** state, and bucketing logic dictating that the client should enroll in a branch of the experiment.
+*   To **Enrolled** state,  by observing the experiment in Remote Settings for the first time, the experiment being in **Enrolling** state, and bucketing logic dictating that the client should enroll in a branch of the experiment.
 *   To **NotEnrolled** state, by observing the experiment in Remote Settings for the first time, but deciding not to enroll based on the observed experiment state or local config.
 
 
@@ -167,11 +167,11 @@ Transitions:
 
 
 
-*   To **Enrolled **state, when the experiment transitions to **Enrolling** state, and bucketing logic dictates that the client should enroll in a branch of the experiment.
+*   To **Enrolled** state, when the experiment transitions to **Enrolling** state, and bucketing logic dictates that the client should enroll in a branch of the experiment.
     *   (N.B. this includes the experiment transitioning **Enrolling** -> **Enrolling** with an update to the experiment config)
     *   (N.B. the bucketing logic may depend on the state of other experiments, in the case of conflicts between multiple experiments)
-*   To **Errored **state, encountering some unrecoverable error in the experiment config.
-*   To **Discarded **state, when the experiment transitions to **Cancelled** or **Completed**.
+*   To **Errored** state, encountering some unrecoverable error in the experiment config.
+*   To **Discarded** state, when the experiment transitions to **Cancelled** or **Completed**.
 
 
 #### The "Enrolled" State
@@ -182,17 +182,17 @@ Transitions:
 
 
 
-*   To **Disqualified **state:
+*   To **Disqualified** state:
     *   When the user explicitly opts out of participating in this experiment.
     *   When the user explicitly opts out of participating in experiments in general.
     *   When application code makes an explicit API call to disable this experiment.
     *   When the experiment transitions to **Enrolling** or **Running** state, and its targeting expression no longer matches the client.
         *   (N.B. this includes the experiment transitioning **Enrolling** -> **Enrolling** with an update to the experiment config, which can re-trigger bucketing evaluation)
     *    When encountering some unrecoverable error in the experiment config.
-*   To **WasEnrolled **state:
+*   To **WasEnrolled** state:
     *   When the experiment transitions to **Cancelled** or **Completed**
         *   (i.e. When a valid response is received from Remote Settings and the experiment is no longer present in the Remote Settings collection).
-*   To **Discarded **state, when the user entirely disables telemetry in their client.
+*   To **Discarded** state, when the user entirely disables telemetry in their client.
 
 
 #### The "Disqualified" State
@@ -203,10 +203,10 @@ Transitions:
 
 
 
-*   To **WasEnrolled **state:
+*   To **WasEnrolled** state:
     *   When the experiment transitions to **Cancelled** or **Completed**
         *   (i.e. When a valid response is received from Remote Settings and the experiment is no longer present in the Remote Settings collection).
-*   To **Discarded **state, when the user entirely disables telemetry in their client.
+*   To **Discarded** state, when the user entirely disables telemetry in their client.
 
 Note that once a client has been disqualified from an experiment, it is not possible for it to be resume showing the experiment treatment.
 
@@ -227,7 +227,7 @@ Transitions:
 
 
 
-*   To **Discarded **state after 31 days have passed since it entered the **WasEnrolled** state, according to the client's local clock.
+*   To **Discarded** state after 31 days have passed since it entered the **WasEnrolled** state, according to the client's local clock.
 
 
 #### The "Errored" State
@@ -240,7 +240,7 @@ Transitions:
 
 
 
-*   To **Discarded **state, when the experiment transitions to **Cancelled** or **Completed**.
+*   To **Discarded** state, when the experiment transitions to **Cancelled** or **Completed**.
 
 
 #### The "Discarded" State
@@ -258,26 +258,32 @@ Nimbus will use the [Glean Experiments API](https://mozilla.github.io/glean/book
 
 
 
-*   After initialization, the Nimbus SDK will list all known experiments in **Enrolled**, **Disqualified **or **WasEnrolled **state and call `setExperimentActive(slug, branch)` to tag outgoing telemetry pings with the enrolled branch of that experiment.
+*   After initialization, the Nimbus SDK will list all known experiments in **Enrolled**, **Disqualified **or **WasEnrolled** state and call `setExperimentActive(slug, branch)` to tag outgoing telemetry pings with the enrolled branch of that experiment.
 *   When an experiment transitions to **Enrolled** state, the Nimbus SDK will call  `setExperimentActive(slug, branch)` to tag outgoing telemetry pings with the enrolled branch of the new experiment.
-*   When an experiment transitions from **WasEnrolled **to **Discarded**, the Nimbus SDK will call `setExperimentInactive(slug)` to cease tagging outgoing telemetry pings with information about the experiment.
+*   When an experiment transitions from **WasEnrolled **to **Discarded**, the
+Nimbus SDK will call `setExperimentInactive(slug)` to cease tagging outgoing
+telemetry pings with information about the experiment.  Note, that Glean does
+not cache or persist the experiment API info, so it's important to call
+`setExperimentActive` on every run, preferably close to startup so that
+it can annotate any custom pings that may be sent out early during app launch.
+The `setExperimentInactive` only needs to be called if we have called
+`setExperimentActive` for that experiment in the same app run.
 
 Nimbus will also emit Glean [events](https://mozilla.github.io/glean/book/user/metrics/event.html) on key experiment state transitions:
-
 
 
 *   An "**_enrollment_**" event, when an experiment enters the **Enrolled** state.
     *   Event field "experiment" records the experiment slug.
     *   Event field "branch" records the branch into which the client enrolled.
     *   Event field "enrollmentId" contains a randomly-generated identifier for this enrollment.
-*   A "**_disqualification_**" event, when an experiment enters the **Disqualified **state.
+*   A "**_disqualification_**" event, when an experiment enters the **Disqualified** state.
     *   Event field "experiment" records the experiment slug.
     *   Event field "branch" records the branch into which the client enrolled.
     *   Event field "enrollmentId" contains the enrollment id from the corresponding "enrollment" event.
     *   Event field "reason" containing the reason for disqualification, as one of the following values:
         *   "optout"
         *   "targeting"
-*   An "**_unenrollment_**" event, when an experiment enters the **WasEnrolled **state.
+*   An "**_unenrollment_**" event, when an experiment enters the **WasEnrolled** state.
     *   Event field "experiment" records the experiment slug.
     *   Event field "branch" records the branch into which the client enrolled.
     *   Event field "enrollmentId" contains the enrollment id from the corresponding "enrollment" event.
@@ -363,7 +369,7 @@ Nimbus will also emit Glean [events](https://mozilla.github.io/glean/book/user/m
 
 
 
-*   For each experiment in the **WasEnrolled **state:
+*   For each experiment in the **WasEnrolled** state:
     *   If it has been more than N days since we entered that state, discard the experiment state.
 
 
