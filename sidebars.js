@@ -47,6 +47,7 @@ module.exports = {
         "jetstream/statistics",
         "jetstream/outcomes",
         "jetstream/configuration",
+        "jetstream/data-products",
         "jetstream/operations",
         "jetstream/troubleshooting",
         {
