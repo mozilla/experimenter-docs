@@ -30,7 +30,7 @@ Also, see [configuring notifications](https://docs.github.com/en/github/managing
 Alternatively, consider subscribing to this repository in the [GitHub Slack](https://slack.github.com/) app by searching for it under "Apps" inside Slack.
 
 </div>
-   <img src="/experimenter-docs/img/contributing/github-watch.png" alt="GitHub Watch" className="img-xs-right" />
+   <img src="/img/contributing/github-watch.png" alt="GitHub Watch" className="img-xs-right" />
 </div>
 
 ## GitHub Workflow
@@ -45,13 +45,13 @@ If you aren't familiar with using Git via the command line, we recommend using t
 
 In the following sections, you'll find corresponding links to the GH UI directly under each section title. If you need to edit a file, you'll click on the "Edit" button:
 
-<img src="/experimenter-docs/img/contributing/edit-this-file.png" alt="edit this file" className="img-sm" />
+<img src="/img/contributing/edit-this-file.png" alt="edit this file" className="img-sm" />
 
 You'll be brought to the GitHub editor page for that file. If you're creating a new document, you'll see a similar editor.
 
 When you're satisfied with your changes or new document, at the bottom of the page, enter a commit message and optional description. Be sure to have the option "Create a new branch" selected, the name of which can be anything, but **if you also need to make edits to the sidebar or add images**, you'll want to keep the branch name in mind.
 
-<img src="/experimenter-docs/img/contributing/commit-changes.png" alt="Commit changes" className="img-xl" />
+<img src="/img/contributing/commit-changes.png" alt="Commit changes" className="img-xl" />
 
 Click `Commit changes` and you'll be brought to a pull request view comparing your new branch to `main`. If you don't need to make updates to the sidebar, see the [Pull Request Workflow](#pull-request-workflow) section and click `Create pull request`.
 
@@ -165,7 +165,7 @@ Tip: If you just need to update the sidebar label and not the page title (atypic
 
 1. Create a new top-level internal link to the doc or modify an existing one
 
-<img src="/experimenter-docs/img/contributing/top-level-link.png" alt="top-level link" className="img-lg" />
+<img src="/img/contributing/top-level-link.png" alt="top-level link" className="img-lg" />
 
 To set this up, you'll have to modify the `sidebars.js` file locally or through the GH UI link above - all it needs is the `id` that is set at the top of the MD file. It will look something like this to reflect the screenshot:
 
@@ -182,7 +182,7 @@ module.exports = {
 2. Create a new top-level external link to the doc
 
 <div className="flex-lg">
-<img src="/experimenter-docs/img/contributing/top-level-external-link.png" alt="top-level external link" className="img-sm-left" />
+<img src="/img/contributing/top-level-external-link.png" alt="top-level external link" className="img-sm-left" />
 
 <div>
 
@@ -210,7 +210,7 @@ You'll want to make sure `type` is set to `"link"`.
 3. Create a new internal link to the doc in an existing or new category
 
 <div className="flex-lg">
-<img src="/experimenter-docs/img/contributing/category-link.png" alt="category link" className="img-sm-left order-2-lg" />
+<img src="/img/contributing/category-link.png" alt="category link" className="img-sm-left order-2-lg" />
 <div>
 
 In Docusaurusland, sidebar menu items with a down caret are called "categories."
@@ -239,7 +239,7 @@ module.exports = {
 4. Create a new external link to a doc in an existing or new category
 
 <div className="flex-lg mb-16px">
-<img src="/experimenter-docs/img/contributing/category-external-link.png" alt="category link" className="img-sm-left" />
+<img src="/img/contributing/category-external-link.png" alt="category link" className="img-sm-left" />
 <div>
 
 The code changes for this option essentially combine options 2 and 3.
