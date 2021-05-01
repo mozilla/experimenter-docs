@@ -5,7 +5,7 @@ title: Jetstream Architecture and Operations
 
 **[Jetstream]** is part of the Cirrus ecosystem and depends on some external services.
 
-![Cirrus overview](https://github.com/mozilla/experimenter-docs/blob/main/static/img/jetstream/cirrus.png)
+![Cirrus overview](/img/jetstream/cirrus.png)
 *High-level overview of Cirrus*
 
 Jetstream is [scheduled to run in Airflow](https://github.com/mozilla/telemetry-airflow/blob/e5de501d8063cc366e9bb546135f3866136cb47d/dags/jetstream.py#L22) daily. The daily runs will analyze all experiments that are currently active or just ended the day before and write metrics, statistics and errors for each experiment to BigQuery. Active V1 experiments and V6 experiments (Nimbus experiments) are retrieved from the [Experimenter API](https://experimenter.services.mozilla.com/api/v1/experiments/).
