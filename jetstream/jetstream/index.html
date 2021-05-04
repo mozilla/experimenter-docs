@@ -8,7 +8,7 @@
 <link rel="alternate" type="application/atom+xml" href="/blog/atom.xml" title="Experimenter Docs Blog Atom Feed">
 <link rel="search" type="application/opensearchdescription+xml" title="Experimenter Docs" href="/opensearch.xml"><title data-react-helmet="true">Jetstream overview | Experimenter Docs</title><meta data-react-helmet="true" property="og:url" content="https://experimenter.info/jetstream/jetstream"><meta data-react-helmet="true" name="docsearch:language" content="en"><meta data-react-helmet="true" name="docsearch:version" content="current"><meta data-react-helmet="true" name="docsearch:docusaurus_tag" content="docs-default-current"><meta data-react-helmet="true" property="og:title" content="Jetstream overview | Experimenter Docs"><meta data-react-helmet="true" name="description" content="[Jetstream] is an analysis framework for experiments."><meta data-react-helmet="true" property="og:description" content="[Jetstream] is an analysis framework for experiments."><link data-react-helmet="true" rel="shortcut icon" href="/img/favicon.ico"><link data-react-helmet="true" rel="canonical" href="https://experimenter.info/jetstream/jetstream"><link data-react-helmet="true" rel="alternate" href="https://experimenter.info/jetstream/jetstream" hreflang="en"><link data-react-helmet="true" rel="alternate" href="https://experimenter.info/jetstream/jetstream" hreflang="x-default"><link data-react-helmet="true" rel="preconnect" href="https://BH4D9OD16A-dsn.algolia.net" crossorigin="anonymous"><link rel="stylesheet" href="/assets/css/styles.dfe43bf9.css">
 <link rel="preload" href="/assets/js/styles.505fd5f3.js" as="script">
-<link rel="preload" href="/assets/js/runtime~main.37e8ecd1.js" as="script">
+<link rel="preload" href="/assets/js/runtime~main.2c90ef67.js" as="script">
 <link rel="preload" href="/assets/js/main.1fccd0d7.js" as="script">
 <link rel="preload" href="/assets/js/1.87260b3c.js" as="script">
 <link rel="preload" href="/assets/js/2.269d485d.js" as="script">
@@ -16,7 +16,7 @@
 <link rel="preload" href="/assets/js/31.85bb467b.js" as="script">
 <link rel="preload" href="/assets/js/935f2afb.6767413c.js" as="script">
 <link rel="preload" href="/assets/js/17896441.051772bc.js" as="script">
-<link rel="preload" href="/assets/js/29b9b2ee.fb1c59a6.js" as="script">
+<link rel="preload" href="/assets/js/29b9b2ee.0a9815bc.js" as="script">
 </head>
 <body>
 <script>!function(){function e(e){document.documentElement.setAttribute("data-theme",e)}var t=function(){var e=null;try{e=localStorage.getItem("theme")}catch(e){}return e}();null!==t?e(t):window.matchMedia("(prefers-color-scheme: dark)").matches?e("dark"):(window.matchMedia("(prefers-color-scheme: light)").matches,e("light"))}()</script><div id="__docusaurus">
@@ -50,12 +50,24 @@ client has enrolled, and week 0 results are available a week after the
 enrollment period closes. Results for each window are published as soon
 as complete data is available for all enrolled clients.</p><p>The &quot;overall&quot; window, published after the experiment has ended, is a
 window beginning on each client’s day 0 that spans the longest period
-for which all clients have complete data.</p><h2><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_2LWZ" id="datasets"></a>Datasets<a class="hash-link" href="#datasets" title="Direct link to heading">#</a></h2><p>The datasets that back the Experimenter results dashboards
+for which all clients have complete data.</p><h3><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_2LWZ" id="analysis-steps"></a>Analysis steps<a class="hash-link" href="#analysis-steps" title="Direct link to heading">#</a></h3><p>When analyzing experiments, the following steps are executed for each experiment:</p><p><img src="https://github.com/mozilla/experimenter-docs/blob/main/static/img/jetstream/analysis-steps.png" alt="Experiment analyis steps"></p><p>A <a href="https://github.com/mozilla/jetstream/tree/main/jetstream/config" target="_blank" rel="noopener noreferrer">default configuration</a>
+which depends on the experiment type and, if defined, a custom configuration
+provided via the <a href="https://github.com/mozilla/jetstream-config" target="_blank" rel="noopener noreferrer">jetstream-config</a> repository are parsed and used for analysis.
+The experiment definition and config parameters are used to run some checks
+to determine if the experiment can be analyzed. These checks include, for example,
+validating start dates, end dates and enrollment periods.</p><p>If the experiment is valid, then metrics are calculated for each analysis period
+(daily, weekly, 28 days, overall) and written to BigQuery. Metrics are either
+specified or a reference to existing metrics defined in <a href="https://github.com/mozilla/mozanalysis" target="_blank" rel="noopener noreferrer">mozanalysis</a>
+is provided in the configuration files. Next, for each segment, first
+<a href="https://github.com/mozilla/jetstream/blob/main/jetstream/pre_treatment.py" target="_blank" rel="noopener noreferrer">pre-treatments</a>
+are applied to the metrics data which is then used to calculate
+<a href="https://github.com/mozilla/jetstream/blob/main/jetstream/statistics.py" target="_blank" rel="noopener noreferrer">statistics</a>.
+Statistics data is written to BigQuery and later exported to GCS as JSON. </p><h2><a aria-hidden="true" tabindex="-1" class="anchor enhancedAnchor_2LWZ" id="datasets"></a>Datasets<a class="hash-link" href="#datasets" title="Direct link to heading">#</a></h2><p>The datasets that back the Experimenter results dashboards
 are available in BigQuery.
 <a href="https://docs.telemetry.mozilla.org/datasets/jetstream.html" target="_blank" rel="noopener noreferrer">Technical documentation</a>
-is available in the Mozilla data docs.</p></div></article><div class="margin-vert--xl"><div class="row"><div class="col"><a href="https://github.com/mozilla/experimenter-docs/edit/main/docs/jetstream/jetstream.md" target="_blank" rel="noreferrer noopener"><svg fill="currentColor" height="1.2em" width="1.2em" preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 40 40" class="iconEdit_2_ui" aria-label="Edit page"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div></div></div><div class="margin-vert--lg"><nav class="pagination-nav" aria-label="Docs pages navigation"><div class="pagination-nav__item"><a class="pagination-nav__link" href="/console/custom-audiences"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">« Custom Audiences</div></a></div><div class="pagination-nav__item pagination-nav__item--next"><a class="pagination-nav__link" href="/jetstream/metrics"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Metrics »</div></a></div></nav></div></div></div><div class="col col--3"><div class="tableOfContents_35-E thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#analysis-paradigm" class="table-of-contents__link">Analysis paradigm</a></li><li><a href="#datasets" class="table-of-contents__link">Datasets</a></li></ul></div></div></div></div></main></div></div><footer class="footer"><div class="container"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2021 Mozilla Corporation</div></div></div></footer></div>
+is available in the Mozilla data docs.</p></div></article><div class="margin-vert--xl"><div class="row"><div class="col"><a href="https://github.com/mozilla/experimenter-docs/edit/main/docs/jetstream/jetstream.md" target="_blank" rel="noreferrer noopener"><svg fill="currentColor" height="1.2em" width="1.2em" preserveAspectRatio="xMidYMid meet" role="img" viewBox="0 0 40 40" class="iconEdit_2_ui" aria-label="Edit page"><g><path d="m34.5 11.7l-3 3.1-6.3-6.3 3.1-3q0.5-0.5 1.2-0.5t1.1 0.5l3.9 3.9q0.5 0.4 0.5 1.1t-0.5 1.2z m-29.5 17.1l18.4-18.5 6.3 6.3-18.4 18.4h-6.3v-6.2z"></path></g></svg>Edit this page</a></div></div></div><div class="margin-vert--lg"><nav class="pagination-nav" aria-label="Docs pages navigation"><div class="pagination-nav__item"><a class="pagination-nav__link" href="/console/custom-audiences"><div class="pagination-nav__sublabel">Previous</div><div class="pagination-nav__label">« Custom Audiences</div></a></div><div class="pagination-nav__item pagination-nav__item--next"><a class="pagination-nav__link" href="/jetstream/metrics"><div class="pagination-nav__sublabel">Next</div><div class="pagination-nav__label">Metrics »</div></a></div></nav></div></div></div><div class="col col--3"><div class="tableOfContents_35-E thin-scrollbar"><ul class="table-of-contents table-of-contents__left-border"><li><a href="#analysis-paradigm" class="table-of-contents__link">Analysis paradigm</a><ul><li><a href="#analysis-steps" class="table-of-contents__link">Analysis steps</a></li></ul></li><li><a href="#datasets" class="table-of-contents__link">Datasets</a></li></ul></div></div></div></div></main></div></div><footer class="footer"><div class="container"><div class="footer__bottom text--center"><div class="footer__copyright">Copyright © 2021 Mozilla Corporation</div></div></div></footer></div>
 <script src="/assets/js/styles.505fd5f3.js"></script>
-<script src="/assets/js/runtime~main.37e8ecd1.js"></script>
+<script src="/assets/js/runtime~main.2c90ef67.js"></script>
 <script src="/assets/js/main.1fccd0d7.js"></script>
 <script src="/assets/js/1.87260b3c.js"></script>
 <script src="/assets/js/2.269d485d.js"></script>
@@ -63,6 +75,6 @@ is available in the Mozilla data docs.</p></div></article><div class="margin-ver
 <script src="/assets/js/31.85bb467b.js"></script>
 <script src="/assets/js/935f2afb.6767413c.js"></script>
 <script src="/assets/js/17896441.051772bc.js"></script>
-<script src="/assets/js/29b9b2ee.fb1c59a6.js"></script>
+<script src="/assets/js/29b9b2ee.0a9815bc.js"></script>
 </body>
 </html>
