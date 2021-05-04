@@ -53,6 +53,28 @@ The "overall" window, published after the experiment has ended, is a
 window beginning on each client’s day 0 that spans the longest period
 for which all clients have complete data.
 
+### Analysis steps
+
+When analyzing experiments, the following steps are executed for each experiment:
+
+![Experiment analyis steps](https://github.com/mozilla/experimenter-docs/blob/main/static/img/jetstream/analysis-steps.png)
+
+A [default configuration](https://github.com/mozilla/jetstream/tree/main/jetstream/config)
+which depends on the experiment type and, if defined, a custom configuration
+provided via the [jetstream-config] repository are parsed and used for analysis.
+The experiment definition and config parameters are used to run some checks
+to determine if the experiment can be analyzed. These checks include, for example,
+validating start dates, end dates and enrollment periods.
+
+If the experiment is valid, then metrics are calculated for each analysis period
+(daily, weekly, 28 days, overall) and written to BigQuery. Metrics are either
+specified or a reference to existing metrics defined in [mozanalysis](https://github.com/mozilla/mozanalysis)
+is provided in the configuration files. Next, for each segment, first
+[pre-treatments](https://github.com/mozilla/jetstream/blob/main/jetstream/pre_treatment.py)
+are applied to the metrics data which is then used to calculate
+[statistics](https://github.com/mozilla/jetstream/blob/main/jetstream/statistics.py).
+Statistics data is written to BigQuery and later exported to GCS as JSON. 
+
 ## Datasets
 
 The datasets that back the Experimenter results dashboards
