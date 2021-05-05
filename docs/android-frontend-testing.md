@@ -97,13 +97,13 @@ These fields affect which OS, app and build the experiment is for. These should 
 
 These fields affect segment the population for eligibility for the experiment, and which branch they'll be given.
 
- * `targeting`: Experimenter will help you generate this JEXL query string. If Nimbus evaluates this on a given device to `true`, then the device is eligible for the experiment. If your testing the app, then you 
+ * `targeting`: Experimenter will help you generate this JEXL query string. If Nimbus evaluates this on a given device to `true`, then the device is eligible for the experiment. If your testing the app, then you (TODO)
  * `bucketConfig`: `start` `count` and `total`. Of the total eligible users, the proportion that will actually be enrolled in the experiment is given by `(count - start) / total`. For testing purposes, you should make `start = 0`, `count = 10000`, `total = 10000`, i.e. enroll 100% of eligible devices.
 
 If the device is enrolled in the experiment (i.e. is targeted as eligible, and in the experiment bucket), then it will be enrolled in to one of the two or more branches. Once enrolled it will not change branches.
 
  * `branch` -> `slug`: This should match the branches that the app's feature responds to. In most cases, it will be `treatment` and `control`.
- * `branch`->`ratio`: The `ratio` property of each branch, gives the proportion of the enrolled population wil get a particular branch. Tip: make your ratios add up to 100. In the above example, the `control` branch gets 60 out of every (60 + 40) enrollments, i.e. 60%.
+ * `branch` -> `ratio`: The `ratio` property of each branch, gives the proportion of the enrolled population will get a particular branch. Tip: make your ratios add up to 100. In the above example, the `control` branch gets 60 out of every (60 + 40) enrollments, i.e. 60%.
 
 ## Changing between experiments
 
