@@ -57,7 +57,7 @@ for which all clients have complete data.
 
 When analyzing experiments, the following steps are executed for each experiment:
 
-<img src="/img/jetstream/analysis-steps.png" alt="Experiment analyis steps" width="350"/>
+<img src="/img/jetstream/analysis-steps.png" alt="Experiment analyis steps" className="img-sm"/>
 
 A [default configuration](https://github.com/mozilla/jetstream/tree/main/jetstream/config)
 which depends on the experiment type and, if defined, a custom configuration
