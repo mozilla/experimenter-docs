@@ -1,6 +1,6 @@
 # 🌩 Documentation Hub for Nimbus & Experimenter Users
 
-Check out the docs at: **https://mozilla.github.io/experimenter-docs/**
+Check out the docs at: **https://experimenter.info/**
 
 **Please file issues for this repository in [Experimenter](https://github.com/mozilla/experimenter/issues) and add the `experimenter-docs` label.**
 
@@ -19,7 +19,7 @@ Relevant ADRs:
 
 Pages are written in Markdown and can be found under [`docs/`](/docs).
 
-Check out [the Contributing page](https://mozilla.github.io/experimenter-docs/contributing) for helpful Docusaurus and GitHub UI tips to learn how to create a new document, edit an existing one, and/or how to adjust the sidebar. You don't have to check out the repository locally to contribute.
+Check out [the Contributing page](https://experimenter.info/contributing) for helpful Docusaurus and GitHub UI tips to learn how to create a new document, edit an existing one, and/or how to adjust the sidebar. You don't have to check out the repository locally to contribute.
 
 ### Working locally
 
