@@ -43,8 +43,12 @@ If you already published an experiment through Nimbus then you will want to test
 
 > nimbus.debug
 
-2. Then fill in the required details and navigate to the following address
+2. You need to copy paste the following URL and fill in the required details.
 
-These steps assume you used the Preview functionality in Experimenter and the recipe is not yet deployed to production.
+For experiments that are already live:
+
+> about:studies?optin_slug=<YOUR_EXPERIMENT_SLUG>&optin_branch=<BRANCH_SLUG_TO_ENROLL>
+
+For experiments that are in "preview" mode:
 
 > about:studies?optin_slug=<YOUR_EXPERIMENT_SLUG>&optin_branch=<BRANCH_SLUG_TO_ENROLL>&optin_collection=nimbus-preview
