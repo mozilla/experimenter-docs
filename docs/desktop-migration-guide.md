@@ -8,7 +8,7 @@ This guide will help you integrate `ExperimentAPI.jsm` in your Desktop front-end
 
 In order to use `ExperimentAPI.jsm` your code must be able to import `jsm`s in the parent process or a privileged child process.
 
-## Create a new feautre
+## Create a new feature
 
 Take a look a the [Desktop Feature API docs](desktop-feature-api) to register a new feature in the manifest. If you are already using Firefox preferences to experiment using Normandy, you can add those as `fallbackPref`
 

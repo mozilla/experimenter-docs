@@ -63,7 +63,7 @@ This could happen, for example, if available memory or CPUs have been exceeded. 
         
 #### There has been an error because of a timeout when using an external API.
 
-Timeouts occasionally happen when running queries in BigQuery, fetching experiments from the Experimenter API or fetching config files from Github. Jetstream implements a retry mechanism for most of these cases but it is possible that all of these retries fail. Rerunning affected experiments should in most cases resolve these issues. However, if this failures keep happening then this could indicate API changes.
+Timeouts occasionally happen when running queries in BigQuery, fetching experiments from the Experimenter API or fetching config files from GitHub. Jetstream implements a retry mechanism for most of these cases but it is possible that all of these retries fail. Rerunning affected experiments should in most cases resolve these issues. However, if this failures keep happening then this could indicate API changes.
         
 #### There is a bug in the jetstream code base
 1. Add a test case to [jetstream] to reproduce the error.

@@ -52,7 +52,7 @@ For monitoring Nimbus experiments, some common failure cases are exposed as part
 
 ## GCS Data Export
 
-Jetstream exports statistics data and metadata of analysed experimentents to the `mozanalysis` GCS bucket.
+Jetstream exports statistics data and metadata of analysed experiments to the `mozanalysis` GCS bucket.
 
 ### Statistics Data
 

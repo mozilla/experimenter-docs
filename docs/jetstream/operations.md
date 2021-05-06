@@ -41,7 +41,7 @@ The [`dask.delayed interface`](https://docs.dask.org/en/latest/delayed.html) is 
 ## Setup
 
 Jetstream is executed on the `jetstream` Kubernetes cluster in the `moz-fx-data-experiments` project which is set up following [Argo's installation guide](https://github.com/argoproj/argo/blob/master/docs/quick-start.md):
-* When creating or re-creating the cluster, Bigquery and Compute Engine read/write permissions need to be enabled
+* When creating or re-creating the cluster, BigQuery and Compute Engine read/write permissions need to be enabled
 * Installing Argo:
 	* Create an `argo` namespace: `kubectl create ns argo`
 	* Install commonly used components: `kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/quick-start-postgres.yaml`
