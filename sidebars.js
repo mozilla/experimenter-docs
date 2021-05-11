@@ -35,7 +35,8 @@ module.exports = {
           href:
             "https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws/edit#heading=h.75kfit458h84",
         },
-        "console/custom-audiences"
+        "console/custom-audiences",
+        "console/preview"
       ],
     },
     {
