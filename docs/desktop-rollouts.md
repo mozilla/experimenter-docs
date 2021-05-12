@@ -29,7 +29,16 @@ If the feature has not yet been extensively tested, isn't production quality, or
 - In Desktop starting in **Firefox 90**
 - (Mobile dates TBD)
 
-### How do rollouts interact with experiments?
+### Can I run an Nimbus experiment and a rollout simultaneously?
+
+Yes. You can do this if you want understand the impact of a change while also gradually releasing the experience to more users. Keep in mind that if you do plan to release the experience to 100% of users, you should make sure it meets production quality standards. You would need to:
+
+1. Launch an experiment that targets a fixed portion of the population (sized appropriately for whatever you are trying to measure)
+2. Launch a rollout using the steps below at a low percentage of the population
+3. Monitor your rollout in grafana to determine if you can continue increasing the population size. You may also want to look at the week 1 data from your experiment to make an early determination.
+4. If everything looks good, gradually increase the percentage of the roll-out by editing the configuration.
+
+### What if a user enrolls in both a rollout and an experiment?
 
 If a client receives a rollout _and_ enrolls in an experiment for the same feature, the Feature API will **prefer the experiment configuration**.
 
