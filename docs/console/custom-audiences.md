@@ -19,7 +19,7 @@ Right now, Desktop-only audiences will appear as options for mobile experiments.
 
 ### How to add a new custom audience
 
-Create a PR against [constants/nimbus.py](https://github.com/mozilla/experimenter/blob/main/app/experimenter/experiments/constants/nimbus.py) (see [this example](https://github.com/mozilla/experimenter/blob/main/app/experimenter/experiments/constants/nimbus.py). You will need to set up a local dev environment (make sure you `cp .env.sample .env`) and run `make makemigrations && make check` to generate a migration and run tests.
+Create a PR against [constants/nimbus.py](https://github.com/mozilla/experimenter/blob/main/app/experimenter/experiments/constants/nimbus.py) (see [this example](https://github.com/mozilla/experimenter/commit/1948822fe1f2096a4273bbf57111017b9fe3492b). You will need to set up a local dev environment (make sure you `cp .env.sample .env`) and run `make makemigrations && make check` to generate a migration and run tests.
 
 Request review from a console core team member. It should be available in the Experimenter UI a few minutes after the PR has merged.
 
