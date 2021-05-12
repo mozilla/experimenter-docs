@@ -17,4 +17,4 @@ These steps only apply to Firefox Desktop Version 90+. Instructions for Fenix an
 
 3. Open `about:config` in **Firefox Desktop v90+** and set `nimbus.debug` to `true`. Paste the URL you copied above in your browser.
 
-4. You should be enrolled! To exist the experiment, go to `about:studies` and click "Remove"
+4. You should be enrolled! To exit the experiment, go to `about:studies` and click "Remove"
