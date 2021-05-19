@@ -14,46 +14,17 @@ const { ExperimentFakes } = ChromeUtils.import(
 
 ## Testing your feature integrating with Nimbus
 
-1. You need to create a recipe
+You need to provide a feature configuration and await enrollment
 
 ```js
-let recipe = ExperimentFakes.recipe("my-cool-experiment", {
-  branches: [
-    {
-      slug: "treatment-branch",
-      ratio: 1,
-      feature: {
-        featureId: "<YOUR FEATURE>",
-        // The feature is on
-        enabled: true,
-        // If you defined `variables` in the MANIFEST
-        // the `value` should match that schema
-        value: null,
-      },
-    },
-  ],
-  bucketConfig: {
-    start: 0,
-    // Ensure 100% enrollment
-    count: 10000,
-    total: 10000,
-    namespace: "my-mochitest",
-    randomizationUnit: "normandy_id",
-  },
+let doEnrollmentCleanup = await ExperimentFakes.enrollWithFeatureConfig({
+  featureId: "<YOUR FEATURE>",
+  // The feature is on
+  enabled: true,
+  // If you defined `variables` in the MANIFEST
+  // the `value` should match that schema
+  value: null,
 });
-```
-
-2. Now with the newly created recipe you want the test to enroll in the experiment
-
-```js
-let {
-  enrollmentPromise,
-  doExperimentCleanup,
-} = ExperimentFakes.enrollmentHelper(recipe);
-
-// Await for enrollment to complete
-
-await enrollmentPromise;
 
 // Now you can assume the feature is enabled so you can
 // test and that it's doing the right thing
@@ -63,3 +34,21 @@ await enrollmentPromise;
 // Finishing up
 await doExperimentCleanup();
 ```
+
+## Testing with a live Nimbus recipe
+
+If you already published an experiment through Nimbus then you will want to test enrollment in the browser.
+
+1. Flip the following pref to true in the browser you want to enroll (in about:config)
+
+> nimbus.debug
+
+2. You need to copy paste the following URL and fill in the required details.
+
+For experiments that are already live:
+
+> about:studies?optin_slug=<YOUR_EXPERIMENT_SLUG>&optin_branch=<BRANCH_SLUG_TO_ENROLL>
+
+For experiments that are in "preview" mode:
+
+> about:studies?optin_slug=<YOUR_EXPERIMENT_SLUG>&optin_branch=<BRANCH_SLUG_TO_ENROLL>&optin_collection=nimbus-preview
