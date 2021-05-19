@@ -52,3 +52,41 @@ For experiments that are already live:
 For experiments that are in "preview" mode:
 
 > about:studies?optin_slug=<YOUR_EXPERIMENT_SLUG>&optin_branch=<BRANCH_SLUG_TO_ENROLL>&optin_collection=nimbus-preview
+
+## Testing with Desktop Rollouts
+
+For writing tests you usually want to have the following modules imported:
+
+```js
+const { ExperimentAPI, NimbusFeatures } = ChromeUtils.import(
+  "resource://nimbus/ExperimentAPI.jsm",
+);
+const { ExperimentFakes } = ChromeUtils.import(
+  "resource://testing-common/NimbusTestUtils.jsm",
+);
+```
+
+Next this is how you would set up your feature to test integration with Desktop Rollouts:
+
+```js
+  // Ensure everything has finished initializing
+  await ExperimentAPI.ready();
+  // The actual setup
+  await ExperimentFakes.remoteDefaultsHelper({
+    // Reference your feature already defined in the FeatureManifest.js
+    feature: NimbusFeatures.<YOUR FEATURE>,
+    configuration: {
+      // An identifier used in telemetry
+      slug: "my-test-configuration",
+      // Is the feature on or off
+      enabled: true,
+      // Any additional variables
+      variables: {},
+    },
+  });
+
+  // Now your feature integration is ready for testing
+
+  // NimbusFeature.<YOUR FEATURE>.isEnabled()
+  // NimbusFeature.<YOUR FEATURE>.getValue()
+```
