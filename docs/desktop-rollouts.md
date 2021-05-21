@@ -31,12 +31,30 @@ If the feature has not yet been extensively tested, isn't production quality, or
 
 ### Can I run an Nimbus experiment and a rollout simultaneously?
 
-Yes. You can do this if you want understand the impact of a change while also gradually releasing the experience to more users. Keep in mind that if you do plan to release the experience to 100% of users, you should make sure it meets production quality standards. You would need to:
+It's possible, but bear in mind that rollouts are not measurement instruments. Experiments are.
+
+If you have uncertainty about the effect of the feature,
+you may wish to be guided by experiment results instead of deploying the feature immediately.
+
+Before you do this, you should consider:
+
+* Future experimentation needs: once you deploy the feature to someone,
+  you lose the ability to observe what happens when you introduce that feature to that user.
+  Consider whether you have a need for holdbacks.
+* Decision criteria: identify the risks you're trying to mitigate with a rollout and decide whether you need multiple stages or not.
+  If you have multiple stages, how will you know whether to advance or roll back?
+  What signals will help you make your decision? Where will they come from?
+  If you are relying on the experiment to guide you, make sure that the timelines are compatible.
+  Consult data science before relying on signals derived from the behavior of the rollout group,
+  since rollouts are not measurement tools and lack a control.
+
+You would need to:
 
 1. Launch an experiment that targets a fixed portion of the population (sized appropriately for whatever you are trying to measure)
-2. Launch a rollout using the steps below at a low percentage of the population
-3. Monitor your rollout in grafana to determine if you can continue increasing the population size. You may also want to look at the week 1 data from your experiment to make an early determination.
-4. If everything looks good, gradually increase the percentage of the roll-out by editing the configuration.
+2. When you are ready, launch a rollout using the steps below at a low percentage of the population
+3. As the rollout proceeds, consult your decision criteria. Change the percentage of the roll-out by editing the configuration.
+
+Keep in mind that if you do plan to release the experience to 100% of users, you should make sure it meets production quality standards. 
 
 ### What if a user enrolls in both a rollout and an experiment?
 
@@ -88,7 +106,9 @@ Each entry in the `configurations` list can have a targeting `JEXL` expression t
 You can monitor users that receive your configuration by looking at the [experiments environment](https://firefox-source-docs.mozilla.org/toolkit/components/telemetry/data/environment.html?highlight=experiments#experiments). When a rollout is active, it will add the following:
 
 - `id`: `default-<feature>`, where `<feature>` is the id of your feature in the manifest
-- `branch`: The slug of the whatever rollout configuration is active=
+- `branch`: The slug of the whatever rollout configuration is active
+
+Remember that rollouts are not measurement tools. Rely on experimentation to measure effect sizes.
 
 ## Testing instructions
 
