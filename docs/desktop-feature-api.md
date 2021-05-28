@@ -10,7 +10,7 @@ This guide will help you use the Nimbus Feature API in Desktop Firefox to run ex
 
 - 🆕 Added a [`getVariable()`](#getvariable) API that optimizes accessing single variables.
 - 🆕 Added an `isEarlyStartup` option in the manifest. Use this if you need to cache values for early synchronous access.
-- ⚠️ Deprecated `getValue()` method in favour of [`getAllVariables()`](#getvariable). Please use this for new code.
+- ⚠️ Deprecated `getValue()` method in favour of [`getAllVariables()`](#getallvariables). Please use this for new code.
 - ⚠️ Deprecated the `enabledFallbackPref` in the manifest. If you want to use `.isEnabled()`, you should add an `enabled` variable to the manifest instead and include that in your `variables` payload in experimenter going forward.
 
 ## About the Feature API
@@ -31,7 +31,7 @@ In the Nimbus ecosystem, a `feature` is an area of code instrumented for experim
 In your code, you will use the Nimbus SDK to access variables associated with those features. e.g.
 
 ```js
-const { screens, skipFocus } = NimbusFeatures.aboutwelcome.getVariables();
+const { screens, skipFocus } = NimbusFeatures.aboutwelcome.getAllVariables();
 ```
 
 ## Configuration sources
@@ -107,9 +107,9 @@ Returns the value of a single feature variable. You can optionally send an expos
 Warning: **This function will throw in Nightly and CI build** if you do not define `variableName` in the Nimbus manifest.
 
 ```js
-const foo = NimbusFeatures.myFeature.getValue("foo");
+const foo = NimbusFeatures.myFeature.getVariable("foo");
 
-const bar = NimbusFeatures.myFeature.getValue("bar", {
+const bar = NimbusFeatures.myFeature.getVariable("bar", {
   sendExposureEvent: true,
 });
 
@@ -119,14 +119,14 @@ const baz = NimbusFeatures.myFeature.getValue("notAVariable");
 
 ### `getAllVariables()`
 
-`getVariable(variableName: string, {sendExposureEvent = false, defaultValues}): FeatureValue`
+`getAllVariables({sendExposureEvent = false, defaultValues}): FeatureValue`
 
 Returns the value of all variables for a feature. Note that **variables will be merged beftween sources**.
 
 If `options.defaultValues` is defined, it will be preferred before default branch fallback values but after experiment, remote, and user-set preference values.
 
 ```js
-const { foo, bar } = NimbusFeatures.myFeature.getVariables({
+const { foo, bar } = NimbusFeatures.myFeature.getAllVariables({
   sendExposureEvent: true,
   defaultValues: { foo: true, bar: false },
 });
@@ -156,7 +156,7 @@ Wait for the remote experiment and defaults stores to be synced before checking 
 
 ```js
 await NimbusFeatures.myFeature.ready();
-const { foo } = NimbusFeatures.myFeature.getValue();
+const { foo } = NimbusFeatures.myFeature.getAllVariables();
 ```
 
 ### `onUpdate()`
@@ -165,7 +165,7 @@ Listen for changes, include to remote defaults or pref values.
 
 ```js
 NimbusFeatures.myFeature.onUpdate(() => {
-  const newValue = NimbusFeatures.myFeature.getValue();
+  const newValue = NimbusFeatures.myFeature.getAllVariables();
   updateUI(newValue);
 });
 ```
