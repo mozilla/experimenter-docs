@@ -8,21 +8,25 @@ This guide will help you integrate `ExperimentAPI.jsm` in your Desktop front-end
 
 In order to use `ExperimentAPI.jsm` your code must be able to import `jsm`s in the parent process or a privileged child process.
 
-## Create a new feature
+## Add a new feature to the manifest
 
 Take a look a the [Desktop Feature API docs](desktop-feature-api) to register a new feature in the manifest. If you are already using Firefox preferences to experiment using Normandy, you can add those as `fallbackPref`
 
 ```js
-// in ExperimentAPI.jsm
+
+// If these are your preferences in firefox.js
+pref("browser.aboutwelcome.enabled", true);
+pref("browser.aboutwelcome.skipFocus", false);
+
+// This is what your manifest entry would look like
 const MANIFEST = {
-  // Our feature name
   aboutwelcome: {
     description: "The about:welcome page",
-    // This is a short-form for an "enabled" property
-    enabledFallbackPref: "browser.aboutwelcome.enabled",
     variables: {
-      // Additional (optional) values that we can control
-      // The name of these variables is up to you
+      enabled: {
+        type: "boolean",
+        fallbackPref: "browser.aboutwelcome.enabled",
+      }
       skipFocus: {
         type: "boolean",
         fallbackPref: "browser.aboutwelcome.skipFocus",
@@ -31,9 +35,6 @@ const MANIFEST = {
   },
 };
 
-// In firefox.js
-pref("browser.aboutwelcome.enable", true);
-pref("skipFocus", false);
 ```
 
 ## Switch Services.prefs usages to NimbusFeatures
@@ -41,17 +42,15 @@ pref("skipFocus", false);
 Anywhere in the code your are using `Services.prefs` to get values, use `NimbusFeatures` instead:
 
 ```js
-Services.prefs.getBoolPref("browser.aboutwelcome.enabled");
+Services.prefs.getBoolPref("browser.aboutwelcome.skipFocus");
 ```
 
 becomes
 
 ```js
-NimbusFeature.aboutwelcome.isEnabled();
+NimbusFeature.aboutwelcome.getVariable("skipFocus");
 ```
 
 ## Tests
 
 If you've configured fallback preferences your tests should pass, but we recommend also using the the [Testing Guide](desktop-frontend-testing) to add tests for your feature that enroll experiment configurations.
-
-For more examples and usecases please see the [SDK Docs](https://docs.google.com/document/d/1ev75pG0nAM1lz53WuPQkWqykUlZMmZRbx8wzvvn5DhU/edit#heading=h.hvm8985z4f8s).
