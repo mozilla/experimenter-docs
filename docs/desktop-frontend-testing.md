@@ -88,5 +88,5 @@ Next this is how you would set up your feature to test integration with Desktop 
   // Now your feature integration is ready for testing
 
   // NimbusFeature.<YOUR FEATURE>.isEnabled()
-  // NimbusFeature.<YOUR FEATURE>.getValue()
+  // NimbusFeature.<YOUR FEATURE>.getAllVariables()
 ```
