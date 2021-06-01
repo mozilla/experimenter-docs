@@ -18,3 +18,7 @@ These steps only apply to Firefox Desktop Version 90+. Instructions for Fenix an
 3. Open `about:config` in **Firefox Desktop v90+** and set `nimbus.debug` to `true`. Paste the URL you copied above in your browser.
 
 4. You should be enrolled! To exit the experiment, go to `about:studies` and click "Remove"
+
+#### Earlier Desktop Firefox versions (<90)
+
+To use preview with earlier versions of Firefox, you can use your Browser Toolbox devtools to run [this code snippet](https://gist.github.com/piatra/fb3876257f876386da104df593000ce9).
