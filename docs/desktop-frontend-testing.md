@@ -19,11 +19,10 @@ You need to provide a feature configuration and await enrollment
 ```js
 let doEnrollmentCleanup = await ExperimentFakes.enrollWithFeatureConfig({
   featureId: "<YOUR FEATURE>",
-  // The feature is on
-  enabled: true,
-  // If you defined `variables` in the MANIFEST
-  // the `value` should match that schema
-  value: null,
+  // You can add values for each variable you added to the manifest
+  value: {
+    enabled: true
+  }
 });
 
 // Now you can assume the feature is enabled so you can
