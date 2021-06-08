@@ -75,6 +75,22 @@ module.exports = {
           href:
             "https://docs.google.com/document/d/1kchihPal0__A4VOAiPJarNuZXns5KhOHHfIeIzT6zfU/edit#",
         },
+        {
+          type: "link",
+          label: "Feature Variables API",
+          href: "feature-variables-and-me",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "Firefox for iOS Engineers",
+      items: [
+        {
+          type: "link",
+          label: "Feature Variables API",
+          href: "feature-variables-and-me",
+        },
       ],
     },
     {
