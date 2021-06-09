@@ -12,13 +12,11 @@ The API used by software engineers is relatively small, so this document is not 
 
 > ⛅️🔬🔭 Nomenclature
 >
-> Much of the literature around the methodology of experiments Nimbus implements has its roots in medical testing. The feature variables API do not require understanding of double blind experiments or data-science, but this document will occasionally use words like "treatment" or "exposure".
+> Much of the literature around the methodology of experiments Nimbus implements has its roots in medical testing. The feature variables API does not require understanding of double blind experiments or data-science, but this document will occasionally use words like "treatment" or "exposure".
 
-## Introdution
+## Introduction
 
 The "Feature" in the "Feature Variables API" refers to features of the application. It's pretty abstract, and how the application is divided up into features is up to the product teams. Over time, a feature may be involved in many experiments.
-
-One easy way to start thinking about features, would be to identify user-visible surfaces of the app: the `new-tab` screen, the `app-menu`, the `context-menu`, the `onboarding`.
 
 However, there is one rule:
 
@@ -27,6 +25,8 @@ However, there is one rule:
 > *For a given user each feature can only be involved in one experiment at a time*.
 >
 > If we see user change behavior after being exposed to an experimental treatment we need to be able to attribute it to that treatment, not another from a different experiment.
+
+One easy way to start thinking about features, would be to identify user-visible surfaces of the app: the `new-tab` screen, the `app-menu`, the `context-menu`, the `onboarding`.
 
 Imagine you're a designer, doing a re-design of the app's menu. It would be natural to call the app menu a "feature" of the app.
 
@@ -50,6 +50,10 @@ As a team communication tool, it may help to consider a JSON object to enumerate
 This JSON object looks like what experimenters will be putting into branch configuration screens in Experimenter, under Feature Configuration.
 
 Where did these keys come from? This is not up to Nimbus, but up to the app, i.e. the app team. In this hypothetical case, you have some theories about the title and the icon, and now the app needs to get those values from nimbus.
+
+> ⛅️🔬🔭  Naming Convention
+>
+> Nimbus doesn't take a view on how you arrange the JSON, but by convention, like all other identifiers, it prefers kebab-case (i.e. lower-case-words-joined-with-dashes).
 
 In the app code, the `Variables` object is a wrapper around this JSON object, and we have a number of getters to get values out. Notice that all getters return optional types, so it is up to the app developer to provide a default value.
 
@@ -75,7 +79,7 @@ A few things to talk about here:
 
 ### Fundamental types: Strings, Int, Bool
 
-`getString()`, `getBool()` and `getInt()` all return exactly is in the JSON. If there is a disagreement about types, i.e. if the app is expecting a string, and the value in the JSON is an integer, the app gets `nil` or `null`.
+`getString()`, `getBool()` and `getInt()` all return values as found in the JSON. If there is a disagreement about types, i.e. if the app is expecting a string, and the value in the JSON is an integer, the app gets `nil` or `null`.
 
 ### Everything is optional
 
@@ -105,13 +109,15 @@ This means that you can use either pre-translated strings to try out experiments
 
 In the example above, the `icon` uses `getImage()` and its Android analog `getDrawable()`. This gets a string value from the JSON with `getString()` and then uses that value to look up the pre-bundled resource.
 
-For example on Android: `getDrawable("settings-menu-item-icon")` may get a string `"ic_settings"`, which is then resolved to `R.drawable.ic_settings`, which is then resolved to `context.resources.getDrawable(R.drawable.ic_settings)`.
+For example on Android: `getDrawable("settings-menu-item-icon")` uses `getString("settings-menu-item-icon")` which might get the value `"ic_settings"` from JSON. This is then resolved to `R.drawable.ic_settings`, which is then resolved to `context.resources.getDrawable(R.drawable.ic_settings)`.
 
-On iOS: `getImage("settings-menu-item-icon")` may get a string `"icon_photon_gear"`, which is then used to get the named `UIImage` with `UIImage(named:in:)`.
+On iOS: `getImage("settings-menu-item-icon")` uses `getString("settings-menu-item-icon")` which might get the value `"icon_photon_gear"`, which is then used to get the named `UIImage` with `UIImage(named:in:)`.
 
 ## Making JSON more manageable
 
 We focused on the settings menu item in the above example, as a way of making a small enough example to reason about in this documentation, but it made for some very long variable names. The `Variables` object has itself a `getVariables(key: String)` method to make navigating the JSON more easily. This in turn allows the JSON to be organized in different ways.
+
+Zooming out of our example above, which had just one menu item: we can re-arrange the JSON to accommodate multiple menu items, with a simpler nested structure:
 
 ```json
 {
@@ -159,7 +165,7 @@ let settingsItem = menuVariables.getVariables("settings").let { vars ->
     let icon: UIImage = vars?.getImage("icon") ?? UIImage(named: "icon-photon-gear")
     let isEnabled: Bool = vars?.getBool("enabled") ?? true
 
-    MenuItem(icon, title, action)
+    MZMenuItem(icon: icon, title: title, action: action)
 }
 ```
 
@@ -172,9 +178,12 @@ let settingsItem = menuVariables.getVariables("settings").let { vars ->
 > ⛅️🔬🔭 Enrollment versus Exposure
 >
 > When a client is selected to take part in an experiment, they are _assigned_ a branch. This is _enrollment_.
+>
 > However, the user may not be _exposed_ to the branch until sometime later. The exposure is the earliest moment that the user could be affected by the experimental treatment.
 >
-> Nimbus tracks the enrollment and the exposure events using Glean.
+> Nimbus records the enrollments and exposure events using Glean.
+>
+> Enrollments are recorded at each app start-up, and exposure events each time an exposure happens.
 
 For experiments in Firefox for iOS and Android, enrollment happens shortly after app-startup.
 
@@ -199,7 +208,7 @@ val menuButton = Button(
 )
 ```
 
-This is a characature of the same code in Swift.
+This is a caricature of the same code in Swift.
 
 ```swift
 let menuSheet = createMenuSheet(
@@ -215,11 +224,13 @@ func didOpenMenu() {
 }
 ```
 
+Nimbus will take care of finding out what experiment, if any, the user is enrolled in when using this feature.
+
 ## Using configurable features to experiment with another
 
 The feature itself may be configurable, but we don't have to limit feature configuration to experiments _about that feature_.
 
-We can imagine world where we have multiple features, say: an `app-menu`, `onboarding` and `newtab`. On each of these features we have a messaging surface, and we want to run an experiment to find which is the best surface to show the message about a behavior we wish to maximise: setting the browser to be the device default.
+We can imagine a world where we have multiple configurable features, say: an `app-menu`, `onboarding` and `newtab`. On each of these features we have a messaging surface, and we want to run an experiment to find which is the best surface to show the message about a behavior we wish to maximize: setting the browser to be the device default.
 
 Can we configure an experiment to test each of the message on each of these messaging surfaces?
 
@@ -227,7 +238,7 @@ Can we configure an experiment to test each of the message on each of these mess
 >
 > *Coming soon* While this is available in Experimenter, currently the Nimbus SDK does not support different features in different branches.
 
-We might also imagine a world where we have multiple features as before. Two differnet product teams are experimenting with two new capabilities of the app: both require onboarding instructions, one has an entry point via a app menu item, and the other has an entry point in the new tab screen.
+We might also imagine a world where we have multiple features as before. Two different product teams are experimenting with two new capabilities of the app: both require onboarding instructions, one has an entry point via a app menu item, and the other has an entry point in the new tab screen.
 
 If it was one product team where communication is high, perhaps they might run one experiment, with two treatment branches: one branch with configuration for the `onboarding` and `app-menu` features, and one branch with configuration for the `onboarding` and `new-tab` features.
 
@@ -251,16 +262,20 @@ When the feature is being implemented, these variables will begin to acquire con
 
 When the feature is being tested, QA testers are going to want to configure the features within bounds and tolerances set by the designs and the engineers.
 
-Finally, when the feature is part of experiments, then the experiment owner, setting the branches in Experimenter needs to be able configure the branches with variables with spellings and organization that match the app.
+Finally, when the feature is part of experiments, then the experiment owner, setting the branches in Experimenter needs to be able configure the branches with variables with spellings and organization that match the app implementation.
 
-It's strongly recommended that you keep a track of these identifiers and descriptions of the configurability of each of the features in at least one place.
+It's strongly recommended that you keep a track of these identifiers and descriptions of the configurability of each of the features in at least one place. After implementing a configurable feature, it should probably live with the code repository, so it can versioned and tracked with the code.
 
 > 👋 Unimplemented
 >
-> The Nimbus team has a few ideas about this, for documenting the features in an app in a machine readable format, tentantively called the Manifest. We're thinking:
-> 
-> 1. generating code for app developers to use in configuration.
-> 2. generating UI for experimenters to use in experiment design
-> 3. generating UI for QA to use in feature testing and local development.
+> The Nimbus team has a few ideas about this, for documenting the features in an app in a machine readable format, tentatively called the Manifest. We're thinking:
+>
+> 1. generating code for app developers to use in app code
+    - managing defaults values
+    - removing magic strings
+> 2. automating the registering of feature ids to Experimenter
+    - currently this needs an Experimenter reviewer or admin.
+> 3. generating Experimenter UI for experimenters to use in experiment branch design
+> 4. generating on-device tools for feature testing, branch design and local development.
 >
 > We're in the early stages of planning this, so would love to hear some feedback or ideas you may have.
