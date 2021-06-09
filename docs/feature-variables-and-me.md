@@ -105,7 +105,7 @@ This means that you can use either pre-translated strings to try out experiments
 >
 > Resource lookup via `Bundle` and `Context` uses the objects passed to nimbus at construction time at app-startup. In Firefox for iOS and Fenix this is `Bundle.main` and `context.applicationContext` respectively.
 
-### Image resources
+### 📷 Image resources
 
 In the example above, the `icon` uses `getImage()` and its Android analog `getDrawable()`. This gets a string value from the JSON with `getString()` and then uses that value to look up the pre-bundled resource.
 
@@ -254,7 +254,7 @@ Because both product teams' experiments require the `onboarding` experiment, no 
 >
 > *Coming soon* Configuring multiple features per branch isn't yet in Experimenter.
 
-## Working with configurable features
+## 🔧⚙️ Working with configurable features
 
 Throughout the process of designing and building these configurable features, the feature variables have needed to be documented. At first, when the feature is being envisioned and designed, the variables should travel with the designs themselves.
 
