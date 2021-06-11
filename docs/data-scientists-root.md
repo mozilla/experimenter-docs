@@ -40,11 +40,13 @@ The support that investigation owners need from data scientists during experimen
 
 ## Sampling framework
 
-We cannot just go take a random sample of our clients. Instead, we must wait for a client to check for updates, and at that time, randomly assign the client to either a treatment or control. To handle this time discrepancy, each experiment starts with an enrollment period during which clients can enroll in the experiment. After the enrollment period ends, no more clients can be added to the experiment. See [this documentation](https://experimenter.info/jetstream/jetstream/#analysis-paradigm) for more information on how we handle clients who enroll at different times within the enrollment period, and how to control the time duration of an experiment.
+Experiment metrics are analyzed over a defined period of time since a client enrolls in an experiment. We report results for an analysis period (e.g. the first day after enrollment) after all clients have had a chance to experience the treatment for that duration. In order to return results in finite time, each experiment starts with an enrollment period of fixed length during which clients can enroll in the experiment. We modify the recipe to instruct clients to stop enrolling, and ignore clients that report enrollment anyway, after the declared enrollment period ends. The [Jetstream overview](jetstream/jetstream.md#analysis-paradigm) describes the analysis paradigm in more depth and how it relates to the length of an experiment.
 
 Because enrollment depends on checking for updates, samples will be skewed towards active users at the beginning of the enrollment period.
+We typically leave enrollment open for a week to account for weekly seasonality (e.g. weekday vs. weekend users) and to give clients who are active less often a chance to enroll.
+This makes our experiment population essentially a sample of WAU.
 
-For more nuances about sampling, enrollment and exposure (whether or not the client actually saw the treatment or control), see [this documentation](https://experimenter.info/client-sdk-states-and-lifecycle/#key-concepts).
+For more nuances about sampling, enrollment and exposure (whether or not the client actually saw the treatment or control), see [the experiment lifecycle overview](client-sdk-states-and-lifecycle.mdx).
 
 ## Sample size recommendations
 
