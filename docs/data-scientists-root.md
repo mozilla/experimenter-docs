@@ -15,15 +15,28 @@ Some other things you may be looking for are:
 
 ## What is the role of experimentation at Mozilla?
 
-Experimentation informs product decision-making at Mozilla. This suite of experimentation tools is designed for Product Managers to A/B test hypotheses they have about new and existing products and features. [Here](https://experimenter.services.mozilla.com/nimbus/) you can see examples of completed and active experiments.
+Experimentation informs product decision-making at Mozilla.
+This suite of experimentation tools is designed for product managers and other investigation owners to A/B test hypotheses they have about new and existing products and features.
+[Experimenter](https://experimenter.services.mozilla.com/nimbus/) (internal link)
+and the [experiment review repository](https://mana.mozilla.org/wiki/display/FIREFOX/Experiments+Previously+Reviewed) (internal link)
+contain examples of completed and active experiments.
 
-Over half of completed experiments have found statistically significant differences.
+## Collaborating with investigation owners
 
-## Collaborating with Product
+Data scientists support investigation owners in setting up and interpreting their experiments.
+[The Firefox experiment design process](https://mana.mozilla.org/wiki/display/FIREFOX/Experiment+Design+Process) (internal link)
+describes the process for both data scientists and stakeholders.
 
-Data scientists support Product Managers in setting up and interpreting their experiments. [Here](https://mana.mozilla.org/wiki/display/FIREFOX/Experiment+Design+Process) is more information about how that collaboration works. 
+[The Nimbus onboarding guide](https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws/edit#)
+explains how to set up an experiment in the experiment console.
 
-[This documentation](https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws/edit#) explains how to set up an experiment. The main support that Product Managers need from Data Scientists during experimentat set-up include: validating that the experimental design will answer their questions, sample size recommendations, writing custom metrics if needed, and explaining statistics.
+The support that investigation owners need from data scientists during experiment set-up includes:
+
+* validating that the experimental design will answer their questions
+* consulting on telemetry specifications
+* sample size recommendations
+* writing [custom metrics](jetstream/metrics.md) if needed
+* guidance about interpretation
 
 ## Sampling framework
 
