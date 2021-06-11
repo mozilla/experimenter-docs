@@ -6,11 +6,9 @@ slug: /data-scientists
 
 ## What is the role of experimentation at Mozilla?
 
-Experimentation informs product decision-making at Mozilla. This suite of experimentation tools is designed for Product Managers to A/B test hypotheses they have about new and existing products and features. 
+Experimentation informs product decision-making at Mozilla. This suite of experimentation tools is designed for Product Managers to A/B test hypotheses they have about new and existing products and features. [Here](https://experimenter.services.mozilla.com/nimbus/) you can see examples of completed and active experiments.
 
-Here are some examples of past experiments & their use cases:
-
-X% of past experiments have produced statistically significant results.
+Over half of completed experiments have found statistically significant differences.
 
 ## Collaborating with Product
 
@@ -49,5 +47,7 @@ If you want to perform some analysis by hand, [Jetstream datasets](https://docs.
 
 ## Watch out for
 
-Here are other things that can go wrong with data collection:
-- <some common things here>
+Here are other things to watch out for:
+- Are there other experiments taking place at the same time as yours? How might that affect the interpretation of your results, or limit your sample sizes?
+- Are there multiple implementation phases to this new feature? Does Product want to compare results from one phase to another?
+- ...
