@@ -50,16 +50,27 @@ For more nuances about sampling, enrollment and exposure (whether or not the cli
 
 ## Sample size recommendations
 
-Sample size recommendations are made as as percentage of the population. Here, a population is defined as a set of clients filtered on:
+Sample size recommendations are operationalized as the fraction of the Firefox population that should consider enrolling in your recipe.
+
+Nimbus can filter on several factors, including:
+
 - channel
 - minimum version
 - country
 - locale
-- other?
+- OS
+- client preference values (on desktop)
+- other factors
 
-The above attributes are the only ones that Nimbus is able to filter to on, before the beginning of enrollment. If you desire additional filters (e.g., filters on preference settings), then Nimbus will apply those filters as clients enroll in the experiment. However, since Nimbus is not able to apply additional filters before the beginning of enrollment, you must inflate your sample size recommendations assuming that clients not satisfying additional filters will be included in the population.
+This additional filtering always happens logically _after_ a client passes the sizing filter.
+You must inflate your population fraction to account for filtering.
 
-Many of our telemetry metrics are not normally distributed. For non-normally distributed data, you may consider a Mann-Whitney U-test to calculate sample sizes for a comparing 2+ samples. [Gpower](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) implements the Mann-Whitney U-test.
+For a concrete example, imagine that Firefox WAU is 1,000 clients. 20% of WAU is from Canada. You wish to deploy an experiment to Canadian users. Your power analysis says that you need 50 clients in total to enroll. You should specify a population fraction of at least 25%, because 1,000 * 0.2 (from Canada) * 0.25 (your filter) = 50.
+
+Most of our telemetry metrics are not normally distributed. A couple approaches that you may find helpful are:
+
+* powering a Mann-Whitney U-test. [Gpower](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) implements the Mann-Whitney U-test.
+* log-transforming the data and the expected difference and powering a _t_ test in log space.
 
 ## Metrics and statistics
 
