@@ -1,8 +1,17 @@
 ---
 id: data-scientists-root
-title: Root Page
+title: Experimentation for data scientists
 slug: /data-scientists
 ---
+
+This page describes the roles data scientists play in experimentation at Mozilla.
+
+Some other things you may be looking for are:
+
+* Documentation about using [Jetstream](jetstream/jetstream.md), Mozilla's experiment analysis tool
+* Technical documentation about [datasets used in experimentation](https://docs.telemetry.mozilla.org/tools/experiments.html)
+* [Process documentation](https://mana.mozilla.org/wiki/display/DATA/Mozilla+Data+Organization) for the Mozilla data science organization
+  (internal link)
 
 ## What is the role of experimentation at Mozilla?
 
