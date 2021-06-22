@@ -5,7 +5,7 @@ sidebar_label: Intro
 slug: /
 ---
 
-Welcome to the [Experimenter](https://github.com/mozilla/experimenter) documentation hub! The goal of this website is to serve as a central location for documenting and linking to documentation of all things Experimenter, Nimbus, Jetstream, and related SDKs.
+Welcome to the [Experimenter](https://experimenter.services.mozilla.com/nimbus/) documentation hub! The goal of this website is to serve as a central location for documenting and linking to documentation of all things Experimenter, Nimbus, Jetstream, and related SDKs.
 
 You will find documentation pages linked in the sidebar, and all external links are denoted with an external icon.
 
