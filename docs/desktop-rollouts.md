@@ -110,6 +110,22 @@ You can monitor users that receive your configuration by looking at the [experim
 
 Remember that rollouts are not measurement tools. Rely on experimentation to measure effect sizes.
 
+#### Custom population percentage
+
+If you want to release a rollout to a specific portion of a population, you can add [`bucketSample`](https://searchfox.org/mozilla-central/source/toolkit/components/utils/Sampling.jsm#120) to the `targeting` string to do so. Here's an example
+
+Note that the three inputs are: the start of the range, the number of buckets, and the total buckets (which should always be `10000`).
+
+In this example, this would enroll 20% of all users (from 0-2000).
+
+```
+{
+  "targeting": "[userId, "YOUR_NAMESPACE_HERE"]|bucketSample(0, 2000, 10000)"
+}
+```
+
+
+
 ## Testing instructions
 
 In the future, we will support a preview workflow like with experiments. For now:
