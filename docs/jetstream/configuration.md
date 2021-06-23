@@ -91,7 +91,7 @@ enrollment_query = """
       branch,
       enrollment_date,
       num_enrollments
-  FROM `moz-fx-data-shared-prod`.some_table.name_here
+  FROM mozdata.some_table.name_here
   WHERE
       DATE(submission_timestamp) BETWEEN "{{experiment.start_date_str}}" AND "{{experiment.last_enrollment_date_str}}"
       AND mozfun.map.get_key(environment.experiments, "{{experiment.slug}}") IS NOT NULL
