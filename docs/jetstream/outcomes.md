@@ -39,10 +39,14 @@ The important elements are:
 * Top-level `friendly_name` and `description` fields, which define how the Outcome appears in Experimenter
 * One or more `metrics` blocks that describe the metrics to compute, and any supporting `data_source`s as necessary.
 
+The configuration languge is identical to the custom experiment configuration language described in [Configuring Jetstream].
+
 Opening a pull request to `jetstream-config` with an Outcome definition will cause it to be validated.
 If it passes, a data scientist can merge the Outcome definition without additional review.
 
 Experimenter will need to be re-deployed to pick up a new Outcome. Please ask in #nimbus-project if you're in a hurry!
+
+[Configuring Jetstream]: jetstream/configuration.md
 
 ## When should I use Outcomes?
 
