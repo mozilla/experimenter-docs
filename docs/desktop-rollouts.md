@@ -72,7 +72,7 @@ To be able to use rollouts, make sure you [register your feature in the Nimbus m
 This is for MVP testing only will be replaced by Experimenter UI by Firefox 90.
 :::
 
-To rollout changes to a feature, you will need to update (or create, if none exists) the record that matches your feature id in the `nimbus-desktop-defaults` [remote settings collection(https://settings-writer.stage.mozaws.net/v1/admin/#/buckets/main-workspace/collections/nimbus-desktop-defaults/records):
+To rollout changes to a feature, you will need to update (or create, if none exists) the record that matches your feature id in the `nimbus-desktop-defaults` [remote settings collection](https://settings-writer.stage.mozaws.net/v1/admin/#/buckets/main-workspace/collections/nimbus-desktop-defaults/records):
 
 ```js
 {
