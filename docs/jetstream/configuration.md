@@ -83,6 +83,7 @@ reference_branch = "control"
 # Override the "enrollment query" mozanalysis will use.
 # See https://github.com/mozilla/mozanalysis/issues/93 for more details about
 # what the query needs to contain.
+# It must yield columns named client_id, branch, enrollment_date, and num_enrollment_events.
 # Jetstream interprets this as a Jinja2 template; an `experiment` object is provided
 # that lets you access other details from Experimenter, like a slug.
 enrollment_query = """
@@ -108,6 +109,10 @@ end_date = "2020-12-31"
 # you can set this to true.
 skip = false
 ```
+
+You should not define a `start_date` and `end_date` in your Jetstream configuration
+unless it is important for your analysis that the deployment period is not the same as the analysis period.
+
 
 ### Metrics section
 
@@ -241,6 +246,7 @@ This looks like:
 
 ```toml
 [segments.my_segment]
+# Note the aggregation function; these expressions are grouped over client_id
 select_expression = '{{agg_any("is_default_browser")}}'
 data_source = "my_data_source"
 
@@ -249,6 +255,16 @@ from_expression = '(SELECT submission_date, client_id, is_default_browser FROM m
 ```
 
 Learn more about defining a segment data source in the [mozanalysis documentation][moza-segment-ds].
+
+The `clients_last_seen` table is particularly useful for segmentation because each client should be present on the `submission_date` when they enroll.
+If you are not using `clients_last_seen`, you probably want to set the `window_start` argument for the segment data source to a value more negative than zero,
+which controls how far back before enrollment mozanalysis will look to compute the segment expression.
+
+For example, to aggregate over rows from the week prior to enrollment, the segment data source should be defined with `window_start = -7`.
+
+To segment on fields in the telemetry environment, you can use the `event` ping table (not the derived `events` table) with no lookback period,
+since the `event` ping that contains the enrollment event will necessarily be received
+on the date of enrollment.
 
 [moza-segment-ds]: https://mozilla.github.io/mozanalysis/api/segments.html#mozanalysis.segments.SegmentDataSource
 
