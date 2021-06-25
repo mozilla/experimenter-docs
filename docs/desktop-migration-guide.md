@@ -54,3 +54,7 @@ NimbusFeature.aboutwelcome.getVariable("skipFocus");
 ## Tests
 
 If you've configured fallback preferences your tests should pass, but we recommend also using the the [Testing Guide](desktop-frontend-testing) to add tests for your feature that enroll experiment configurations.
+
+## Links
+
+- [PR Example of a switch from prefs to NimbusFeatures](https://phabricator.services.mozilla.com/D118760)

@@ -6,10 +6,6 @@ slug: /desktop-rollouts
 
 If you want to set configurations for a feature remotely _for non-experiment users_, you can do so with Nimbus Rollouts.
 
-:::warning
-This feature is still in the early stages of development. The first version will be available in Firefox 89 for a limited set of early users and more extensively in Firefox 90. See [our project plan](https://mana.mozilla.org/wiki/display/FJT/Rapid+Rollouts) for more information.
-:::
-
 ## FAQS
 
 ### What is this for?
@@ -38,10 +34,10 @@ you may wish to be guided by experiment results instead of deploying the feature
 
 Before you do this, you should consider:
 
-* Future experimentation needs: once you deploy the feature to someone,
+- Future experimentation needs: once you deploy the feature to someone,
   you lose the ability to observe what happens when you introduce that feature to that user.
   Consider whether you have a need for holdbacks.
-* Decision criteria: identify the risks you're trying to mitigate with a rollout and decide whether you need multiple stages or not.
+- Decision criteria: identify the risks you're trying to mitigate with a rollout and decide whether you need multiple stages or not.
   If you have multiple stages, how will you know whether to advance or roll back?
   What signals will help you make your decision? Where will they come from?
   If you are relying on the experiment to guide you, make sure that the timelines are compatible.
@@ -54,7 +50,7 @@ You would need to:
 2. When you are ready, launch a rollout using the steps below at a low percentage of the population
 3. As the rollout proceeds, consult your decision criteria. Change the percentage of the roll-out by editing the configuration.
 
-Keep in mind that if you do plan to release the experience to 100% of users, you should make sure it meets production quality standards. 
+Keep in mind that if you do plan to release the experience to 100% of users, you should make sure it meets production quality standards.
 
 ### What if a user enrolls in both a rollout and an experiment?
 
@@ -124,7 +120,16 @@ In this example, this would enroll 20% of all users (from 0-2000).
 }
 ```
 
+#### User facing information
 
+Users can see if there are any active rollouts for their profile by going to `about:support > Remote Features`. The section will
+mention the name of the feature and the slug of the configuration currently active. There is no user facing name and description
+as for experiments.
+
+#### Debug
+
+Set `messaging-system.log` pref to `all` to see logging information like which rollout configuration matched or which did not
+apply due to targeting.
 
 ## Testing instructions
 
@@ -134,3 +139,7 @@ In the future, we will support a preview workflow like with experiments. For now
 2. Use the Remote Settings devtools to switch to the staging endpoint.
 
 For writing tests please see [Testing with Desktop Rollouts](desktop-frontend-testing#testing-with-desktop-rollouts)
+
+## Links
+
+- [Project plan](https://mana.mozilla.org/wiki/display/FJT/Rapid+Rollouts)
