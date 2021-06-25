@@ -113,6 +113,15 @@ end_date = "2020-12-31"
 # If you need Jetstream to decline to run analysis for an experiment,
 # you can set this to true.
 skip = false
+
+# You can override the exposure signal for the experiment if one is useful.
+# We'll default to the Nimbus exposure event if one is not specified here.
+[experiment.exposure_signal]
+name = "nimbus"
+friendly_name = "Nimbus exposure signal"
+description = "Nimbus desktop feature exposure signal"
+data_source = "normandy_events"
+select_expression = "event_method = 'expose' AND event_string_value = 'my_slug'"
 ```
 
 You should not define a `start_date` and `end_date` in your Jetstream configuration
@@ -183,6 +192,13 @@ friendly_name = "Cows clicked"
 
 # A description that will be displayed by dashboards.
 description = "Number of cows clicked"
+
+# Whether to compute the metric on an exposures basis, an enrollments basis, or both.
+# An enrollments basis includes all users that enrolled. This is currently the default.
+# An exposures basis includes all users that would have experienced a difference in their
+# user experience as a result of the experiment; it is a subset of enrollments.
+# We may default to an exposures basis in the future.
+exposure_basis = ["exposures", "enrollments"]
 ```
 
 You should also add some sections to describe how your new metrics should be summarized for reporting.
