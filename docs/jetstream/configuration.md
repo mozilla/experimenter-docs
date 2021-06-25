@@ -53,7 +53,12 @@ Lines starting with a `#` are comments and have no effect.
 
 ### Experiment section
 
-This part of the configuration file lets you specify the segments you wish to analyze.
+This part of the configuration file lets you
+
+* specify the segments you wish to analyze,
+* override some values from Experimenter, and
+* define an exposure signal for your experiment.
+
 Segments are subsets of your enrolled population,
 and depend on some factor that could be observed about the client
 before they enrolled in the experiment.
