@@ -53,7 +53,36 @@ The "overall" window, published after the experiment has ended, is a
 window beginning on each client’s day 0 that spans the longest period
 for which all clients have complete data.
 
-### Analysis steps
+## Enrollment vs exposure
+
+Enrollment and exposure are two separate steps in the experiment lifecycle.
+All experiments have enrollment events; some experiments have exposure events.
+
+*Enrollment* happens when a Firefox client receives a recipe,
+evaluates the targeting expression,
+and decides to enroll in the experiment.
+
+*Exposure* occurs at the earliest moment at which a user would encounter a different experience
+in different branches of the experiment.
+
+Not all enrolled users will be exposed, though all exposed users must have been enrolled.
+Calculating metrics based on _enrolled_ users will tell us what the effect on our KPIs for the targeted segment would be if we deployed the treatment to everyone.
+Calculating metrics based on _exposed_ users helps us understand whether we had an effect on the users we were able to reach.
+Using an exposure basis for our analysis helps us understand if we are having an interesting effect on a small population.
+
+For example, consider an experiment on the Picture in Picture feature.
+PiP displays a small icon when users hover their mouse over an eligible video.
+If a user never visits a page with an eligible video, the experiment cannot have any effect on them.
+Two reasonable choices for exposure events could be the moment that a page is loaded with an eligible video,
+or the moment that the PiP overlay icon is first displayed.
+
+Any telemetry collection can be used as an exposure event, though events are often especially useful.
+Many Nimbus features will send a [Nimbus exposure event] automatically when the feature configuration is consulted;
+these are `normandy#expose` events on desktop and `nimbus_events.exposure` events in Glean.
+
+[Nimbus exposure event]: feature-variables-and-me.md#recording-exposure-events
+
+## Analysis steps
 
 When analyzing experiments, the following steps are executed for each experiment:
 
