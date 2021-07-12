@@ -19,7 +19,7 @@ Want to edit one of these docs, add a new one, or modify the sidebar? Check out 
 
 ## Getting started
 
-Want to run an experiment in Firefox? Here's what you should do first:
+Want to run an experiment with [Nimbus](https://experimenter.services.mozilla.com/nimbus/) in Firefox? Here's what you should do first:
 
 - Follow the [Experiment Design Process](https://mana.mozilla.org/wiki/x/XdTNBw) to work with Data Science on your hypothesis and experiment design.
-- Go through onboarding to use the [Nimbus Console](https://mana.mozilla.org/wiki/display/FJT/Nimbus+Onboarding#NimbusOnboarding-Branches)
+- Go through [onboarding](https://mana.mozilla.org/wiki/display/FJT/Nimbus+Onboarding#NimbusOnboarding-Branches) to use the [Nimbus Console](https://experimenter.services.mozilla.com/nimbus/)
