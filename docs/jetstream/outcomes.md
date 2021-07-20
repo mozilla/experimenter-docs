@@ -20,6 +20,7 @@ A simple Outcome definition (excerpted from [a live Outcome](https://github.com/
 ```toml
 friendly_name = "Picture in Picture"
 description = "Usage and engagement metrics for the video Picture-in-Picture feature."
+default_metrics = ["used_picture_in_picture"]
 
 [metrics.used_picture_in_picture]
 friendly_name = "Used Picture in Picture"
@@ -37,6 +38,7 @@ statistics = { binomial = {} }
 The important elements are:
 
 * Top-level `friendly_name` and `description` fields, which define how the Outcome appears in Experimenter
+* The optional top-level `default_metrics` field, which specifies the metrics that will be showed at the top of the visualization page as the "primary metrics" 
 * One or more `metrics` blocks that describe the metrics to compute, and any supporting `data_source`s as necessary.
 
 The configuration languge is identical to the custom experiment configuration language described in [Configuring Jetstream].
