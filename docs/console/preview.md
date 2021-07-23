@@ -6,7 +6,7 @@ title: Previewing Experiments
 This guide will help you preview what each branch of an experiment will look like for users in the target application.
 
 :::warning
-These steps only apply to Firefox Desktop Version 90+. Instructions for Fenix and iOS are coming soon.
+These steps only apply to Firefox Desktop Version 90+. You can find [instructions for iOS here](ios-preview-testing.md), Fenix instructions are coming soon!
 :::
 
 1. For experiments that are already live, go to the summary page. For experiments that have not yet launched, you will need the author to click "Launch to Preview" on the Review & Launch page.
