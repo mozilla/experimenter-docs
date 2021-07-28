@@ -45,7 +45,7 @@ The Nimbus Feature API will return the correct configuration for a feature given
 
 ## Registering a new feature
 
-To register a new feature, you will need to choose an identifier and add it to the manifest in [ExperimentAPI.jsm](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/ExperimentAPI.jsm):
+To register a new feature, you will need to choose an identifier and add it to the manifest in [FeatureManifest.js](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.js):
 
 ```javascript
 // In ExperimentAPI.jsm
