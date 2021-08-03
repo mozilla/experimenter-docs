@@ -4,10 +4,11 @@ title: Migration Guide (JS)
 slug: /desktop-migration-guide
 ---
 
-This guide will help you migrate your Desktop front-end code to run experiments with Nimbus, while still being able to use preferences for default values and local development.
+This guide will help you migrate your Desktop front-end code to run experiments with Nimbus, while still being able to use preferences for default and user-override values
 
 Prerequisites: 
 * Your experimental variables are already instrumented with Firefox preferences
+* You don't use the `user branch` of each pref for anything other than actual user-defined values or testing (see docs on [order of precedence](/desktop-feature-api#configuration-sources)
 * Your code can import a `jsm`
 
 ### An illustrative example (about:myself)
@@ -34,9 +35,9 @@ const FeatureManifest = {
         type: "boolean",
         fallbackPref: "browser.aboutmyself.enabled",
       }
-      text: {
+      bgColor: {
         type: "string",
-        fallbackPref: "browser.aboutmyself.text",
+        fallbackPref: "browser.aboutmyself.bgcolor",
       },
     },
   },
@@ -57,16 +58,16 @@ XPCOMUtils.defineLazyModuleGetters(this, {
 Then anywhere in your code that uses `Services.prefs` to get experiment-defined values, use `NimbusFeatures` instead:
 
 ```js
-const enabled = Services.prefs.getBoolPref("browser.aboutmyself.enabled");
+element.style.backgroundColor = Services.prefs.getBoolPref("browser.aboutmyself.bgColor");
 ```
 
 becomes
 
 ```js
-const enabled = NimbusFeatures.aboutmyself.getVariable("enabled");
+element.style.backgroundColor = NimbusFeatures.aboutmyself.getVariable("bgColor");
 ```
 
-See the [API reference docs](/desktop-feature-api#api-reference-guide) for more details, including listening to changes
+See the [API reference docs](/desktop-feature-api#api-reference-guide) for more details, including listening to changes.
 
 ## Step 3: Run tests
 
