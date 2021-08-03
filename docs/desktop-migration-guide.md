@@ -10,7 +10,7 @@ Prerequisites:
 * Your experimental variables are already instrumented with Firefox preferences
 * Your code can import a `jsm`
 
-## An illustrative example (about:myself)
+### An illustrative example (about:myself)
 
 For the purposes of this guide, we will be migrating an imaginary about page (`about:myself`), which uses the following preferences defined in `firefox.js`:
 
@@ -21,7 +21,7 @@ pref("browser.aboutmyself.bgcolor", "#FE8DAE");
 
 ## Step 1: Add a new feature to the manifest
 
-First, you will need to register a new feature `FeatureManifest.js`. In this case, we're creating one called `aboutmyself`.
+First, you will need to register a new feature in [FeatureManifest.js](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.js). In this case, we're creating one called `aboutmyself`.
 
 Each preference is registered as a `variable`:
 
@@ -44,9 +44,7 @@ const FeatureManifest = {
 
 ```
 
-See the [Desktop Feature API docs](desktop-feature-api) for more details.
-
-## Step 2: Update your feature code from `Services.prefs` to `NimbusFeatures`
+## Step 2: Update your feature code
 
 First, you will need to import `ExperimentAPI.jsm`:
 
@@ -68,9 +66,11 @@ becomes
 const enabled = NimbusFeatures.aboutmyself.getVariable("enabled");
 ```
 
+See the [API reference docs](/desktop-feature-api#api-reference-guide) for more details, including listening to changes
+
 ## Step 3: Run tests
 
-If you've configured fallback preferences your tests should pass as written, but we recommend also using the the [Testing Guide](desktop-frontend-testing) to add tests for your feature that enroll experiment configurations.
+If you've configured fallback preferences your tests should pass as written, but we recommend also reading [Testing Guide](/desktop-frontend-testing) to add experiment-specific tests.
 
 ## Links
 
