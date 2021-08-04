@@ -115,6 +115,7 @@ module.exports = {
       label: "Desktop Engineers",
       items: [
         "desktop-feature-api",
+        "platform-feature-api",
         "desktop-migration-guide",
         "desktop-rollouts",
         "desktop-frontend-testing",

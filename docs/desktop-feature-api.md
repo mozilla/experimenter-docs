@@ -10,8 +10,6 @@ This guide will help you use the Nimbus Feature API in Desktop Firefox to run ex
 
 - 🆕 Added a [`getVariable()`](#getvariable) API that optimizes accessing single variables.
 - 🆕 Added an `isEarlyStartup` option in the manifest. Use this if you need to cache values for early synchronous access.
-- ⚠️ Deprecated `getValue()` method in favour of [`getAllVariables()`](#getallvariables). Please use this for new code.
-- ⚠️ Deprecated the `enabledFallbackPref` in the manifest. If you want to use `.isEnabled()`, you should add an `enabled` variable to the manifest instead and include that in your `variables` payload in experimenter going forward.
 
 ## About the Feature API
 
@@ -48,7 +46,7 @@ The Nimbus Feature API will return the correct configuration for a feature given
 To register a new feature, you will need to choose an identifier and add it to the manifest in [FeatureManifest.js](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.js):
 
 ```javascript
-// In ExperimentAPI.jsm
+// In FeatureManifest.js
 
 const MANIFEST = {
   // Our feature name
@@ -114,7 +112,7 @@ const bar = NimbusFeatures.myFeature.getVariable("bar", {
 });
 
 // notAVariable is not defined in the manifest, so this will throw in CI
-const baz = NimbusFeatures.myFeature.getValue("notAVariable");
+const baz = NimbusFeatures.myFeature.getVariable("notAVariable");
 ```
 
 ### `getAllVariables()`
@@ -132,19 +130,9 @@ const { foo, bar } = NimbusFeatures.myFeature.getAllVariables({
 });
 ```
 
-### `getValue()`
-
-:::caution deprecated
-Note: This method is deprecated. You should use getAllVariables() instead.
-:::
-
-`getValue({sendExposureEvent = false}): FeatureValue`
-
-Returns the value of all feature variables. You can optionally send an exposure event when the function is called.
-
 ### `recordExposureEvent()`
 
-Use this to manually send an exposure event. Alternatively, you can use the `sendExposureEvent` option for `isEnabled`/`getValue` (see above).
+Use this to manually send an exposure event. Alternatively, you can use the `sendExposureEvent` option for `isEnabled` (see above).
 
 ```js
 NimbusFeatures.myFeature.recordExposureEvent();
