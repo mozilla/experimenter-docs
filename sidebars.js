@@ -61,7 +61,10 @@ module.exports = {
     {
       type: "category",
       label: "Data Scientists",
-      items: ["data-scientists-root"],
+      items: [
+        "data-scientists/data-scientists-root",
+        "data-scientists/telemetry"
+      ],
     },
 
     {
