@@ -13,10 +13,6 @@ They are:
 - Specific to a particular application (Not all audiences can target all applications)
 - Evaluated on clients via an expression language (`JEXL`)
 
-:::warning
-Right now, Desktop-only audiences will appear as options for mobile experiments. This is a [known issue](https://jira.mozilla.com/browse/EXP-1242)
-:::
-
 ### How to add a new custom audience
 
 Create a PR against [constants/nimbus.py](https://github.com/mozilla/experimenter/blob/main/app/experimenter/experiments/constants/nimbus.py) that adds a new JEXL expression.
