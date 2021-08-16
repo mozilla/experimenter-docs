@@ -49,6 +49,24 @@ module.exports = {
           label: "Feature Variables API",
           href: "feature-variables-and-me",
         },
+        {
+          type: "link",
+          label: "Adding custom targeting attributes",
+          href: "ios-custom-targeting"
+        }
+      ],
+    },
+    {
+      type: "category",
+      label: "Fenix Testing",
+      items: [
+        "android-frontend-testing",
+      ],
+    },
+    {
+      type: "category",
+      label: "iOS Testing",
+      items: [
         "ios-preview-testing"
       ],
     },
