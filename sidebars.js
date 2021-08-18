@@ -38,6 +38,11 @@ module.exports = {
           href: "feature-variables-and-me",
         },
         "android-frontend-testing",
+        {
+          type: "link",
+          label: "Adding custom targeting attributes",
+          href: "fenix-custom-targeting"
+        }
       ],
     },
     {
