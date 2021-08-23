@@ -23,6 +23,10 @@ Create a PR against [constants/nimbus.py](https://github.com/mozilla/experimente
 
 Request review from a console core team member. It should be available in the Experimenter UI a few minutes after the PR has merged.
 
+If you're an iOS or a Android developer check the following instructions for how to add new client-side targeting attributes:
+- [iOS](ios-custom-targeting.md)
+- [Android](android-custom-targeting.md)
+
 ⚠️ **New custom audiences should be tested by the core Nimbus team before they are used in production.**
 This could involve any or all of the following:
 

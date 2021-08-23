@@ -41,7 +41,7 @@ module.exports = {
         {
           type: "link",
           label: "Adding custom targeting attributes",
-          href: "fenix-custom-targeting"
+          href: "android-custom-targeting"
         }
       ],
     },
@@ -58,20 +58,7 @@ module.exports = {
           type: "link",
           label: "Adding custom targeting attributes",
           href: "ios-custom-targeting"
-        }
-      ],
-    },
-    {
-      type: "category",
-      label: "Fenix Testing",
-      items: [
-        "android-frontend-testing",
-      ],
-    },
-    {
-      type: "category",
-      label: "iOS Testing",
-      items: [
+        },
         "ios-preview-testing"
       ],
     },
