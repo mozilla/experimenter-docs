@@ -29,7 +29,7 @@ This is different from enrollment or experiment activation because it
 registers when a user actually gets exposed to the experiment feature.
 
 :::tip
-Exposure is not set by default in Firefox Desktop. You must either call [recordExposureEvent()](/desktop-feature-api#recordexposureevent) manually or add `{sendExposureEvent: true}` to the options object of any API call. See [API documentation](/desktop-feature-api#getvariable) for more info.
+Exposure is not sent by default in Firefox Desktop. You should call [recordExposureEvent()](/desktop-feature-api#recordexposureevent). See [API documentation](/desktop-feature-api) for more info.
 :::
 
 | Android, iOS (`event.name`) | Desktop (`event.method`) |
