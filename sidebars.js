@@ -2,41 +2,65 @@ module.exports = {
   sidebar: [
     {
       type: "category",
-      label: "Welcome",
+      label: "Getting Started",
       items: [
-        "welcome",
-        "contributing",
-        {
-          type: "link",
-          label: "Design Process",
-          href: "https://mana.mozilla.org/wiki/x/XdTNBw",
-        },
-        {
-          type: "link",
-          label: "Nimbus Onboarding",
-          href:
-            "https://mana.mozilla.org/wiki/display/FJT/Nimbus+Onboarding#NimbusOnboarding-Branches",
-        },
+        "getting-started/intro",
+        "getting-started/contributing"
       ],
     },
     {
       type: "category",
       label: "Experiment Owners",
       items: [
+        "experiment-owners/access",
+        "experiment-owners/custom-audiences",
+        "experiment-owners/preview"
+      ],
+    },
+
+    {
+      type: "category",
+      label: "Data Scientists",
+      items: [
+        "data-scientists/data-scientists-root",
+        "data-scientists/telemetry"
+      ],
+    },
+
+    {
+      type: "category",
+      label: "Firefox for Android",
+      items: [
+        "fenix-experiments-getting-started",
         {
           type: "link",
-          label: "Experimentation with Nimbus",
-          href:
-            "https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws",
+          label: "Feature Variables API",
+          href: "feature-variables-and-me",
         },
+        "android-frontend-testing",
+      ],
+    },
+    {
+      type: "category",
+      label: "Firefox for iOS",
+      items: [
         {
           type: "link",
-          label: "Monitoring and Analyzing your Experiment",
-          href:
-            "https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws/edit#heading=h.75kfit458h84",
+          label: "Feature Variables API",
+          href: "feature-variables-and-me",
         },
-        "console/custom-audiences",
-        "console/preview"
+        "ios-preview-testing"
+      ],
+    },
+    {
+      type: "category",
+      label: "Firefox for Desktop",
+      items: [
+        "desktop-feature-api",
+        "platform-feature-api",
+        "desktop-migration-guide",
+        "desktop-rollouts",
+        "desktop-frontend-testing",
       ],
     },
     {
@@ -56,69 +80,6 @@ module.exports = {
           label: "GitHub Repo",
           href: "https://github.com/mozilla/jetstream",
         },
-      ],
-    },
-    {
-      type: "category",
-      label: "Data Scientists",
-      items: [
-        "data-scientists/data-scientists-root",
-        "data-scientists/telemetry"
-      ],
-    },
-
-    {
-      type: "category",
-      label: "Fenix Engineers",
-      items: [
-        "fenix-experiments-getting-started",
-        {
-          type: "link",
-          label: "Android API (proposal)",
-          href:
-            "https://docs.google.com/document/d/1kchihPal0__A4VOAiPJarNuZXns5KhOHHfIeIzT6zfU/edit#",
-        },
-        {
-          type: "link",
-          label: "Feature Variables API",
-          href: "feature-variables-and-me",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Firefox for iOS Engineers",
-      items: [
-        {
-          type: "link",
-          label: "Feature Variables API",
-          href: "feature-variables-and-me",
-        },
-      ],
-    },
-    {
-      type: "category",
-      label: "Fenix Testing",
-      items: [
-        "android-frontend-testing",
-      ],
-    },
-    {
-      type: "category",
-      label: "iOS Testing",
-      items: [
-        "ios-preview-testing"
-      ]
-    },
-    {
-      type: "category",
-      label: "Desktop Engineers",
-      items: [
-        "desktop-feature-api",
-        "platform-feature-api",
-        "desktop-migration-guide",
-        "desktop-rollouts",
-        "desktop-frontend-testing",
       ],
     },
     {
