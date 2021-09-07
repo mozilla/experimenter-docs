@@ -38,6 +38,11 @@ module.exports = {
           href: "feature-variables-and-me",
         },
         "android-frontend-testing",
+        {
+          type: "link",
+          label: "Adding custom targeting attributes",
+          href: "android-custom-targeting"
+        }
       ],
     },
     {
@@ -48,6 +53,11 @@ module.exports = {
           type: "link",
           label: "Feature Variables API",
           href: "feature-variables-and-me",
+        },
+        {
+          type: "link",
+          label: "Adding custom targeting attributes",
+          href: "ios-custom-targeting"
         },
         "ios-preview-testing"
       ],
