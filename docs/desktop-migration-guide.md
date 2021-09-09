@@ -71,7 +71,7 @@ See the [API reference docs](/desktop-feature-api#api-reference-guide) for more 
 
 ## Step 3: Run tests
 
-If you've configured fallback preferences your tests should pass as written, but we recommend also reading [Testing Guide](/desktop-frontend-testing) to add experiment-specific tests.
+If you've configured fallback preferences your tests should pass as written, but we recommend also reading [Testing Guide](/desktop-feature-api-testing) to add experiment-specific tests.
 
 ## Links
 
