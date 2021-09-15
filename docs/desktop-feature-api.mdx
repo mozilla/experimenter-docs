@@ -53,7 +53,8 @@ NimbusFeatures::GetBool("aboutwelcome"_ns, "enabled"_ns, false);
 
 ## Configuration sources
 
-:::tip Note: This section is relevant only for the JS API.
+:::tip Note
+This section is relevant only for the JS API.
 :::
 
 The Nimbus Feature API will return the correct configuration for a feature given a few different inputs **in this order**:
@@ -64,9 +65,6 @@ The Nimbus Feature API will return the correct configuration for a feature given
 4. **Local default**: Finally, we will return the _default branch_ of preferences in the manifest, if they are defined in [firefox.js](https://searchfox.org/mozilla-central/source/browser/app/profile/firefox.js).
 
 ## Registering a new feature
-
-:::tip Note: This is relevant for both JS and C++ usage.
-:::
 
 To register a new feature, you will need to choose an identifier and add it to the manifest in [FeatureManifest.js](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.js):
 
@@ -133,7 +131,7 @@ XPCOMUtils.defineLazyModuleGetters(this, {
 
 ### `isEnabled()`
 
-`isEnabled(): boolean`
+`isEnabled(): boolean` (JS Only)
 
 Short form for `.getVariable("enabled")`
 
@@ -205,7 +203,7 @@ NimbusFeatures::GetInt("aboutwelcome"_ns, "skipFocus"_ns, false);
 
 ### `getAllVariables()`
 
-`getAllVariables({sendExposureEvent = false, defaultValues}): FeatureValue`
+`getAllVariables({sendExposureEvent = false, defaultValues}): FeatureValue` (JS Only)
 
 Returns the value of all variables for a feature. Note that **variables will be merged beftween sources**.
 
@@ -275,6 +273,8 @@ NimbusFeatures::RecordExposureEvent("featurename"_ns, true);
 </Tabs>
 
 ### `ready()`
+
+`ready(): Promise` (JS Only)
 
 Wait for the remote experiment and defaults stores to be synced before checking values.
 
