@@ -132,10 +132,15 @@ const { foo, bar } = NimbusFeatures.myFeature.getAllVariables({
 
 ### `recordExposureEvent()`
 
-Use this to manually send an exposure event. Alternatively, you can use the `sendExposureEvent` option for `isEnabled` (see above).
+Use this to send an exposure event. By defualt this will send one exposure event per function call, but you can add an options object of `{once: true}` to only send it once per session.
+
+Note that you should add an `exposureDescription` to the manifest describing when/how this event is sent. 
 
 ```js
 NimbusFeatures.myFeature.recordExposureEvent();
+
+// Only sends once per session, even if this function is called muliple times
+NimbusFeatures.myFeature.recordExposureEvent({once: true});
 ```
 
 ### `ready()`
