@@ -1,8 +1,11 @@
 ---
-id: desktop-frontend-testing
-title: Desktop Front-end testing
-slug: /desktop-frontend-testing
+id: desktop-feature-api-testing
+title: Desktop Feature API testing
+slug: /desktop-feature-api-testing
 ---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 In order to make testing easier we created some helpers that can be accessed by including
 
@@ -89,3 +92,28 @@ Next this is how you would set up your feature to test integration with Desktop 
   // NimbusFeature.<YOUR FEATURE>.isEnabled()
   // NimbusFeature.<YOUR FEATURE>.getAllVariables()
 ```
+
+## Testing with gTest
+
+Otherwise for a `gTest` or other requirements you can set a pref `nimbus.syncdatastore.<feature name>.<variable name>` with the appropriate type you defined in the FeatureManifest.
+
+⚠️ This variable naming convention is an implementation detail and might change in the future.
+
+```cpp
+#include "mozilla/browser/NimbusFeatures.h"
+
+# Set a preference as described above based on what you want the test to do
+
+// GetInt will return the appropriate value you set
+NimbusFeatures::GetInt("aboutwelcome"_ns, "skipFocus"_ns, false);
+
+// On update will call your callback function when the pref value changes
+NimbusFeatures::OnUpdate("aboutwelcome"_ns, "skipFocus"_ns,
+  [](const char*, void*){}, void*);
+```
+
+#### Examples
+
+Examples of platform consumers:
+
+* [Bug 1719070 - UA: Add support for a Nimbus experiment to override Firefox's User-Agent string.](https://phabricator.services.mozilla.com/D121112)

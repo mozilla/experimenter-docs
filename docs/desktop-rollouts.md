@@ -138,7 +138,7 @@ In the future, we will support a preview workflow like with experiments. For now
 1. Add the config to the staging Remote Settings `nimbus-desktop-defaults` collection.
 2. Use the Remote Settings devtools to switch to the staging endpoint.
 
-For writing tests please see [Testing with Desktop Rollouts](desktop-frontend-testing#testing-with-desktop-rollouts)
+For writing tests please see [Testing with Desktop Rollouts](desktop-feature-api-testing#testing-with-desktop-rollouts)
 
 ## Links
 

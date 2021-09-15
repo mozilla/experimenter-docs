@@ -1,0 +1,373 @@
+---
+id: desktop-feature-api
+title: Nimbus Feature API (JS and C++)
+slug: /desktop-feature-api
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+This guide will help you use the Nimbus Feature API in Desktop Firefox to run experiments, set values remotely, and manage user preferences. If you are familiar with Normandy and are trying to migrate a feature, you may want to check out the [Migration Guide for Pref Experiments](desktop-migration-guide).
+
+## About the Feature API
+
+### Can I use this?
+
+For the JS implementation you can import `ExperimentAPI.jsm` in the parent process or a privileged child process. We _do_ support First run experiments on Windows, holdbacks, and an early-stage implementation of rollouts.
+
+For the C++ implementation you can import `#include "mozilla/browser/NimbusFeatures.h"` and we support early startup experiments and holdbacks.
+
+If you have a usecase that isn't supported, please reach out in #ask-experimenter on Slack.
+
+### What is a feature?
+
+In the Nimbus ecosystem, a `feature` is an area of code instrumented for experiments and remote configuration. It can be as small as a single function or as complex as a whole about: page. Some examples:
+
+- `aboutwelcome`, The about:welcome page in Desktop
+- `newtab`, The about:newtab page in Desktop
+
+In your code, you will use the Nimbus SDK to access variables associated with those features. e.g.
+
+<Tabs
+  defaultValue="js"
+  values={[
+    { label: "JavaScript", value: "js" },
+    { label: "C++", value: "cpp" },
+  ]
+}>
+<TabItem value="js">
+
+```js
+const { screens, skipFocus } = NimbusFeatures.aboutwelcome.getAllVariables();
+```
+
+</TabItem>
+<TabItem value="cpp">
+
+```cpp
+NimbusFeatures::GetBool("aboutwelcome"_ns, "enabled"_ns, false);
+```
+
+</TabItem>
+</Tabs>
+
+## Configuration sources
+
+:::tip Note
+This section is relevant only for the JS API.
+:::
+
+The Nimbus Feature API will return the correct configuration for a feature given a few different inputs **in this order**:
+
+1. **End-user-setting**: If the _user branch_ of any preferences in the manifest are set, this will override experiment values or defaults. We believe this is important to respect user choice.
+2. **Experiment value**: Next, we check if a Nimbus experiment is activated that changes the feature.
+3. **Remotely-configured value**: If no experiment is set, we check if there is a remotely-defined value. This is a mechanism that allows us to roll-out changes quickly between releases.
+4. **Local default**: Finally, we will return the _default branch_ of preferences in the manifest, if they are defined in [firefox.js](https://searchfox.org/mozilla-central/source/browser/app/profile/firefox.js).
+
+## Registering a new feature
+
+To register a new feature, you will need to choose an identifier and add it to the manifest in [FeatureManifest.js](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.js):
+
+```javascript
+// In FeatureManifest.js
+
+const MANIFEST = {
+  // Our feature name
+  aboutwelcome: {
+    description: "The about:welcome page",
+    // Include this if you need sychronous access / very early access at startup
+    // or if you are registering this to use for platform experiments.
+    isEarlyStartup: true,
+    variables: {
+      // Additional (optional) values that we can control
+      // The name of these variables is up to you
+      enabled: {
+        type: "boolean",
+        // Currently not supported for platform API
+        // See bug 1723755
+        fallbackPref: "browser.aboutwelcome.enabled",
+      },
+      skipFocus: {
+        type: "boolean",
+      },
+    },
+  },
+};
+
+// In firefox.js
+pref("browser.aboutwelcome.enabled", true);
+```
+
+## Importing the Feature API
+
+Import the `NimbusFeatures` module:
+
+<Tabs
+  defaultValue="js"
+  values={[
+    { label: "JavaScript", value: "js" },
+    { label: "C++", value: "cpp" },
+  ]
+}>
+<TabItem value="js">
+
+```js
+XPCOMUtils.defineLazyModuleGetters(this, {
+  NimbusFeatures: "resource://nimbus/ExperimentAPI.jsm",
+});
+```
+
+</TabItem>
+<TabItem value="cpp">
+
+```cpp
+#include "mozilla/browser/NimbusFeatures.h"
+```
+
+</TabItem>
+</Tabs>
+
+## API Reference Guide
+
+### `isEnabled()`
+
+`isEnabled(): boolean` (JS Only)
+
+Short form for `.getVariable("enabled")`
+
+Note that you should have an `enabled` property defined in the manifest if you plan to use this.
+
+<Tabs
+  defaultValue="js"
+  values={[
+    { label: "JavaScript", value: "js" },
+    { label: "C++", value: "cpp" },
+  ]
+}>
+
+<TabItem value="js">
+
+```js
+const isEnabled = NimbusFeatures.myFeature.isEnabled();
+```
+
+</TabItem>
+<TabItem value="cpp">
+
+```cpp
+// There's no equivalent for this. You can instead use:
+NimbusFeatures::GetBool("featurename"_ns, "enabled"_ns, false);
+```
+
+</TabItem>
+</Tabs>
+
+### `getVariable()`
+
+`getVariable(variableName: string, {sendExposureEvent = false}): FeatureValue`
+
+Returns the value of a single feature variable. You can optionally send an exposure event when the function is called.
+
+<Tabs
+  defaultValue="js"
+  values={[
+    { label: "JavaScript", value: "js" },
+    { label: "C++", value: "cpp" },
+  ]
+}>
+<TabItem value="js">
+
+```js
+// Warning: **This function will throw in Nightly and CI build** if you do not define `variableName` in the Nimbus manifest.
+
+const foo = NimbusFeatures.myFeature.getVariable("foo");
+
+const bar = NimbusFeatures.myFeature.getVariable("bar", {
+  sendExposureEvent: true,
+});
+
+// notAVariable is not defined in the manifest, so this will throw in CI
+const baz = NimbusFeatures.myFeature.getVariable("notAVariable");
+```
+
+</TabItem>
+<TabItem value="cpp">
+
+```cpp
+// feature name and variable name to retrieve the value
+NimbusFeatures::GetInt("aboutwelcome"_ns, "skipFocus"_ns, false);
+```
+
+</TabItem>
+</Tabs>
+
+### `getAllVariables()`
+
+`getAllVariables({sendExposureEvent = false, defaultValues}): FeatureValue` (JS Only)
+
+Returns the value of all variables for a feature. Note that **variables will be merged beftween sources**.
+
+If `options.defaultValues` is defined, it will be preferred before default branch fallback values but after experiment, remote, and user-set preference values.
+
+<Tabs
+  defaultValue="js"
+  values={[
+    { label: "JavaScript", value: "js" },
+    { label: "C++", value: "cpp" },
+  ]
+}>
+<TabItem value="js">
+
+```js
+const { foo, bar } = NimbusFeatures.myFeature.getAllVariables({
+  sendExposureEvent: true,
+  defaultValues: { foo: true, bar: false },
+});
+```
+
+</TabItem>
+<TabItem value="cpp">
+
+```cpp
+// There is no equivalent for this in C++. Instead you can use
+// NimbusFeatures::GetInt("featurename"_ns, "variablename"_ns, 0)
+// NimbusFeatures::GetBool("featurename"_ns, "variablename"_ns, false)
+// To access a single variable value at a time
+```
+
+</TabItem>
+</Tabs>
+
+### `recordExposureEvent()`
+
+Use this to send an [exposure event](/jetstream/jetstream/#enrollment-vs-exposure). By defualt this will send one exposure event per function call, but you can add an options object of `{once: true}` to only send it once per session.
+
+Note that you should add an `exposureDescription` to the manifest describing when/how this event is sent.
+
+<Tabs
+  defaultValue="js"
+  values={[
+    { label: "JavaScript", value: "js" },
+    { label: "C++", value: "cpp" },
+  ]
+}>
+<TabItem value="js">
+
+```js
+NimbusFeatures.myFeature.recordExposureEvent();
+
+// Only sends once per session, even if this function is called muliple times
+NimbusFeatures.myFeature.recordExposureEvent({ once: true });
+```
+
+</TabItem>
+<TabItem value="cpp">
+
+```cpp
+// aOnce=true specifies that we only want to send this event once per browsing
+// session
+NimbusFeatures::RecordExposureEvent("featurename"_ns, true);
+```
+
+</TabItem>
+</Tabs>
+
+### `ready()`
+
+`ready(): Promise` (JS Only)
+
+Wait for the remote experiment and defaults stores to be synced before checking values.
+
+<Tabs
+  defaultValue="js"
+  values={[
+    { label: "JavaScript", value: "js" },
+    { label: "C++", value: "cpp" },
+  ]
+}>
+<TabItem value="js">
+
+```js
+await NimbusFeatures.myFeature.ready();
+const { foo } = NimbusFeatures.myFeature.getAllVariables();
+```
+
+</TabItem>
+<TabItem value="cpp">
+
+```cpp
+// This is not needed by the C++ API and has no equivalent, instead by
+// registering your feature as `isEarlyStartup` you can ensure that `GetBool`
+// and `GetInt` will return the experiment value at startup
+```
+
+</TabItem>
+</Tabs>
+
+### `onUpdate()`
+
+Listen for changes, include to remote defaults or pref values.
+
+<Tabs
+  defaultValue="js"
+  values={[
+    { label: "JavaScript", value: "js" },
+    { label: "C++", value: "cpp" },
+  ]
+}>
+<TabItem value="js">
+
+```js
+NimbusFeatures.myFeature.onUpdate(() => {
+  const newValue = NimbusFeatures.myFeature.getAllVariables();
+  updateUI(newValue);
+});
+```
+
+</TabItem>
+<TabItem value="cpp">
+
+```cpp
+NimbusFeatures::OnUpdate("aboutwelcome"_ns, "skipFocus"_ns,
+  [](const char*, void*){}, void*);
+```
+
+</TabItem>
+</Tabs>
+
+### `off()`
+
+Stop listening for changes.
+
+<Tabs
+  defaultValue="js"
+  values={[
+    { label: "JavaScript", value: "js" },
+    { label: "C++", value: "cpp" },
+  ]
+}>
+<TabItem value="js">
+
+```js
+NimbusFeatures.myFeature.onUpdate(aListener);
+
+// Later
+NimbusFeatures.myFeature.off(aListener);
+```
+
+</TabItem>
+<TabItem value="cpp">
+
+```cpp
+// Provide feature name and value to watch for changes
+NimbusFeatures::OnUpdate("aboutwelcome"_ns, "skipFocus"_ns,
+  [](const char*, void*){}, void*);
+
+
+// Later
+NimbusFeatures::OffUpdate("aboutwelcome"_ns, "skipFocus"_ns,
+  [](const char*, void*){}, void*);
+```
+
+</TabItem>
+</Tabs>

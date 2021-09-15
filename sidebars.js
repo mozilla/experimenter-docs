@@ -67,10 +67,9 @@ module.exports = {
       label: "Firefox for Desktop",
       items: [
         "desktop-feature-api",
-        "platform-feature-api",
         "desktop-migration-guide",
         "desktop-rollouts",
-        "desktop-frontend-testing",
+        "desktop-feature-api-testing",
       ],
     },
     {
