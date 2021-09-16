@@ -373,11 +373,11 @@ The feature itself may be configurable, but we don't have to limit feature confi
 
 We can imagine a world where we have multiple configurable features, say: an `app-menu`, `onboarding` and `newtab`. On each of these features we have a messaging surface, and we want to run an experiment to find which is the best surface to show the message about a behavior we wish to maximize: setting the browser to be the device default.
 
-Can we configure an experiment to test each of the message on each of these messaging surfaces?
+Q Can we configure an experiment to test each of the message on each of these messaging surfaces?
 
-> 👋 Unimplemented
->
-> *Coming soon* While this is available in Experimenter, currently the Nimbus SDK does not support different features in different branches.
+A This would be done with an experiment that has three branches, and each branch configures exactly one feature. The application code doesn't have to know about the linkage between the features in this experiment, just get its configuration from Nimbus.
+
+If a user is enrolled in that experiment, no other experiment is allowed to use the features involved.
 
 We might also imagine a world where we have multiple features as before. Two different product teams are experimenting with two new capabilities of the app: both require onboarding instructions, one has an entry point via a app menu item, and the other has an entry point in the new tab screen.
 
@@ -391,9 +391,7 @@ Both teams require the `onboarding` feature. This allows each team to run their 
 
 Because both product teams' experiments require the `onboarding` experiment, no user will be involved in _both_ experiments.
 
-> 👋 Unimplemented
->
-> *Coming soon* Configuring multiple features per branch isn't yet in Experimenter.
+For such an experiment, an experiment would have two branches, each of which configure two features.
 
 ## 🔧⚙️ Working with configurable features
 
