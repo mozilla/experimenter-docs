@@ -18,8 +18,7 @@ slug: /fenix-engineers
 
 > NOTE: featureID setup access is controlled via experimenter Django admin.
 >
-> - **staging**, ask for help in the #nimbus-rust-sdk slack channel
-> - **production**, ask for help in the #experimenter slack channel
+> Please ask for help in the `#ask-experimenter` channel
 
 ## Fenix setup
 
