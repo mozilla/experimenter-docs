@@ -79,7 +79,7 @@ A few things to talk about here:
 
 ### Fundamental types: Strings, Int, Bool
 
-`getString()`, `getBool()` and `getInt()` all return values as found in the JSON. If there is a disagreement about types, i.e. if the app is expecting a string, and the value in the JSON is an integer, the app gets `nil` or `null`.
+`getString(key)`, `getBool(key)` and `getInt(key)` all return values as found in the JSON. If there is a disagreement about types, i.e. if the app is expecting a string, and the value in the JSON is an integer, the app gets `nil` or `null`.
 
 ### Everything is optional
 
@@ -159,7 +159,7 @@ In Swift:
 
 ```swift
 let menuVariables = nimbus.getVariables("app-menu")
-let settingsItem = menuVariables.getVariables("settings").let { vars ->
+let settingsItem = menuVariables.getVariables("settings") { vars ->
     let action: String = vars?.getString("action") ?? "firefox://settings"
     let title: String = vars?.getText("title") ?? Strings.AppMenuSettingsTitle
     let icon: UIImage = vars?.getImage("icon") ?? UIImage(named: "icon-photon-gear")
@@ -172,6 +172,147 @@ let settingsItem = menuVariables.getVariables("settings").let { vars ->
 > 👋 Information
 >
 > `variables.getVariables()` can be arbitrarily deep. `variables.getVariables()` returns an optional `Variables` object.
+
+### Structural types
+
+Lists and dictionary types are supported for every type.
+
+For example: `getStringList(key)` returns an list of `String`s (`[String]?` or `List<String>?`). `getIntMap(key)` returns a `[String: Int]?` or `Map<String, Int>?`. Getting a `Map` of anything will always have a key type `String`.
+
+This includes nested variables and enums.
+
+For example, we may have configured a feature to accept some JSON that may look like this:
+
+```json
+{
+    "ordering": ["settings", "bookmarks", "history"],
+    "items": {
+        "settings": {
+            "icon": "ic_settings",
+            "title": "Settings",
+            "action": "firefox://settings"
+        },
+        "bookmarks": {
+            "icon": "ic_bookmarks",
+            "title": "View Bookmarks",
+            "action": "firefox://bookmark_list"
+        },
+        "history": {
+            "icon": "ic_history",
+            "title": "View History",
+            "action": "firefox://history_list"
+        }
+    }
+}
+```
+
+The application code to read that JSON now looks like this in Kotlin:
+
+```kotlin
+fun toMenuItem(vars: Variables): MenuItem? {
+    val action: String = vars?.getString("action") ?: return null
+    val title: String = vars?.getText("title") ?: return null
+    val icon: Drawable = vars?.getDrawable("icon") ?: return null
+    return MenuItem(icon, title, action)
+}
+
+val menuVariables = nimbus.getVariables("app-menu")
+// Use the ordering from the experiment or the hardcoded version.
+val ordering: List<String> = menuVariables.getStringList("ordering") ?: hardcodedOrdering
+// Get a list of MenuItem items from the "items" object, using toMenuItem.
+val experimentalItems: Map<String, MenuItem> = menuVariables.getVariablesMap("items", ::toMenuItem) ?: mapOf()
+
+// use the ordering to lookup the menu items from the experiment or the hardcoded version.
+val items: List<MenuItem> = ordering.mapNotNull { id -> experimentalItems[id] ?: hardcodedItems[id] }
+
+// Use the items to make the menu
+```
+
+And in Swift:
+
+```swift
+func toMenuItem(vars: Variables): MZMenuItem? {
+    guard let action = vars.getString("action"),
+        let title = vars.getText("title"),
+        let icon = vars.getDrawable("icon") else {
+            return nil
+        }
+    return MZMenuItem(icon: icon, title: title, action: action)
+}
+
+let menuVariables = nimbus.getVariables("app-menu")
+// Use the ordering from the experiment or the hardcoded version.
+let ordering = menuVariables.getStringList("ordering") ?? hardcodedOrdering
+// Get a list of MZMenuItem items from the "items" object, using toMenuItem.
+let experimentalItems = menuVariables.getVariablesMap("items", transform: toMenuItem) ?? [:]()
+
+// use the ordering to lookup the menu items from the experiment or the hardcoded version.
+let items: [MZMenuItem] = ordering.compactMap { id in experimentalItems[id] ?? hardcodedItems[id] }
+
+// Use the items to make the menu
+```
+
+Building the menu like this allows the experiment to add and remove menu items remotely, while still providing a default experience.
+
+### Enumerations of values
+
+The above example leans quite heavily on `String`s. The code may be written in such a way that an `enum` would be more appropriate.
+
+In this contrived example of a homescreen with different sections, we see some JSON with a list and a map. The items of the list correspond to the keys of the map.
+
+```json
+{
+    "section-ordering": ["topSites", "highlights", "collections"],
+    "sections-rows": {
+        "topSites": 1,
+        "highlights": 1,
+        "collections": 2,
+        "recentlyViewed": 0
+    }
+}
+```
+
+We can represent these items in Kotlin as an enum.
+
+```kotlin
+enum class SectionId {
+    recentlyViewed,
+    topSites,
+    highlights,
+    collections
+}
+```
+
+> 👋 Information
+>
+> `enum` classes in Kotlin can be resolved only by their name, which cannot include hyphens.
+
+Also in Swift:
+
+```swift
+enum SectionId: String {
+    case recentlyViewed
+    case topSites
+    case highlights
+    case collections
+}
+```
+
+Then, when preparing our Home screen, we can get the list:
+
+```kotlin
+val variables = nimbus.getVariables("home-screen")
+val ordering: List<SectionId>? = variables.getEnumList("section-ordering")
+val sectionsRows: Map<SectionId, Int>? = variables.getIntMap("sections-rows")?.mapKeysAsEnums()
+```
+
+and in Swift.
+
+```swift
+let variables = nimbus.getVariables("home-screen")
+let ordering: [SectionId]? = variables.getEnumList("section-ordering")
+let sectionRows: [SectionId: Int]? = variables.getIntMap("section-rows").compactMapKeysAsEnums()
+```
 
 ## Recording exposure events
 
@@ -232,11 +373,11 @@ The feature itself may be configurable, but we don't have to limit feature confi
 
 We can imagine a world where we have multiple configurable features, say: an `app-menu`, `onboarding` and `newtab`. On each of these features we have a messaging surface, and we want to run an experiment to find which is the best surface to show the message about a behavior we wish to maximize: setting the browser to be the device default.
 
-Can we configure an experiment to test each of the message on each of these messaging surfaces?
+Q Can we configure an experiment to test each of the message on each of these messaging surfaces?
 
-> 👋 Unimplemented
->
-> *Coming soon* While this is available in Experimenter, currently the Nimbus SDK does not support different features in different branches.
+A This would be done with an experiment that has three branches, and each branch configures exactly one feature. The application code doesn't have to know about the linkage between the features in this experiment, just get its configuration from Nimbus.
+
+If a user is enrolled in that experiment, no other experiment is allowed to use the features involved.
 
 We might also imagine a world where we have multiple features as before. Two different product teams are experimenting with two new capabilities of the app: both require onboarding instructions, one has an entry point via a app menu item, and the other has an entry point in the new tab screen.
 
@@ -250,9 +391,7 @@ Both teams require the `onboarding` feature. This allows each team to run their 
 
 Because both product teams' experiments require the `onboarding` experiment, no user will be involved in _both_ experiments.
 
-> 👋 Unimplemented
->
-> *Coming soon* Configuring multiple features per branch isn't yet in Experimenter.
+For such an experiment, an experiment would have two branches, each of which configure two features.
 
 ## 🔧⚙️ Working with configurable features
 
