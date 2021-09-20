@@ -3,10 +3,7 @@ module.exports = {
     {
       type: "category",
       label: "Getting Started",
-      items: [
-        "getting-started/intro",
-        "getting-started/contributing"
-      ],
+      items: ["getting-started/intro", "getting-started/contributing"],
     },
     {
       type: "category",
@@ -14,7 +11,7 @@ module.exports = {
       items: [
         "experiment-owners/access",
         "experiment-owners/custom-audiences",
-        "experiment-owners/preview"
+        "experiment-owners/preview",
       ],
     },
 
@@ -23,7 +20,7 @@ module.exports = {
       label: "Data Scientists",
       items: [
         "data-scientists/data-scientists-root",
-        "data-scientists/telemetry"
+        "data-scientists/telemetry",
       ],
     },
 
@@ -41,8 +38,8 @@ module.exports = {
         {
           type: "link",
           label: "Adding custom targeting attributes",
-          href: "android-custom-targeting"
-        }
+          href: "android-custom-targeting",
+        },
       ],
     },
     {
@@ -57,9 +54,9 @@ module.exports = {
         {
           type: "link",
           label: "Adding custom targeting attributes",
-          href: "ios-custom-targeting"
+          href: "ios-custom-targeting",
         },
-        "ios-preview-testing"
+        "ios-preview-testing",
       ],
     },
     {
@@ -70,6 +67,7 @@ module.exports = {
         "desktop-migration-guide",
         "desktop-rollouts",
         "desktop-feature-api-testing",
+        "desktop-targeting-debug",
       ],
     },
     {
