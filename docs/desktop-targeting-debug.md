@@ -9,15 +9,13 @@ slug: /desktop-targeting-debug
 ## How to enable ASRouter devtools
 
 - In `about:config`, set `browser.newtabpage.activity-stream.asrouter.devtoolsEnabled` to `true`
-- Visit `about:newtab#asrouter` to see the devtools.
+- Visit `about:newtab#devtools-targeting` to see the devtools (you need to copy-paste this manually to navigate).
 
 ## Overview of ASRouter devtools
 
 ![Devtools image](/img/desktop/desktop-devtools.png)
 
 ## Targeting
-
-Navigate to the _Targeting_ tab using the left-hand side navigation.
 
 Inside the textarea targeting expressions can be written and evaluated using the `Evaluate` button.
 
@@ -36,7 +34,7 @@ A JEXL function is called using the `|` operator followed by the function name, 
 - Any preference can be read using `|prefValue`
 - An array of objects can be filtered by key value
 
-```
+```js
 topFrecentSites // An array of objects with `frequency` and `host` names
 
 topFrecentSites[.frecency > 9000] // returns an array containing only those objects with frequency over 9000
@@ -47,9 +45,9 @@ topFrecentSites[.frecency > 9000] // returns an array containing only those obje
 * `[{a:1, type:"foo"}, {b:2, type:"bar"}]|mapToProperty("type")` => `["foo", "bar"]`
 * Date casting
 
-```
+```js
 // Is the profile older than 7 days
-((currentDate|date - profileAgeCreated) / 86400000) > 7
+(currentDate | (date - profileAgeCreated)) / 86400000 > 7;
 ```
 
 - `1 in [1,2,3]` => `true`
