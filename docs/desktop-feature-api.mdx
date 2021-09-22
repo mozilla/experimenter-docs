@@ -164,9 +164,9 @@ NimbusFeatures::GetBool("featurename"_ns, "enabled"_ns, false);
 
 ### `getVariable()`
 
-`getVariable(variableName: string, {sendExposureEvent = false}): FeatureValue`
+`getVariable(variableName: string): FeatureValue`
 
-Returns the value of a single feature variable. You can optionally send an exposure event when the function is called.
+Returns the value of a single feature variable.
 
 <Tabs
   defaultValue="js"
@@ -181,10 +181,6 @@ Returns the value of a single feature variable. You can optionally send an expos
 // Warning: **This function will throw in Nightly and CI build** if you do not define `variableName` in the Nimbus manifest.
 
 const foo = NimbusFeatures.myFeature.getVariable("foo");
-
-const bar = NimbusFeatures.myFeature.getVariable("bar", {
-  sendExposureEvent: true,
-});
 
 // notAVariable is not defined in the manifest, so this will throw in CI
 const baz = NimbusFeatures.myFeature.getVariable("notAVariable");
@@ -203,7 +199,7 @@ NimbusFeatures::GetInt("aboutwelcome"_ns, "skipFocus"_ns, false);
 
 ### `getAllVariables()`
 
-`getAllVariables({sendExposureEvent = false, defaultValues}): FeatureValue` (JS Only)
+`getAllVariables({ defaultValues }): FeatureValue` (JS Only)
 
 Returns the value of all variables for a feature. Note that **variables will be merged beftween sources**.
 
@@ -220,7 +216,6 @@ If `options.defaultValues` is defined, it will be preferred before default branc
 
 ```js
 const { foo, bar } = NimbusFeatures.myFeature.getAllVariables({
-  sendExposureEvent: true,
   defaultValues: { foo: true, bar: false },
 });
 ```
