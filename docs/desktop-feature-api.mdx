@@ -366,3 +366,23 @@ NimbusFeatures::OffUpdate("aboutwelcome"_ns, "skipFocus"_ns,
 
 </TabItem>
 </Tabs>
+
+## Experiment Metadata
+
+If you need to know whether an experiment is active or get access to the experiment or branch identifier (for exmple, to report in `utm_params`), you can use `ExperimentAPI.getExperimentMetaData`:
+
+```js
+XPCOMUtils.defineLazyModuleGetters(this, {
+  ExperimentAPI: "resource://nimbus/ExperimentAPI.jsm",
+});
+
+const data = ExperimentAPI.getExperimentMetaData({featureId: "myFeature"});
+
+// If there is no experiment, data will be null.
+const slug = data?.slug;
+const branchSlug = data?.branch?.slug;
+
+if (experimentSlug && branchSlug) {
+  sendSomeTelemetry(`The experiment identifier is ${slug} and the branch identifier is ${branchSlug}`);
+}
+```
