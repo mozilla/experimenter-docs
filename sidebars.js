@@ -21,6 +21,7 @@ module.exports = {
       items: [
         "data-scientists/data-scientists-root",
         "data-scientists/telemetry",
+        "data-scientists/bucketing",
       ],
     },
 
