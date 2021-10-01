@@ -4,24 +4,24 @@ title: Bucketing
 slug: /Bucketing
 ---
 
-**Bucketing** is the process of assigning branches of experiments to users. When a user is “bucketed” into an experiment, it means that the configuration in one of its branches (such as a change to part of the UI) can be activated, and that any interactions we record from that moment on can be associated with the experiment and branch identifier.
+**Bucketing** is the process of randomly assigning users to experiment branches. When a user is “bucketed” into an experiment, it means that the configuration in one of its branches (such as a change to part of the UI) can be activated, and that any interactions we record from that moment on can be associated with the experiment and branch identifier.
 
-For Firefox experiments, we bucket users into experiments client-side using inputs from configuration delivered from a server. Assignment happens during sychronization time v.s. being generated on demand for each feature.
+:::info which experiments?
+This documentation applies to experiments launched to Desktop, iOS, and Android Firefox through the "Nimbus" or "Normandy" systems. Differences between platforms are noted when relevant.
+:::
 
-### Which experiments does this apply to?
+## Assumptions
 
-Experiments launched through Nimbus and Normandy to Desktop, iOS, and Android Firefox. Differences in the implementation or capabilities are noted when relevant.
+In order to support the analysis of controlled experiments, we must be able to satisfy the following functional requirements:
 
-## Supported Capabilities
-
-- We can randomly assign users to one or more branches of one or more experiments simultaneously.
-- We can control interactions between experiments (i.e. ensure experiments don't overlap) if we want to.
-- We can specify "targeting" conditions for an experiment, that is, certain characteristics about a client that must be met before the client can be considered a candidate (e.g. region, profile age).
+- We can randomly assign users to one or more branches of of an experiment.
+- A single user can enroll in multiple experiments simultaneously.
+- We can specify certain characteristics about a client that must be met for a client to bucket into an experiment, such as region.
 - We can assign users to unevenly distributed branches(e.g. 10% to A, 90% to B)
+- We can control interactions between experiments (i.e. ensure experiments do not overlap) when we want to.
+- We can observe which users have bucketed into which experiments/branches and when.
 
-### Statistical Requirements
-
-In order to support the analysis of controlled experiments, the selected bucketing strategy must satisfy the following requirements. The steps described in the mplementation section should clarify how each of the requirements should be satisfied.
+We assume the following statistical requirements:
 
 - Assignment of targeted clients to branches is uniformly random with respect to all observables. If we were to look at the set of users for each branch (where unique users are identified by the randomization unit), we should see roughly the same distribution of locale, location, profile age, etc.
 - Branch assignment must not depend on anything the user can influence.
@@ -32,21 +32,168 @@ In order to support the analysis of controlled experiments, the selected bucketi
 
 ## Implementation
 
-### Overview
+At a high level, we bucket users into experiments client-side by taking a hash of a [randomly generated user id](#randomization-unit) and some configuration delivered from our experimentation servers. Assignment happens when configuration is synced to the client and sends enrollment telemetry.
 
-Note that "Experimenter" is the server-side application that defines experiments and delivers them to Firefox clients. Technically definitions come from Normandy
+### Configuration
 
-1. A user creates an experiment in **Experimenter** with (a) an overall population percentage to three decimal places (b) a set of branches, each with a "ratio" (the default is `1`). The experiment can also include targeting, e.g. only clients in the US region.
-2. The server allocates a "bucket rage" configuration for the experiment, which includes a namespace and a range between `0` and `10 000` representing the population percentage.
-3. The experiment is added to the set of live experiments and synchronized to clients.
-4. When a Firefox client revieves a new experiment configuration, the experiment SDK takes a hash of the namespace, the experimenter identifier, and a unique identifier for that client (see [Randomization Unit](#randomization-unit)) and determines if the result falls in the given range.
-5. If the client is assigned to the experiment, a branch is randomly assigned based on the ratios configured for the branch.
-6. The client is enrolled; the correct feature value is returned (or for Normandy, prefs are set) and an enrollment event is sent.
+:::note
+This example uses the Nimbus experiment format. While the Normandy format is different, the client-side algorithm is almost identical. Many fields have been omitted for brevity.
+:::s
+
+```json
+{
+  "slug": "my-cool-test",
+  "targeting": "browserSettings.update.channel == 'release'",
+  "bucketConfig": {
+    "start": 5000,
+    "count": 2000,
+    "total": 10000,
+    "namespace": "aboutwelcome-1",
+    "randomizationUnit": "normandy_id"
+  },
+
+  "branches": [
+    { "slug": "control", "ratio": 1 },
+    { "slug": "treatment", "ratio": 1 }
+  ]
+}
+```
+
+- `targeting` specifies conditions that must be met before the client can be considered. In this case, the user must in the release channel (beta or nightly users will not be considered).
+- `count` is a fraction of `total` representing the chance of getting bucketed. In this case, the chance is 20%.
+- `start` is an integer representing a "range" of buckets, which allows for [isolation of experiments](#controlling-interactions) along a single `namespace`. In this example, the start is set to 5000, which would isolate it from users in an existing experiment with a `start` of 0 and a `count` of 5000.
 
 ### Randomization Unit
 
-Bucketing uses a unique identifier (the `normandy_id`" on desktop, the `nimbus_id` on mobile) generated at startup.
+Bucketing uses a stable unique identifier generated at startup. Note that this identifier is _not_ `client_id`, which is the standard unit for aggregation for most data analysis in Firefox.
 
-See [Desktop implementation](https://searchfox.org/mozilla-central/source/toolkit/components/utils/ClientEnvironment.jsm#99).
+Desktop experiments use the `normandy_id`, a unique stable identifier generated by the `ClientEnvironment` module during first run and stored in a preference (see [implementation](https://searchfox.org/mozilla-central/source/toolkit/components/utils/ClientEnvironment.jsm#99)). It differs from `client_id` in that it is _not_ exposed to Telemetry and it is not synced across profiles / accounts.
 
-### Hashing function
+Mobile experiments use the `nimbus_id`, a unique identifier generated by the Nimbus client during first run stored in the experiments database (see [implementation](https://github.com/mozilla/application-services/blob/866c72cddc4d925a0dc1a83c9aeebd2e878be85e/components/nimbus/src/lib.rs#L433)).
+
+### Experiment assignment
+
+In order to randomize clients into experiments, we take a SHA-256 hash of the `namespace` and the `randomization_unit` truncated to 12 characters and check if that falls between the bucket range configured in the experiment.
+
+Consider this example:
+
+```json
+{
+  "slug": "experiment-B",
+  "bucketConfig": {
+    "start": 3000,
+    "count": 2000,
+    "total": 10000,
+    "namespace": "rutabaga",
+    "randomizationUnit": "normandy_id"
+  }
+}
+```
+
+A client will be bucketed into the experiment if the input hash falls in the range `3000` to `4999`:
+
+```
+                  start
+                  |     hash
+                  v     v
+  [0, 1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000, 9000]
+                              ^
+                              end
+```
+
+### Branch assignment
+
+Assuming a client has satisfied all targeting conditions and bucketed into an experiment, we will randomly assign a branch. Unlike experiments, branches cannot specify targeting conditions, and hashes are re-randomized for every experiment. We do this by:
+
+1. Assigning buckets equal to the ratios specified in each branch
+2. Taking a SHA-256 hash of the [randomization unit](#randomization-unit) and the experiment identifier (which is unique per experiment)
+3. Checking which range the input hash falls into
+
+For example, given the following branch ratios:
+
+```json
+{
+  "slug": "experiment-123",
+  "branches": [
+    { "slug": "a", "ratio": 2 },
+    { "slug": "b", "ratio": 5 },
+    { "slug": "c", "ratio": 3 }
+  ]
+}
+```
+
+We will assign 20% of the buckets to branch `a`, 50% to `b`, and 30% to `c`. We take a hash of the client's `normandy_id` and the experiment slug (`experiment-123`) and see which bucket range it falls into:
+
+```
+                     hash
+                     v
+  [a, a, b, b, b, b, b, c, c, c]
+
+```
+
+### Controlling interactions
+
+By default, all experiments are allowed to interact and clients can bucket into multiple experiments simultaneously. However, sometimes we _do_ want experiments to be exclusive, such as when they change the same set of variables.
+
+In practice, we have three methods of preventing interactions between experiments:
+
+#### Bucket range exclusion
+
+Experiments that configure the same namespace will bucket identically for the same user identifier. This means we can exclude experiments by giving the same namespace and have them specify non-interacting ranges (start / count).
+
+Consider two experiments with the following configurations:
+
+```json
+{
+  "slug": "experiment-A",
+  "bucketConfig": {
+    "start": 0,
+    "count": 3000,
+    "total": 10000,
+    "namespace": "rutabaga",
+    "randomizationUnit": "normandy_id"
+  }
+},
+{
+  "slug": "experiment-B",
+  "bucketConfig": {
+    "start": 3000,
+    "count": 2000,
+    "total": 10000,
+    "namespace": "rutabaga",
+    "randomizationUnit": "normandy_id"
+  }
+}
+```
+
+Say we generate a value of `4562` from our hash on a given client. The client is bucketed into `experiment-B` because this falls in the the range for this experiment (which is `3000` to `4999`).
+
+Note that we _always_ re-randomize branch assignment, so we can't isolate based on branch.
+
+#### Client-side rules
+
+In Nimbus, clients are prevented from enrolling into two experiments that target the same feature with a simple check during enrollment. For example, a user cannot be enrolled in two experiments that change the `aboutwelcome` feature.
+
+In Normandy, clients are prevented from enrolling in two experiments that change the same preference.
+
+#### Targeting exclusion
+
+For specific experiments that should be excluded from others, a targeting expression can be included with a specific experiment identifier:
+
+```json
+{
+  "targeting": "!activeExperiments['some-experiment']"
+}
+```
+
+## Validating bucketing
+
+### Branch balance
+
+We expect to see some variation between the observed v.s. expected ratios for enrollment in branches for experiments. However, too much imbalance might be indication that there might be a problem with the validity of the experiment configuration, implementation, or execution.
+
+As a first step, we continuously monitor daily active population and enrollment by branch to see if anything is obviously wrong. We do this with standard Grafana monitoring dashboards generated for every experiment:
+
+![Daily active population is 2.152m control, 2.150m treatment](/img/bucketing/daily-active-pop.png)
+
+We can also run a chi-squared test of independence to determine whether the difference between the actual v.s. expected ratio of branches is statistically significant. Note that this can have some temporary fluctuation, but if we see a sustained period of enrollment for which the p-value is less than 0.05, we consider it cause for further investigation.
