@@ -22,7 +22,7 @@ Want to run an experiment in Firefox? Here's what you should do first:
 
 If the experiment was run with Nimbus, check out the [directory of live and completed experiments](https://experimenter.services.mozilla.com/nimbus/). Normandy experiments can be found [here](https://experimenter.services.mozilla.com/).
 
-If the experiment is not yet live, you will probably be able to find a relevant Jira ticket on this [Data Sceence Experimentation Collaboration Board](https://mozilla-hub.atlassian.net/jira/software/c/projects/DS/boards/258)
+If the experiment is not yet live, you will probably be able to find a relevant Jira ticket on this [Data Science Experimentation Collaboration Board](https://mozilla-hub.atlassian.net/jira/software/c/projects/DS/boards/258)
 
 ## About these docs
 
