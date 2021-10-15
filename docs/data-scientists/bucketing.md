@@ -185,15 +185,3 @@ For specific experiments that should be excluded from others, a targeting expres
   "targeting": "!activeExperiments['some-experiment']"
 }
 ```
-
-## Validating bucketing
-
-### Branch balance
-
-We expect to see some variation between the observed v.s. expected ratios for enrollment in branches for experiments. However, too much imbalance might be indication that there might be a problem with the validity of the experiment configuration, implementation, or execution.
-
-As a first step, we continuously monitor daily active population and enrollment by branch to see if anything is obviously wrong. We do this with standard Grafana monitoring dashboards generated for every experiment:
-
-![Daily active population is 2.152m control, 2.150m treatment](/img/bucketing/daily-active-pop.png)
-
-We can also run a chi-squared test of independence to determine whether the difference between the actual v.s. expected ratio of branches is statistically significant. Note that this can have some temporary fluctuation, but if we see a sustained period of enrollment for which the p-value is less than 0.05, we consider it cause for further investigation.
