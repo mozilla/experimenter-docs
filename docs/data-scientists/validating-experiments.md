@@ -18,7 +18,9 @@ As a first step, you should continuously monitor daily active population and enr
 
 You will also see a "Sample Ratio Mismatch" health check, which is a chi-squared test of independence to determine whether the difference between the actual v.s. expected ratio of branches is statistically significant. Note that this can have some temporary fluctuation, but you see a sustained period of enrollment for which the p-value is less than 0.01, you should consider this cause for further investigation.
 
-Possible causes for sample ratio mismatch you might want to investigate:
+![SRM check screenshot](https://user-images.githubusercontent.com/1455535/137956046-c63f8c40-df02-4641-9259-14f02c021945.png)
+
+You will see SRM checks for daily active clients, enrollments, and unenrollments. Note that it is *always* important for enrollments to be balanced, whereas noise in unenrollments is less concerning. Some potential causes of SRM if you do see a potential issue:
 
 - Low overall enrollment
 - High unenrollments in treatment due to implementation details of the experience being tested
