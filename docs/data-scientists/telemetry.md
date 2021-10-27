@@ -22,8 +22,9 @@ Recorded when a user has met the conditions and is first bucketed into an experi
 
 ### Exposure
 
-This records an event at the moment the user is exposed to an experiment
-treatment. The event is triggered either by the code checking that a
+This should be recorded at the moment the user sees an experiment
+treatment *or would have seen it* if they are in a control branch.
+The event is triggered either by the code checking that a
 certain experiment feature is enabled or when that feature value is used.
 This is different from enrollment or experiment activation because it
 registers when a user actually gets exposed to the experiment feature.
