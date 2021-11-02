@@ -48,7 +48,10 @@ Users can be removed from experiments for a number of reasons, which shows up on
 
 #### Debugging unenrollments by reason
 
-In order to see which branches/reasons are responsible for unenrollment, you can query for unenrollment events by branch and reason. For example:
+In order to see which "reasons" are responsible for unenrollment, you can take a look at this part of the dashboard:
+![image](https://user-images.githubusercontent.com/1455535/137957335-e34e9ab5-05cd-42b2-b1fd-2e88d90bb60c.png)
+
+Alternatively, you can run your own query for unenrollment events. For example, this will show you unenrollments by reason *and* branch:
 
 ```sql
 SELECT
