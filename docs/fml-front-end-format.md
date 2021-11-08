@@ -4,7 +4,7 @@ title: Feature Manifest Language Front-end Format As YAML
 slug: /fml-front-end-format
 ---
 
-- Status: new
+- Status: accepted
 - Deciders: @travis79, @jhugman, @teshaq, @k88hudson
 - Date: 2021-10-26
 
