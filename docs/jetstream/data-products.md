@@ -48,7 +48,7 @@ The `query_cost_v1` table has the following schema:
 
 #### Experimenter Experiments
 
-For monitoring Nimbus experiments, some common failure cases are exposed as part of the [Experiments Enrollments Grafana dashboard](https://grafana.telemetry.mozilla.org/d/XspgvdxZz/experiment-enrollment?orgId=1). These monitoring rules will require access to collected experiments enrollment data which is available in `monitoring.experimenter_experiments_v1`. This dataset is part of [bigquery-etl](https://github.com/mozilla/bigquery-etl/tree/main/sql/moz-fx-data-experiments/monitoring/experimenter_experiments_v1) and updated every 10 minutes by fetching data from the Experimenter API.
+For monitoring Nimbus experiments, some common failure cases are exposed as part of the [Experiments Enrollments dashboard](https://mozilla.cloud.looker.com/dashboards-next/216). These monitoring rules will require access to collected experiments enrollment data which is available in `monitoring.experimenter_experiments_v1`. This dataset is part of [bigquery-etl](https://github.com/mozilla/bigquery-etl/tree/main/sql/moz-fx-data-experiments/monitoring/experimenter_experiments_v1) and updated every 10 minutes by fetching data from the Experimenter API.
 
 ## GCS Data Export
 
