@@ -9,7 +9,7 @@ slug: /
 Need help? Reach out in `#ask-experimenter` on Slack or join a [lightning advisory session](https://docs.google.com/document/d/1fj4BqG0N-cN_Fx5sq-AozdiOdKO7asaDWR4B7sH88F0).
 :::
 
-Welcome to the [Experimenter](https://experimenter.services.mozilla.com/nimbus/) documentation hub, your central resource for A/B experiments in Firefox Mobile and Desktop. Whether you are an engineer working on a feature, a product manager with a hyposthesis, or a data scientist helping design and interpret results, we want to give you the tools to get
+Welcome to the [Experimenter](https://experimenter.services.mozilla.com/nimbus/) documentation hub, your central resource for A/B experiments in Firefox Mobile and Desktop. Whether you are an engineer working on a feature, a product manager with a hypothesis, or a data scientist helping design and interpret results, we want to give you the tools to get
 
 ## Run an experiment
 
