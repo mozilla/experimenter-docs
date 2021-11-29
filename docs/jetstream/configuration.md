@@ -122,6 +122,8 @@ friendly_name = "Nimbus exposure signal"
 description = "Nimbus desktop feature exposure signal"
 data_source = "normandy_events"
 select_expression = "event_method = 'expose' AND event_string_value = 'my_slug'"
+window_start = "enrollment_start"
+window_end = "analysis_period_end"
 ```
 
 You should not define a `start_date` and `end_date` in your Jetstream configuration
@@ -326,3 +328,65 @@ data_source = "search_clients_engines_sources_daily"
 [metrics.urlbar_amazon_search_count.statistics.bootstrap_mean]
 [metrics.urlbar_amazon_search_count.statistics.deciles]
 ```
+
+### Defining Exposure Signals
+
+Many Nimbus features will send a [Nimbus exposure event] automatically when the feature configuration is consulted;
+these are `normandy#expose` events on desktop and `nimbus_events.exposure` events in Glean.
+However, it is also possible to define custom exposure events:
+
+```toml
+[experiment.exposure_signal]
+name = "nimbus"
+friendly_name = "Nimbus exposure signal"
+description = "Nimbus desktop feature exposure signal"
+data_source = "events"
+select_expression = "
+   event_category = 'normandy'
+   AND event_method = 'expose'
+   AND event_object = 'nimbus_experiment'
+   AND event_string_value = 'experiment-slug'
+   AND normalized_channel = 'release'
+"
+window_start = 0                    # optional
+window_end = "analysis_window_end"  # optional
+```
+
+* `select_expression`: Defines the condition for when an exposure happens. 
+* `data_source`: Specifies the dataset on which to apply the `select_expression`. Can use [predefined](https://mozilla.github.io/mozanalysis/api/metrics.html#mozanalysis.metrics.DataSource) or custom data sources. 
+* `window_start` and `window_end`: Optional parameters that specify the date range when clients are checked for exposure. Defaults to `window_start = 'enrollment_start'` and `window_end = 'enrollment_end'`. Other valid values include:
+    * Any positive integer: The number of days after the first enrollment date. 
+    * Any negative integer: The number of days before the first enrollment date. 
+    * `enrollment_start`: Equivalent to using `0`
+    * `enrollment_end`: Equivalent to using the enrollment period length in days
+    * `analysis_window_start`: The start of the current analysis window
+    * `analysis_window_end`: The end of the current analysis window
+
+Metrics based on clients that have seen the exposure signal are only computed for those that specify `exposures` as one of their `analysis_bases`:
+
+```toml
+[metrics.ad_clicks]
+analysis_bases = ["exposures", "enrollments"]
+```
+
+Using `window_start` and `window_end` it is possible to consider clients as exposed/non-exposed during the observation period. For example, if clients should only be considered as exposed during an analysis window:
+
+```toml
+[experiment.exposure_signal]
+# ...
+window_start = "analysis_window_start"
+window_end = "analysis_window_end"
+```
+
+Or, if clients should be considered as exposed if they have received the exposure signal during the current analysis window or any time before:
+```toml
+[experiment.exposure_signal]
+# ...
+window_start = "enrollment_start"
+window_end = "analysis_window_end"
+```
+
+Results for exposure based metrics are currently not visualized in Experimenter. To access results, the BigQuery tables need to be queried directly.
+
+
+[Nimbus exposure event]: feature-variables-and-me.md#recording-exposure-events
