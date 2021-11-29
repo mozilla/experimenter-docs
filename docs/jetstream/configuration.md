@@ -340,7 +340,7 @@ However, it is also possible to define custom exposure events:
 name = "nimbus"
 friendly_name = "Nimbus exposure signal"
 description = "Nimbus desktop feature exposure signal"
-data_source = "events_unnested"
+data_source = "events"
 select_expression = "
    event_category = 'normandy'
    AND event_method = 'expose'
@@ -350,27 +350,19 @@ select_expression = "
 "
 window_start = 0                    # optional
 window_end = "analysis_window_end"  # optional
-
-
-[data_sources.events_unnested]
-from_expression = """(
-  SELECT
-    *
-  FROM
-    `moz-fx-data-shared-prod.telemetry.events`
-)"""
 ```
 
-`select_expression` defines the condition for when an exposure happens. Exposure signals can use predefined or custom `data_sources`. `window_start` and `window_end` are optional parameters that specify the date range when clients are checked for exposure.
-The parameters are representing the number of days before or after the first enrollment date. There are some additional custom values that can be used:
-* `enrollment_start`: equal to using `0`
-* `enrollment_end`: equal to the enrollment period length in days
-* `analysis_window_start`: to use the start of the current analysis window
-* `analysis_window_end`: to use the end of the current analysis window
-* some integer: to specify the window with a custom value
-* if parameters are not specified: default to `enrollment_start` and `enrollment_end`
+* `select_expression`: Defines the condition for when an exposure happens. 
+* `data_source`: Specifies the dataset on which to apply the `select_expression`. Can use [predefined](https://mozilla.github.io/mozanalysis/api/metrics.html#mozanalysis.metrics.DataSource) or custom data sources. 
+* `window_start` and `window_end`: Optional parameters that specify the date range when clients are checked for exposure. Defaults to `window_start = 'enrollment_start'` and `window_end = 'enrollment_end'`. Other valid values include:
+    * Any positive integer: The number of days after the first enrollment date. 
+    * Any negative integer: The number of days before the first enrollment date. 
+    * `enrollment_start`: Equivalent to using `0`
+    * `enrollment_end`: Equivalent to using the enrollment period length in days
+    * `analysis_window_start`: The start of the current analysis window
+    * `analysis_window_end`: The end of the current analysis window
 
-Metrics based on clients that have seen the exposure signal are only computed for those that specify `enrollments` as one of their `analysis_bases`:
+Metrics based on clients that have seen the exposure signal are only computed for those that specify `exposures` as one of their `analysis_bases`:
 
 ```toml
 [metrics.ad_clicks]
