@@ -22,33 +22,27 @@ pref("browser.aboutmyself.bgcolor", "#FE8DAE");
 
 ## Step 1: Add a new feature to the manifest
 
-First, you will need to register a new feature in [FeatureManifest.js](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.js). In this case, we're creating one called `aboutmyself`.
+First, you will need to register a new feature in [FeatureManifest.yaml](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.yaml). In this case, we're creating one called `aboutmyself`.
+After adding the feature a build step is required to update the appropriate header file.
 
 Read more to find out if you want to send an [exposure event](/jetstream/jetstream/#enrollment-vs-exposure). This is optional but a decision must be recorded in the manifest.
 
 Each preference is registered as a `variable`:
 
-```js
-const FeatureManifest = {
-  aboutmyself: {
-    description: "A page that shows personal browsing stats.",
-    // Exposure is optional, in which case `hasExposure` would be false
-    // and `exposureDescription` would not be defined
-    hasExposure: true,
-    exposureDescription: "The exposure is the earliest moment that the user could be affected by the experimental treatment."
-    variables: {
-      enabled: {
-        type: "boolean",
-        fallbackPref: "browser.aboutmyself.enabled",
-      }
-      bgColor: {
-        type: "string",
-        fallbackPref: "browser.aboutmyself.bgcolor",
-      },
-    },
-  },
-};
-
+```yaml
+aboutmyself:
+  description: A page that shows personal browsing stats
+  # Exposure is optional, in which case `hasExposure` would be false
+  # and `exposureDescription` would not be defined
+  hasExposure: true
+  exposureDescription: The exposure is the earliest moment that the user could be affected by the experimental treatment
+  variables:
+    enabled:
+      type: boolean
+      fallbackPref: browser.aboutmyself.enabled
+    bgColor:
+      type: string
+      fallbackPref: browser.aboutmyself.bgcolor
 ```
 
 ## Step 2: Update your feature code

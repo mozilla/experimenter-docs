@@ -66,33 +66,29 @@ The Nimbus Feature API will return the correct configuration for a feature given
 
 ## Registering a new feature
 
-To register a new feature, you will need to choose an identifier and add it to the manifest in [FeatureManifest.js](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.js):
+To register a new feature, you will need to choose an identifier and add it to the manifest in [FeatureManifest.yaml](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.yaml):
+After adding the feature a build step is required to update the appropriate header file.
+
+```yaml
+# In FeatureManifest.yaml
+# Our feature name
+aboutwelcome:
+  description: The about:welcome page
+  # Include this if you need sychronous access / very early access at startup
+  # or if you are registering this to use for platform experiments.
+  isEarlyStartup: true
+  variables:
+    # Additional (optional) values that we can control
+    # The name of these variables is up to you
+    enabled:
+      type: boolean
+      fallbackPref: browser.aboutwelcome.enabled
+    skipFocus:
+      type: boolean
+
+```
 
 ```javascript
-// In FeatureManifest.js
-
-const MANIFEST = {
-  // Our feature name
-  aboutwelcome: {
-    description: "The about:welcome page",
-    // Include this if you need sychronous access / very early access at startup
-    // or if you are registering this to use for platform experiments.
-    isEarlyStartup: true,
-    variables: {
-      // Additional (optional) values that we can control
-      // The name of these variables is up to you
-      enabled: {
-        type: "boolean",
-        // Currently not supported for platform API
-        // See bug 1723755
-        fallbackPref: "browser.aboutwelcome.enabled",
-      },
-      skipFocus: {
-        type: "boolean",
-      },
-    },
-  },
-};
 
 // In firefox.js
 pref("browser.aboutwelcome.enabled", true);
