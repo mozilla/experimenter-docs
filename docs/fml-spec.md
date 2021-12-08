@@ -133,9 +133,9 @@ guard spotlightConfig.enabled else {
 
 // let item = CSSearchableItem(…)
 
-let numDays = spotlightConfig.keepForDays
 let oneDayInSeconds: TimeInterval = 24 * 60 * 60
-item.expirationDate = Date(timeIntervalSinceNow: numDays * oneDayInSeconds)
+let maxAgeInSeconds = spotlightConfig.maxAgeInDays * oneDayInSeconds
+item.expirationDate = Date(timeIntervalSinceNow: maxAgeInSeconds)
 ```
 
 Notice that:
