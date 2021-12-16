@@ -5,8 +5,17 @@ Jetstream runs analyses for experiments launched on several different platforms,
 ---
 ## Adding support in mozanalysis
 https://github.com/mozilla/mozanalysis/
-- Add new metric(s) in `mozanalysis` (if needed). For more detailed guide follow [how do I add a metric to my experiment](https://experimenter.info/jetstream/metrics#how-do-i-add-a-metric-to-my-experiment), and [defining metric](https://experimenter.info/jetstream/configuration#metrics-section)
-- Add new segment(s) in `mozanalysis` (if needed). For more detailed guide follow [defining segment](https://experimenter.info/jetstream/configuration#defining-segments)
+
+- Default metrics and datasources need to be added to mozanalysis. These default metric and data source definitions will be available for custom experiment configurations:
+    - Add new metric(s) in `mozanalysis` (if needed). For more detailed guide follow [how do I add a metric to my experiment](https://experimenter.info/jetstream/metrics#how-do-i-add-a-metric-to-my-experiment), and [defining metric](https://experimenter.info/jetstream/configuration#metrics-section)
+
+<br />
+
+- Optionally, segment definitions can also be added in mozanalysis:
+    - Add new segment(s) in `mozanalysis` (if needed). For more detailed guide follow [defining segment](https://experimenter.info/jetstream/configuration#defining-segments)
+
+<br />
+
 - After adding support to mozanalysis and merging your changed into the [main branch](https://github.com/mozilla/mozanalysis/tree/main) new package needs to be published to [PyPi](https://pypi.org/project/mozanalysis/)
 - Make sure `main` branch is your current branch and create a new git tag using:
 
@@ -70,4 +79,3 @@ app_id = "firefox-desktop"
 - `segments_module` - mozanalysis segments module that this platform should use (default: `None`)
 - `enrollments_query_type` - whether enrollments should be determined based on Glean events (`glean-event`) data or Normandy data (`normandy`) (default: `glean-event`)
 - `app_id` - application ID as defined in [probe-scraper repository.yaml](https://github.com/mozilla/probe-scraper/blob/main/repositories.yaml)
-
