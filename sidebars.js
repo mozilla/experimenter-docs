@@ -42,6 +42,11 @@ module.exports = {
           label: "Adding custom targeting attributes",
           href: "android-custom-targeting",
         },
+        {
+          type: "link",
+          label: "Feature Manifest Language Specification",
+          href: "fml-spec",
+        },
       ],
     },
     {
@@ -57,6 +62,11 @@ module.exports = {
           type: "link",
           label: "Adding custom targeting attributes",
           href: "ios-custom-targeting",
+        },
+        {
+          type: "link",
+          label: "Feature Manifest Language Specification",
+          href: "fml-spec",
         },
         "ios-preview-testing",
       ],
