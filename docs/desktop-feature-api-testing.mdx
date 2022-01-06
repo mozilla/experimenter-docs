@@ -4,8 +4,8 @@ title: Desktop Feature API testing
 slug: /desktop-feature-api-testing
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 In order to make testing easier we created some helpers that can be accessed by including
 
@@ -24,8 +24,8 @@ let doEnrollmentCleanup = await ExperimentFakes.enrollWithFeatureConfig({
   featureId: "<YOUR FEATURE>",
   // You can add values for each variable you added to the manifest
   value: {
-    enabled: true
-  }
+    enabled: true,
+  },
 });
 
 // Now you can assume the feature is enabled so you can
@@ -71,26 +71,23 @@ const { ExperimentFakes } = ChromeUtils.import(
 Next this is how you would set up your feature to test integration with Desktop Rollouts:
 
 ```js
-  // Ensure everything has finished initializing
-  await ExperimentAPI.ready();
-  // The actual setup
-  await ExperimentFakes.remoteDefaultsHelper({
-    // Reference your feature already defined in the FeatureManifest.yaml
-    feature: NimbusFeatures.<YOUR FEATURE>,
-    configuration: {
-      // An identifier used in telemetry
-      slug: "my-test-configuration",
-      // Is the feature on or off
-      enabled: true,
-      // Any additional variables
-      variables: {},
-    },
-  });
+// Ensure everything has finished initializing
+await ExperimentAPI.ready();
+// The actual setup
+const doCleanup = await ExperimentFakes.enrollWithRollout({
+  // Reference your feature id already defined in the FeatureManifest.yaml
+  featureId: "<YOUR FEATURE ID>",
+  value: {
+    variables: { enabled: true },
+  },
+});
 
-  // Now your feature integration is ready for testing
+// Now your feature integration is ready for testing
 
-  // NimbusFeature.<YOUR FEATURE>.isEnabled()
-  // NimbusFeature.<YOUR FEATURE>.getAllVariables()
+// NimbusFeature.<YOUR FEATURE>.getVariable("enabled")
+// NimbusFeature.<YOUR FEATURE>.getAllVariables()
+
+await doCleanup(); // to remove the rollout
 ```
 
 ## Testing with gTest
@@ -116,4 +113,4 @@ NimbusFeatures::OnUpdate("aboutwelcome"_ns, "skipFocus"_ns,
 
 Examples of platform consumers:
 
-* [Bug 1719070 - UA: Add support for a Nimbus experiment to override Firefox's User-Agent string.](https://phabricator.services.mozilla.com/D121112)
+- [Bug 1719070 - UA: Add support for a Nimbus experiment to override Firefox's User-Agent string.](https://phabricator.services.mozilla.com/D121112)
