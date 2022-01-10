@@ -22,41 +22,13 @@ slug: /fenix-engineers
 
 ## Fenix setup
 
-1. Update [experiments.kt](https://github.com/mozilla-mobile/fenix/blob/master/app/src/main/java/org/mozilla/fenix/experiments/Experiments.kt) **Experiment** to include the featureID string as your experiment constant.
-1. Confirm [experiments.kt](https://github.com/mozilla-mobile/fenix/blob/master/app/src/main/java/org/mozilla/fenix/experiments/Experiments.kt) **ExperimentBranch** contains the branch names you intend to use or add them if you are using something other than the _control_ and _treatment_ default values.
-1. Initialize your experiment in the appropriate location and call **getExperimentBranch** to get your experiment.
+Preparing your app for experimentation is now about getting your app features to get its configuration from the Nimbus Feature API.
 
-### Example
+1. [Instrument your application feature with the Feature API][feature-api].
+1. Once your feature is instrumented, you should add the feature-id to Experimenter.
+1. Now Experimenter knows about the feature, you can configure your application features with an experiment.
 
-This is an example of the configuration of a Fenix **Bookmarks A/B** experiment on the “**Bookmarks Icon**” (bookmark-icon) featureID using the **treatment** and **control** branches.
-
-```kotlin title="Experiments.kt"
-class Experiments {
-    companion object {
-        const val BOOKMARK_ICON = "bookmark-icon"
-    }
-}
-
-class ExperimentBranch {
-    companion object {
-        const val TREATMENT = "treatment"
-        const val CONTROL = "control"
-    }
-}
-```
-
-```kotlin title="HomeMenu.kt"
-
-val experiments = context.components.analytics.experiments
-        val bookmarksIcon = experiments.getExperimentBranch(Experiments.BOOKMARK_ICON)
-            .let {
-                when (it) {
-                    ExperimentBranch.TREATMENT -> R.drawable.ic_bookmark_list
-                    else -> R.drawable.ic_bookmark_filled
-                }
-            }
-```
-
+[feature-api]: feature-variables-and-me
 ## Local Testing
 
 1. Setup your local Fenix build to point to the experimenter
