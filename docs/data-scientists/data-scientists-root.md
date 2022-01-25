@@ -78,6 +78,8 @@ To see which metrics are included by default to this auto-generated report as we
 
 If you want to perform some analysis by hand, [Jetstream datasets](https://docs.telemetry.mozilla.org/datasets/jetstream.html) are also available in BigQuery. Many telemetry datasets also include an `experiments` field, which when filtered on the experiment slug, can identify rows in the dataset enrolled in the experiment.
 
+For certain experiments, data scientists may need to contruct confidence intervals for relative or percent differences. Example implementations can be found in [this notebook](https://colab.research.google.com/drive/1sVOdVdraPwec_Hit4OiaDDH4TJGzaIcc?usp=sharing).
+
 ## Watch out for
 
 Here are other things to watch out for:
