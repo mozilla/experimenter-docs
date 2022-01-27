@@ -13,7 +13,7 @@ This guide will help you use the Nimbus Feature API in Desktop Firefox to run ex
 
 ### Can I use this?
 
-For the JS implementation you can import `ExperimentAPI.jsm` in the parent process or a privileged child process. We _do_ support First run experiments on Windows, holdbacks, and an early-stage implementation of rollouts.
+For the JS implementation you can import `ExperimentAPI.jsm` in the parent process or a privileged child process. We _do_ support First run experiments on Windows, holdbacks, and rollouts.
 
 For the C++ implementation you can import `#include "mozilla/browser/NimbusFeatures.h"` and we support early startup experiments and holdbacks.
 
@@ -85,11 +85,9 @@ aboutwelcome:
       fallbackPref: browser.aboutwelcome.enabled
     skipFocus:
       type: boolean
-
 ```
 
 ```javascript
-
 // In firefox.js
 pref("browser.aboutwelcome.enabled", true);
 ```
@@ -372,13 +370,15 @@ XPCOMUtils.defineLazyModuleGetters(this, {
   ExperimentAPI: "resource://nimbus/ExperimentAPI.jsm",
 });
 
-const data = ExperimentAPI.getExperimentMetaData({featureId: "myFeature"});
+const data = ExperimentAPI.getExperimentMetaData({ featureId: "myFeature" });
 
 // If there is no experiment, data will be null.
 const slug = data?.slug;
 const branchSlug = data?.branch?.slug;
 
 if (experimentSlug && branchSlug) {
-  sendSomeTelemetry(`The experiment identifier is ${slug} and the branch identifier is ${branchSlug}`);
+  sendSomeTelemetry(
+    `The experiment identifier is ${slug} and the branch identifier is ${branchSlug}`,
+  );
 }
 ```
