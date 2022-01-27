@@ -307,7 +307,19 @@ Listen for changes, include to remote defaults or pref values.
 <TabItem value="js">
 
 ```js
-NimbusFeatures.myFeature.onUpdate(() => {
+NimbusFeatures.myFeature.onUpdate((event, reason) => {
+  /**
+   * `reason` is a string that can be used to identify the source
+   * of the update event.
+   * This list of reasons:
+   * 1. `feature-experiment-loaded` or `feature-rollout-loaded` this
+   * is triggered when the Nimbus feature has finished loading
+   * (when .ready() resolves). It is not relevant for isEarlyStartup=true features
+   * 2. `experiment-updated` or `rollout-updated` client recipe for this
+   * feature was changed (activated or deactivated)
+   * 3. `pref-updated` the value of the fallback pref for the feature
+   * variable was changed
+   */
   const newValue = NimbusFeatures.myFeature.getAllVariables();
   updateUI(newValue);
 });
