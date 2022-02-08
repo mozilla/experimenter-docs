@@ -14,7 +14,18 @@ module.exports = {
         "experiment-owners/preview",
       ],
     },
-
+    {
+      type: "category",
+      label: "The Nimbus Cookbook",
+      items: [
+        {
+          type: "link",
+          label: "Feature Manifest Language Specification",
+          href: "/fml-spec",
+        },
+        "cookbook/fml/index",
+      ]
+    },
     {
       type: "category",
       label: "Data Scientists",
@@ -34,18 +45,18 @@ module.exports = {
         {
           type: "link",
           label: "Feature Variables API",
-          href: "feature-variables-and-me",
+          href: "/feature-variables-and-me",
         },
         "android-frontend-testing",
         {
           type: "link",
           label: "Adding custom targeting attributes",
-          href: "android-custom-targeting",
+          href: "/android-custom-targeting",
         },
         {
           type: "link",
           label: "Feature Manifest Language Specification",
-          href: "fml-spec",
+          href: "/fml-spec",
         },
       ],
     },
@@ -56,17 +67,12 @@ module.exports = {
         {
           type: "link",
           label: "Feature Variables API",
-          href: "feature-variables-and-me",
+          href: "/feature-variables-and-me",
         },
         {
           type: "link",
           label: "Adding custom targeting attributes",
-          href: "ios-custom-targeting",
-        },
-        {
-          type: "link",
-          label: "Feature Manifest Language Specification",
-          href: "fml-spec",
+          href: "/ios-custom-targeting",
         },
         "ios-preview-testing",
       ],
