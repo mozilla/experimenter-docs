@@ -20,7 +20,7 @@ The integration test suite is an end-to-end test suite that uses Selenium and Fi
 
 ## Legacy tests
 
-To run the legacy steps follow steps 1-3 above. Then run this command: `make integration_test_legacy`. This will run the legacy experimenter testt suite.
+To run the legacy tests follow steps 1-3 above. Then run this command: `make integration_test_legacy`. This will run the legacy experimenter testt suite.
 
 #### Running a single test
 
