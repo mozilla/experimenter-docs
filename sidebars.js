@@ -107,6 +107,7 @@ module.exports = {
       items: [
         "android-feature-api",
         "client-sdk-states-and-lifecycle",
+        "integration-tests",
         {
           type: "link",
           label: "Experimenter GH Repo",
