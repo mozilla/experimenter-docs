@@ -4,7 +4,7 @@ title: Integration Test Docs
 slug: /integration-tests
 ---
 
-# Integraiton Tests
+# Integration Tests
 
 ## About
 
@@ -27,6 +27,6 @@ To pass custom parameters to pytest use the environment variable `PYTEST_ARGS`.
 
 To run the legacy tests follow steps 1-3 above. Then run this command: `make integration_test_legacy`. This will run the legacy experimenter test suite.
 
-#### Running a single test
+## Running a single test
 
 If you would like to run just 1 test, pass this flag to PYTEST_ARGS with the test name you would like to run: `-k`. Example `make integration_test_nimbus PYTEST_ARGS=-ktest_archive_experiment`
