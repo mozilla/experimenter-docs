@@ -144,5 +144,17 @@ module.exports = {
         },
       ],
     },
+    {
+      type: "category",
+      label: "Messaging System",
+      items: [
+        "messaging/messaging-surfaces",
+        {
+          type: "link",
+          label: "Triggers & User Actions",
+          href: "https://firefox-source-docs.mozilla.org/toolkit/components/messaging-system/docs/",
+        },
+      ],
+    },
   ],
 };
