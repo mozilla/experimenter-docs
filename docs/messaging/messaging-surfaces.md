@@ -29,4 +29,6 @@ These pages appears on start-up as a full content page.
 
 
 ## Snippets
+<img src="/img/messaging/snippets.png" alt="Exxample of snippets component" className="img-sm"/>
+<br/>
 Short messages that appear on New Tab Page to highlight products, features and initiatives
