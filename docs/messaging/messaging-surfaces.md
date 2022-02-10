@@ -20,6 +20,8 @@ Shown at the top of browser content area, these can be per tab (switching tabs h
 This is a window level modal, all other interactions are prevented. The user is given a primary and a secondary button to interact with the modal.
 
 ## PrivateBrowsing
+<img src="/img/messaging/privatebrowsing.png" alt="Exxample of private browsing message" className="img-sm"/>
+<br/>
 Messages shown inside about:privatebrowsing content area when new private window is opened.
 
 
