@@ -24,7 +24,7 @@ module.exports = {
           href: "/fml-spec",
         },
         "cookbook/fml/index",
-      ]
+      ],
     },
     {
       type: "category",
@@ -122,26 +122,22 @@ module.exports = {
         {
           type: "link",
           label: "How to Launch a Nimbus Experiment",
-          href:
-            "https://mana.mozilla.org/wiki/display/FJT/How+to+Launch+a+Nimbus+Experiment",
+          href: "https://mana.mozilla.org/wiki/display/FJT/How+to+Launch+a+Nimbus+Experiment",
         },
         {
           type: "link",
           label: "Nimbus Data Transfer Object",
-          href:
-            "https://mana.mozilla.org/wiki/pages/viewpage.action?pageId=130920248",
+          href: "https://mana.mozilla.org/wiki/pages/viewpage.action?pageId=130920248",
         },
         {
           type: "link",
           label: "Experiment Telemetry",
-          href:
-            "https://mana.mozilla.org/wiki/display/FJT/Nimbus+Engineering#NimbusEngineering-ExperimentTelemetry",
+          href: "https://mana.mozilla.org/wiki/display/FJT/Nimbus+Engineering#NimbusEngineering-ExperimentTelemetry",
         },
         {
           type: "link",
           label: "Lessons Learned",
-          href:
-            "https://mana.mozilla.org/wiki/display/FJT/Lessons+Learned+-+Experiment+Incidents+and+Close+Calls",
+          href: "https://mana.mozilla.org/wiki/display/FJT/Lessons+Learned+-+Experiment+Incidents+and+Close+Calls",
         },
       ],
     },
@@ -155,11 +151,12 @@ module.exports = {
           label: "Triggers & User Actions",
           href: "https://firefox-source-docs.mozilla.org/toolkit/components/messaging-system/docs/",
         },
+        "messaging/frequency-cap",
         {
           type: "link",
           label: "Available Targeting",
           href: "https://firefox-source-docs.mozilla.org/browser/components/newtab/content-src/asrouter/docs/targeting-attributes.html",
-        }
+        },
       ],
     },
   ],
