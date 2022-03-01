@@ -26,8 +26,12 @@ Check out [the Contributing page](https://experimenter.info/contributing) for he
 To build and run this project locally, clone the repository and run:
 
 ```
-npm i -g corepack #Install Corepack to get yarn (not necessary on nodejs >=16)
-sudo corepack enable #Enable Corepack
+# Install Corepack to get yarn (not necessary on nodejs >=16)
+npm i -g corepack
+
+# Enable Corepack
+sudo corepack enable
+
 yarn
 yarn start
 ```
