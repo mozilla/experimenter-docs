@@ -14,7 +14,7 @@ Welcome to the [Experimenter](https://experimenter.services.mozilla.com/nimbus/)
 ## Experimentation Workflow 
 
 <div class="miro-container"> 
-<iframe class="responsive-iframe" src="https://miro.com/app/live-embed/uXjVOJ3IYRA=/?moveToViewport=-1075,981,1776,993" frameBorder="0" scrolling="no" allowFullScreen></iframe>
+<iframe class="responsive-iframe" src="https://miro.com/app/live-embed/uXjVOJ3IYRA=/?moveToViewport=-2130,380,5949,3025&embedAutoplay=true" frameBorder="0" scrolling="no"></iframe>
 </div>
 
 ## Find an existing experiment
