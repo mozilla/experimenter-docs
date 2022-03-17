@@ -4,7 +4,7 @@ title: Messaging Display Logic
 slug: /messaging/display-logic
 ---
 
-There are three types of display logic you should consider when using any of the [messaging surfaces](./messaging-surfaces):
+There are three types of display logic you should consider when using any of the [messaging surfaces](/messaging/messaging-surfaces):
 
 * **Triggers**: In what context should the message be shown? (e.g. when the user opens a URL)
 * **Targeting**: For what kinds of users, or browser state, should the message be shown? (e.g. locale, country, prefs)
@@ -42,7 +42,7 @@ Depending on the needs of your campaign, messages can be configured to be shown 
 
 ### Impressions
 
-We refer to the number of times a message can be shown in terms of "number of impressions". The details of a what counts as a single impression differ depending on the UI of the specific surface you are using, so you should read our [messaging surfaces](./messaging-surfaces) documentation to understand exactly what counts.
+We refer to the number of times a message can be shown in terms of "number of impressions". The details of a what counts as a single impression differ depending on the UI of the specific surface you are using, so you should read our [messaging surfaces](/messaging/messaging-surfaces) documentation to understand exactly what counts.
 
 ### Frequency
 
