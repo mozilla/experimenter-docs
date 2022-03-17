@@ -146,6 +146,7 @@ module.exports = {
       label: "Messaging System",
       items: [
         "messaging/messaging-surfaces",
+        "messaging/display-logic",
         {
           type: "link",
           label: "Triggers & User Actions",
