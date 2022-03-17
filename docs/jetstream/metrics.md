@@ -42,7 +42,7 @@ Data scientists can extend and define outcomes
 in the outcomes path of the
 [`jetstream-config`](https://github.com/mozilla/jetstream-config/tree/main/outcomes) repository.
 
-A small set of guardrail metrics
+A small set of guardrail metrics (called Core Firefox Metrics in Nimbus Console)
 specific to each platform
 is run by default for each experiment.
 These are defined in the main Jetstream repository
