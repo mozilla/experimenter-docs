@@ -13,7 +13,7 @@ Welcome to the [Experimenter](https://experimenter.services.mozilla.com/nimbus/)
 
 ## Experimentation Workflow 
 
-To view a recorded training for the Experimentation Workflow, [click here](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=4d337632-a0bd-4be7-bee8-ae5b017134ae)
+To view a recorded training for the Experimentation Workflow, [click here](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=4d337632-a0bd-4be7-bee8-ae5b017134ae&start=0)
 
 <div class="miro-container"> 
 <iframe class="responsive-iframe" src="https://miro.com/app/live-embed/uXjVOJ3IYRA=/?moveToViewport=-2130,380,5949,3025&embedAutoplay=true" frameBorder="0" scrolling="no"></iframe>
