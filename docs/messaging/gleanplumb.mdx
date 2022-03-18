@@ -44,7 +44,7 @@ GleanPlumb is built on top of Nimbus, Mozilla's experimentation platform. Nimbus
 
 Using Experimenter in the general case is documented elsewhere, so this document is specifically concerned with configuring the `messaging` feature, via the Branches screen.
 
-![my-first-message in the branch configuration screenn](/img/gleanplumb/branch-config.png)
+![my-first-message in the branch configuration screen](/img/gleanplumb/branch-config.png)
 
 The messages that are sent are specified as JSON in the "Value" text area on this screen, so much of this document will consider this the user-interface for sending messages.
 
@@ -84,7 +84,7 @@ If any of these components are missing, then the message is considered _malforme
 
 ### Triggers
 
-The app provides the messaging system with attributes. We use JEXL expressions to query these attributes.
+The app provides the messaging system with [attributes](#list-of-attributes). We use JEXL expressions to query these attributes.
 
 To reduce errors and to allow re-use, the JEXL expressions are named. By convention, these names are in `SCREAMING_SNAKE_CASE`.
 
@@ -157,7 +157,7 @@ If the specified `action` property contains a `://` it is treated as a bare URL,
 
 Before the final URL is opened, a variable subsitution is made, so identifiers within a pair of braces may be made part of the URL.
 
-[Any attribute][list-of-attributes] that GleanPlumb knows about can be used. For example:
+[Any attribute](#list-of-attributes) that GleanPlumb knows about can be used. For example:
 
 ```json
 {
@@ -189,19 +189,27 @@ This allows the client's anonymous survey results to match up to their Glean dat
 
 There are additional message attributes which don't quite fit anywhere, yet. It is best to leave this unused. We're looking for feedback during the MVP phase.
 
-- `max-display-count` - the number of sessions the message is shown before expiring.
 - `style` – this is a string key into the `styles` object. It will code for visual style, and/or priority.
+
+Current values are `DEFAULT`, `PERSISTENT`, `WARNING`, `URGENT`.
+
+This currently code for:
+
+ - the message `priority`. Messages will be shown in descending order of priority.
+ - the `max-display-count`. Messages will be shown to the user for this number of sessions before the message expires.
 
 ## Localization of messages
 
-Localization of strings and messages is not fully developed in Nimbus,
+Localization of strings and messages is not fully developed in Nimbus: the intention is to integrate with the existing tooling for localizing strings.
 
 For message content, you might use identifiers of pre-translated strings (in [Firefox for iOS][fxios-strings], [Firefox for Android][fenix-strings]). This might be useful for very common phrases like OK, or Cancel.
+
+However this relies on the exact translations either being coincidentally already in use by the app, or the experimental copy known about before the app was released. For several reasons, we do not recommend this approach.
 
 [fxios-strings]: https://github.com/mozilla-mobile/firefox-ios/blob/main/Client/Frontend/Strings.swift#L60
 [fenix-strings]: https://github.com/mozilla-mobile/fenix/blob/main/app/src/main/res/values/strings.xml
 
-However this relies on the exact translations either being coincidentally already in use by the app, or the experimental copy known about before the app was released.
+Instead, we can add multiple messages which do the same thing, but in different langauges.
 
 The `messages` property is a JSON object, so can accept multiple messages, each with different locale triggers.
 
@@ -409,7 +417,7 @@ The `on-control` property controls what happens in this case:
 
 By default, `on-control` is set to `show-next-message`.
 
-## Events
+## Events emitted
 
 ### Nimbus Events
 
@@ -435,6 +443,10 @@ Each of the following events is emitted— via Glean— at certain points while 
 Each message has a `message-key` extra.
 
 ## Extending the system
+
+Much of the system relies on Nimbus [merging together JSON objects](/cookbook/fml/growable-collections). We have seen this in the `messages` object which can contain messages from the default configuration, rollouts, and experiments.
+
+We can also add to the `actions`, `triggers` and `styles` object in the same way. This is covered below, and do not need an engineer.
 
 ### Adding attributes
 
@@ -480,13 +492,13 @@ Trigger expressions can be added on a per-message basis, by adding to the `trigg
 
 The `DATE_IS_CHRISTMAS` is now available as a trigger expression in all the messages in the branch.
 
-It can be used in all messages only when it is added back to the application's [list of trigger expressions][#list-of-trigger-expressions].
+It can be used in all messages only when it is added back to the application's [list of trigger expressions](#list-of-trigger-expressions).
 
 Care should be taken to test this new trigger expression before deploying it.
 
 Suitable tools to prototype these expressions:
 
- - [JEXL playground](https://czosel.github.io/jexl-playground/)
+ - This [JEXL playground](https://czosel.github.io/jexl-playground/#/?context=%7B%0A%20%20%22app_name%22%3A%20%22fenix%22%2C%0A%20%20%22app_id%22%3A%20%22org.mozilla.fenix%22%2C%0A%20%20%22channel%22%3A%20%22release%22%2C%0A%20%20%22app_version%22%3A%20%22101.0.0%22%2C%0A%20%20%22device_manufacturer%22%3A%20%22Samsung%22%2C%0A%20%20%22device_model%22%3A%20%22Note%205%22%2C%0A%20%20%22locale%22%3A%20%22es-US%22%2C%0A%20%20%22os%22%3A%20%22Android%22%2C%0A%20%20%22os_version%22%3A%20%2213.1%22%2C%0A%0A%20%20%22is_default_browser%22%3A%20true%2C%0A%20%20%22date_string%22%3A%20%222022-06-19%22%0A%7D&input='US'%20in%20locale%20%26%26%20'-06-19'%20in%20date_string%0A&transforms=%7B%7D) is setup to prototype expressions against existing attributes.
  - [JEXL documentation](https://github.com/TomFrost/Jexl#all-the-details)
 
 ### Adding custom actions
@@ -542,7 +554,7 @@ Deeplinks are implemented by the application developers, and should be added to 
 }
 ```
 
-Custom actions can be used in all messages only when they are added back to the application's [list of actions][#list-of-actions].
+Custom actions can be used in all messages only when they are added back to the application's [list of actions](#list-of-actions).
 
 ## Lifecycle of a message
 
