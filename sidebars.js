@@ -158,6 +158,11 @@ module.exports = {
           label: "Available Targeting",
           href: "https://firefox-source-docs.mozilla.org/browser/components/newtab/content-src/asrouter/docs/targeting-attributes.html",
         },
+            {
+      type: "category",
+      label: "Glossary / Lexicon",
+      items: ["glossary/experiment-tools", "glossary/experiment-terms"],
+    },
       ],
     },
   ],
