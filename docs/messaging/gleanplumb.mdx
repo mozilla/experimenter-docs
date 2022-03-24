@@ -4,18 +4,15 @@ title: Using the Experimenter to send messages to Mobile clients
 slug: /mobile-messaging
 ---
 
-[fxios-actions]:                 #missing-link
+[fxios-actions-fml]:             #missing-link
 [fxios-actions-eng]:             https://github.com/mozilla-mobile/firefox-ios/blob/main/Client/Application/NavigationRouter.swift#L114-L131
 [fxios-attributes-eng]:          #missing-link
-[fxios-trigger-expressions]:     #missing-link
-[fxios-trigger-expressions-eng]: #missing-link
+[fxios-trigger-expressions-fml]: #missing-link
 
-[fenix-actions]:                 #missing-link
+[fenix-actions-fml]:             #missing-link
 [fenix-actions-eng]:             https://github.com/mozilla-mobile/fenix/blob/main/app/src/main/AndroidManifest.xml#L91-L126
 [fenix-attributes-eng]:          #missing-link
-[fenix-trigger-expressions]:     #missing-link
-[fenix-trigger-expressions-eng]: #missing-link
-
+[fenix-trigger-expressions-fml]: #missing-link
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -494,12 +491,17 @@ The `DATE_IS_CHRISTMAS` is now available as a trigger expression in all the mess
 
 It can be used in all messages only when it is added back to the application's [list of trigger expressions](#list-of-trigger-expressions).
 
+Once a branch has been rolled out, then `DATE_IS_CHRISTMAS` becomes available to all messages.
+
+Finally, it can be rolled back in to the product by adding it to the `nimbus.fml.yaml` file, i.e. in [Firefox for iOS][fxios-trigger-expressions-fml] and [Firefox for Android][fenix-trigger-expressions-fml].
+
 Care should be taken to test this new trigger expression before deploying it.
 
 Suitable tools to prototype these expressions:
 
  - This [JEXL playground](https://czosel.github.io/jexl-playground/#/?context=%7B%0A%20%20%22app_name%22%3A%20%22fenix%22%2C%0A%20%20%22app_id%22%3A%20%22org.mozilla.fenix%22%2C%0A%20%20%22channel%22%3A%20%22release%22%2C%0A%20%20%22app_version%22%3A%20%22101.0.0%22%2C%0A%20%20%22device_manufacturer%22%3A%20%22Samsung%22%2C%0A%20%20%22device_model%22%3A%20%22Note%205%22%2C%0A%20%20%22locale%22%3A%20%22es-US%22%2C%0A%20%20%22os%22%3A%20%22Android%22%2C%0A%20%20%22os_version%22%3A%20%2213.1%22%2C%0A%0A%20%20%22is_default_browser%22%3A%20true%2C%0A%20%20%22date_string%22%3A%20%222022-06-19%22%0A%7D&input='US'%20in%20locale%20%26%26%20'-06-19'%20in%20date_string%0A&transforms=%7B%7D) is setup to prototype expressions against existing attributes.
  - [JEXL documentation](https://github.com/TomFrost/Jexl#all-the-details)
+
 
 ### Adding custom actions
 
@@ -534,10 +536,20 @@ You can add URLs as named actions for use by multiple messages.
 }
 ```
 
-Deeplinks are implemented by the application developers, and should be added to the `nimbus.fml.yaml` file.
+Deeplinks are implemented by the application developers in the app.
 
-- Firefox for Android [Deeplinks in the `AndroidManifest.xml`][fenix-actions-eng].
-- Firefox for iOS [Deeplinks in the `NavigationRouter.swift`][fxios-actions-eng].
+There are two parts to making new actions for messages:
+    - implementing them so that the app can respond to deeplinks.
+    - making those links accessible to messages, by adding them to the `nimbus.fml.yaml` file.
+
+- Firefox for Android:
+    - [Deeplinks in the `AndroidManifest.xml`][fenix-actions-eng].
+    - Corresponding [`actions` in the `nimbus.fml.yaml`][fenix-actions-fml]. Note that the `deepLinkScheme` is omitted in the FML.
+- Firefox for iOS:
+    - [Deeplinks in the `NavigationRouter.swift`][fxios-actions-eng].
+    - Corresponding [`actions` in the `nimbus.fml.yaml`][fxios-actions-fml]. Note that the `deepLinkScheme` is omitted in the FML.
+
+If the implementation stage has been done, but the FML part hasn't, you can add the action as part of the branch configuration.
 
 ```json
 {
@@ -597,7 +609,7 @@ These trigger expressions are application specific:
 Expression name | JEXL expression | Discussion
 --- | --- | ---
 
-It is possible this table is out of date. The definitive source of truth for this in [the code][fenix-trigger-expressions] itself.
+It is possible this table is out of date. The definitive source of truth for this in [the code][fenix-trigger-expressions-fml] itself.
 
 </TabItem>
 <TabItem value="fxios">
@@ -605,10 +617,11 @@ It is possible this table is out of date. The definitive source of truth for thi
 Expression name | JEXL expression | Discussion
 --- | --- | ---
 
-It is possible this table is out of date. The definitive source of truth for this in [the code][fxios-trigger-expressions] itself.
+It is possible this table is out of date. The definitive source of truth for this in [the code][fxios-trigger-expressions-fml] itself.
 
 </TabItem>
 </Tabs>
+
 
 ### List of actions
 
@@ -629,10 +642,6 @@ Action                               | Description | Corresponding Deeplink |
 `ENABLE_PRIVATE_BROWSING`            |  | `firefox://enable_private_browsing` |
 `INSTALL_SEARCH_WIDGET`              |  | `firefox://install_search_widget` |
 `MAKE_DEFAULT_BROWSER`               |  | `firefox://make_default_browser` |
-`VIEW_BOOKMARKS`                     |  | `firefox://urls_bookmarks` |
-`VIEW_COLLECTIONS`                   |  | `firefox://home_collections` |
-`VIEW_HISTORY`                       |  | `firefox://urls_history` |
-`VIEW_HOMESCREEN`                    |  | `firefox://home` |
 `OPEN_SETTINGS_ACCESSIBILITY`        |  | `firefox://settings_accessibility` |
 `OPEN_SETTINGS_ADDON_MANAGER`        |  | `firefox://settings_addon_manager` |
 `OPEN_SETTINGS_DELETE_BROWSING_DATA` |  | `firefox://settings_delete_browsing_data` |
@@ -644,8 +653,32 @@ Action                               | Description | Corresponding Deeplink |
 `OPEN_SETTINGS_WALLPAPERS`           |  | `firefox://settings_wallpapers` |
 `OPEN_SETTINGS`                      |  | `firefox://settings` |
 `TURN_ON_SYNC`                       |  | `firefox://turn_on_sync` |
+`VIEW_BOOKMARKS`                     |  | `firefox://urls_bookmarks` |
+`VIEW_COLLECTIONS`                   |  | `firefox://home_collections` |
+`VIEW_HISTORY`                       |  | `firefox://urls_history` |
+`VIEW_HOMESCREEN`                    |  | `firefox://home` |
 </TabItem>
 <TabItem value="fxios">
+
+Action                               | Description | Corresponding Deeplink |
+------------------------------------ | --- | --- |
+`ENABLE_PRIVATE_BROWSING`     |  | `firefox://deep-link?url=homepanel/new-private-tab` |
+`MAKE_DEFAULT_BROWSER`        |  | `firefox://deep-link?url=default-browser/system-settings` |
+`OPEN_SETTINGS_EMAIL`         |  | `firefox://deep-link?url=settings/mailto` |
+`OPEN_SETTINGS_FXA`           |  | `firefox://deep-link?url=settings/fxa` |
+`OPEN_SETTINGS_HOMESCREEN`    |  | `firefox://deep-link?url=settings/homepage` |
+`OPEN_SETTINGS_NEW_TAB`       |  | `firefox://deep-link?url=settings/newtab` |
+`OPEN_SETTINGS_PRIVACY`       |  | `firefox://deep-link?url=settings/clear-private-data` |
+`OPEN_SETTINGS_SEARCH_ENGINE` |  | `firefox://deep-link?url=settings/search` |
+`OPEN_SETTINGS_THEME`         |  | `firefox://deep-link?url=settings/theme` |
+`OPEN_SETTINGS_WALLPAPERS`    |  | `firefox://deep-link?url=settings/wallpaper` |
+`OPEN_SETTINGS`               |  | `firefox://deep-link?url=settings/general` |
+`VIEW_BOOKMARKS`              |  | `firefox://deep-link?url=homepanel/bookmarks` |
+`VIEW_DOWNLOADS`              |  | `firefox://deep-link?url=homepanel/downloads` |
+`VIEW_HISTORY`                |  | `firefox://deep-link?url=homepanel/history` |
+`VIEW_READING_LIST`           |  | `firefox://deep-link?url=homepanel/reading-list` |
+`VIEW_TOP_SITES`              |  | `firefox://deep-link?url=homepanel/top-sites` |
+
 </TabItem>
 </Tabs>
 
@@ -696,13 +729,15 @@ It is possible this table is out of date. The definitive source of truth for thi
 
 Attribute | Type | Description
 ----------|------|------------
+`is_default_browser`                 | boolean  |                      |
+`date_string`                        | string   | In YYYY-MM-DD format |
 
 It is possible this table is out of date. The definitive source of truth for this in [the code][fxios-attributes-eng] itself.
 
 </TabItem>
 </Tabs>
 
-
+<!---
 ### Empty Tabs
 
 <Tabs
@@ -755,6 +790,25 @@ ALWAYS: true
 NEVER: false
 ```
 
+```yaml
+OPEN_SETTINGS:               ://deep-link?url=settings/general
+OPEN_SETTINGS_NEW_TAB:       ://deep-link?url=settings/newtab
+OPEN_SETTINGS_HOMESCREEN:    ://deep-link?url=settings/homepage
+OPEN_SETTINGS_WALLPAPERS:    ://deep-link?url=settings/wallpaper
+OPEN_SETTINGS_EMAIL:         ://deep-link?url=settings/mailto
+OPEN_SETTINGS_SEARCH_ENGINE: ://deep-link?url=settings/search
+OPEN_SETTINGS_PRIVACY:       ://deep-link?url=settings/clear-private-data
+OPEN_SETTINGS_FXA:           ://deep-link?url=settings/fxa
+OPEN_SETTINGS_THEME:         ://deep-link?url=settings/theme
+VIEW_BOOKMARKS:              ://deep-link?url=homepanel/bookmarks
+VIEW_TOP_SITES:              ://deep-link?url=homepanel/top-sites
+VIEW_READING_LIST:           ://deep-link?url=homepanel/reading-list
+VIEW_HISTORY:                ://deep-link?url=homepanel/history
+VIEW_DOWNLOADS:              ://deep-link?url=homepanel/downloads
+ENABLE_PRIVATE_BROWSING:     ://deep-link?url=homepanel/new-private-tab
+MAKE_DEFAULT_BROWSER:        ://deep-link?url=default-browser/system-settings
+```
+-->
 
 ```
 Русский военный корабль, иди на хуй

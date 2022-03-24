@@ -157,6 +157,7 @@ module.exports = {
           label: "Available Targeting",
           href: "https://firefox-source-docs.mozilla.org/browser/components/newtab/content-src/asrouter/docs/targeting-attributes.html",
         },
+        "messaging/mobile-messaging"
       ],
     },
   ],
