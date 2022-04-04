@@ -63,7 +63,7 @@ Nimbus can filter on several factors, including:
 This additional filtering always happens logically _after_ a client passes the sizing filter.
 You must inflate your population fraction to account for filtering.
 
-For a concrete example, imagine that Firefox WAU is 1,000 clients. 20% of WAU is from Canada. You wish to deploy an experiment to Canadian users. Your power analysis says that you need 50 clients in total to enroll. You should specify a population fraction of at least 25%, because 1,000 * 0.2 (from Canada) * 0.25 (your filter) = 50.
+For a concrete example, imagine that Firefox WAU is 1,000 clients. 20% of WAU is from Canada. You wish to deploy an experiment to Canadian users. Your power analysis says that you need 50 clients in total to enroll. You should specify a population fraction of at least 25%, because 1,000 \* 0.2 (from Canada) \* 0.25 (your filter) = 50.
 
 Most of our telemetry metrics are not normally distributed. A couple approaches that you may find helpful are:
 
