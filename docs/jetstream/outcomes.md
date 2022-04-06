@@ -9,6 +9,8 @@ which will be displayed on the Experimenter results page.
 
 Outcomes are defined in TOML snippets in the [`outcomes/` path of the jetstream-config repository](https://github.com/mozilla/jetstream-config/tree/main/outcomes).
 
+See what [outcomes are available](https://mozilla.github.io/jetstream-config/outcomes/firefox_desktop/firefox_suggest/).
+
 Watch a demo about how to use Outcomes:
 
 <iframe src="https://drive.google.com/file/d/10pHG1S8ucpVBlNgCq2CIR5lXPLdJQfwm/preview" width="640" height="480"></iframe>
