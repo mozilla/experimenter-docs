@@ -9,10 +9,10 @@ slug: /mobile-messaging
 [fxios-attributes-eng]:          #missing-link
 [fxios-trigger-expressions-fml]: https://github.com/mozilla-mobile/firefox-ios/blob/main/nimbus.fml.yaml#L139
 
-[fenix-actions-fml]:             #missing-link
+[fenix-actions-fml]:             https://github.com/mozilla-mobile/fenix/blob/main/nimbus.fml.yaml#L126
 [fenix-actions-eng]:             https://github.com/mozilla-mobile/fenix/blob/main/app/src/main/AndroidManifest.xml#L91-L126
-[fenix-attributes-eng]:          #missing-link
-[fenix-trigger-expressions-fml]: #missing-link
+[fenix-attributes-eng]:          https://github.com/mozilla-mobile/fenix/blob/main/app/src/main/java/org/mozilla/fenix/gleanplumb/CustomAttributeProvider.kt#L29
+[fenix-trigger-expressions-fml]: https://github.com/mozilla-mobile/fenix/blob/main/nimbus.fml.yaml#L115
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
@@ -34,6 +34,11 @@ It is also a living document:
 
  - the messaging system is under active development, and learning from its MVP.
  - attributes useful in triggers, and deeplink actions will accrue in each of the embedding apps.
+
+#### Edit history
+
+- Changed `is_default_browser` to `is_default_browser_string`.
+- Renamed Glean messages to match the implementation.
 
 ## Scene setting
 
@@ -430,12 +435,12 @@ In the case of messaging, exposure events are emitted when the user is enrolled,
 
 Each of the following events is emitted— via Glean— at certain points while the message exists on the user's device.
 
-- `impression`: the message is shown to the user.
-- `interaction`: the user has tapped on the button, or the message itself if a button doesn't exist.
+- `message_shown`: the message is shown to the user.
+- `message_clicked`: the user has tapped on the button, or the message itself if a button doesn't exist.
     - an `action-uuid` is given as an extra.
 - `malformed`: the message sender has somehow made an error specifying a particular message. e.g.
-- `dismissed`: the message was shown to the user, and tapped the dismiss action. This is message surface dependent.
-- `expired`: The message has been shown to the user for a number of sessions, and not been interacted with. We therefore expire the message.
+- `message_dismissed`: the message was shown to the user, and tapped the dismiss action. This is message surface dependent.
+- `message_expired`: The message has been shown to the user for a number of sessions, and not been interacted with. We therefore expire the message.
 
 Each message has a `message-key` extra.
 
@@ -461,7 +466,7 @@ Trigger expressions can be added on a per-message basis, by adding to the `trigg
 ```json
 {
     "triggers": {
-        "DATE_IS_CHRISTMAS": "'-12-25' in data-string"
+        "DATE_IS_CHRISTMAS": "'-12-25' in date_string"
     },
 
     "messages": {
@@ -539,9 +544,10 @@ You can add URLs as named actions for use by multiple messages.
 Deeplinks are implemented by the application developers in the app.
 
 There are two parts to making new actions for messages:
-    - implementing them so that the app can respond to deeplinks.
-    - making those links accessible to messages, by adding them to the `nimbus.fml.yaml` file.
+- implementing them so that the app can respond to deeplinks.
+- making those links accessible to messages, by adding them to the `nimbus.fml.yaml` file.
 
+For example:
 - Firefox for Android:
     - [Deeplinks in the `AndroidManifest.xml`][fenix-actions-eng].
     - Corresponding [`actions` in the `nimbus.fml.yaml`][fenix-actions-fml]. Note that the `deepLinkScheme` is omitted in the FML.
@@ -608,6 +614,8 @@ These trigger expressions are application specific:
 
 Expression name | JEXL expression | Discussion
 --- | --- | ---
+`I_AM_DEFAULT_BROWSER`       | `is_default_browser_string == 'true' ` |  |
+`I_AM_NOT_DEFAULT_BROWSER`   | `is_default_browser_string == 'false'` |  |
 
 It is possible this table is out of date. The definitive source of truth for this in [the code][fenix-trigger-expressions-fml] itself.
 
@@ -708,6 +716,12 @@ Attribute | Type | Description
 
 These attributes are application specific.
 
+Unfortunately, the JEXL evaluator used does not have support for [boolean equality][bool-equ] or [negation][bool-not],
+so boolean attributes should be simulated with strings or integers.
+
+[bool-equ]: https://github.com/mozilla/jexl-rs/issues/22
+[bool-not]: https://github.com/mozilla/jexl-rs/issues/15
+
 <Tabs
   defaultValue="fenix"
   values={[
@@ -719,8 +733,8 @@ These attributes are application specific.
 
 Attribute | Type | Description
 ----------|------|------------
-`is_default_browser`                 | boolean  |                      |
-`date_string`                        | string   | In YYYY-MM-DD format |
+`is_default_browser_string`                 | string   | Should change to boolean on fixing [`==`][bool-equ] and [`!`][bool-not] |
+`date_string`                               | string   | In YYYY-MM-DD format                                                    |
 
 It is possible this table is out of date. The definitive source of truth for this in [the code][fenix-attributes-eng] itself.
 
@@ -729,7 +743,6 @@ It is possible this table is out of date. The definitive source of truth for thi
 
 Attribute | Type | Description
 ----------|------|------------
-`is_default_browser`                 | boolean  |                      |
 `date_string`                        | string   | In YYYY-MM-DD format |
 
 It is possible this table is out of date. The definitive source of truth for this in [the code][fxios-attributes-eng] itself.
