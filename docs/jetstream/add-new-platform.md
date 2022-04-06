@@ -64,7 +64,6 @@ pip-compile --generate-hashes --output-file=requirements.txt requirements.in
 An example of desktop configuration
 ```
 [platform.firefox_desktop]
-config_spec_path = "default_metrics.toml"
 metrics_module = "desktop"
 segments_module = "desktop"
 enrollments_query_type = "normandy"
@@ -74,7 +73,6 @@ app_id = "firefox-desktop"
 ---
 ### Configuration breakdown
 - `[platform.platform_name]` - Specify platform name
-- `config_spec_path` - toml configuration for the app found inside `jetstream/config` folder (default: `<platform_name>.toml`).
 - `metrics_module` - mozanalysis metrics module that this platform should use (default: `<platform_name>`)
 - `segments_module` - mozanalysis segments module that this platform should use (default: `None`)
 - `enrollments_query_type` - whether enrollments should be determined based on Glean events (`glean-event`) data or Normandy data (`normandy`) (default: `glean-event`)

@@ -88,7 +88,7 @@ When analyzing experiments, the following steps are executed for each experiment
 
 <img src="/img/jetstream/analysis-steps.png" alt="Experiment analyis steps" className="img-sm"/>
 
-A [default configuration](https://github.com/mozilla/jetstream/tree/main/jetstream/config)
+A [default configuration](https://mozilla.github.io/jetstream-config/default_configs/firefox_desktop/)
 which depends on the experiment type and, if defined, a custom configuration
 provided via the [jetstream-config] repository are parsed and used for analysis.
 The experiment definition and config parameters are used to run some checks

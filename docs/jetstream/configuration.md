@@ -136,9 +136,9 @@ The metrics section allows you to specify and define the metrics that you're col
 the statistical summaries that you'd like applied to them, and any filters that you need.
 See the [Jetstream docmentation at DTMO][jetstream-dtmo] for more details on the analysis window concept.
 
-You can use the names of metrics defined in mozanalysis without redefining them.
-See the [mozanalysis metrics documentation](https://mozilla.github.io/mozanalysis/api/metrics/desktop.html)
-for your platform for the set of defined metrics.
+You can use the names of pre-defined metrics defined in mozanalysis without redefining them.
+See what [pre-defined metrics are available](https://mozilla.github.io/jetstream-config/metrics/firefox_desktop/) for your platform.
+
 
 ```toml
 [metrics]
@@ -245,8 +245,10 @@ data_source = "main"
 
 ### Defining data sources
 
-Most of the regular data sources are already defined in mozanalysis,
-but you can define a new one in a similar way to how new metrics are defined.
+Most of the regular data sources are already defined in mozanalysis. 
+See what [pre-defined data sources are available](https://mozilla.github.io/jetstream-config/data_sources/firefox_desktop/) for your platform.
+You can also define a new one in a similar way to how new metrics are defined.
+
 
 Add a section that looks like:
 
