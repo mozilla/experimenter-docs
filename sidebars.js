@@ -111,7 +111,6 @@ module.exports = {
       type: "category",
       label: "Core Nimbus Team",
       items: [
-        "android-feature-api",
         "client-sdk-states-and-lifecycle",
         "integration-tests",
         {
