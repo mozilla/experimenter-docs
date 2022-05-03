@@ -24,8 +24,8 @@ This works for both Normandy and Nimbus slugs.
 
 To add or update a custom configuration, open a pull request against [jetstream-config]. 
 CI checks will validate the columns, data sources, and SQL syntax. Note that if the experiment has not yet launched, the CI checks will not pass.
-Once CI completes, you may merge the pull request, which will trigger Jetstream to re-run your analysis. Results should be available in several hours, depending upon the complexity of the configuration.
-No additional review is necessary to land configurations. 
+Once CI completes, you may merge the pull request, which will trigger Jetstream to re-run your analysis. 
+No additional review is necessary to land configurations. Results should be available in several hours, depending upon the complexity of the configuration.
 
 Note that rerunning experiments may be costly!
 Don't let this stop you from doing your job,
