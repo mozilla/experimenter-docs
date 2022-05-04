@@ -45,5 +45,5 @@ in the outcomes path of the
 A small set of guardrail metrics (called Core Firefox Metrics in Nimbus Console)
 specific to each platform
 is run by default for each experiment.
-These are defined in the main Jetstream repository
-in [jetstream/config/](https://github.com/mozilla/jetstream/tree/main/jetstream/config).
+These are defined in the main Jetstream-config repository 
+in [jetstream-config/](https://github.com/mozilla/jetstream-config/blob/main/defaults/firefox_desktop.toml)
