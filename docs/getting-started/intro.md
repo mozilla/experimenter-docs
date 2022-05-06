@@ -6,17 +6,18 @@ slug: /
 ---
 
 :::tip
-Need help? Reach out in `#ask-experimenter` on Slack or join a [lightning advisory session](https://docs.google.com/document/d/1fj4BqG0N-cN_Fx5sq-AozdiOdKO7asaDWR4B7sH88F0).
+Need help? Reach out in [`#ask-experimenter`](https://mozilla.slack.com/archives/CF94YGE03) on Slack or join a [lightning advisory session](https://docs.google.com/document/d/1fj4BqG0N-cN_Fx5sq-AozdiOdKO7asaDWR4B7sH88F0).
 :::
 
-Welcome to the [Experimenter](https://experimenter.services.mozilla.com/nimbus/) documentation hub, your central resource for A/B experiments in Firefox Mobile and Desktop. Whether you are an engineer working on a feature, a product manager with a hypothesis, or a data scientist helping design and interpret results, we want to give you the tools to get
+Welcome to the [Experimenter](https://experimenter.services.mozilla.com/nimbus/) documentation hub, your central resource for A/B experiments in Firefox Mobile and Desktop. Whether you are an engineer working on a feature, a product manager with a hypothesis, or a data scientist helping design and interpret results, we want to give you the tools to get started!
 
-## Run an experiment
+## Experimentation Workflow 
 
-Want to run an experiment in Firefox? Here's what you should do first:
+To view a recorded training for the Experimentation Workflow, [click here](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=4d337632-a0bd-4be7-bee8-ae5b017134ae&start=0)
 
-- Follow the [Experiment Design Process](https://mana.mozilla.org/wiki/display/FJT/Experiment+Process+Checklist) to work on your hypothesis and experiment design.
-- Assuming you have decided to use the Nimbus platform, go through [onboarding](https://mana.mozilla.org/wiki/display/FJT/Nimbus+Onboarding#NimbusOnboarding-Branches) to use the [Nimbus Console](https://experimenter.services.mozilla.com/nimbus/)
+<div class="miro-container"> 
+<iframe class="responsive-iframe" src="https://miro.com/app/live-embed/uXjVOJ3IYRA=/?moveToViewport=-2130,380,5949,3025&embedAutoplay=true" frameBorder="0" scrolling="no"></iframe>
+</div>
 
 ## Find an existing experiment
 

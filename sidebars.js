@@ -111,7 +111,6 @@ module.exports = {
       type: "category",
       label: "Core Nimbus Team",
       items: [
-        "android-feature-api",
         "client-sdk-states-and-lifecycle",
         "integration-tests",
         {
@@ -146,6 +145,7 @@ module.exports = {
       label: "Messaging System",
       items: [
         "messaging/messaging-surfaces",
+        "messaging/display-logic",
         {
           type: "link",
           label: "Triggers & User Actions",
@@ -157,6 +157,7 @@ module.exports = {
           label: "Available Targeting",
           href: "https://firefox-source-docs.mozilla.org/browser/components/newtab/content-src/asrouter/docs/targeting-attributes.html",
         },
+        "messaging/mobile-messaging"
       ],
     },
   ],

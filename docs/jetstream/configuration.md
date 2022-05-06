@@ -14,7 +14,7 @@ Outcome definitions are also created in jetstream-config and use the same config
 
 Custom experiment configurations are associated with an experiment by their filename,
 which should match the experiment slug, like `my-experiment-slug.toml`.
-This works for both Normandy and Nimbus slugs.
+This works for both Normandy and Nimbus slugs. 
 
 [partybal]: https://protosaur.dev/partybal/
 [outcome]: jetstream/outcomes.md
@@ -22,10 +22,10 @@ This works for both Normandy and Nimbus slugs.
 
 ## Landing configurations
 
-To add or update a custom configuration, open a pull request against [jetstream-config].
-CI checks will validate the columns, data sources, and SQL syntax.
-Once CI completes, you may merge the pull request, which will trigger Jetstream to re-run your analysis.
-No additional review is necessary to land configurations.
+To add or update a custom configuration, open a pull request against [jetstream-config]. 
+CI checks will validate the columns, data sources, and SQL syntax. Note that if the experiment has not yet launched, the CI checks will not pass.
+Once CI completes, you may merge the pull request, which will trigger Jetstream to re-run your analysis. 
+No additional review is necessary to land configurations. Results should be available in several hours, depending upon the complexity of the configuration.
 
 Note that rerunning experiments may be costly!
 Don't let this stop you from doing your job,
@@ -136,9 +136,9 @@ The metrics section allows you to specify and define the metrics that you're col
 the statistical summaries that you'd like applied to them, and any filters that you need.
 See the [Jetstream docmentation at DTMO][jetstream-dtmo] for more details on the analysis window concept.
 
-You can use the names of metrics defined in mozanalysis without redefining them.
-See the [mozanalysis metrics documentation](https://mozilla.github.io/mozanalysis/api/metrics/desktop.html)
-for your platform for the set of defined metrics.
+You can use the names of pre-defined metrics defined in mozanalysis without redefining them.
+See what [pre-defined metrics are available](https://mozilla.github.io/jetstream-config/metrics/firefox_desktop/) for your platform.
+
 
 ```toml
 [metrics]
@@ -245,8 +245,10 @@ data_source = "main"
 
 ### Defining data sources
 
-Most of the regular data sources are already defined in mozanalysis,
-but you can define a new one in a similar way to how new metrics are defined.
+Most of the regular data sources are already defined in mozanalysis. 
+See what [pre-defined data sources are available](https://mozilla.github.io/jetstream-config/data_sources/firefox_desktop/) for your platform.
+You can also define a new one in a similar way to how new metrics are defined.
+
 
 Add a section that looks like:
 
