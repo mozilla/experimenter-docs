@@ -44,7 +44,7 @@ Each experiment begins with an enrollment period with fixed start and end dates 
 
 For each client, experiment metrics are analyzed over a defined period of time from enrollment. We report results for an analysis period (e.g. the first day after enrollment) after all clients have had a chance to experience the treatment for that duration. The [Jetstream overview](jetstream/jetstream.md#analysis-paradigm) describes the analysis paradigm in more depth and how it relates to the length of an experiment.
 
-For more nuances about sampling, enrollment and exposure (whether or not the client actually saw the treatment or control), see [the experiment lifecycle overview](client-sdk-states-and-lifecycle.mdx).
+For more nuances about sampling, enrollment and exposure (whether or not the client actually saw the treatment or control), see [the experiment lifecycle overview](deep-dives/specifications/client-sdk-states-and-lifecycle.mdx).
 
 ## Sample size recommendations
 

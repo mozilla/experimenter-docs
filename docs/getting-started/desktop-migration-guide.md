@@ -1,9 +1,10 @@
 ---
 id: desktop-migration-guide
-title: Migration Guide (JS)
+title: Desktop Migration Guide (JS)
 slug: /desktop-migration-guide
 ---
 
+## To migrate front-end normandy prefs to Nimbus controlled experiments or rollouts
 This guide will help you migrate your Desktop front-end code to run experiments with Nimbus, while still being able to use preferences for default and user-override values
 
 Prerequisites: 

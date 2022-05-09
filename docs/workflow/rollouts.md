@@ -1,10 +1,10 @@
 ---
-id: desktop-rollouts
-title: Desktop Rollouts
-slug: /desktop-rollouts
+id: rollouts
+title: Rollouts
+slug: /rollouts
 ---
 
-If you want to set configurations for a feature remotely _for non-experiment users_, you can do so with Nimbus Rollouts.
+If you want to set configurations for a feature remotely _for non-experiment users_, you can do so with a **Rollout**.
 
 ## FAQS
 

@@ -1,5 +1,4 @@
 ---
-id: access
 title: Getting Access
 slug: /access
 ---

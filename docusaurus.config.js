@@ -1,6 +1,6 @@
 module.exports = {
-  title: "Experimenter Docs",
-  tagline: "Documentation hub for Experimenter",
+      title: "Experimenter Docs",
+  tagline: "Documentation souce for Data scientists, Product Managers and Engineers",
   url: "https://experimenter.info",
   baseUrl: "/",
   onBrokenLinks: "throw",
@@ -19,7 +19,7 @@ module.exports = {
       respectPrefersColorScheme: true,
     },
     navbar: {
-      title: "Experimenter Docs",
+      title: "Mozilla Experimentation and Feature Delivery",
       logo: {
         alt: "Experimenter Logo",
         src: "img/logo.svg",
