@@ -11,7 +11,7 @@ slug: /ios-preview-testing
 The first step to testing the preview flow is to launch an experiment
 to preview on the stage nimbus server (we should not using the production server for testing). Go to the [stage experimenter](https://stage.experimenter.nonprod.dataops.mozgcp.net/nimbus/) and create your experiment there.
 
-Follow the first few instructions on [the preview docs](experiment-owners/preview.md) to get an experiment to preview. (note that the experiment should be set to target iOS, look at the [FAQ](#faq) section at the bottom)
+Follow the first few instructions on [the preview docs](preview.md) to get an experiment to preview. (note that the experiment should be set to target iOS, look at the [FAQ](#faq) section at the bottom)
 
 ## Pointing a local iOS build to the stage server
 

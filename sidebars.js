@@ -29,7 +29,7 @@ module.exports = {
         "getting-started/for-engineers",
         "getting-started/desktop-migration-guide",
         "getting-started/desktop-feature-api",
-        "getting-started/mobile-feature-api"
+        "deep-dives/mobile/mobile-feature-api"
       ],
     },
     "getting-started/for-product",

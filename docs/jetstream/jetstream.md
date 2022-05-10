@@ -80,7 +80,7 @@ Any telemetry collection can be used as an exposure event, though events are oft
 Many Nimbus features will send a [Nimbus exposure event] automatically when the feature configuration is consulted;
 these are `normandy#expose` events on desktop and `nimbus_events.exposure` events in Glean.
 
-[Nimbus exposure event]: feature-variables-and-me.md#recording-exposure-events
+[Nimbus exposure event]: ../mobile-feature-api#recording-exposure-events
 
 ## Analysis steps
 
