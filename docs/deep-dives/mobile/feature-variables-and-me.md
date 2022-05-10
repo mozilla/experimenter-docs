@@ -1,3 +1,9 @@
+---
+id: mobile-feature-api
+title: Mobile Feature API
+slug: /mobile-feature-api
+---
+
 # Feature Variables and Me
 
 ## About this document

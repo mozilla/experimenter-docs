@@ -1,7 +1,7 @@
 ---
 id: bucketing
 title: Bucketing
-slug: /Bucketing
+slug: /bucketing
 ---
 
 **Bucketing** is the process of randomly assigning users to experiment branches. When a user is “bucketed” into an experiment, it means that the configuration in one of its branches (such as a change to part of the UI) can be activated, and that any interactions we record from that moment on can be associated with the experiment and branch identifier.

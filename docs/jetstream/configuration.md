@@ -391,4 +391,4 @@ window_end = "analysis_window_end"
 Results for exposure based metrics are currently not visualized in Experimenter. To access results, the BigQuery tables need to be queried directly.
 
 
-[Nimbus exposure event]: feature-variables-and-me.md#recording-exposure-events
+[Nimbus exposure event]: ../mobile-feature-api#recording-exposure-events

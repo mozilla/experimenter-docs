@@ -4,7 +4,7 @@ title: Adding new targeting attributes to Android
 ---
 # Adding new targeting attributes to Android
 This page demonstrates how to add new targeting attributes to Android, enabling experiment creators more specific targeting.
-For more general documentation on targeting custom audiences, check out [the custom audiences docs](experiment-owners/custom-audiences.md)
+For more general documentation on targeting custom audiences, check out [the custom audiences docs](custom-audiences)
 
 ## Adding the attribute to the application
 The Nimbus SDK exposes a new `customTargetingAttributes` parameter in its initializer that is a `Map<String, String>` map. We can take advantage of this parameter to pass in new targeting attributes without modifying the Nimbus SDK at all.
@@ -28,7 +28,7 @@ val appInfo = NimbusAppInfo(
 Note that since we need to add the targeting attributes on the client code, the attribute changes will have to ride the trains before they are available for targeting.
 
 ## Adding the attribute on experimenter
-After the targeting attribute is ready on the app, you will need to modify experimenter to allow creating experiments that target the attribute you created. Follow the instructions on [the custom audiences page](experiment-owners/custom-audiences.md#how-to-add-a-new-custom-audience) to add the new targeting on experimenter.
+After the targeting attribute is ready on the app, you will need to modify experimenter to allow creating experiments that target the attribute you created. Follow the instructions on [the custom audiences page](custom-audiences#how-to-add-a-new-custom-audience) to add the new targeting on experimenter.
 :::warning
 The targeting `JEXL` expression on experimenter **must** use the same name as the key given to the SDK. For example, if the app defines a key-value pair, with key `isFirstRun`. experimenter expression must use the same name (i.e `isFirstRun`).
 :::
