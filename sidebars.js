@@ -44,6 +44,7 @@ module.exports = {
               "type": "category",
               "label": "Implementing",
               "items": [
+                "workflow/experiment-owners",
                 "workflow/feature-definition",
                 "workflow/a-b-experiments",
                 "workflow/custom-audiences",
