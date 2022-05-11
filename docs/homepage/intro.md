@@ -16,13 +16,13 @@ Welcome to the [Experimenter](https://experimenter.services.mozilla.com/nimbus/)
 
 ## What is covered here?
 
-These documents are specific to the Mozilla experimentation program know as **Nimbus**.  Nimbus experimentation and support is currently available for our Firefox Desktop and Mobile browser applications.  
+These documents are specific to the Mozilla experimentation program known as **Nimbus**.  Nimbus experimentation and support is currently available for our Firefox Desktop and Mobile browser applications.  
 
 Our platform code is all open-source however, we do not offer support or services to 3rd party consumers. Some documentation links may only be available to Mozilla employees and NDA contributors.
 
 ## What other tools exist
 
-The following projects have bespoke tools for experimentation.  These are not included as part of this documentation with the exception of a migration guide from Normandy to Nimbus for engineers.
+The following projects have bespoke tools for experimentation.  These are not included as part of this documentation with the exception of a [migration guide from Normandy to Nimbus](desktop-migration-guide) for engineers.
 
 * Firefox Desktop (legacy experimentation): [Normandy](https://wiki.mozilla.org/Firefox/Normandy/PreferenceRollout)
 * Mozilla Websites (a/b experiments): [Bedrock](https://github.com/mozilla/bedrock)
