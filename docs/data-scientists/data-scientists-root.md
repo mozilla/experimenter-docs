@@ -21,16 +21,16 @@ This suite of experimentation tools is designed for product managers and other i
 and the [experiment review repository](https://mana.mozilla.org/wiki/display/FIREFOX/Experiments+Previously+Reviewed) (internal link)
 contain examples of completed and active experiments.
 
-## Collaborating with investigation owners
+## Collaborating with experiment owners
 
-Data scientists support investigation owners in setting up and interpreting their experiments.
+Data scientists support experiment owners in setting up and interpreting their experiments.
 [The Firefox experiment design process](https://mana.mozilla.org/wiki/display/FIREFOX/Experiment+Design+Process) (internal link)
 describes the process for both data scientists and stakeholders.
 
 [The Nimbus onboarding guide](https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws/edit#)
 explains how to set up an experiment in the experiment console.
 
-The support that investigation owners need from data scientists during experiment set-up includes:
+The support that experiment owners need from data scientists during experiment set-up includes:
 
 * validating that the experimental design will answer their questions
 * consulting on telemetry specifications
@@ -50,6 +50,7 @@ For more nuances about sampling, enrollment and exposure (whether or not the cli
 
 Sample size recommendations are operationalized as the fraction of the Firefox population that should consider enrolling in your recipe.
 
+### Filtering
 Nimbus can filter on several factors, including:
 
 - channel
@@ -65,6 +66,24 @@ You must inflate your population fraction to account for filtering.
 
 For a concrete example, imagine that Firefox WAU is 1,000 clients. 20% of WAU is from Canada. You wish to deploy an experiment to Canadian users. Your power analysis says that you need 50 clients in total to enroll. You should specify a population fraction of at least 25%, because 1,000 \* 0.2 (from Canada) \* 0.25 (your filter) = 50.
 
+### Multiple experiments on the same feature
+If there are already Live experiments on the same feature as your experiment, you **sometimes** need to inflate the sample size to account for clients enrolled in the existing Live experiments that the Nimbus front-end is not aware of. Instructions below.
+
+1. Find the most recent experiment that launched for your feature on your channel.
+2. Go to the recipe JSON for that experiment. You'll see something like:
+`
+ "bucketConfig": {
+    "count": 3478,
+    "namespace": "firefox-desktop-urlbar-release-2",
+    "randomizationUnit": "normandy_id",
+    "start": 3678,
+    "total": 10000
+  },
+`
+3. The example JSON above shows that the most recent experiment used buckets 3678 to 7156 (= 3678 + 3478). If your new experiment needs less than 28.44% (= (10,000 - 7156)/100) of the clients, then you do not need to inflate the percentage to account for Nimbus being unaware of clients enrolled in previous experiments.
+4. If your new experiment needs more than 28.44% of the clients, then you must inflate the percentage to account for 71.56% of the clients already being enrolled in experiments. For example, if your new experiment needs 30% of the clients, then you must input 41.92% (= 30% / 71.56%) into "Population %" in the Nimbus front-end. 
+
+### Non-normal distributions
 Most of our telemetry metrics are not normally distributed. A couple approaches that you may find helpful are:
 
 * powering a Mann-Whitney U-test. [Gpower](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) implements the Mann-Whitney U-test.
