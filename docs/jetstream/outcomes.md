@@ -40,7 +40,7 @@ statistics = { binomial = {} }
 The important elements are:
 
 * Top-level `friendly_name` and `description` fields, which define how the Outcome appears in Experimenter
-* The optional top-level `default_metrics` field, which specifies the metrics that will be showed at the top of the visualization page as the "primary metrics" 
+* The optional top-level `default_metrics` field, which specifies the metrics that will be showed at the top of the visualization page as the "primary metrics"
 * One or more `metrics` blocks that describe the metrics to compute, and any supporting `data_source`s as necessary.
 
 The configuration languge is identical to the custom experiment configuration language described in [Configuring Jetstream].
@@ -51,6 +51,47 @@ If it passes, a data scientist can merge the Outcome definition without addition
 Experimenter will need to be re-deployed to pick up a new Outcome. Please ask in #nimbus-project if you're in a hurry!
 
 [Configuring Jetstream]: jetstream/configuration.md
+
+## Parametizing Outcome
+
+It is also possible to parametize `select_expression` in outcomes:
+
+```toml
+friendly_name = "Picture in Picture"
+description = "Usage and engagement metrics for the video Picture-in-Picture feature."
+default_metrics = ["used_picture_in_picture"]
+
+### parameters definition
+[parameters]
+
+[parameters.id]
+friendly_name = "ID associated with the experiment"
+description = "ID associated with this experiment"
+default = "0"  # this will be the default value if not overwritten in an external config
+distinct_by_branch = false  # if set to true, ensure to specify `branch_name` for each parameter
+
+[metrics.used_picture_in_picture]
+friendly_name = "Used Picture in Picture"
+description = "Fraction of clients that used PiP over the measurement window"
+select_expression = "id = {{parameters.id}}"  # this allows us to reference defined parameters here
+data_source = "events"
+statistics = { binomial = {} }
+```
+
+The value for the parameter can then be passed through external configuration like so:
+
+```toml
+description = "Clients have clicked on ad"
+
+[parameters.id]
+value = "1"
+```
+
+This would result in the following `select_expression` for `metrics.used_picture_in_picture`:
+
+```
+id = 1
+```
 
 ## When should I use Outcomes?
 

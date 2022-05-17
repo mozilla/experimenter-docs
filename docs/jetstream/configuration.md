@@ -313,6 +313,13 @@ Outcome snippets look, for example, like:
 friendly_name = 'Example config'
 description = 'Example outcome snippet'
 
+# parameters definition
+[parameters.id]
+friendly_name = "Experiment ID"
+description = "ID of the experiment we want to track"
+default = "0"  # this will be the default value if not overwritten in an external config
+distinct_by_branch = false  # if set to true, ensure to specify `branch_name` for each value
+
 [metrics.total_amazon_search_count]
 select_expression = "SUM(CASE WHEN engine like 'amazon%' then sap else 0 end)"
 data_source = "search_clients_engines_sources_daily"
@@ -322,13 +329,62 @@ data_source = "search_clients_engines_sources_daily"
 [metrics.urlbar_amazon_search_count]
 select_expression = """
 SUM(CASE
-        WHEN source = 'alias' and engine like 'amazon%' then sap
-        WHEN source = 'urlbar' and engine like 'amazon%' then sap
-        WHEN source = 'urlbar-searchmode' and engine like 'amazon%' then sap
+        WHEN source = 'alias' AND engine LIKE 'amazon%' THEN sap
+        WHEN source = 'urlbar' AND engine LIKE 'amazon%' THEN sap
+        WHEN source = 'urlbar-searchmode' AND engine LIKE 'amazon%' THEN sap
         else 0 end)"""
+data_source = "search_clients_engines_sources_daily"
+
+[metrics.dummy_metric]
+select_expression = """
+COUNTIF(experiment_id = {{parameters.id}})
+"""
 data_source = "search_clients_engines_sources_daily"
 [metrics.urlbar_amazon_search_count.statistics.bootstrap_mean]
 [metrics.urlbar_amazon_search_count.statistics.deciles]
+```
+
+### Overwriting Outcomes parameters (metrics.dummy_metric)
+
+__distinct_by_branch == False__ example:
+
+```toml
+description = "Amazon Search"
+
+[parameters.id]
+value = "1"
+```
+
+This will result in the following string for the parametized `select_expression`:
+
+```sql
+COUNTIF(experiment_id = 1)
+```
+
+__distinct_by_branch == True__ example:
+
+```toml
+description = "Amazon Search"
+
+[parameters.id]
+distinct_by_branch = True
+value = [
+    {
+        "value": "1",
+        "branch_name": "experiment_branch_name_1"
+    },
+    {
+        "value": "2",
+        "branch_name": "experiment_branch_name_2"
+    }
+]
+
+```
+
+This will result in the following string for the parametized `select_expression`:
+
+```sql
+COUNTIF(experiment_id = 1 AND e.branch_name = 'experiment_branch_name_1') OR COUNTIF(experiment_id = 2 AND e.branch_name = 'experiment_branch_name_2')
 ```
 
 ### Defining Exposure Signals
