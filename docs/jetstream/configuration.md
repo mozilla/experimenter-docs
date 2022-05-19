@@ -307,18 +307,20 @@ Unlike experiment configurations, the `[metrics]` section does not specify the a
 are computed for. Jetstream computes metrics defined in outcome snippets for weekly and overall
 analysis windows.
 
+`select_expression` in Outcomes supports parametization. This enables Outcomes to be reused as values specified in an external jestream config to be injected into the select_expression.
+
 Outcome snippets look, for example, like:
 
 ```toml
 friendly_name = 'Example config'
 description = 'Example outcome snippet'
 
-# parameters definition
+# parameters definition (Optional)
 [parameters.id]
 friendly_name = "Experiment ID"
 description = "ID of the experiment we want to track"
 default = "0"  # this will be the default value if not overwritten in an external config
-distinct_by_branch = false  # if set to true, ensure to specify `branch_name` for each value
+distinct_by_branch = false  # if set to true, value provided in config needs to specify value and corresponding id.
 
 [metrics.total_amazon_search_count]
 select_expression = "SUM(CASE WHEN engine like 'amazon%' then sap else 0 end)"
@@ -344,9 +346,11 @@ data_source = "search_clients_engines_sources_daily"
 [metrics.urlbar_amazon_search_count.statistics.deciles]
 ```
 
-### Overwriting Outcomes parameters (metrics.dummy_metric)
+### Overwriting Outcomes parameters
 
-__distinct_by_branch == False__ example:
+__distinct_by_branch set to False__ example:
+
+External config:
 
 ```toml
 description = "Amazon Search"
@@ -355,36 +359,30 @@ description = "Amazon Search"
 value = "1"
 ```
 
-This will result in the following string for the parametized `select_expression`:
+`select_expression` for metric `metrics.dummy_metric` will now look like this:
 
 ```sql
 COUNTIF(experiment_id = 1)
 ```
 
-__distinct_by_branch == True__ example:
+__distinct_by_branch set to True__ example:
+
+External config:
 
 ```toml
 description = "Amazon Search"
 
 [parameters.id]
 distinct_by_branch = True
-value = [
-    {
-        "value": "1",
-        "branch_name": "experiment_branch_name_1"
-    },
-    {
-        "value": "2",
-        "branch_name": "experiment_branch_name_2"
-    }
-]
-
+# value.[corresponding_branch_name] = [value]
+value.experiment_branch_name_1 = 1
+value.experiment_branch_name_2 = 2
 ```
 
-This will result in the following string for the parametized `select_expression`:
+`select_expression` for metric `metrics.dummy_metric` will now look like this:
 
 ```sql
-COUNTIF(experiment_id = 1 AND e.branch_name = 'experiment_branch_name_1') OR COUNTIF(experiment_id = 2 AND e.branch_name = 'experiment_branch_name_2')
+COUNTIF(CASE e.branch_name WHEN "experiment_branch_name_1" THEN "1" WHEN "experiment_branch_name_2" THEN "2" END)
 ```
 
 ### Defining Exposure Signals

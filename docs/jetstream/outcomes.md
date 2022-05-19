@@ -54,7 +54,9 @@ Experimenter will need to be re-deployed to pick up a new Outcome. Please ask in
 
 ## Parametizing Outcome
 
-It is also possible to parametize `select_expression` in outcomes:
+It is also possible to parametize `select_expression` in outcomes, values the parameters to be replaced with can then be specified in external jetstream config.
+
+Example of an outcome using parametization:
 
 ```toml
 friendly_name = "Picture in Picture"
@@ -78,20 +80,8 @@ data_source = "events"
 statistics = { binomial = {} }
 ```
 
-The value for the parameter can then be passed through external configuration like so:
+Instruction on how to specify parameter values can be found [Jetstream Configuration](configuration.md#overwriting-outcomes-parameters)
 
-```toml
-description = "Clients have clicked on ad"
-
-[parameters.id]
-value = "1"
-```
-
-This would result in the following `select_expression` for `metrics.used_picture_in_picture`:
-
-```
-id = 1
-```
 
 ## When should I use Outcomes?
 
