@@ -380,7 +380,7 @@ value.experiment_branch_name_2 = "amazon"
 `select_expression` for metric `metrics.dummy_metric` will now look like this:
 
 ```sql
-COUNTIF(CASE e.branch_name WHEN "experiment_branch_name_1" THEN "1" WHEN "experiment_branch_name_2" THEN "2" END)
+COUNTIF(CASE e.branch_name WHEN "experiment_branch_name_1" THEN "google" WHEN "experiment_branch_name_2" THEN "amazon" END)
 ```
 
 ### Defining Exposure Signals
