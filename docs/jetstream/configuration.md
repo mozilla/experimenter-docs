@@ -315,12 +315,11 @@ friendly_name = 'Example config'
 description = 'Example outcome snippet'
 
 # parameters definition (Optional)
-[parameters.id]
-friendly_name = "Experiment ID"
-description = "ID of the experiment we want to track"
-default = "0"  # this will be the default value if not overwritten in an external config
+[parameters.search_engine]
+friendly_name = "Search engine"
+description = "Search engine we want to track"
+default = "google"  # this will be the default value if not overwritten in an external config
 distinct_by_branch = false  # if set to true, value provided in config needs to specify value and corresponding id.
-
 [metrics.total_amazon_search_count]
 select_expression = "SUM(CASE WHEN engine like 'amazon%' then sap else 0 end)"
 data_source = "search_clients_engines_sources_daily"
