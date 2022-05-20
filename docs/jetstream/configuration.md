@@ -363,7 +363,7 @@ value = "amazon"
 COUNTIF(engine = 'amazon')
 ```
 
-__distinct_by_branch set to True__ example:
+__`distinct_by_branch` set to `True`__ example:
 
 External config:
 
