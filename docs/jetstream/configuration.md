@@ -373,8 +373,8 @@ description = "Amazon Search"
 [parameters.id]
 distinct_by_branch = True
 # value.[corresponding_branch_name] = [value]
-value.experiment_branch_name_1 = 1
-value.experiment_branch_name_2 = 2
+value.experiment_branch_name_1 = "google"
+value.experiment_branch_name_2 = "amazon"
 ```
 
 `select_expression` for metric `metrics.dummy_metric` will now look like this:
