@@ -54,7 +54,7 @@ Experimenter will need to be re-deployed to pick up a new Outcome. Please ask in
 
 ## Parameterizing Outcomes
 
-It is also possible to parametize `select_expression` in outcomes, values the parameters to be replaced with can then be specified in external jetstream config.
+It is also possible to parameterize `select_expression` in outcomes, values the parameters to be replaced with can then be specified in external jetstream config.
 
 Example of an outcome using parametization:
 
