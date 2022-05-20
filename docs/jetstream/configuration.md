@@ -353,8 +353,8 @@ External config:
 ```toml
 description = "Amazon Search"
 
-[parameters.id]
-value = "1"
+[parameters.search_engine]
+value = "amazon"
 ```
 
 `select_expression` for metric `metrics.dummy_metric` will now look like this:
