@@ -360,7 +360,7 @@ value = "amazon"
 `select_expression` for metric `metrics.dummy_metric` will now look like this:
 
 ```sql
-COUNTIF(experiment_id = 1)
+COUNTIF(engine = 'amazon')
 ```
 
 __distinct_by_branch set to True__ example:
