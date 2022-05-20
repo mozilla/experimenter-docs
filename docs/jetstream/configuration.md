@@ -307,8 +307,7 @@ Unlike experiment configurations, the `[metrics]` section does not specify the a
 are computed for. Jetstream computes metrics defined in outcome snippets for weekly and overall
 analysis windows.
 
-`select_expression` in Outcomes supports parametization. This enables Outcomes to be reused as values specified in an external jestream config to be injected into the select_expression.
-
+`select_expression` in Outcomes supports parameterization. This enables Outcomes to be reused as values specified in an external jetstream config to be injected into the `select_expression`.
 Outcome snippets look, for example, like:
 
 ```toml
