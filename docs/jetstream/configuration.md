@@ -337,7 +337,7 @@ data_source = "search_clients_engines_sources_daily"
 
 [metrics.dummy_metric]
 select_expression = """
-COUNTIF(experiment_id = {{parameters.id}})
+COUNTIF(engine = '{{parameters.search_engine}}')
 """
 data_source = "search_clients_engines_sources_daily"
 [metrics.urlbar_amazon_search_count.statistics.bootstrap_mean]
