@@ -346,7 +346,7 @@ data_source = "search_clients_engines_sources_daily"
 
 ### Overwriting Outcomes parameters
 
-__distinct_by_branch set to False__ example:
+__distinct_by_branch set to false__ example:
 
 External config:
 
@@ -363,7 +363,7 @@ value = "amazon"
 COUNTIF(engine = 'amazon')
 ```
 
-__`distinct_by_branch` set to `True`__ example:
+__`distinct_by_branch` set to `true`__ example:
 
 External config:
 
@@ -371,7 +371,7 @@ External config:
 description = "Amazon Search"
 
 [parameters.id]
-distinct_by_branch = True
+distinct_by_branch = true
 # value.[corresponding_branch_name] = [value]
 value.experiment_branch_name_1 = "google"
 value.experiment_branch_name_2 = "amazon"
