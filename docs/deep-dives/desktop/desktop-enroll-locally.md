@@ -27,9 +27,9 @@ Trying to iterate on an experiment in Preview on experimenter.services.mozilla.c
 * Open `Tools > Browser Tools > Browser Toolbox`
 * Switch to the browser console
 * In the input area, do the following:
+ 	* `const branchSlug = 'treatment-a'; # or whatever branch you want
+ 	* `let recipe = ` _paste_recipe_json_here_ `;`
 	* `const { ExperimentManager: em } = ChromeUtils.import("resource://nimbus/lib/ExperimentManager.jsm");`
-	* `let recipe = ` _paste_recipe_json_here_ `;`
-	* `const branchSlug = 'treatment-a'; # or whatever branch you want`
 	* `let branch = recipe.branches.find(b => b.slug == branchSlug);`
 	* `em.forceEnroll(recipe, branch);`
 
