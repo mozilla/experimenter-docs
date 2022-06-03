@@ -1,5 +1,5 @@
 ---
-title: Getting Access
+title: Experiment Reviewers
 slug: /access
 ---
 
