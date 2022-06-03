@@ -31,6 +31,8 @@ Note that rerunning experiments may be costly!
 Don't let this stop you from doing your job,
 but try to avoid too much iteration on large and long-running experiments.
 
+Has your configuration landed but generated unexpected analyses? Troubleshooting information can be found [here](https://experimenter.info/jetstream/troubleshooting) which includes instructions on accessing the Jetstream error logs.
+
 ## Configuration file syntax
 
 Custom configs for [experiments](#custom-experiment-configurations) and [outcome snippets](#outcome-snippets)
