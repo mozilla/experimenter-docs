@@ -51,4 +51,4 @@ Jetstream is executed on the `jetstream` Kubernetes cluster in the `moz-fx-data-
 
 
 [jetstream]: https://github.com/mozilla/jetstream
-[jetstream error dashboard]: https://sql.telemetry.mozilla.org/dashboard/jetstream-errors?p_experiment=%25
+[jetstream error dashboard]: https://mozilla.cloud.looker.com/dashboards/246

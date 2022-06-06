@@ -21,9 +21,9 @@ The dashboard can than be accessed via [127.0.0.1:8080](http://127.0.0.1:8080) t
 
 Jetstream logs errors to the console and, optionally, to the `monitoring.logs` BigQuery table. Logging to BigQuery is enabled by default when running Jetstream via Airflow, as it allows for better alerting and monitoring of errors. It is by default disabled for runs triggered via the jetstream-config CI.
 
-Errors can be viewed on the [Jetstream error dashboard] in Redash.
+Errors can be viewed on the [Jetstream error dashboard] in Looker.
 
-Additionally, alerts have been set up in Redash to check for errors daily and sent an email if failures have been detected. To subscribe to these alerts, email addresses can be added as _Destinations_ in the [Redash alert configuration](https://sql.telemetry.mozilla.org/alerts/81).
+Additionally, alerts can be set up in Looker to check for errors daily and sent an email if failures have been detected. To subscribe to these alerts, go to the [Jetstream error dashboard], click on the _Alerts_ (bell) icon on the _Critical Errors Last Run_ tiles and follow the "Error Count" alert.
 
 ### Something went wrong, what do I do?
 
@@ -79,4 +79,4 @@ Timeouts occasionally happen when running queries in BigQuery, fetching experime
 
 
 [jetstream]: https://github.com/mozilla/jetstream
-[jetstream error dashboard]: https://sql.telemetry.mozilla.org/dashboard/jetstream-errors?p_experiment=%25
+[jetstream error dashboard]: https://mozilla.cloud.looker.com/dashboards/246
