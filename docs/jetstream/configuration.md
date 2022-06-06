@@ -309,12 +309,19 @@ Unlike experiment configurations, the `[metrics]` section does not specify the a
 are computed for. Jetstream computes metrics defined in outcome snippets for weekly and overall
 analysis windows.
 
+`select_expression` in Outcomes supports parameterization. This enables Outcomes to be reused as values specified in an external jetstream config to be injected into the `select_expression`.
 Outcome snippets look, for example, like:
 
 ```toml
 friendly_name = 'Example config'
 description = 'Example outcome snippet'
 
+# parameters definition (Optional)
+[parameters.search_engine]
+friendly_name = "Search engine"
+description = "Search engine we want to track"
+default = "google"  # this will be the default value if not overwritten in an external config
+distinct_by_branch = false  # if set to true, value provided in config needs to specify value and corresponding id.
 [metrics.total_amazon_search_count]
 select_expression = "SUM(CASE WHEN engine like 'amazon%' then sap else 0 end)"
 data_source = "search_clients_engines_sources_daily"
@@ -324,13 +331,58 @@ data_source = "search_clients_engines_sources_daily"
 [metrics.urlbar_amazon_search_count]
 select_expression = """
 SUM(CASE
-        WHEN source = 'alias' and engine like 'amazon%' then sap
-        WHEN source = 'urlbar' and engine like 'amazon%' then sap
-        WHEN source = 'urlbar-searchmode' and engine like 'amazon%' then sap
+        WHEN source = 'alias' AND engine LIKE 'amazon%' THEN sap
+        WHEN source = 'urlbar' AND engine LIKE 'amazon%' THEN sap
+        WHEN source = 'urlbar-searchmode' AND engine LIKE 'amazon%' THEN sap
         else 0 end)"""
+data_source = "search_clients_engines_sources_daily"
+
+[metrics.dummy_metric]
+select_expression = """
+COUNTIF(engine = '{{parameters.search_engine}}')
+"""
 data_source = "search_clients_engines_sources_daily"
 [metrics.urlbar_amazon_search_count.statistics.bootstrap_mean]
 [metrics.urlbar_amazon_search_count.statistics.deciles]
+```
+
+### Overwriting Outcomes parameters
+
+__distinct_by_branch set to false__ example:
+
+External config:
+
+```toml
+description = "Amazon Search"
+
+[parameters.search_engine]
+value = "amazon"
+```
+
+`select_expression` for metric `metrics.dummy_metric` will now look like this:
+
+```sql
+COUNTIF(engine = 'amazon')
+```
+
+__`distinct_by_branch` set to `true`__ example:
+
+External config:
+
+```toml
+description = "Amazon Search"
+
+[parameters.id]
+distinct_by_branch = true
+# value.[corresponding_branch_name] = [value]
+value.experiment_branch_name_1 = "google"
+value.experiment_branch_name_2 = "amazon"
+```
+
+`select_expression` for metric `metrics.dummy_metric` will now look like this:
+
+```sql
+COUNTIF(CASE e.branch_name WHEN "experiment_branch_name_1" THEN "google" WHEN "experiment_branch_name_2" THEN "amazon" END)
 ```
 
 ### Defining Exposure Signals
