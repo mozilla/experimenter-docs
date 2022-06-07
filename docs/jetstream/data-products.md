@@ -17,7 +17,7 @@ Datasets used for monitoring the operation of Jetstream are part of the `monitor
 
 #### Error Logs
 
-Jetstream logs errors and warning encountered during its analysis runs to `monitoring.logs`. This datasets is used as basis for the [Jetstream error dashboard] and for [setting up alerts](https://sql.telemetry.mozilla.org/alerts/81).
+Jetstream logs errors and warning encountered during its analysis runs to `monitoring.logs`. This datasets is used as basis for the [Jetstream error dashboard] and for setting up alerts.
 
 The `logs` table has the following schema:
 
@@ -98,5 +98,5 @@ Each JSON metadata file contains the following information:
 Metadata of metrics and outcomes is used to show names, descriptions and whether larger numbers are better in the Experimenter results. 
 
 [jetstream-dtmo]: https://docs.telemetry.mozilla.org/datasets/jetstream.html
-[jetstream error dashboard]: https://sql.telemetry.mozilla.org/dashboard/jetstream-errors?p_experiment=%25
+[jetstream error dashboard]: https://mozilla.cloud.looker.com/dashboards/246
 [bigquery pricing]: https://cloud.google.com/bigquery/pricing
