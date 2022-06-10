@@ -32,4 +32,4 @@ The following projects have bespoke tools for experimentation.  These are not in
 
 ## About these docs
 
-This website is built using [Docusaurus](https://v2.docusaurus.io/). If you'd like to edit or add to them, check out the [Contributing](/contributing) page.
+This website is built using [Docusaurus](https://v2.docusaurus.io/). If you'd like to edit or add to them, check out the [Contributing](/contributing) page. 
