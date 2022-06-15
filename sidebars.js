@@ -110,8 +110,8 @@ module.exports = {
             },
             "workflow/launching",
             "workflow/monitoring",
-            "workflow/analyzing",
-            "workflow/ending"
+            "workflow/ending",            
+            "workflow/analyzing"
     ]
     },
     {
