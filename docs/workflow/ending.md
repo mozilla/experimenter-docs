@@ -7,7 +7,7 @@ slug: /ending
 
 # Ending Your Experiment
 
-## Ending enrollment
+## To end enrollment
 
 Once the experiment has reached the end of the enrollment period, the experiment owner can elect to end enrollment which will prevent new clients from enrolling. To do this, first press the `End Enrollment` button located on the experiment's managment page in [the Experimenter console](https://experimenter.services.mozilla.com). This will record the request. A reviewer with [L3 access](/access) *will then need to approve the request*. If your product team does not have a dedicated reviewer, you can request the ending by posting in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03). 
 
@@ -21,7 +21,7 @@ Some notes:
 * By default, clients enrolled after the planned enrollment window *will be excluded from automated analysis*. If the experiment needs to remain enrolling after the initial window in order to hit a volume threshold, a [custom Jestream config](/jetstream/configuration) will need to be created. For assistance creating this, please file a Data Org JIRA ticket or attend the relevant [office hours](https://mana.mozilla.org/wiki/display/DATA/Office+Hours) for your experiment. 
 
 
-## Ending the experiment
+## To end the experiment
 
 Once the experiment has run for sufficient time, it can be ended. This is the process by which clients are unenrolled from the experiment and revert to seeing the default experience. Ending the experiment will also trigger the final analysis to be run. This is a nightly batch process, so expect results to be available the day after the experiment was ended. 
 
