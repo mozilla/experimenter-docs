@@ -26,6 +26,7 @@ enrollment_period = 14
 ```
 
 
+
 ## To end the experiment
 
 Once the experiment has run for sufficient time, it can be ended. This is the process by which clients are unenrolled from the experiment and revert to seeing the default experience. Ending the experiment will also trigger the final analysis to be run. This is a nightly batch process, so expect results to be available the day after the experiment was ended. 
