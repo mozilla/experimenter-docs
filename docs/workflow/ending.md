@@ -18,7 +18,12 @@ Once the experiment has reached the end of the enrollment period, the experiment
 Some notes:
 * Enrollments can be ended at any time after launch, not just after the proposed period
 * If enrollment is ended before sufficient client volume has been achieved, there may not be enough users in the experiment to determine statistical significance. 
-* By default, clients enrolled after the planned enrollment window *will be excluded from automated analysis*. If the experiment needs to remain enrolling after the initial window in order to hit a volume threshold, a [custom Jestream config](/jetstream/configuration) will need to be created. For assistance creating this, please file a Data Org JIRA ticket or attend the relevant [office hours](https://mana.mozilla.org/wiki/display/DATA/Office+Hours) for your experiment. 
+* By default, clients enrolled after the planned enrollment window *will be excluded from automated analysis*. If the experiment needs to remain enrolling after the initial window in order to hit a volume threshold, a [custom Jestream config](/jetstream/configuration) will need to be created. For assistance creating this, please file a Data Org JIRA ticket or attend the relevant [office hours](https://mana.mozilla.org/wiki/display/DATA/Office+Hours) for your experiment. An example of the relevant TOML is below. This will set the enrollment period to be the first 14 days of the experiment. Note that this will impact the observation window (data collection window between enrollment and the end of the experiment, from which the experiment results are calculated). 
+
+```toml
+[experiment]
+enrollment_period = 14
+```
 
 
 ## To end the experiment
