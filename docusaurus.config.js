@@ -1,5 +1,5 @@
 module.exports = {
-      title: "Experimenter Docs",
+  title: "Experimenter Docs",
   tagline: "Documentation souce for Data scientists, Product Managers and Engineers",
   url: "https://experimenter.info",
   baseUrl: "/",
