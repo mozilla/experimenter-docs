@@ -4,15 +4,10 @@ sidebar_label: Experiment Owners
 slug: /experiment-owners
 ---
 
-![Implementing flow](/img/workflow/implementing.png)
+The role of experiment owner is most frequently played by a Product Manager, though others may act in this capacity.  Please follow the [Getting Started: Product Manager guidance](https://experimenter.info/for-product)
 
-As the experiment owner, it is your responsibility to collaborate with Data Science and Engineering to determine if your product needs additional telemetry, feature, or targeting configurations.
 
-## To determine your telmetry needs
 
-## To check feature configuration
-
-## To verify targeting availability
 
 
 
