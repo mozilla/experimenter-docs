@@ -5,6 +5,7 @@ sidebar_label: Designing
 slug: /designing
 ---
 
+WARNING: below is a sample image only of this part of the flow - see this [LIVE and CURRENT workflow](https://miro.com/app/board/uXjVOJ3IYRA=/) for the most accurate information, including maintained links and flow)
 ![Designing flow](/img/workflow/designing.png)
 
 Good experiment design starts with a period of ideation.  Think about your product strategy and brainstorm some ideas that align with your goals.  Look for opportunities that are low cost and easy to implement, such as a feature that already exists in your product that you believe could be easily modified to be even more impactful.
