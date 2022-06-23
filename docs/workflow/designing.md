@@ -19,7 +19,7 @@ Once you have concluded that an experiment is the correct approach for you conti
 
 1. File a [data org (DO) Jira ticket](https://mana.mozilla.org/wiki/pages/viewpage.action?pageId=109990007)
 
-1. Show up to an experiment design office hours (aka lightening advisory group) to discuss and validate your ideas 
+1. Show up to an experiment design office hours to discuss and validate your ideas.  There are a few [office hours available](https://mana.mozilla.org/wiki/display/DATA/Office+Hours)- depending on your need and where you are in the experiment process.  
 
 :::info
 Lightning Advising happens Thursdays noon PST and 8:45 AM PST.  Add yourself to the [agenda](https://docs.google.com/document/d/1fj4BqG0N-cN_Fx5sq-AozdiOdKO7asaDWR4B7sH88F0/edit#heading=h.yguiolmttiw2).
