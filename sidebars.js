@@ -83,7 +83,7 @@ module.exports = {
                     {
                       type: "link",
                       label: "Triggers & User Actions",
-                      href: "https://firefox-source-docs.mozilla.org/toolkit/components/messaging-system/docs/",
+                      href: "https://firefox-source-docs.mozilla.org/toolkit/components/messaging-system/docs/#triggers-and-actions",
                     },
                     "messaging/frequency-cap",
                     {
