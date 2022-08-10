@@ -13,7 +13,7 @@ In order to use the Nimbus platform to create and launch experiments, you will n
 
 ### Onboarding for New Reviewers (L3)
 
-Assuming you have been vouched for by a Nimbus admininstrator + a Product Owner (product manager or engineering manager if the team doesn’t have a dedicated PM), you should go through the following steps to get review access on Nimbus:
+Assuming you have been vouched for by a Nimbus administrator + a Product Owner (product manager or engineering manager if the team doesn’t have a dedicated PM), you should go through the following steps to get review access on Nimbus:
 
 #### Basic access
 
