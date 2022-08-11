@@ -61,7 +61,7 @@ The Nimbus Feature API will return the correct configuration for a feature given
 
 1. **Experiment value**: First, we check if a Nimbus experiment is activated that changes the feature.
 1. **Remotely-configured value**: If no experiment is set, we check if there is a remotely-defined value. This is a mechanism that allows us to roll-out changes quickly between releases.
-1. **Local default**: Finally, we will return the _default branch_ of preferences in the manifest, if they are defined in [firefox.js](https://searchfox.org/mozilla-central/source/browser/app/profile/firefox.js).
+1. **Local default**: Finally, we will return the current value of preferences in the manifest, if they are defined in [firefox.js](https://searchfox.org/mozilla-central/source/browser/app/profile/firefox.js).
 
 ## Registering a new feature
 
