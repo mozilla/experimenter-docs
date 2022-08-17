@@ -138,7 +138,7 @@ The metrics section allows you to specify and define the metrics that you're col
 the statistical summaries that you'd like applied to them, and any filters that you need.
 See the [Jetstream docmentation at DTMO][jetstream-dtmo] for more details on the analysis window concept.
 
-You can use the names of pre-defined metrics defined in mozanalysis without redefining them.
+You can use the names of pre-defined metrics defined in the `definitions/` directory of jetstream-config without redefining them.
 See what [pre-defined metrics are available](https://mozilla.github.io/jetstream-config/metrics/firefox_desktop/) for your platform.
 
 
@@ -146,7 +146,7 @@ See what [pre-defined metrics are available](https://mozilla.github.io/jetstream
 [metrics]
 # Metrics to compute for each daily analysis window.
 # Defined as a list of strings. The string should be the "slug" of the metric,
-# which is the name of the Metric object defined in mozanalysis, or the name
+# which is the name of the metric defined in `definitions/`, or the name
 # of the metric definition section in this config file (see below).
 daily = []
 
@@ -175,13 +175,13 @@ For example, you could define a new metric based on a scalar named
 [metrics.ever_clicked_cows]
 # A clause of a SELECT expression. The expression must contain an aggregation function.
 # The expression is evaluated with `GROUP BY client_id, branch` over an analysis window.
-# Interpreted as a Jinja2 template. The mozanalysis helper functions are available,
+# Interpreted as a Jinja2 template. Various helper functions are available,
 # so you could equivalently write the expression below like:
 # select_expression = "{{agg_sum("payload.processes.parent.scalars.browser_engagment_cows_clicked")}} > 0"
-# See https://mozilla.github.io/mozanalysis/api/metrics.html for details.
+# See https://mozilla.github.io/jetstream-config/functions/ for details.
 select_expression = "SUM(COALESCE(payload.processes.parent.scalars.browser_engagement_cows_clicked)) > 0"
 
-# The data source to use. You can use the slug of a data source defined in mozanalysis,
+# The data source to use. You can use the slug of a data source defined in `definitions/`,
 # or else define a new data source below.
 data_source = "main"
 
