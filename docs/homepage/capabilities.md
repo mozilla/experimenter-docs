@@ -11,6 +11,7 @@ Nimbus is a full-featured experimentation platform that provides configuration, 
 - Simple experiment configuration UI
 - Pre-launch testing support
 - Multifeature experiments
+- Rollouts
 - Simple targeting
 - Advanced customizable targeting
 - Remote settings integration
