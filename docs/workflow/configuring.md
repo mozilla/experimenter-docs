@@ -43,7 +43,9 @@ _Please bring questions about enrollment period and sizing either to [Data Scien
 
 ## The Observation Window
 
-Once a client has enrolled in an experiment, their Observation Window has begun, during which time we can monitor their telemetry and compute metrics. The windows is usually expressed as the number of days since enrollment. The observation window is an abstraction that represents the longest period of time we can observe any individual client for and can be calculated by differencing the enrollment period from the overall runtime for the experiment (observation window = total runtime - enrollment period).
+Once a client has enrolled in an experiment, their Observation Window has begun, during which time we can monitor their telemetry and compute metrics. The windows is usually expressed as the number of days since enrollment and _is the same for all clients, regardless of when they enroll_.
+
+The observation window is an abstraction that represents the longest period of time we can observe any individual client for and can be calculated by differencing the enrollment period from the overall runtime for the experiment (observation window = total runtime - enrollment period).
 
 ### Relationship with unenrollment and the end of the experiment.
 
