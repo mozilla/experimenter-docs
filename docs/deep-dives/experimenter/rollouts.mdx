@@ -1,15 +1,15 @@
 ---
-id: rollouts 
+id: rollouts
 title: Rollouts
-slug: /rollouts 
+slug: /rollouts
 ---
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-# Rollouts 
+# Rollouts
 
-> 💡 Note: this feature is still in progress. See "Future work".
+> 💡  Note: this feature is still in progress. See "Future work".
 
 Rollouts are single-branch experiments that differ from a traditional experiment in a number of ways.
 
@@ -27,7 +27,7 @@ A rollout is different from an experiment in that the population size can be sca
 
 - When configuring the audience for a rollout of a given feature, I should see information about all live experiments/rollouts of the same feature so I clearly understand how that will impact my population sizing.
   This can be done by filtering on the home screen by the given feature. All experiments/rollouts that have been created for that feature will appear in the filtered list.
- 
+
 ### Directory view
 
 - I should to view all live experiments and rollouts for a given feature.
@@ -35,7 +35,7 @@ A rollout is different from an experiment in that the population size can be sca
 
 ## Supported platforms and minimum version targeting
 
-Experimenter currently supports the following platforms: 
+Experimenter currently supports the following platforms:
 
 - Desktop
 - Fenix (Firefox for Android)
@@ -62,7 +62,7 @@ The minimum version supported for rollouts on all platforms (listed above) is cu
 - When I need to increase or decrease the population percentage of a rollout configuration, I want to do this without creating a new rollout instance.
   > ⚠️  Unimplemented
 
-  Currently, a rollout is created using the same workflow as an experiment (Nimbus home -> Create new -> ✅  This is a rollout). The population percentage is defined at create time, and is not editable while live (see "Future work").
+  Currently, a rollout is created using the same workflow as an experiment (Nimbus home -> Create new -> ✅   This is a rollout). The population percentage is defined at create time, and is not editable while live (see "Future work").
 
 - When increasing/decreasing the population percentage, I should be able to request a review and approve/reject via the experimenter UI.
   > ⚠️  Unimplemented
@@ -71,7 +71,7 @@ The minimum version supported for rollouts on all platforms (listed above) is cu
 
 - I should be able to differentiate between experiments and rollouts when looking at a directory listing.
   > ⚠️  Unimplemented
-  
+
   Rollouts are not differentiated on the main home page. When creating a new rollout, you can see the "Rollout" tag added next to the experiment name. Behind the scenes, rollouts are differentiated from experiments by their bucket prefix.
   <img title="Rollout tag" src="/img/deep-dives/rollout-tag-experiment-summary.png" height="500"/>
 
