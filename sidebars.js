@@ -189,6 +189,7 @@ module.exports = {
       label: "Additional Links",
       items: [
         "integration-tests",
+        "local-enrollment",
         {
           type: "link",
           label: "Experimenter GH Repo",
