@@ -18,8 +18,11 @@ Rollouts are single-branch experiments that differ from a traditional experiment
 When I have a “winning branch” from an in-flight experiment, I want to easily set some percentage of the non-experiment population to that feature configuration. To create a rollout from an experiment, the experiment is cloned and a new rollout is created. Through this clone, the population percentage can be changed. Additionally, a rollout can be manually created (without cloning) through the "Create new" button on the Nimbus home screen. To mark the new item as a rollout, check the "This is a rollout" box on the "Branches" page:
 <img title="Rollout checkbox" src="/img/deep-dives/rollout-checkbox.png" height="500"/>
 
-A rollout is different from an experiment in that the population size can be scaled up and down (even set all the way to zero) with no analytical repurcussions. Even if a rollout is set to have a population size of zero (essentially turning the feature "off"), the rollout may be edited again to increase the population size. Likewise, if the rollout is "fully rolled out" to 100% of the population, it may still be edited.
-> ⚠️  See "Future work", live editability
+A rollout is different from an experiment in the following ways: 
+- A rollout only has a single branch
+- A client can be enrolled in both a single experiment AND rollout for a given feature
+- The experiment feature value takes precedence over the rollout feature value
+- Rollouts use a separate bucketing namespace from experiments so you don't need to worry about the populations colliding
 
 ## Features
 
@@ -30,7 +33,7 @@ A rollout is different from an experiment in that the population size can be sca
 
 ### Directory view
 
-- I should to view all live experiments and rollouts for a given feature.
+- I should be able to view all live experiments and rollouts for a given feature.
   From the Nimbus home screen, all rollouts and experiments are viewable. There is no specific filtering to allow only rollouts at this time (see "Future work", separation of concerns).
 
 ## Supported platforms and minimum version targeting
