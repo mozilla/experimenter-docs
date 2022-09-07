@@ -1,0 +1,88 @@
+---
+id: rollouts
+title: Rollouts
+slug: /rollouts
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# Rollouts
+
+> 💡  Note: this feature is still in progress. See "Future work".
+
+Rollouts are single-branch experiments that differ from a traditional experiment in a number of ways.
+
+## When should I use a rollout instead of an experiment?
+
+When I have a “winning branch” from an in-flight experiment, I want to easily set some percentage of the non-experiment population to that feature configuration. To create a rollout from an experiment, the experiment is cloned and a new rollout is created. Through this clone, the population percentage can be changed. Additionally, a rollout can be manually created (without cloning) through the "Create new" button on the Nimbus home screen. To mark the new item as a rollout, check the "This is a rollout" box on the "Branches" page:
+<img title="Rollout checkbox" src="/img/deep-dives/rollout-checkbox.png" height="500"/>
+
+A rollout is different from an experiment in the following ways: 
+- A rollout only has a single branch
+- A client can be enrolled in both a single experiment AND rollout for a given feature
+- The experiment feature value takes precedence over the rollout feature value
+- Rollouts use a separate bucketing namespace from experiments so you don't need to worry about the populations colliding
+
+## Features
+
+### Interactions
+
+- When configuring the audience for a rollout of a given feature, I should see information about all live experiments/rollouts of the same feature so I clearly understand how that will impact my population sizing.
+  This can be done by filtering on the home screen by the given feature. All experiments/rollouts that have been created for that feature will appear in the filtered list.
+
+### Directory view
+
+- I should be able to view all live experiments and rollouts for a given feature.
+  From the Nimbus home screen, all rollouts and experiments are viewable. There is no specific filtering to allow only rollouts at this time (see "Future work", separation of concerns).
+
+## Supported platforms and minimum version targeting
+
+Experimenter currently supports the following platforms:
+
+- Desktop
+- Fenix (Firefox for Android)
+- Focus Android
+- Firefox iOS
+- Focus iOS
+
+The minimum version supported for rollouts on all platforms (listed above) is currently 105. See [Experimenter](https://github.com/mozilla/experimenter/blob/main/app/experimenter/experiments/constants.py#L370) for more details.
+
+## Future work
+
+- Live editability for rollouts
+- Differentiate opt-out support for experiments vs rollouts
+- Separation of concerns: separating experiment and rollout state
+
+### Interactions
+
+- I want to be able to create new experiments or update my rollout population without having to launch in a particular order to avoid unwanted interactions on the client.
+  > ⚠️  Unimplemented
+  See "Future work", live editability.
+
+### Ramping
+
+- When I need to increase or decrease the population percentage of a rollout configuration, I want to do this without creating a new rollout instance.
+  > ⚠️  Unimplemented
+
+  Currently, a rollout is created using the same workflow as an experiment (Nimbus home -> Create new -> ✅   This is a rollout). The population percentage is defined at create time, and is not editable while live (see "Future work").
+
+- When increasing/decreasing the population percentage, I should be able to request a review and approve/reject via the experimenter UI.
+  > ⚠️  Unimplemented
+
+### Directory view
+
+- I should be able to differentiate between experiments and rollouts when looking at a directory listing.
+  > ⚠️  Unimplemented
+
+  Rollouts are not differentiated on the main home page. When creating a new rollout, you can see the "Rollout" tag added next to the experiment name. Behind the scenes, rollouts are differentiated from experiments by their bucket prefix.
+  <img title="Rollout tag" src="/img/deep-dives/rollout-tag-experiment-summary.png" height="500"/>
+
+### Automated analysis
+
+- The dashboards for rollouts that OpMon generates follow this URL pattern:
+  ```
+  https://mozilla.cloud.looker.com/dashboards/operational_monitoring::<slug with underscores>
+  ```
+
+  > ⚠️  Unimplemented
