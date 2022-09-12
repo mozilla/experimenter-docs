@@ -80,6 +80,12 @@ module.exports = {
                   items: [
                     "messaging/messaging-surfaces",
                     "messaging/display-logic",
+                    "messaging/telemetry",
+                    "messaging/groups-and-campaigns",
+                    "messaging/experiments-and-user-messaging",
+                    "messaging/how-a-message-gets-shown",
+                    "messaging/remote-localization",
+                    "messaging/limitations",
                     {
                       type: "link",
                       label: "Triggers & User Actions",
