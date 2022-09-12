@@ -16,4 +16,8 @@ slug: overview
 
 If the experiment was run with Nimbus, check out the [directory of live and completed experiments](https://experimenter.services.mozilla.com/nimbus/). Normandy experiments can be found [here](https://experimenter.services.mozilla.com/).
 
+## Links to experimentation tools
+Here is the [link to Nimbus Console](https://experimenter.services.mozilla.com/nimbus/) - where new experiments are created, reviewed/launched, monitored, and eventually have the results.
+Here is the [link to STAGE for Nimbus Console](https://stage.experimenter.nonprod.dataops.mozgcp.net/nimbus/).  This is where you can create experiments and learn how to interact with the tools without impacting production users.
+
 If the experiment is not yet live, you will probably be able to find a relevant Jira ticket on this [Data Science Experimentation Collaboration Board](https://mozilla-hub.atlassian.net/jira/software/c/projects/DS/boards/258)
