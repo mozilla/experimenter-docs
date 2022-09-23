@@ -22,6 +22,18 @@ An alternative to using an enrollment period to select clients is to use continu
 
 <img src="/img/mozanalysis/continuous-enrollment.png" alt="Analysis with continuous enrollment" className="img-lg"/>
 
+### Time series of metrics
+
+In some cases, experiments will require client-level time series data. Mozanalysis can split the analysis period into time series periods (either daily, weekly, or monthly).
+
+<img src="/img/mozanalysis/time-series.png" alt="Time series metrics" className="img-lg"/>
+
+The time series data returned will contain a row for each client for each time series period, so the number of rows in the time series results will be (number of periods) times larger than the results for a single analysis window. Mozanalysis offers a few options to retrieve this data:
+
+1. Download the entire set directly: Mozanalysis will warn the user about the approximate size of the data set they will download.
+2. Download the data in chunks: Analysis periods in the time series are keyed by start dates, and the data for each period can be downloaded separately using this key.
+3. Calculate aggregated metrics in BQ before downloading: A BQ aggregate function can be used to calculate within-analysis-period statistics before downloading; this will drastically reduce the size of the data, to (number of periods) rows, and is recommended whenever possible.
+
 ## Targets and metrics
 
 Selecting clients for analysis is accomplished by using the [`Segment`](https://github.com/mozilla/mozanalysis/tree/main/src/mozanalysis/segments) objects in Mozanalysis; users can either reuse segments that currently exists in Mozanalysis or by defining one at runtime. Segments consist of a data source, either a table or view in BigQuery, and a SELECT expression to filter that data source; this SELECT expression must include a SQL aggregate function. 
