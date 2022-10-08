@@ -122,39 +122,6 @@ XPCOMUtils.defineLazyModuleGetters(this, {
 
 ## API Reference Guide
 
-### `isEnabled()`
-
-`isEnabled(): boolean` (JS Only)
-
-Short form for `.getVariable("enabled")`
-
-Note that you should have an `enabled` property defined in the manifest if you plan to use this.
-
-<Tabs
-  defaultValue="js"
-  values={[
-    { label: "JavaScript", value: "js" },
-    { label: "C++", value: "cpp" },
-  ]
-}>
-
-<TabItem value="js">
-
-```js
-const isEnabled = NimbusFeatures.myFeature.isEnabled();
-```
-
-</TabItem>
-<TabItem value="cpp">
-
-```cpp
-// There's no equivalent for this. You can instead use:
-NimbusFeatures::GetBool("featurename"_ns, "enabled"_ns, false);
-```
-
-</TabItem>
-</Tabs>
-
 ### `getVariable()`
 
 `getVariable(variableName: string): FeatureValue`
