@@ -20,7 +20,7 @@ const { ExperimentFakes } = ChromeUtils.import(
 You need to provide a feature configuration and await enrollment
 
 ```js
-let doEnrollmentCleanup = await ExperimentFakes.enrollWithFeatureConfig({
+let doExperimentCleanup = await ExperimentFakes.enrollWithFeatureConfig({
   featureId: "<YOUR FEATURE>",
   // You can add values for each variable you added to the manifest
   value: {
