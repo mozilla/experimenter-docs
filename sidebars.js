@@ -63,7 +63,13 @@ module.exports = {
     {
       "Experimentation Workflow": [
             "workflow/overview",
-            "workflow/designing",
+            {
+              "type": "category",
+              "label": "Designing",
+              "items": [
+                "workflow/rollouts-faq",
+              ]
+            },
             {
               "type": "category",
               "label": "Implementing",

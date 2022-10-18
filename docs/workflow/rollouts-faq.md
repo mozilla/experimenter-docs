@@ -1,8 +1,12 @@
 ---
-id: rollouts
-title: Rollouts
-slug: /rollouts
+id: rollouts-faq
+title: Rollouts FAQ
+slug: /rollouts-faq
 ---
+:::tip
+Want more info on rollouts?
+Take a look at our [deep dive](deep-dives/experimenter/rollouts), or reach out in [`#ask-experimenter`](https://mozilla.slack.com/archives/CF94YGE03) on Slack. 
+:::
 
 If you want to set configurations for a feature remotely _for non-experiment users_, you can do so with a **Rollout**.
 
