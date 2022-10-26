@@ -40,7 +40,7 @@ Selecting clients for analysis is accomplished by using the [`Segment`](https://
 
 Similarly, Mozanalysis experiment sizing reuses `Metric` objects from [Jetstream](jetstream/metrics.md), and users can reuse metrics that are currently implemented in [Mozanalysis](https://github.com/mozilla/mozanalysis/tree/main/src/mozanalysis/metrics) or [jetstream-config], or users can define their own at runtime.
 
-Metrics and target segments are passed to Mozanalysis experiment sizing as lists of `Segment` or `Metric` objects; users may include multiple of each in the analysis.
+Metrics and target segments are passed to Mozanalysis experiment sizing as lists of `Segment` or `Metric` objects; users may include multiple of each in the analysis. When multiple `Segment` objects are used, Mozanalysis identifies clients that satisfy the conditions of **all** targets in the list. If users would like to run analyses where `Segment`s should be joined with OR rather than AND, multiple experiment sizing tasks should be completed, for each condition in the OR statement, and aggregate the returned results from each separate study.
 
 ## Implemented sample size calculators
 
