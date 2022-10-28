@@ -1,0 +1,58 @@
+---
+id: fml-cli
+title: Nimbus FML command line interface
+slug: /fml-cli
+---
+
+# Commands
+
+## Generating code for an mobile application
+
+The simplest invocation is in this form:
+
+```
+% nimbus-fml generate --language <LANGUAGE> --channel <CHANNEL> <INPUT> <OUTPUT>
+```
+
+`LANGUAGE` can be `kotlin` or `swift`.
+
+`CHANNEL` is one of the channels specified in the FML file.
+
+`INPUT` may be a local file or directory.
+
+`OUTPUT` should be a local file or directory.
+
+If `INPUT` is a directory, it is recursively searches for any files with names ending in `.fml.yaml`.
+
+This command should be called at build time of components and the build time of the application.
+
+### Adding `repo-file`s
+
+Adding [repo files](fml-paths) can be done with one or more `--repo-file` argument.
+
+```
+% nimbus-fml generate --language <LANGUAGE> --repo-file ./app-structure.json <INPUT> <OUTPUT>
+```
+
+### Caching remote files
+
+```
+% nimbus-fml generate --language <LANGUAGE> --channel CHANNEL --cache-dir ./build/cache-dir <INPUT> <OUTPUT>
+```
+
+[For `include` and `import` directives in the FML](/fml-imports-and-includes), a remote file may be referenced. The cache directory is a local cache of these remote files.
+
+
+## Generating a manifest file for experimenter
+
+The reason to use a custom manifest format a language specific JSON serialization library is to do with keeping the code in sync with the experimenter web server.
+
+For legacy reasons, this is a different format of yaml file, which should be checked in to version control and is periodically pulled in by experimenter.
+
+```
+% nimbus-fml generate-experimenter <INPUT> <OUTPUT>
+```
+
+This should only be called at the application level, with the one main fml file as an input.
+
+`--cache-dir` and `--repo-file` arguments are also supported.

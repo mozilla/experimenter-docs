@@ -20,9 +20,21 @@ The API used by software engineers is relatively small, so this document is not 
 >
 > Much of the literature around the methodology of experiments Nimbus implements has its roots in medical testing. The feature variables API does not require understanding of double blind experiments or data-science, but this document will occasionally use words like "treatment" or "exposure".
 
+### Document status
+
+**Note: The code in this document still works, but is _not_ the supported way of interacting with the Nimbus Feature API.**
+
+**This document is still useful for the concepts. The [Feature Manifest Language specification](fml-spec) would be the best place for engineers to go having read this document.**
+
 ## Introduction
 
 The "Feature" in the "Feature Variables API" refers to features of the application. It's pretty abstract, and how the application is divided up into features is up to the product teams. Over time, a feature may be involved in many experiments.
+
+We can be more specific here:
+
+> ⛅️🔬🔭 Concept
+>
+> *A feature is an identifiable part of the app in which a change might be detectable by a user*.
 
 However, there is one rule:
 
@@ -409,18 +421,4 @@ When the feature is being tested, QA testers are going to want to configure the 
 
 Finally, when the feature is part of experiments, then the experiment owner, setting the branches in Experimenter needs to be able configure the branches with variables with spellings and organization that match the app implementation.
 
-It's strongly recommended that you keep a track of these identifiers and descriptions of the configurability of each of the features in at least one place. After implementing a configurable feature, it should probably live with the code repository, so it can versioned and tracked with the code.
-
-> 👋 Unimplemented
->
-> The Nimbus team has a few ideas about this, for documenting the features in an app in a machine readable format, tentatively called the Manifest. We're thinking:
->
-> 1. generating code for app developers to use in app code
-    - managing defaults values
-    - removing magic strings
-> 2. automating the registering of feature ids to Experimenter
-    - currently this needs an Experimenter reviewer or admin.
-> 3. generating Experimenter UI for experimenters to use in experiment branch design
-> 4. generating on-device tools for feature testing, branch design and local development.
->
-> We're in the early stages of planning this, so would love to hear some feedback or ideas you may have.
+**The [Feature Manifest Language specification](fml-spec) would be the best place for engineers to go having read this document.**
