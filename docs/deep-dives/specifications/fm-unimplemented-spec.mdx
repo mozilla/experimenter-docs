@@ -122,3 +122,50 @@ guard let message = FxNimbus.features.emergencyStartupMessage else {
 ```
 
 Features with `required` variables which should be marked `failable` but aren't will produce an error.
+
+## Imports and Includes
+
+#### Unclear/scope–creep/YAGNI
+
+- The importing `.fml.yaml` file should not have access to types from the imported one.
+- The imported file may not have an `import` list.
+
+> Eventually it might be necessary to have imported files recursively importing other files.
+> Implementing this proposal will give an idea of how much extra complexity is required.
+
+#### Connecting to different languages or contexts
+
+The `import` block does two different roles:
+
+1. Giving `experimenter` knowledge of the imported features.
+2. Sending experimental configuration from the application singleton into the components.
+
+For features written in a different language, the feature configuration needs to travel across an FFI.
+
+```yaml
+import:
+    path:      @mozilla/gecko-dev/fenix.fml.yaml
+    channel:   production
+    connector: gecko-view
+    features:
+        autofill:
+            - value: {}
+```
+
+Imports for the same connector are gathered up so we can get a `Map<String, JSONObject>` containing configuration from the experiment (and the app-specific defaults) by calling:
+
+```kotlin
+FxNimbus.connectors.geckoView.value()
+```
+
+The app will need to send this to the right place, for example:
+
+```kotlin
+val nimbus = Nimbus.shared
+nimbus.register(object : Nimbus.Observer {
+    fun onExperimentsApplied() {
+        val features: Map<String, JSONObject> = FxNimbus.connectors.geckoView.value()
+        geckoView.setNimbusFeatures(features)
+    }
+})
+```

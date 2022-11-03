@@ -9,9 +9,9 @@ import TabItem from "@theme/TabItem";
 
 # Componentizing the FML
 
-Currently the `nimbus-fml` tooling is only able to work on one file at a time.
+In the first iteration of the `nimbus-fml`, the tooling was only able to work on one file at a time.
 
-It accepts a `nimbus.fml.yaml` file, and outputs a Kotlin or Swift file for inclusion in the product, or an `.experimenter.yaml` file for ingestion into Experimenter.
+It accepted a `nimbus.fml.yaml` file, and outputed a Kotlin or Swift file for inclusion in the product, or an `.experimenter.yaml` file for ingestion into Experimenter.
 
 The pattern we have seen is that the application specifies code that:
 
@@ -20,7 +20,7 @@ The pattern we have seen is that the application specifies code that:
 
 This second restriction is most problematic: the app's components (e.g. Fenix is made up of Android Components, Application Services, GeckoView and Gecko) are unable to instrument their code for experimentation, even though they by themselves might make up the majority of the codebase of the app.
 
-This proposal discusses three new blocks in the FML specification, which are to implement including and importing FML files which easily solve these problems.
+This document discusses three new blocks in the FML specification, which are to implement including and importing FML files which easily solve these problems.
 
 It allows for experimentation in the re-usable and library codebases that makes up most of our applications.
 
@@ -34,9 +34,6 @@ It enables cross-platform re-use of data definitions and schemas which will in t
 - The components' feature code generation happens at component compile time
 - Generated feature code should be visible and configurable from the application
     - e.g. Fenix and Focus might use the same feature from Android Components, but require different configuration.
-
-## Non-goals
-
 - versioning and branches:
     - experiments are launched at a population of users using different versions of the app.
     - each specific version of the app is potentially built with a specific version of their components
@@ -44,6 +41,8 @@ It enables cross-platform re-use of data definitions and schemas which will in t
 - local development
     - for some feature development, working in multiple repos _at the same time_ is necessary.
     - for this proposal, easily varying the paths or URLs of components is not explored, although this will likely involve a config file.
+
+## Non-goals
 - namespacing
     - currently names of feature, object, and enum classes are unique; collisions are disallowed
     - for this proposal, no attempt is made to allow classes of the same name to be used.
@@ -73,7 +72,7 @@ Each component or app has its own `build.gradle`.
 The following command is assembled and run by the Nimbus Gradle Plugin.
 
 ```sh
-% nimbus-fml features --input component.fml.yaml --build-dir components/build/generated/debug/nimbus
+% nimbus-fml generate --language kotlin --channel release component.fml.yaml components/build/generated/debug/nimbus
 ```
 
 This will generated exactly one Kotlin file.
@@ -84,12 +83,10 @@ This will generated exactly one Kotlin file.
 The following command is assembled and run by a Build Phase.
 
 ```sh
-% nimbus-fml features --input component.fml.yaml --output component/Generated/component.swift
+% nimbus-fml generate --language swift --channel release component.fml.yaml component/Generated
 ```
 
 This will generated exactly one Swift file.
-
-> Note: it would be trivial to specify the output directory (e.g. a `--build-dir` argument), but `xcodebuild` integration is easier if the BuildPhase can specify the filename.
 
 </TabItem>
 </Tabs>
@@ -97,24 +94,10 @@ This will generated exactly one Swift file.
 The following command is assembled and run at application build time only.
 
 ```sh
-% nimbus-fml experimenter --input application.fml.yaml --output .experimenter.yaml
+% nimbus-fml generate-experimenter application.fml.yaml .experimenter.yaml
 ```
 
 The `.experimenter.yaml` file is checked into source control, and ingested by Experimenter.
-
-### Paths and URLs
-
-In several places paths to link one `.fml.yaml` file to another.
-
-For convenience, we should use the conventions around URLs used in Carthage and npm package managers:
-
-- a relative path must use `/` as a separator
-- a relative path may use `./` and `../` in their prefixes
-- an absolute URL may be used, but this must start with `https://`
-- a Github repository may be specified with a prefix of `@`.
-    - e.g. `@mozilla/nimbus-shared` expands to `https://raw.githubusercontent.com/mozilla/nimbus-shared/main/`
-
-> Hint: The rules of the URL construction would be a good place to consider local development and branches.
 
 ### The `about` block
 
@@ -142,8 +125,9 @@ If not present:
 
 ```yaml
 about:
-    class:   .nimbus.MyNimbus
-    package: mozilla.components.search
+    android:
+        class:   .nimbus.MyNimbus
+        package: mozilla.components.search
 ```
 
 The `package` property **must** correspond to the app's namespace, where the `R` and `BuildConfig` files are generated.
@@ -157,8 +141,9 @@ For Android developers, this should be the familiar way `android:name` is specif
 
 ```yaml
 about:
-    class:   AccountsNimbus
-    module:  Accounts
+    ios:
+        class:   AccountsNimbus
+        module:  Accounts
 ```
 
 The `module` property is the name of the module the generate class will be in.
@@ -238,51 +223,6 @@ import:
 ```
 
 The `value` used by the imported code will come from the importing code.
-
-#### Unclear/scope–creep/YAGNI
-
-- The importing `.fml.yaml` file should not have access to types from the imported one.
-- The imported file may not have an `import` list.
-
-> Eventually it might be necessary to have imported files recursively importing other files.
-> Implementing this proposal will give an idea of how much extra complexity is required.
-
-#### Connecting to different languages or contexts
-
-The `import` block does two different roles:
-
-1. Giving `experimenter` knowledge of the imported features.
-2. Sending experimental configuration from the application singleton into the components.
-
-For features written in a different language, the feature configuration needs to travel across an FFI.
-
-```yaml
-import:
-    path:      @mozilla/gecko-dev/fenix.fml.yaml
-    channel:   production
-    connector: gecko-view
-    features:
-        autofill:
-            - value: {}
-```
-
-Imports for the same connector are gathered up so we can get a `Map<String, JSONObject>` containing configuration from the experiment (and the app-specific defaults) by calling:
-
-```kotlin
-FxNimbus.connectors.geckoView.value()
-```
-
-The app will need to send this to the right place, for example:
-
-```kotlin
-val nimbus = Nimbus.shared
-nimbus.register(object : Nimbus.Observer {
-    fun onExperimentsApplied() {
-        val features: Map<String, JSONObject> = FxNimbus.connectors.geckoView.value()
-        geckoView.setNimbusFeatures(features)
-    }
-})
-```
 
 ## Implementation notes
 
