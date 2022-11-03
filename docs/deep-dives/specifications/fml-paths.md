@@ -60,5 +60,5 @@ Defining local paths is also useful for imposing structure on a complicated file
 The `nimbus-fml` command line can accept multiple repo-files at a time, resolving `@` links as it goes.
 
 ```sh
-nimbus-fml generate --repo-path ./app-structure.json --repo-path @mozilla-mobile/dependency-versions/v102.0.json --language swift ./input.fml.yaml output-dir
+nimbus-fml generate --repo-file ./app-structure.json --repo-file @mozilla-mobile/dependency-versions/v102.0.json --language swift ./input.fml.yaml output-dir
 ```

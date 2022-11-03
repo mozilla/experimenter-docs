@@ -534,13 +534,6 @@ Values for `Text` and `Image` are strings which must correspond to the following
 
 The lookup uses the `R` class.
 
-</TabItem>
-</Tabs>
-
-If the text key does not resolve to a localized string, the key itself is used as a string.
-
-For Android only:
-
 Android uses integer identifiers stored in the `R` class. Sometimes these identifiers are what is required.
 
 In the above example:
@@ -550,6 +543,13 @@ val heroImage = FxNimbus.features.upgradeMessage.value().heroImage
 val resId: Int = heroImage.resourceId
 val image: Drawable = heroImage.resource
 ```
+
+</TabItem>
+</Tabs>
+
+---
+
+For `Text` strings, if the text key does not resolve to a localized string, the key itself is used as a string.
 
 ### Object types
 
