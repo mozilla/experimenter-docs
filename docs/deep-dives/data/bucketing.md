@@ -101,6 +101,8 @@ A client will be bucketed into the experiment if the input hash falls in the ran
                               end
 ```
 
+#### Namespace rollovers
+
 ### Branch assignment
 
 Assuming a client has satisfied all targeting conditions and bucketed into an experiment, we will randomly assign a branch. Unlike experiments, branches cannot specify targeting conditions, and hashes are re-randomized for every experiment. We do this by:
