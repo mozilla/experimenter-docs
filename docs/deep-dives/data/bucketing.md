@@ -101,6 +101,14 @@ A client will be bucketed into the experiment if the input hash falls in the ran
                               end
 ```
 
+#### Namespace rollovers
+
+When a `namespace` is fully consumed (i.e., an experiment requests a bucket range beyond `9999`), the namespace "rolls over". The namespace ID is updated from something like `<application>-<feature>-<channel>-1` to `<application>-<feature>-<channel>-2` and the clients are effectively rehashed to form 10000 new buckets. When an experiment launches on this new namespace, some fraction of the requested client range is already enrolled into an experiment (unlike a non-rollover situation where the requested client range is guaranteed to yield available clients) and so _experiments will under-enroll their desired amount_.
+
+As an example, suppose that 75% of the namespace has been consumed by experiments that _have ended_ and that 20% of the namespace is consumed by an active experiment called `A` (i.e., `A` is live with a `bucketConfig` of `{"start":7500, "end":9500", "total":10000}`). Suppose further that another 20% experiment called `B` is launched. In that situation, the namespace will rollover and buckets `0000` to `2000` of the new namespace will be allocated to `B`. Some fraction of `B`'s clients (approximately 20%) will still be enrolled in `A`, so even though they meet the enrollment criteria, they will not enroll. Thus, `B` will actually enroll 16% of the available userspace, even though it targeted 20%.
+
+In practices, experiments can run indefinitely and namespaces can rollover indefinitely so one must account for any running experiment on any prior iteration of the namespace, not just the previous iteration. That said, the impact of this effect is moderated by retention (or lack thereof) in that a 1 year old experiment using 20% of the clients will only block some fraction less, maybe 10%, because clients have churned and many of the clients in that experiment have dropped while new clients have joined after that experiment enrolled. Further, the impact of this effect depends on the targeting itself. For example, experiments targeting new clients do not suffer from this problem (all clients who meet the targeting are guaranteed to not be in any previous experiments because they are new) while experiments that target the same client subset over and over are most impacted.
+
 ### Branch assignment
 
 Assuming a client has satisfied all targeting conditions and bucketed into an experiment, we will randomly assign a branch. Unlike experiments, branches cannot specify targeting conditions, and hashes are re-randomized for every experiment. We do this by:
