@@ -7,7 +7,7 @@ slug: /for-product
 ## What is the role of Product in experimentation?
 Product Managers typically have the role of experiment owner in the [experimentation workflow](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=4d337632-a0bd-4be7-bee8-ae5b017134ae&start=0).  The required training for new experiment owners is [here](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3bcc9a08-50a4-45bb-88fe-af2001116cb3) - the slide deck in the video is [here](https://docs.google.com/presentation/d/11jGYVCRhzqG5R4aemcNtfQ3umzsQAcZrGiFp5a9T7us/edit#slide=id.g144dc03564c_0_7). You must watch the training video before your first experiment.  Ask any quesitons in ask-experimenter (you will have questions the first few times).  We are happy to help people through the learning curve.  
 Responsibilities include:
-*  starting and completing the experiment brief - which aligns everyone supporting the experiment to the learning goals.
+*  starting and completing the [experiment brief](https://docs.google.com/document/d/1eFGL9FATIuZudjSItpIT2Ct1C5qb5E3Qk7hJuJQT67s/edit#) - which aligns everyone supporting the experiment to the learning goals.
 *  implementing the experiment in Nimbus console
 *  coordinating with the QA team for sign-off
 *  launching the experiment
