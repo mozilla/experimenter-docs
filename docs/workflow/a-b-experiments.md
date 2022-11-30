@@ -14,7 +14,7 @@ slug: /a-b-experiments
 
 
 ## To implement custom telemetry collection
-If you need telemetry beyond what is already specfied for your mobile client as part of your implementation process you will need to add the additional telemetry to your client.
+If you need telemetry beyond what is already specified for your mobile client as part of your implementation process you will need to add the additional telemetry to your client.
 
 * Desktop
 * Mobile

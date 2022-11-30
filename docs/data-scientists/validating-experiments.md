@@ -24,7 +24,7 @@ You will see SRM checks for daily active clients, enrollments, and unenrollments
 
 - Low overall enrollment
 - High unenrollments in treatment due to implementation details of the experience being tested
-- Irrgularities in deployment of experiments/updating in flight
+- Irregularities in deployment of experiments/updating in flight
 
 ### Low enrollments
 
@@ -39,7 +39,7 @@ Once your experiment has been enrolling for a day or so, you should check your m
 
 ### High unenrollments
 
-Users can be removed from experiments for a number of reasons, which shows up on your dashboard as "unenrollments". When unrollments look suspiciously high, these are some possible causes to investigate:
+Users can be removed from experiments for a number of reasons, which shows up on your dashboard as "unenrollments". When unenrollments look suspiciously high, these are some possible causes to investigate:
 
 - A targeting condition that was true during enrollment is no longer satisfied (e.g. user switched regions)
 - A preference that is required for the experiment to be on was changed by the user

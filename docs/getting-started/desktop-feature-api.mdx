@@ -73,7 +73,7 @@ After adding the feature a build step is required to update the appropriate head
 # Our feature name
 aboutwelcome:
   description: The about:welcome page
-  # Include this if you need sychronous access / very early access at startup
+  # Include this if you need synchronous access / very early access at startup
   # or if you are registering this to use for platform experiments.
   isEarlyStartup: true
   variables:
@@ -161,7 +161,7 @@ NimbusFeatures::GetInt("aboutwelcome"_ns, "skipFocus"_ns, false);
 
 `getAllVariables({ defaultValues }): FeatureValue` (JS Only)
 
-Returns the value of all variables for a feature. Note that **variables will be merged beftween sources**.
+Returns the value of all variables for a feature. Note that **variables will be merged between sources**.
 
 If `options.defaultValues` is defined, it will be preferred before default branch fallback values but after experiment, remote, and user-set preference values.
 
@@ -195,7 +195,7 @@ const { foo, bar } = NimbusFeatures.myFeature.getAllVariables({
 
 ### `recordExposureEvent()`
 
-Use this to send an [exposure event](/jetstream/jetstream/#enrollment-vs-exposure). By defualt this will send one exposure event per function call, but you can add an options object of `{once: true}` to only send it once per session.
+Use this to send an [exposure event](/jetstream/jetstream/#enrollment-vs-exposure). By default this will send one exposure event per function call, but you can add an options object of `{once: true}` to only send it once per session.
 
 Note that you should add an `exposureDescription` to the manifest describing when/how this event is sent.
 
@@ -211,7 +211,7 @@ Note that you should add an `exposureDescription` to the manifest describing whe
 ```js
 NimbusFeatures.myFeature.recordExposureEvent();
 
-// Only sends once per session, even if this function is called muliple times
+// Only sends once per session, even if this function is called multiple times
 NimbusFeatures.myFeature.recordExposureEvent({ once: true });
 ```
 
@@ -341,7 +341,7 @@ NimbusFeatures::OffUpdate("aboutwelcome"_ns, "skipFocus"_ns,
 
 ## Experiment Metadata
 
-If you need to know whether an experiment is active or get access to the experiment or branch identifier (for exmple, to report in `utm_params`), you can use `ExperimentAPI.getExperimentMetaData`:
+If you need to know whether an experiment is active or get access to the experiment or branch identifier (for example, to report in `utm_params`), you can use `ExperimentAPI.getExperimentMetaData`:
 
 ```js
 XPCOMUtils.defineLazyModuleGetters(this, {

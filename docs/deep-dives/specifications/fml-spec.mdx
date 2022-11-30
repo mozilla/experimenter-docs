@@ -11,7 +11,7 @@ import TabItem from "@theme/TabItem";
 
 ## About this document
 
-This document is the specfiication for the Feature Manifest Language for use with the Nimbus SDK. It is implemented by the `nimbus-fml` tool, which is a Rust [command line app run](/fml-cli) at build time of a mobile app.
+This document is the specification for the Feature Manifest Language for use with the Nimbus SDK. It is implemented by the `nimbus-fml` tool, which is a Rust [command line app run](/fml-cli) at build time of a mobile app.
 
 ## Introduction
 
@@ -58,7 +58,7 @@ Remotely set experiments and rollouts will vary the configurations by presenting
 
 Each project has one or more manifest file, containing all the features configured in that project.
 
-Running `nimbus-fml` for a manifest generates a Swift or Kotlin class, which is named as a commmand line argument.
+Running `nimbus-fml` for a manifest generates a Swift or Kotlin class, which is named as a command line argument.
 
 In the examples, this class is called `FxNimbus`, but this is project specific. This is the entry point to getting values out of Nimbus.
 
@@ -351,7 +351,7 @@ enums:
     description: An enum of types of icon that can be presented alongside titles of pages
     variants:
       letter: A rendering of the first letter of the domain name
-      screenshot: A screenshot thumbnail of the webppage
+      screenshot: A screenshot thumbnail of the webpage
       favicon: The favicon derived from the webpage
       none: No icon is displayed
 ```
@@ -670,7 +670,7 @@ In this example, a `Map<SectionId, Boolean>` is used. `SectionId` is an enum.
 
 Maps with enum keys must have a default value for every variant of the enum.
 
-Since maps are backed by JSON objects, the merge/patching allows entries to come from the manifest, experiments and rollouts simulatenously.
+Since maps are backed by JSON objects, the merge/patching allows entries to come from the manifest, experiments and rollouts simultaneously.
 
 ## Merging other FML files into this one
 
@@ -682,7 +682,7 @@ include:
     - @mozilla/nimbus-shared/fml/messaging.yaml
 ```
 
-Notice the `@` in the second entry: by default this will be interpretted as a Github repository, with the file path on the `main` branch. More about [using `@` paths here](/fml-paths).
+Notice the `@` in the second entry: by default this will be interpreted as a GitHub repository, with the file path on the `main` branch. More about [using `@` paths here](/fml-paths).
 
 In this example, two files are merged into this one: the `features`, `enums` and `objects` from each are added to the corresponding objects in this one.
 

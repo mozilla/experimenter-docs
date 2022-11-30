@@ -6,13 +6,13 @@ Preferences to set in Firefox
 - `app.normandy.run_interval_seconds`: 30
 - `services.settings.server`: `http://localhost:8888/v1`
 
-Note: You can also use the [remote-settings-devtool](https://github.com/mozilla-extensions/remote-settings-devtools) addon to control some of these but the “app.normandy.run_interval_seconds” preference must still be set.
+Note: You can also use the [remote-settings-devtool](https://github.com/mozilla-extensions/remote-settings-devtools) add-on to control some of these but the `app.normandy.run_interval_seconds` preference must still be set.
 
 ## Instructions for Nimbus
 1. Set the above preferences within Firefox
 2. Create a desktop experiment with the following settings
     - A desktop feature
-    - No advanced targeting 
+    - No advanced targeting
     - All Locales
     - All Regions
     - `Percent of clients`: 100%

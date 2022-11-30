@@ -16,7 +16,7 @@ The integration test suite is an end-to-end test suite that uses Selenium and Fi
 You must have Docker installed.
 
 1. Create a python virtual environment
-2. Copy `.env.intergation-tests` file to `.env`.
+2. Copy `.env.integration-tests` file to `.env`.
 3. Run `make refresh SKIP_DUMMY=1` to initialize the DB and setup Nimbus.
 4. Run the `make up_prod_detached` command.
 5. Run the following command to run the integration tests: `make integration_test_nimbus`
