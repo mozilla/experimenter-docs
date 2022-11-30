@@ -21,6 +21,7 @@ Assuming you have been vouched for by a Nimbus administrator + a Product Owner (
 - Watch the half hour [reviewer training video](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b2608de6-defe-44e4-9517-af5d0035268c).  The [training slides are here](https://docs.google.com/presentation/d/11jGYVCRhzqG5R4aemcNtfQ3umzsQAcZrGiFp5a9T7us/edit#slide=id.g144dc03564c_0_7) for reference and links.
 - Follow the steps [setup VPN](https://mana.mozilla.org/wiki/display/SD/VPN)
 - [File a bug using this template](https://bugzilla.mozilla.org/enter_bug.cgi?product=Cloud%20Services&component=Server%3A%20Remote%20Settings) to be added to either or both of the following collections: `nimbus-experiments-desktop` and/or `nimbus-experiments-mobile` for your LDAP to be added on staging and production.
+- Note: on your first review(s) - please ask in #ask-experimenter for a shadow. It's very easy to partner with you sharing a screen to make sure you don't have any questions or uncertainties.
 
 #### Testing Review Workflow on Staging
 
