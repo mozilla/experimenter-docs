@@ -36,7 +36,7 @@ We'll use "treatment" to refer to the change in client behaviour that's triggere
 
 #### Enrollment
 
-Enrollment is the process of the client SDK deciding whether this client should be part of the experiment and if so, what branch it should be assigned to. We'll emit an [enrollment](https://mana.mozilla.org/wiki/display/FJT/Nimbus+Engineering#NimbusEngineering-ExperimentTelemetry) telemetry event when this happens.
+Enrollment is the process of the client SDK deciding whether this client should be part of the experiment and if so, what branch it should be assigned to. We'll emit an [enrollment](https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11469458/Nimbus+Engineering#NimbusEngineering-ExperimentTelemetry) telemetry event when this happens.
 
 Once a client is enrolled in an experiment, it will tag its telemetry pings with that experiment and branch information so that they can be identified for analysis.
 
@@ -47,7 +47,7 @@ Note that it's possible for an experiment to be closed for new enrollments, whil
 
 #### Exposure
 
-Exposure is the process of actually showing the treatment. In other words, it's when we change client behaviour based on the experiment branch in which the client was enrolled, or when we _would_ have changed behaviour if the user was not in the control group. We'll emit an [exposure](https://mana.mozilla.org/wiki/display/FJT/Nimbus+Engineering#NimbusEngineering-ExperimentTelemetry) telemetry event the first time this happens.
+Exposure is the process of actually showing the treatment. In other words, it's when we change client behaviour based on the experiment branch in which the client was enrolled, or when we _would_ have changed behaviour if the user was not in the control group. We'll emit an [exposure](https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11469458/Nimbus+Engineering#NimbusEngineering-ExperimentTelemetry) telemetry event the first time this happens.
 
 Note that it's possible for a client to be enrolled in an experiment but never be exposed to its treatment, for example if the user never uses the part of the client app that is affected by the treatment.
 
@@ -252,7 +252,7 @@ Once the client reaches this state, it stops tagging its telemetry pings with in
 
 ### Telemetry
 
-Nimbus clients will submit telemetry via [Glean](https://mozilla.github.io/glean). The full set of experiment-related telemetry is defined in the [Nimbus Engineering Mana page](https://mana.mozilla.org/wiki/display/FJT/Nimbus+Engineering#NimbusEngineering-ExperimentTelemetry).
+Nimbus clients will submit telemetry via [Glean](https://mozilla.github.io/glean). The full set of experiment-related telemetry is defined in the [Nimbus Engineering Confluence page](https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11469458/Nimbus+Engineering#NimbusEngineering-ExperimentTelemetry).
 
 Nimbus will use the [Glean Experiments API](https://mozilla.github.io/glean/book/user/experiments-api.html) to tag outgoing metrics pings with information about enrolled experiments:
 

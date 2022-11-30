@@ -32,8 +32,8 @@ module.exports = {
           position: "right",
         },
         {
-          href: "https://mana.mozilla.org/wiki/display/FJT/Project+Nimbus",
-          label: "Mana",
+          href: "https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11470446/Nimbus",
+          label: "Confluence",
           position: "right",
         },
         {

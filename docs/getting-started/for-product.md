@@ -24,6 +24,6 @@ Responsibilities include:
 
 ## Key Resources for Product Managers
 Rather than duplicate links that may later break as the process improves - links to the resources and training videos are in the [Workflow Miro Board](https://experimenter.info/workflow/overview).
-*  There are several weekly touchpoints [Office Hours](https://mana.mozilla.org/wiki/display/DATA/Office+Hours) for in person assistance from subject matter experts in different areas.
+*  There are several weekly touchpoints [Office Hours](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours) for in person assistance from subject matter experts in different areas.
 *  If you are confused on any aspect - that's expected the first few experiments until you've gotten the rhythm.  Ask in the #ask-experimenter Slack channel - it is an open community of support from several disciplines.
 

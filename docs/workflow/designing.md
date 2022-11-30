@@ -16,9 +16,9 @@ Once you have concluded that an experiment is the correct approach for you conti
 
 ## To design an experiment
 
-1. Create an [experiment brief](https://docs.google.com/document/d/1eFGL9FATIuZudjSItpIT2Ct1C5qb5E3Qk7hJuJQT67s/edit#heading=https://docs.google.com/document/d/1eFGL9FATIuZudjSItpIT2Ct1C5qb5E3Qk7hJuJQT67s/edit)
+1. Create an [experiment brief](https://docs.google.com/document/d/1eFGL9FATIuZudjSItpIT2Ct1C5qb5E3Qk7hJuJQT67s/edit)
 
-1. File a [data org (DO) Jira ticket](https://mana.mozilla.org/wiki/pages/viewpage.action?pageId=109990007)
+1. File a [data org (DO) Jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/issues/) (click *Create* in the header of the page)
 
-1. Show up to an experiment design office hours to discuss and validate your ideas.  There are a few [office hours available](https://mana.mozilla.org/wiki/display/DATA/Office+Hours)- depending on your need and where you are in the experiment process.  
+1. Show up to an experiment design office hours to discuss and validate your ideas.  There are a few [office hours available](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours)- depending on your need and where you are in the experiment process.
 

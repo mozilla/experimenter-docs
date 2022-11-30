@@ -10,7 +10,7 @@ Some other things you may be looking for are:
 
 * Documentation about using [Jetstream](jetstream/jetstream.md), Mozilla's experiment analysis tool
 * Technical documentation about [datasets used in experimentation](https://docs.telemetry.mozilla.org/tools/experiments.html)
-* [Process documentation](https://mana.mozilla.org/wiki/display/DATA/Mozilla+Data+Organization) for the Mozilla data science organization
+* [Process documentation](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/overview) for the Mozilla data science organization
   (internal link)
 
 ## What is the role of experimentation at Mozilla?
@@ -18,13 +18,13 @@ Some other things you may be looking for are:
 Experimentation informs product decision-making at Mozilla.
 This suite of experimentation tools is designed for product managers and other investigation owners to A/B test hypotheses they have about new and existing products and features.
 [Experimenter](https://experimenter.services.mozilla.com/nimbus/) (internal link)
-and the [experiment review repository](https://mana.mozilla.org/wiki/display/FIREFOX/Experiments+Previously+Reviewed) (internal link)
+and the [experiment review repository](https://mozilla-hub.atlassian.net/wiki/spaces/FIREFOX/pages/11043456/Experiments+Previously+Reviewed) (internal link)
 contain examples of completed and active experiments.
 
 ## Collaborating with experiment owners
 
 Data scientists support experiment owners in setting up and interpreting their experiments.
-[The Firefox experiment design process](https://mana.mozilla.org/wiki/display/FIREFOX/Experiment+Design+Process) (internal link)
+[The Firefox experiment design process](https://mozilla-hub.atlassian.net/wiki/spaces/FIREFOX/pages/11043391/Experiment+Design+Process) (internal link)
 describes the process for both data scientists and stakeholders.
 
 [The Nimbus onboarding guide](https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws/edit#)

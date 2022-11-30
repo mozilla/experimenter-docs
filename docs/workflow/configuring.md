@@ -39,7 +39,7 @@ Putting this together, we generally recommend the following possible lengths for
 
 ### Getting help
 
-_Please bring questions about enrollment period and sizing either to [Data Science Office Hours](https://mana.mozilla.org/wiki/pages/viewpage.action?spaceKey=DATA&title=Office+Hours) or to [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03)_
+_Please bring questions about enrollment period and sizing either to [Data Science Office Hours](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours) or to [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03)_
 
 ## The Observation Window
 
@@ -74,4 +74,4 @@ All experiment metrics are calculated over an Analysis Window which is a subset 
 
 ### Getting help
 
-_Please bring questions about observation windows and analysis to [Data Science Office Hours](https://mana.mozilla.org/wiki/pages/viewpage.action?spaceKey=DATA&title=Office+Hours) or to [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03)_
+_Please bring questions about observation windows and analysis to [Data Science Office Hours](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours) or to [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03)_
