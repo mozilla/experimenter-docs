@@ -7,9 +7,9 @@ With Nimbus experiments, instead of a centralized committee responsible for laun
 
 If you are interested in learning more about your responsibilities, you can find our complete [Access Control Policy here](https://docs.google.com/document/d/1r8oI_Hxe5JQcOejqZcSziX1Aso20AFGBToTFu3BE5j8/edit).
 
-### Onboarding for New Authors (L2)
+### Onboarding for New Authors/Owners (L2)
 
-In order to use the Nimbus platform to create and launch experiments, you will need to go through our [onboarding process](https://mana.mozilla.org/wiki/display/FJT/Nimbus+Onboarding#NimbusOnboarding-Branches). Please ask in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03) to get scheduled.
+In order to use the Nimbus platform to create and launch experiments, you will need to go through the [Experiment Owner onboarding process](https://experimenter.info/for-product). Please ask in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03) if you have any questions and for a shadow on the first experiments(s) you create.
 
 ### Onboarding for New Reviewers (L3)
 
@@ -18,6 +18,7 @@ Assuming you have been vouched for by a Nimbus administrator + a Product Owner (
 #### Basic access
 
 - Read through [rules and responsibilities for L3 users](https://docs.google.com/document/d/1r8oI_Hxe5JQcOejqZcSziX1Aso20AFGBToTFu3BE5j8/edit#heading=h.6v62tolv8dnv). Please note that you will have access to making changes in production for all experiments, and you should decline if you don't feel sufficiently qualified to review an experiment
+- Watch the half hour [reviewer training video](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b2608de6-defe-44e4-9517-af5d0035268c).  The [training slides are here](https://docs.google.com/presentation/d/11jGYVCRhzqG5R4aemcNtfQ3umzsQAcZrGiFp5a9T7us/edit#slide=id.g144dc03564c_0_7) for reference and links.
 - Follow the steps [setup VPN](https://mana.mozilla.org/wiki/display/SD/VPN)
 - [File a bug using this template](https://bugzilla.mozilla.org/enter_bug.cgi?product=Cloud%20Services&component=Server%3A%20Remote%20Settings) to be added to either or both of the following collections: `nimbus-experiments-desktop` and/or `nimbus-experiments-mobile` for your LDAP to be added on staging and production.
 
