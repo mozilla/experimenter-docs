@@ -65,6 +65,13 @@
   max-width: 100%;
 }
 
+.img-xl-center {
+  width: 700px;
+  max-width: 100%;
+  display: block;
+  margin: 10px auto;
+}
+
 .img-xl {
   width: 700px;
   max-width: 100%;
