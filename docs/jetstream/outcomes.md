@@ -43,7 +43,7 @@ The important elements are:
 * The optional top-level `default_metrics` field, which specifies the metrics that will be showed at the top of the visualization page as the "primary metrics"
 * One or more `metrics` blocks that describe the metrics to compute, and any supporting `data_source`s as necessary.
 
-The configuration languge is identical to the custom experiment configuration language described in [Configuring Jetstream].
+The configuration language is identical to the custom experiment configuration language described in [Configuring Jetstream].
 
 Opening a pull request to `jetstream-config` with an Outcome definition will cause it to be validated.
 If it passes, a data scientist can merge the Outcome definition without additional review.
@@ -56,7 +56,7 @@ Experimenter will need to be re-deployed to pick up a new Outcome. Please ask in
 
 It is also possible to parameterize `select_expression` in outcomes, values the parameters to be replaced with can then be specified in external jetstream config.
 
-Example of an outcome using parametization:
+Example of an outcome using parameterization:
 
 ```toml
 friendly_name = "Picture in Picture"

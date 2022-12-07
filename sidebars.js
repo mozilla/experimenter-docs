@@ -222,22 +222,22 @@ module.exports = {
         {
           type: "link",
           label: "How to Launch a Nimbus Experiment",
-          href: "https://mana.mozilla.org/wiki/display/FJT/How+to+Launch+a+Nimbus+Experiment",
+          href: "https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11469776/Nimbus+Onboarding#NimbusOnboarding-LaunchingExperimentsusingNimbus!",
         },
         {
           type: "link",
           label: "Nimbus Data Transfer Object",
-          href: "https://mana.mozilla.org/wiki/pages/viewpage.action?pageId=130920248",
+          href: "https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11469537/The+Nimbus+Data+Transfer+Object+DTO",
         },
         {
           type: "link",
           label: "Experiment Telemetry",
-          href: "https://mana.mozilla.org/wiki/display/FJT/Nimbus+Engineering#NimbusEngineering-ExperimentTelemetry",
+          href: "https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11469458/Nimbus+Engineering#NimbusEngineering-ExperimentTelemetry",
         },
         {
           type: "link",
           label: "Lessons Learned",
-          href: "https://mana.mozilla.org/wiki/display/FJT/Lessons+Learned+-+Experiment+Incidents+and+Close+Calls",
+          href: "https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11470136/Lessons+Learned+-+Experiment+Incidents+and+Close+Calls",
         },
       ],
     },

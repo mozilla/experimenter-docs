@@ -5,7 +5,7 @@ slug: /rollouts-faq
 ---
 :::tip
 Want more info on rollouts?
-Take a look at our [deep dive](deep-dives/experimenter/rollouts), or reach out in [`#ask-experimenter`](https://mozilla.slack.com/archives/CF94YGE03) on Slack. 
+Take a look at our [deep dive](deep-dives/experimenter/rollouts), or reach out in [`#ask-experimenter`](https://mozilla.slack.com/archives/CF94YGE03) on Slack.
 :::
 
 If you want to set configurations for a feature remotely _for non-experiment users_, you can do so with a **Rollout**.
@@ -146,4 +146,4 @@ For writing tests please see [Testing with Desktop Rollouts](desktop-feature-api
 
 ## Links
 
-- [Project plan](https://mana.mozilla.org/wiki/display/FJT/Rapid+Rollouts)
+- [Project plan](https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11471797/Rapid+Rollouts)

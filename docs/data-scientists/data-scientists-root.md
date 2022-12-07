@@ -10,7 +10,7 @@ Some other things you may be looking for are:
 
 * Documentation about using [Jetstream](jetstream/jetstream.md), Mozilla's experiment analysis tool
 * Technical documentation about [datasets used in experimentation](https://docs.telemetry.mozilla.org/tools/experiments.html)
-* [Process documentation](https://mana.mozilla.org/wiki/display/DATA/Mozilla+Data+Organization) for the Mozilla data science organization
+* [Process documentation](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/overview) for the Mozilla data science organization
   (internal link)
 
 ## What is the role of experimentation at Mozilla?
@@ -18,13 +18,13 @@ Some other things you may be looking for are:
 Experimentation informs product decision-making at Mozilla.
 This suite of experimentation tools is designed for product managers and other investigation owners to A/B test hypotheses they have about new and existing products and features.
 [Experimenter](https://experimenter.services.mozilla.com/nimbus/) (internal link)
-and the [experiment review repository](https://mana.mozilla.org/wiki/display/FIREFOX/Experiments+Previously+Reviewed) (internal link)
+and the [experiment review repository](https://mozilla-hub.atlassian.net/wiki/spaces/FIREFOX/pages/11043456/Experiments+Previously+Reviewed) (internal link)
 contain examples of completed and active experiments.
 
 ## Collaborating with experiment owners
 
 Data scientists support experiment owners in setting up and interpreting their experiments.
-[The Firefox experiment design process](https://mana.mozilla.org/wiki/display/FIREFOX/Experiment+Design+Process) (internal link)
+[The Firefox experiment design process](https://mozilla-hub.atlassian.net/wiki/spaces/FIREFOX/pages/11043391/Experiment+Design+Process) (internal link)
 describes the process for both data scientists and stakeholders.
 
 [The Nimbus onboarding guide](https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws/edit#)
@@ -81,7 +81,7 @@ If there are already Live experiments on the same feature as your experiment, yo
   },
 `
 3. The example JSON above shows that the most recent experiment used buckets 3678 to 7156 (= 3678 + 3478). If your new experiment needs less than 28.44% (= (10,000 - 7156)/100) of the clients, then you do not need to inflate the percentage to account for Nimbus being unaware of clients enrolled in previous experiments.
-4. If your new experiment needs more than 28.44% of the clients, then you must inflate the percentage to account for 71.56% of the clients already being enrolled in experiments. For example, if your new experiment needs 30% of the clients, then you must input 41.92% (= 30% / 71.56%) into "Population %" in the Nimbus front-end. 
+4. If your new experiment needs more than 28.44% of the clients, then you must inflate the percentage to account for 71.56% of the clients already being enrolled in experiments. For example, if your new experiment needs 30% of the clients, then you must input 41.92% (= 30% / 71.56%) into "Population %" in the Nimbus front-end.
 
 ### Non-normal distributions
 Most of our telemetry metrics are not normally distributed. A couple approaches that you may find helpful are:
@@ -97,7 +97,7 @@ To see which metrics are included by default to this auto-generated report as we
 
 If you want to perform some analysis by hand, [Jetstream datasets](https://docs.telemetry.mozilla.org/datasets/jetstream.html) are also available in BigQuery. Many telemetry datasets also include an `experiments` field, which when filtered on the experiment slug, can identify rows in the dataset enrolled in the experiment.
 
-For certain experiments, data scientists may need to contruct confidence intervals for relative or percent differences. Example implementations can be found in [this notebook](https://colab.research.google.com/drive/1sVOdVdraPwec_Hit4OiaDDH4TJGzaIcc?usp=sharing).
+For certain experiments, data scientists may need to construct confidence intervals for relative or percent differences. Example implementations can be found in [this notebook](https://colab.research.google.com/drive/1sVOdVdraPwec_Hit4OiaDDH4TJGzaIcc?usp=sharing).
 
 ## Watch out for
 

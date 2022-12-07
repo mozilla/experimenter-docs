@@ -7,7 +7,7 @@ slug: /desktop-migration-guide
 ## To migrate front-end normandy prefs to Nimbus controlled experiments or rollouts
 This guide will help you migrate your Desktop front-end code to run experiments with Nimbus, while still being able to use preferences for default and user-override values
 
-Prerequisites: 
+Prerequisites:
 * Your experimental variables are already instrumented with Firefox preferences
 * You don't use the `user branch` of each pref for anything other than actual user-defined values or testing (see docs on [order of precedence](/desktop-feature-api#configuration-sources)
 * Your code can import a `jsm`
@@ -78,11 +78,11 @@ If you've configured fallback preferences your tests should pass as written, but
 
 ### What happens if I run a Normandy experiment and a Nimbus experiment simultaneously?
 
-If possible, we do not recommend you run Normandy and Nimbus experiments on the same user population simultaneously. If a user were to enroll in an experiment from both sources, the value returned would follow the rules defined in [Configuration Sources docs](/desktop-feature-api#configuration-sources). (Nimbus values override default pref branch values; user pref rbanch values override Nimbus).
+If possible, we do not recommend you run Normandy and Nimbus experiments on the same user population simultaneously. If a user were to enroll in an experiment from both sources, the value returned would follow the rules defined in [Configuration Sources docs](/desktop-feature-api#configuration-sources). (Nimbus values override default pref branch values; user pref branch values override Nimbus).
 
 If you have a long-running Normandy experiment during which you must launch a Nimbus experiment, you can add a custom targeting rule to exclude users from a specific experiment ID.
 
 
 ## Links
 
-- [PR Example of a switch from prefs to NimbusFeatures](https://phabricator.services.mozilla.com/D118760) (This is slightly outdated) 
+- [PR Example of a switch from prefs to NimbusFeatures](https://phabricator.services.mozilla.com/D118760) (This is slightly outdated)

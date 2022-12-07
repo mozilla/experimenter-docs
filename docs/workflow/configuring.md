@@ -24,7 +24,7 @@ The exact choice of period length should consider the total volume of the experi
 
 - Total volume: without increasing the enrollment proportion, larger experiments will need to enroll longer. Of course, in some situations we can increase the enrollment proportion to achieve a shorter enrollment period.
 - Audience:
-  - Existing user experiments: generally, these experiments see the majority of their enrollments quickly, with enrollment volume rapidly falling off as only users who havent synced are eligible to continue enrolling. It's not uncommon with an experiment like this to see 90% of the enrollments within the first week and 10% in the later weeks. In this case, it may not be possible to extend the enrollment period to achieve larger sizes so the only option would be increasing the enrollment fraction.
+  - Existing user experiments: generally, these experiments see the majority of their enrollments quickly, with enrollment volume rapidly falling off as only users who haven't synced are eligible to continue enrolling. It's not uncommon with an experiment like this to see 90% of the enrollments within the first week and 10% in the later weeks. In this case, it may not be possible to extend the enrollment period to achieve larger sizes so the only option would be increasing the enrollment fraction.
   - New user experiments: generally, these experiments see enrollment volume scaling linearly with period length. Letting these experiments enroll for 2 weeks will see double the enrollments of a 1-week variant.
 - Business needs: varying business needs can necessitate varying designs.
 
@@ -39,7 +39,7 @@ Putting this together, we generally recommend the following possible lengths for
 
 ### Getting help
 
-_Please bring questions about enrollment period and sizing either to [Data Science Office Hours](https://mana.mozilla.org/wiki/pages/viewpage.action?spaceKey=DATA&title=Office+Hours) or to [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03)_
+_Please bring questions about enrollment period and sizing either to [Data Science Office Hours](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours) or to [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03)_
 
 ## The Observation Window
 
@@ -74,4 +74,4 @@ All experiment metrics are calculated over an Analysis Window which is a subset 
 
 ### Getting help
 
-_Please bring questions about observation windows and analysis to [Data Science Office Hours](https://mana.mozilla.org/wiki/pages/viewpage.action?spaceKey=DATA&title=Office+Hours) or to [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03)_
+_Please bring questions about observation windows and analysis to [Data Science Office Hours](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours) or to [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03)_
