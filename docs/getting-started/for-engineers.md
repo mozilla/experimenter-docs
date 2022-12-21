@@ -6,6 +6,11 @@ slug: /for-engineers
 
 Engineers are typically tasked with implementing an experiment on a new surface with an experiment that has been designed by their product manager in partnership with a data scientist.
 
+## Integrating with a new app
+
+ * [Getting started with Nimbus, for Android Engineers](/getting-started-for-android-engineers)
+ * [Mobile UI needed for Nimbus](/getting-started-mobile-required-ui)
+
 ## To get started with implementation
 
 * Review the experiment design document.
