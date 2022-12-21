@@ -9,7 +9,7 @@ Engineers are typically tasked with implementing an experiment on a new surface 
 ## Integrating with a new app
 
  * [Getting started with Nimbus, for Android Engineers](/getting-started-for-android-engineers)
- * [Mobile UI needed for Nimbus](http://localhost:3000/getting-started-mobile-required-ui)
+ * [Mobile UI needed for Nimbus](/getting-started-mobile-required-ui)
 
 ## To get started with implementation
 

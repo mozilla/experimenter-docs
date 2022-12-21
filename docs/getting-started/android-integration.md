@@ -12,7 +12,7 @@ This document shows you how to set up the Nimbus SDK with a new Android app. It 
 
 # Building with Nimbus
 
-Nimbus is distributed as part of the `android-components`, which in turn bundles Rust code as part of a what Mozilla's Application Services ["Megazord"](https://github.com/mozilla/application-services/blob/main/docs/design/megazords.md).
+Nimbus is distributed as part of the `android-components`, which in turn bundles Rust code as part of Mozilla's Application Services ["Megazord"](https://github.com/mozilla/application-services/blob/main/docs/design/megazords.md).
 
 In `app/build.gradle`, in the `dependencies` block, include the `implementation` line for Nimbus:
 
@@ -74,7 +74,7 @@ Before using Nimbus in your Android app, you need to start it.
 
 The Nimbus SDK is a configuration store, making configuration available to the any thread, and — to a first approximation— to be immutable within the same session of the app.
 
-For this reason, we want to be start the Nimbus SDK as close to the beginning of the start of the app as possible.
+For this reason, we want to be starting the Nimbus SDK as close to the beginning of the start of the app as possible.
 
 In Firefox for Android and Focus for Android, this is done at the beginning of the `Application#onCreate()` method.
 
@@ -132,7 +132,7 @@ Notes:
 
 1. `Megazord.init()` is called before `createNimbus()`.
 1. `createNimbus` uses a `NimbusBuilder` to create the Nimbus object.
-1. Building a `JSONObject` of custom targeting attributes.
+1. We build a `JSONObject` of custom targeting attributes.
 1. The `nimbus.fetchExperiments()` method is called sometime at or after the app has started.
 
 ## `NimbusBuilder` configuration
@@ -190,7 +190,7 @@ However, `onApplyCallback` in `NimbusBuilder` is guaranteed to be executed on th
 
 ### Handling First Run experiments
 
-Since `fetchExperiments` from the remote settings URL is slow, and we wish to be able have access to the Nimbus experimental configuration as early in start up as possible, Nimbus downloads and caches the experiment recipes on the `n`th run of the app and only applies them and makes them available to the app at the beginning of the _next_ i.e. the `(n + 1)`th run of ther app.
+Since `fetchExperiments` from the remote settings URL is slow, and we wish to be able have access to the Nimbus experimental configuration as early in start up as possible, Nimbus downloads and caches the experiment recipes on the `n`th run of the app and only applies them and makes them available to the app at the beginning of the _next_ i.e. the `(n + 1)`th run of the app.
 
 Astute readers will notice that when `n = 0`, i.e. the very first time the app is run, there are no experiment recipes downloaded. If Remote Settings experiment recipes JSON payload is available as a `raw/` resource, it can be loaded in at first run:
 
@@ -205,7 +205,7 @@ Astute readers will notice that when `n = 0`, i.e. the very first time the app i
         }.build(appInfo)
 ```
 
-The `iniital_experiments.json` file can be downloaded, either as part of the build, or in an automated/timed job. e.g. this is the [Github Action workflow used by Fenix](https://github.com/mozilla-mobile/fenix/blob/main/.github/workflows/fenix-update-nimbus-experiments.yml).
+The `initial_experiments.json` file can be downloaded, either as part of the build, or in an automated/timed job. e.g. this is the [Github Action workflow used by Fenix](https://github.com/mozilla-mobile/fenix/blob/main/.github/workflows/fenix-update-nimbus-experiments.yml).
 
 ### Using the experiments preview collection
 
