@@ -8,7 +8,7 @@ title: Configuring Jetstream
 There are two ways to customize the results that appear in Experimenter and [partybal] for an experiment.
 
 You can either reference an [outcome] while creating the experiment in the console,
-or commit a custom configuration to the [jetstream-config] repository.
+or file a [jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/boards/269) to collaborate with a data scientist commit a custom configuration to the [jetstream-config] repository.
 
 Outcome definitions are also created in jetstream-config and use the same configuration language.
 
@@ -22,7 +22,7 @@ This works for both Normandy and Nimbus slugs.
 
 ## Landing configurations
 
-To add or update a custom configuration, open a pull request against [jetstream-config]. 
+To add or update a custom configuration, a data scientist will open a pull request against [jetstream-config]. 
 CI checks will validate the columns, data sources, and SQL syntax. Note that if the experiment has not yet launched, the CI checks will not pass.
 Once CI completes, you may merge the pull request, which will trigger Jetstream to re-run your analysis. 
 No additional review is necessary to land configurations. Results should be available in several hours, depending upon the complexity of the configuration.
