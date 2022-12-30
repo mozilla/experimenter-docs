@@ -38,7 +38,7 @@ These are defined for each platform in the Jetstream-config repository in [jetst
 Data scientists can extend and define outcomes in the outcomes path of the
 [`jetstream-config`](https://github.com/mozilla/jetstream-config/tree/main/outcomes) repository.  See what [Outcomes are available](https://mozilla.github.io/jetstream-config/outcomes/firefox_desktop/firefox_suggest/).
 
-If the metrics you need are not covered by Guardrail/Core metrics or existing Outcomes - you can add a metric to your experiment by having a data scientist write a[custom configuration](configuration.md) for your experiment.
+If the metrics you need are not covered by Guardrail/Core metrics or existing Outcomes - you can add a metric to your experiment by working with a data scientist to write a [custom configuration](configuration.md) for your experiment.
 
 
 
