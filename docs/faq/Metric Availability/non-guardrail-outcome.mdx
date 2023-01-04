@@ -1,22 +1,23 @@
-## If the metrics you need doesn’t exist already (in Core Metrics or Outcomes)?
+# If the metrics you need don’t exist yet (in Core Metrics or Outcomes)?
 
-After completing your experiment brief and defining your learning goals - go through the steps below until the metrics needed for this experiment are covered.  You do not need to complete all the steps - just enough to answer your questions.
+Watch [this video](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=7f677cde-3b61-4cd5-8119-af7b013c7579)
+After completing your experiment brief and defining your learning goals - attend an office hours to discuss the metrics.  Based on that discussion - go through the steps below until the metrics needed for this experiment are covered.  You do not need to complete all the steps - just enough to answer your questions.
 
 **Step 1** - Check  [here](https://experimenter.info/jetstream/metrics/#how-do-i-add-a-metric-to-my-experiment) to learn if the existing Guardrail/Core metrics or Outcomes will answer your questions.
 
 **Step 2** - Did an experiment run previously had these metrics you need?  
-* Look at previous experiments in your feature area - do those metrics meet your needs?  Re-using metrics is a much quicker than writing from scratch.   
+* Look at previous experiments in your feature area - do those metrics meet your needs?  Re-using metrics is a much quicker than writing custom metrics from scratch.   
 * If yes, create a [DO Jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/boards/269) including:  
   * the link to your current experiment 
-  * the link to the previous experiment(s) results.  Specify with of the metrics from the previous experiment you are interested in.    
-* OPTIONAL: If you will want these metrics for future experiments on this feature - ask to have an Outcome added in addition to (or instead of) a custom config file.  Adding an Outcome means these metrics will become available to select from the Outcome drop down in Metrics.  
+  * the link to the previous experiment(s) results.  Specify the metrics from the previous experiment you are interested in and how they answer your question.    
+* BEST PRACTICE: If you want these metrics for future experiments on this feature - ask to have an Outcome added instead of a custom config file.  Adding an Outcome means these metrics will be available to select from the Outcome drop down in Metrics for future experiments.  
 
 **Step 3** - Provide information to create a custom metric for this experiment.
 * Create a [DO Jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/boards/269) including: 
   * the link to your current experiment  
   * the questions you need to answer about the feature (that aren't covered by metrics from step 1 or step 2)
-  * the specific telemetry probes in your feature that will be used to answer the question - including the possible values those probes collect and when they are sent.
-* A data scientist needs to create a custom jetstream config file to add these metrics, so ask for an estimate for those to be created (varies based on complexity and people available).  
+  * the specific telemetry probes in your feature that will be used to answer the question - including the possible values those probes collect and when they are sent. 
+* A data scientist will work with feature product and engineering to create a custom jetstream config file to add these metrics.  Provided the telemetry probes exist and are testing - the custom configuration file can be written after experiment launch (before end) and applied.
 
 
 
