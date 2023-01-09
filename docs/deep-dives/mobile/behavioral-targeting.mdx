@@ -56,8 +56,8 @@ The following are the existing options for behavioral targeting as defined in Ex
 
 | Name | Description | Targeting String |
 |:---|:---|:---|
-| Core Active Users | A user who has used the application 21 out of the last 28 days. | <pre><code>'<event\>'&#124;eventCountNonZero('Days', 28, 0) >= 21</code></pre> |
-| Recently Logged In Users | A user who has logged into Sync within the last 12 weeks. | <pre><code>'<event\>'&#124;eventCountNonZero('Weeks', 12, 0) > 0</code></pre> |
+| Core Active Users | A user who has used the application 21 out of the last 28 days. | <pre><code>'app-opened-event'&#124;eventCountNonZero('Days', 28, 0) >= 21</code></pre> |
+| Recently Logged In Users | A user who has logged into Sync within the last 12 weeks. | <pre><code>'sync-signin-event'&#124;eventCountNonZero('Weeks', 12, 0) > 0</code></pre> |
 
 
 ## Engineering
