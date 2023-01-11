@@ -1,0 +1,173 @@
+---
+id: mobile-behavioral-targeting
+title: Behavioral Targeting
+slug: /mobile-behavioral-targeting
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+Behavioral targeting is a term used to describe a set of jexl transforms which can be used to target specific user behaviors. User behaviors might be `the user opened the app`, `the user logged in`, `the user navigated to a specific view`, or any user-triggered event that has Glean metrics associated with it.
+
+In order to maintain user privacy, this entire system lives in the Nimbus client launched by our mobile applications. Additionally, events are recorded and stored as counts in time interval-based buckets, allowing for a predictably small amount of disk spaceto be used for this event store.
+
+## Event Bucketing
+
+Stored events are bucketed into time intervals. The time intervals are Minutes, Hours, Days, Weeks, Months, and Years. No additional setup is required for this bucketing process, it is handled entirely by the SDK. Buckets for each of the time intervals are created and stored whenever a new event is recorded.
+
+### Bucket Advancement & Retention
+
+When buckets are created, they have a starting date. This date is set to `Jan 1 00:00:00 UTC` of the current year. As time passes, the current time is incremented by the time difference in whole intervals and the buckets are advanced that many positions.
+
+Bucket advancement occurs when an event is recorded, or when a query is performed. Buckets always advance based off whole increments of their time interval; `Minutes` will advance by full minutes, `Hours` by full hours, and so on. One exception to this rule is the `Months` time interval – it advances in increments of 28 days.
+
+Based on the current datetime, the buckets may not advance at all, or may advance so much that all the buckets are cleared. As an example, if the current date for the `Hours` bucket is set to `May 1 10:00:00 UTC`, and an event is recorded at `May 1 12:45:00 UTC`, the buckets will be advanced 2 positions, the current date will be updated to `May 1 12:00:00 UTC`, and the event will be recorded in the bucket for the 12pm hour.
+
+#### Retention
+
+Each time interval has a maximum number of buckets it retains. As the time intervals move forward, buckets are rotated off of the deque and new buckets are added. If a query is performed that would go beyond the bucket count, it instead is cut off at the bucket count.
+
+The following is a list of the time intervals and their bucket counts:
+
+```
+Minutes 60
+Hours   24
+Days    56
+Weeks   52
+Months  12
+Years   4
+```
+
+## Querying for User Behavior
+
+User behaviors are recorded in the same way as Glean events, and there are a number of ways in which they can be queried.
+
+The following is a list of jexl transforms that exist within the Nimbus targeting helper, and thus are usable on all projects that use the Nimbus Rust library.
+
+| Transform | Description | Args | Returns |
+|:---|:---|:---|:---|
+| `eventSum` | Calculates the sum of all bucket values within the range | `interval, bucket_count, starting_bucket` | int |
+| `eventCountNonZero` | Calculates the total number of buckets with a non-zero value within the range | `interval, bucket_count, starting_bucket` | int |
+| `eventAverage` | Calculates the average of all event bucket values within the range | `interval, bucket_count, starting_bucket` | float |
+| `eventAveragePerNonZeroInterval` | Calculates the average of all buckets with a non-zero value within the range | `interval, bucket_count, starting_bucket` | float |
+| `eventLastSeen` | Returns the number of whole time intervals between the starting bucket and the first bucket with a non-zero value | `interval, starting_bucket` | int |
+
+## Designing Experiments & Behavior Triggers
+
+The following are the existing options for behavioral targeting as defined in Experimenter (found under `Advanced Targeting` in the audience editor). In order to use these targeting options, the application must be Firefox or Focus for Android or iOS.
+
+| Name | Description | Targeting String |
+|:---|:---|:---|
+| Core Active Users | A user who has used the application 21 out of the last 28 days. | <pre><code>'app-opened-event'&#124;eventCountNonZero('Days', 28, 0) >= 21</code></pre> |
+| Recently Logged In Users | A user who has logged into Sync within the last 12 weeks. | <pre><code>'sync-signin-event'&#124;eventCountNonZero('Weeks', 12, 0) > 0</code></pre> |
+
+There are many ways these queries could be used to our advantage when writing behavior-oriented code. One example could be to show a certain message to users after they have launched the app _n_ times, and after 12hrs has passed from when they first opened the application.
+
+```js
+'app-opened-event'&#124;eventSum('Years', 4, 0) >= 3 &&      // The sum of app opened events within the last four years must be 3 or more
+(
+  'app-opened-event'&#124;eventSum('Hours', 12, 12) >= 1 ||  // The sum of app opened events within 12hrs, starting 12hrs ago
+  'app-opened-event'&#124;eventSum('Days', 7, 1) >= 1 ||     // The sum of app opened events within 7 days, starting 1 day ago
+  'app-opened-event'&#124;eventSum('Weeks', 52, 1) >= 1      // The sum of app opened events within 52 weeks, starting 1 week ago
+)                                                            // Any one of these results must have been 1 or more
+```
+
+## Instrumented Events
+
+The following are the events that are currently instrumented in Firefox for iOS and Android, respectively:
+
+<Tabs
+  defaultValue="android"
+  values={[
+    { label: "Android", value: "android" },
+    { label: "iOS", value: "ios" },
+  ]
+}>
+<TabItem value="android">
+
+| Description | Event |
+|:---|:---|
+| Application opened | [app_opened](https://dictionary.telemetry.mozilla.org/apps/fenix/metrics/events_app_opened) |
+| User logged into Sync | [sync_auth.sign_in](https://dictionary.telemetry.mozilla.org/apps/fenix/metrics/sync_auth_sign_in) |
+
+</TabItem>
+<TabItem value="ios">
+
+| Description | Event |
+|:---|:---|
+| Application opened | [app_cycle.foreground](https://dictionary.telemetry.mozilla.org/apps/firefox_ios/metrics/app_cycle_foreground) |
+| User logged into Sync | [sync.login_completed_view](https://dictionary.telemetry.mozilla.org/apps/firefox_ios/metrics/sync_login_completed_view) |
+
+</TabItem>
+</Tabs>
+
+## Engineering
+
+In order to instrument a new behavior/event, an equivalent call to the Nimbus event recording method must be made alongside the call to record a Glean event.
+
+:::note
+
+While this process is currently required, long-term we hope to have a hook in Glean that will record certain events automatically.
+
+:::
+
+<Tabs
+  defaultValue="android"
+  values={[
+    { label: "Android", value: "android" },
+    { label: "iOS", value: "ios" },
+  ]
+}>
+<TabItem value="android">
+
+On Firefox for Android, a call should be made to `components.analytics.experiments.recordEvent` immediately following the Glean event being recorded. The argument should be the event name.
+
+```kotlin title="app/src/main/java/org/mozilla/fenix/HomeActivity.kt"
+import org.mozilla.fenix.ext.components
+
+// ...
+open class HomeActivity : LocaleAwareAppCompatActivity(), NavHostActivity {
+    // ...
+    final override fun onCreate(savedInstanceState: Bundle?) {
+        // ...
+        if (settings().isTelemetryEnabled) {
+            // ...
+            safeIntent
+                ?.let(::getIntentSource)
+                ?.also {
+                    Events.appOpened.record(Events.AppOpenedExtra(it))
+                    // This will record an event in Nimbus' internal event store. Used for behavioral targeting
+                    components.analytics.experiments.recordEvent("app_opened")
+                }
+        }
+        // ...
+    }
+}
+```
+
+[Example in PR](https://github.com/mozilla-mobile/fenix/pull/27934)
+
+</TabItem>
+<TabItem value="ios">
+
+On Firefox for iOS, there is a wrapper for telemetry which makes this process rather simple. In the switch case for the event you want to implement, add a call to `Experiments.shared.recordEvent`. The argument should be the event name.
+
+```swift title="Client/Telemetry/TelemetryWrapper.swift"
+extension TelemetryWrapper {
+    // ...
+    static func gleanRecordEvent(category: EventCategory, method: EventMethod, object: EventObject, value: EventValue? = nil, extras: [String: Any]? = nil) {
+        switch (category, method, object, value, extras) {
+        // ...
+        case (.firefoxAccount, .view, .fxaLoginCompleteWebpage, _, _):
+            GleanMetrics.Sync.loginCompletedView.record()
+            // record the same event for Nimbus' internal event store
+            Experiments.shared.recordEvent("sync.login_completed_view")
+        // ...
+```
+
+[Example in PR](https://github.com/mozilla-mobile/firefox-ios/pull/12560)
+
+</TabItem>
+</Tabs>
+
+<hr/>
