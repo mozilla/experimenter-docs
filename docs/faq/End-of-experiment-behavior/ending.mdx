@@ -1,4 +1,6 @@
 # What happens at experiment end?
 ## Feature state changes
-Question: If there is a problem and I need to abort the experiment and rollout, will cancelling the experiment and rollout revert the feature flags to their pre-experiment and pre-rollout states (i.e. feature is disabled) for all users enrolled so far? 
+*Question: If there is a problem and I need to abort the experiment and rollout, will cancelling the experiment and rollout revert the feature flags to their pre-experiment and pre-rollout states (i.e. feature is disabled) for all users enrolled so far?* 
+
+
 Answer: Ending means Nimbus stops applying the change, so users will go back to whatever state they would have without the experiment or rollout applied.  If you have a complex feature - you can verify by asking QA to test that scenario before release as well.  
