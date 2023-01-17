@@ -9,16 +9,16 @@ slug: /mobile-messaging
 [fxios-attributes-eng]:          #missing-link
 [fxios-trigger-expressions-fml]: https://github.com/mozilla-mobile/firefox-ios/blob/main/nimbus.fml.yaml#L139
 
-[fenix-actions-fml]:             https://github.com/mozilla-mobile/fenix/blob/main/nimbus.fml.yaml#L126
+[fenix-actions-fml]:             https://github.com/mozilla-mobile/fenix/blob/main/messaging.fml.yaml#L126
 [fenix-actions-eng]:             https://github.com/mozilla-mobile/fenix/blob/main/app/src/main/AndroidManifest.xml#L91-L126
 [fenix-attributes-eng]:          https://github.com/mozilla-mobile/fenix/blob/main/app/src/main/java/org/mozilla/fenix/gleanplumb/CustomAttributeProvider.kt#L29
-[fenix-trigger-expressions-fml]: https://github.com/mozilla-mobile/fenix/blob/main/nimbus.fml.yaml#L115
+[fenix-trigger-expressions-fml]: https://github.com/mozilla-mobile/fenix/blob/main/messaging.fml.yaml#L115
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
 # Introduction
-The GleanPlumb messaging system is a feature of Firefox on iOS and Android, designed to send in-app messages directly to users without going through a release cycle.
+The mobile messaging system is a feature of Firefox on iOS and Android, designed to send in-app messages directly to users without going through a release cycle.
 
 It allows staff— most likely experiment owners, product owners, user research and marketing teams—
 
@@ -36,7 +36,7 @@ It is also a living document:
  - attributes useful in triggers, and deeplink actions will accrue in each of the embedding apps.
 
 You can view a demo of sending a survey on mobile [here](https://mozilla.zoom.us/rec/share/CafQjaLn09BtbPvOphePVizKe49IrRF2QHtYcc5zs4XlbmEhHzulcohmvC1WUV49.ZBKmiSNkaw7kbIeJ)
-Access Passcode: 9Zx9Lg&M   
+Access Passcode: 9Zx9Lg&M
 
 
 #### Edit history
@@ -618,8 +618,8 @@ These trigger expressions are application specific:
 
 Expression name | JEXL expression | Discussion
 --- | --- | ---
-`I_AM_DEFAULT_BROWSER`       | `is_default_browser_string == 'true' ` |  |
-`I_AM_NOT_DEFAULT_BROWSER`   | `is_default_browser_string == 'false'` |  |
+`I_AM_DEFAULT_BROWSER`       | `is_default_browser == true`  |  |
+`I_AM_NOT_DEFAULT_BROWSER`   | `is_default_browser == false` |  |
 
 It is possible this table is out of date. The definitive source of truth for this in [the code][fenix-trigger-expressions-fml] itself.
 
@@ -735,20 +735,26 @@ so boolean attributes should be simulated with strings or integers.
 }>
 <TabItem value="fenix">
 
-Attribute | Type | Description
-----------|------|------------
-`is_default_browser_string`                 | string   | Should change to boolean on fixing [`==`][bool-equ] and [`!`][bool-not] |
-`date_string`                               | string   | In YYYY-MM-DD format                                                    |
-`number_of_app_launches`                    | int      | Indicates how many times the app has been launched.                     |
+Attribute | Type | Description | Versions |
+----------|------|-------------|----------|
+`is_default_browser`                        | boolean  | JEXL.rs does not implement [boolean negation `!`][bool-not]             |  |
+`date_string`                               | string   | In YYYY-MM-DD format                                                    |  |
+`number_of_app_launches`                    | int      | Indicates how many times the app has been launched.                     |  |
+`adjust_campaign`                           | string?  | The campaign id parameter as derived by Adjust                          | v111 |
+`adjust_network`                            | string?  | The network parameter as derived by Adjust                              | v111 |
+`adjust_ad_group`                           | string?  | The Ad Group parameter as derived by Adjust                             | v111 |
+`adjust_creative`                           | string?  | The Creative parameter as derived by Adjust                             | v111 |
+`are_notifications_enabled`                 | boolean  | JEXL.rs does not implement [boolean negation `!`][bool-not]             | v111 |
 
 It is possible this table is out of date. The definitive source of truth for this in [the code][fenix-attributes-eng] itself.
 
 </TabItem>
 <TabItem value="fxios">
 
-Attribute | Type | Description
-----------|------|------------
-`date_string`                        | string   | In YYYY-MM-DD format |
+Attribute | Type | Description | Versions |
+----------|------|-------------|----------|
+`date_string`                               | string   | In YYYY-MM-DD format                                                    |
+`is_default_browser`                        | boolean  | JEXL.rs does not implement [boolean negation `!`][bool-not]             |
 
 It is possible this table is out of date. The definitive source of truth for this in [the code][fxios-attributes-eng] itself.
 
