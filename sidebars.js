@@ -45,7 +45,7 @@ module.exports = {
         "data-scientists/telemetry",
         "data-scientists/validating-experiments",
         "data-scientists/experiment-sizing",
-        "data-scientists/experiment-sizing"
+        "data-scientists/auto-sizing-cli"
       ],
     },
     {

@@ -4,7 +4,7 @@ title: Sizing Experiments Using Mozanalysis
 slug: /experiment-sizing
 ---
 
-This page gives an overview of how Mozanalysis can be used to do experiment sizing. **[Mozanalysis]** is a library used to standardize experiment analysis at Mozilla. Mozanalysis contains the statistical tools used by [Jetstream] to produce results from experiments, as well as tools to pull historical data from BigQuery to calculated necessary sample sizes to carry out experiments.
+This page gives an overview of how Mozanalysis can be used to do experiment sizing. **[Mozanalysis]** is a library used to standardize experiment analysis at Mozilla. Mozanalysis contains the statistical tools used by [Jetstream] to produce results from experiments, as well as tools to pull historical data from BigQuery to calculated necessary sample sizes to carry out experiments. The results of the tool are the sample size and percent of the total target population required per branch of an experiment with a balanced design to achieve a given power.
 
 ## Experiment sizing paradigm
 
@@ -44,7 +44,7 @@ Metrics and target segments are passed to Mozanalysis experiment sizing as lists
 
 ## Implemented sample size calculators
 
-Mozanalysis contains functions that take the results from pulling historical data and the list of metrics contained in the results and produce sample size estimates for each metric, given the desired power, significance level, and relative effect size expected from the change, a percent change in a statistic of the metric. The following tests have sample size calculators implemented:
+Mozanalysis contains functions that take the results from pulling historical data and the list of metrics contained in the results and produce sample size estimates for each metric, given the desired power, significance level, and relative effect size expected from the change, a percent change in a statistic of the metric. The tests in Mozanalysis will return the required sample size per branch of the experiment; these sample sizes assume the experiment has two branches and that each branch will have an equal number of clients enrolled in the experiment. The following tests have sample size calculators implemented:
 
 * Z or T test for difference in means for independent samples
 * Z test for difference in proportions for independent samples
