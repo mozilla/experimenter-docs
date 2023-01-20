@@ -1,6 +1,6 @@
 ---
 id: mobile-surveys
-title: Mobile Surveys
+title: Surveys
 slug: /mobile-surveys
 ---
 

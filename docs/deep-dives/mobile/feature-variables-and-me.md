@@ -1,6 +1,6 @@
 ---
 id: mobile-feature-api
-title: Mobile Feature API
+title: Feature API
 slug: /mobile-feature-api
 ---
 

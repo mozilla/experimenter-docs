@@ -1,0 +1,92 @@
+---
+id: mobile-first-run-experiments
+title: First Run Experiments
+slug: /mobile-first-run-experiments
+---
+
+First run experiments are incredibly important to the experimentation ecosystem, but their functionality comes with some key differences from standard experiments. It is _highly_ advised that experiment owners read through this documentation before writing first run experiments.
+
+:::note
+
+The concept of first run experiments is currently only supported on mobile applications, such as Firefox for Android/iOS and Focus.
+
+:::
+
+## What is a first run experiment?
+
+A first run experiment is one that needs to enroll clients on their first launch of the application. All first run experiments bundled with a particular app version would be evaluated for enrollment on the very first run of the application after it is installed.
+
+An experiment can be marked as a first run experiment by checking the "First Run Experiment" checkbox while editing the experiment in the audience page.
+
+<img title="First run checkbox" alt="The first run experiment checkbox is shown on the audience page of an experiment being edited"
+     src="/img/deep-dives/first-run-experiment-checkbox.png" height="500" style={{marginBottom: '10px'}}/>
+
+Similarly to sticky enrollment, certain advanced targeting configurations can require an experiment to be first run.
+
+<img title="First run checkbox required" alt="The first run experiment checkbox is selected and cannot be edited because the advanced targeting configuration selected requires the experiment to be a first run experiment."
+     src="/img/deep-dives/first-run-required.png" height="500" style={{marginBottom: '10px'}}/>
+
+The differences between first run experiments and standard experiments show themselves in a few key areas, described below.
+
+### Application Bundling
+
+Unlike traditional experiments, first run experiments must be bundled with the app. This allows Nimbus to start quickly without needing to make a call to remote settings to fetch the live experiments.
+
+This means that each change to which first-run experiments are live must be met with a code change to add or remove experiments from the bundled file. This would be a very frustrating process to keep up with manually, so we've created an [update-experiments github action](https://github.com/mozilla-mobile/update-experiments) to automate it. Below is an example job configuration for this action.
+
+```yaml
+jobs:
+  update-nimbus-experiments:
+    name: "Update Nimbus Experiments"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Main Branch"
+        uses: actions/checkout@v3
+        with:
+          path: $DIRECTORY
+          ref: main
+          fetch-depth: 0
+      - name: "Update Experiments JSON"
+        id: update-experiments-json
+        uses: mozilla-mobile/update-experiments@v3
+        with:
+          repo-path: $DIRECTORY
+          output-path: path/to/initial_experiments.json
+          experimenter-url: https://experimenter.services.mozilla.com/api/v6/experiments-first-run/
+          app-name: $APP_NAME
+          branch: automation/update-nimbus-experiments
+      - name: Create Pull Request
+        id: create-pull-request
+        uses: peter-evans/create-pull-request@v4
+        if: steps.update-experiments-json.outputs.changed == 1 && steps.update-experiments-json.outputs.changed-branch == 1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: $DIRECTORY
+          branch: automation/update-nimbus-experiments
+          commit-message: "update initial_experiments.json based on the current first-run experiments in experimenter"
+          title: "Update initial experiments JSON for Nimbus"
+          body: "This (automated) PR updates the initial_experiments.json on the `main` branch"
+          delete-branch: true
+```
+
+The only file type currently supported is JSON, and this is usually named `initial_experiments.json`. Some examples of how this workflow and file are used can be seen in [this PR](https://github.com/mozilla-mobile/firefox-ios/pull/12872/files) and [the `initial_experiments.json` file](https://github.com/mozilla-mobile/firefox-ios/blob/main/Client/Experiments/initial_experiments.json) in the Firefox iOS repository.
+
+### Enrollment
+
+For traditional experiments, enrollment is a short period at the beginning of a live experiment's lifecycle where the experiment can enroll new users. The Nimbus SDK does not do any date calculations when determining whether an experiment is enrolling users, instead relying on the `isEnrollmentPaused` experiment field.
+
+Because first run experiments are bundled with the application, that field will remain `true` in the application bundle for the duration of the release. As a result, **even after enrollment is paused within experimenter, first run users will still be evaluated and enrolled.**
+
+When defining the enrollment length and experiment lifetime, it is wise to take this fact into account in planning. As an example, if a first run experiment should run for four weeks, its end date should be four weeks after the date of release for the version it is targeting.
+
+### Advanced Targeting
+
+Many use cases for first run experiments require advanced targeting configurations. To add a new advanced targeting configuration, a pull request should be opened to the Experimenter repository, adding the configuration to [this](https://github.com/mozilla/experimenter/blob/main/app/experimenter/targeting/constants.py) file.
+
+Please follow the contributing guidelines when opening PRs to Experimenter. If you require assistance, please reach out in the #ask-experimenter channel on Slack.
+
+## How do I know if an experiment should be first run?
+
+In short, if your experiment makes changes to onboarding, needs data from brand-new users, or otherwise relates to users who are using Firefox on their device for the first time, then your experiment should most likely be a first run experiment.
+
+Similarly with advanced targeting above, if you have any questions or would like help in making this determination, please reach out in the #ask-experimenter channel on Slack.
