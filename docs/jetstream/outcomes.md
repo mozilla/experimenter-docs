@@ -7,9 +7,9 @@ An Outcome is a reusable configuration snippet
 that defines metrics and statistical summaries for Jetstream to compute,
 which will be displayed on the Experimenter results page.
 
-Outcomes are defined in TOML snippets in the [`outcomes/` path of the jetstream-config repository](https://github.com/mozilla/jetstream-config/tree/main/outcomes).
+Outcomes are defined in TOML snippets in the [`jetstream/outcomes/` path of the metric-hub repository](https://github.com/mozilla/metric-hub/tree/main/jetstream/outcomes).
 
-See what [outcomes are available](https://mozilla.github.io/jetstream-config/outcomes/firefox_desktop/firefox_suggest/).
+See what [outcomes are available](https://mozilla.github.io/metric-hub/outcomes/firefox_desktop/firefox_suggest/).
 
 Watch a demo about how to use Outcomes:
 
@@ -17,7 +17,7 @@ Watch a demo about how to use Outcomes:
 
 ## Defining an Outcome
 
-A simple Outcome definition (excerpted from [a live Outcome](https://github.com/mozilla/jetstream-config/blob/main/outcomes/firefox_desktop/picture_in_picture.toml)) looks like:
+A simple Outcome definition (excerpted from [a live Outcome](https://github.com/mozilla/metric-hub/tree/main/jetstream/outcomes/firefox_desktop/picture_in_picture.toml)) looks like:
 
 ```toml
 friendly_name = "Picture in Picture"
@@ -45,7 +45,7 @@ The important elements are:
 
 The configuration language is identical to the custom experiment configuration language described in [Configuring Jetstream].
 
-Opening a pull request to `jetstream-config` with an Outcome definition will cause it to be validated.
+Opening a pull request to `metric-hub` with an Outcome definition will cause it to be validated.
 If it passes, a data scientist can merge the Outcome definition without additional review.
 
 Experimenter will need to be re-deployed to pick up a new Outcome. Please ask in #nimbus-project if you're in a hurry!

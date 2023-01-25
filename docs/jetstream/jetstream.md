@@ -15,11 +15,11 @@ Investigation owners can add additional [metrics] to a results dashboard by choo
 
 Data scientists can extend Jetstream with new outcomes by contributing
 [outcome] definitions
-to the [jetstream-config] repository.
+to the `jetstream/` directory in the [metric-hub] repository.
 
 Data scientists can also ask Jetstream to evaluate custom metrics for a particular experiment
 by contributing [experiment configurations]
-to jetstream-config.
+to metric-hub.
 
 Jetstream is not a monitoring platform,
 which means that Jetstream does not emit real-time results.
@@ -88,9 +88,9 @@ When analyzing experiments, the following steps are executed for each experiment
 
 <img src="/img/jetstream/analysis-steps.png" alt="Experiment analyis steps" className="img-sm"/>
 
-A [default configuration](https://mozilla.github.io/jetstream-config/default_configs/firefox_desktop/)
+A [default configuration](https://mozilla.github.io/metric-hub/default_configs/firefox_desktop/)
 which depends on the experiment type and, if defined, a custom configuration
-provided via the [jetstream-config] repository are parsed and used for analysis.
+provided via the `jetstream/` directory in the [metric-hub] repository are parsed and used for analysis.
 The experiment definition and config parameters are used to run some checks
 to determine if the experiment can be analyzed. These checks include, for example,
 validating start dates, end dates and enrollment periods.
@@ -113,7 +113,7 @@ is available in the Mozilla data docs.
 
 [experiment configurations]: configuration.md
 [jetstream]: https://github.com/mozilla/jetstream
-[jetstream-config]: https://github.com/mozilla/jetstream-config
+[metric-hub]: https://github.com/mozilla/metric-hub/tree/main/jetstream
 [jetstream-dtmo]: https://docs.telemetry.mozilla.org/datasets/jetstream.html
 [metrics]: metrics.md
 [outcome]: outcomes.md
