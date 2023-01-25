@@ -446,3 +446,6 @@ Results for exposure based metrics are currently not visualized in Experimenter.
 
 
 [Nimbus exposure event]: ../mobile-feature-api#recording-exposure-events
+
+### Data Browsers Team Training Session
+In December 2022, Data Browsers Team held a training session on changing configs to automate metrics in experiment analysis along with a Q&A session. Here is the [video](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=8b9ebd38-5543-4626-9052-af710123d85b) and accompanying [notes](https://docs.google.com/document/d/1yxLh4Sj0mIGkN_gyTf6NwgUGbRnGubFeFVGysxT0V00/edit#) of the session.
