@@ -139,7 +139,7 @@ the statistical summaries that you'd like applied to them, and any filters that 
 See the [Jetstream docmentation at DTMO][jetstream-dtmo] for more details on the analysis window concept.
 
 You can use the names of pre-defined metrics defined in the `jetstream/definitions/` directory of metric-hub without redefining them.
-See what [pre-defined metrics are available](https://mozilla.github.io/metric-hub/metrics//firefox_desktop/) for your platform.
+See what [pre-defined metrics are available](https://mozilla.github.io/metric-hub/metrics/firefox_desktop/) for your platform.
 
 
 ```toml
