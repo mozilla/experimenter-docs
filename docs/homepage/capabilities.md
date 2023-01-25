@@ -42,5 +42,8 @@ Nimbus is a full-featured experimentation platform that provides configuration, 
   - Focus Andriod
   - Focus iOS
 
+## Current feature support
+- [Feature definitions](https://experimenter.info/feature-definition)
+
 ## Requesting feature support
 If you aren't sure we have what you need, pop into #ask-experimenter with your questions or [file an issue](https://mozilla-hub.atlassian.net/secure/CreateIssueDetails!init.jspa?pid=10203&issuetype=10097) 
