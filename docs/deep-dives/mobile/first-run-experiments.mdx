@@ -1,0 +1,94 @@
+---
+id: mobile-first-run-experiments
+title: First Run Experiments
+slug: /mobile-first-run-experiments
+---
+
+First Run Experiments are incredibly important to the experimentation ecosystem, but their functionality comes with some key differences from standard experiments. It is _highly_ advised that experiment owners read through this documentation before writing First Run Experiments.
+
+:::info
+
+While the concept of First Run Experiments is also supported by Firefox for Desktop, this particular documentation only applies to our mobile applications such as Firefox and Focus for Android/iOS.
+
+:::
+
+## What is a First Run Experiment?
+
+A First Run Experiment is one that needs to enroll clients on their first launch of the application. All First Run Experiments bundled with a particular app version would be evaluated for enrollment on the very first run of the application after it is installed.
+
+An experiment can be marked as a First Run Experiment by checking the "First Run Experiment" checkbox while editing the experiment in the audience page.
+
+<img title="First run checkbox" alt="The First Run Experiment checkbox is shown on the audience page of an experiment being edited"
+     src="/img/deep-dives/first-run-experiment-checkbox.png" height="500" style={{marginBottom: '10px'}}/>
+
+Similarly to sticky enrollment, certain advanced targeting configurations can require an experiment to be first run.
+
+<img title="First run checkbox required" alt="The First Run Experiment checkbox is selected and cannot be edited because the advanced targeting configuration selected requires the experiment to be a First Run Experiment."
+     src="/img/deep-dives/first-run-required.png" height="500" style={{marginBottom: '10px'}}/>
+
+The differences between First Run Experiments and standard experiments show themselves in a few key areas, described below.
+
+### Application Bundling
+
+Unlike traditional experiments, First Run Experiments must be bundled with the app. This allows Nimbus to start quickly without needing to make a call to remote settings to fetch the live experiments.
+
+This means that any new First Run Experiments are added to the application's source code repository. This happens automatically via the [`update-experiments` Github action](https://github.com/mozilla-mobile/update-experiments). Below is an example job configuration for this action.
+
+```yaml
+jobs:
+  update-nimbus-experiments:
+    name: "Update Nimbus Experiments"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout Main Branch"
+        uses: actions/checkout@v3
+        with:
+          path: $DIRECTORY
+          ref: main
+          fetch-depth: 0
+      - name: "Update Experiments JSON"
+        id: update-experiments-json
+        uses: mozilla-mobile/update-experiments@v3
+        with:
+          repo-path: $DIRECTORY
+          output-path: path/to/initial_experiments.json
+          experimenter-url: https://experimenter.services.mozilla.com/api/v6/experiments-first-run/
+          app-name: $APP_NAME
+          branch: automation/update-nimbus-experiments
+      - name: Create Pull Request
+        id: create-pull-request
+        uses: peter-evans/create-pull-request@v4
+        if: steps.update-experiments-json.outputs.changed == 1 && steps.update-experiments-json.outputs.changed-branch == 1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: $DIRECTORY
+          branch: automation/update-nimbus-experiments
+          commit-message: "update initial_experiments.json based on the current first-run experiments in experimenter"
+          title: "Update initial experiments JSON for Nimbus"
+          body: "This (automated) PR updates the initial_experiments.json on the `main` branch"
+          delete-branch: true
+```
+
+The only file type currently supported is JSON, and this is usually named `initial_experiments.json`. Some examples of how this workflow and file are used can be seen in [this PR](https://github.com/mozilla-mobile/firefox-ios/pull/12872/files) and [the `initial_experiments.json` file](https://github.com/mozilla-mobile/firefox-ios/blob/main/Client/Experiments/initial_experiments.json) in the Firefox iOS repository.
+
+### Enrollment
+
+For traditional experiments, enrollment is a short period at the beginning of a live experiment's lifecycle where the experiment can enroll new clients. The Nimbus SDK does not do any date calculations when determining whether an experiment is enrolling clients, instead relying on the `isEnrollmentPaused` experiment field.
+
+Because First Run Experiments are bundled with the application, that field will remain `true` in the application bundle for the duration of the release. As a result, **even after enrollment is paused remotely via [Experimenter](/workflow/overview), First Run Experiments on the app's first run will still be evaluated and enrolled.**
+
+Even though clients will be enrolling for the duration of the release, only clients enrolled during the enrollment period as defined in Experimenter will be considered for analysis. As a result, it can be worthwhile to set an earlier end date in Experimenter if only to receive your results earlier.
+
+When defining the enrollment length and experiment lifetime, it is wise to take this fact into account in planning. As an example, if a First Run Experiment should enroll new clients for one week, its enrollment end date should be one week after the date of release for the version it is targeting.
+
+### Advanced Targeting
+
+Many use cases for First Run Experiments require advanced targeting configurations. To add a new advanced targeting configuration, a pull request should be opened to the Experimenter repository, adding the configuration to [this file](https://github.com/mozilla/experimenter/blob/main/app/experimenter/targeting/constants.py).
+
+Please follow the contributing guidelines when opening PRs to Experimenter. If you require assistance, please reach out in the #ask-experimenter channel on Slack.
+
+## How do I know if an experiment should be first run?
+
+In short, if your experiment makes changes to onboarding, needs data from brand-new clients, or otherwise relates to clients who are using Firefox on their device for the first time, then your experiment should most likely be a First Run Experiment.
+
+Similarly with advanced targeting above, if you have any questions or would like help in making this determination, please reach out in the #ask-experimenter channel on Slack.
