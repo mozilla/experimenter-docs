@@ -38,7 +38,7 @@ The time series data returned will contain a row for each client for each time s
 
 Selecting clients for analysis is accomplished by using the [`Segment`](https://github.com/mozilla/mozanalysis/tree/main/src/mozanalysis/segments) objects in Mozanalysis; users can either reuse segments that currently exists in Mozanalysis or by defining one at runtime. Segments consist of a data source, either a table or view in BigQuery, and a SELECT expression to filter that data source; this SELECT expression must include a SQL aggregate function.
 
-Similarly, Mozanalysis experiment sizing reuses `Metric` objects from [Jetstream](jetstream/metrics.md), and users can reuse metrics that are currently implemented in [Mozanalysis](https://github.com/mozilla/mozanalysis/tree/main/src/mozanalysis/metrics) or [jetstream-config], or users can define their own at runtime.
+Similarly, Mozanalysis experiment sizing reuses `Metric` objects from [Jetstream](jetstream/metrics.md), and users can reuse metrics that are currently implemented in [Mozanalysis](https://github.com/mozilla/mozanalysis/tree/main/src/mozanalysis/metrics) or in [Jetstream configs](https://github.com/mozilla/metric-hub/tree/main/jetstream), or users can define their own at runtime.
 
 Metrics and target segments are passed to Mozanalysis experiment sizing as lists of `Segment` or `Metric` objects; users may include multiple of each in the analysis. When multiple `Segment` objects are used, Mozanalysis identifies clients that satisfy the conditions of **all** targets in the list. If users would like to run analyses where `Segment`s should be joined with OR rather than AND, multiple experiment sizing tasks should be completed, for each condition in the OR statement, and aggregate the returned results from each separate study.
 
@@ -61,5 +61,4 @@ Mozanalysis contains functions that take the results from pulling historical dat
 5. Pulling time series historical data and sizing with empirical sample size calculation [(link)](https://colab.research.google.com/drive/1-XT2DMfGSqiCS18yGPIGCs_YWg75qZzn?usp=sharing)
 
 [Jetstream]: jetstream/jetstream.md
-[jetstream-config]: https://github.com/mozilla/jetstream-config
 [mozanalysis]: https://github.com/mozilla/mozanalysis

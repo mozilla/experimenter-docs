@@ -74,7 +74,7 @@ Each JSON metadata file contains the following information:
 "metrics": {
     "metric_slug": {
         "friendly_name": "Friendly metric name",
-        "description": "Metric description defined in mozanalysis or jetstream-config",
+        "description": "Metric description defined in mozanalysis or metric-hub",
         "bigger_is_better": true
     }
     // ...
@@ -83,7 +83,7 @@ Each JSON metadata file contains the following information:
     "outcome_slug": {
         "slug": "outcome_slug",
         "friendly_name": "Friendly outcome name",
-        "description": "Outcome description defined in jetstream-config",
+        "description": "Outcome description defined in metric-hub",
         "metrics": [    // metrics computed as part of outcome
             "metric_slug",
             "another_metric_slug"

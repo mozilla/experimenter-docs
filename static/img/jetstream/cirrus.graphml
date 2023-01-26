@@ -28,13 +28,13 @@
       </data>
     </node>
     <node id="n1">
-      <data key="d4" xml:space="preserve"><![CDATA[https://github.com/mozilla/jetstream-config]]></data>
+      <data key="d4" xml:space="preserve"><![CDATA[https://github.com/mozilla/metric-hub]]></data>
       <data key="d6">
         <y:ImageNode>
           <y:Geometry height="68.0" width="68.0" x="473.0" y="789.5"/>
           <y:Fill color="#CCCCFF" transparent="false"/>
           <y:BorderStyle color="#000000" type="line" width="1.0"/>
-          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="102.126953125" x="-17.0634765625" xml:space="preserve" y="-22.1328125">jetstream-config</y:NodeLabel>
+          <y:NodeLabel alignment="center" autoSizePolicy="content" fontFamily="Dialog" fontSize="12" fontStyle="plain" hasBackgroundColor="false" hasLineColor="false" height="18.1328125" horizontalTextPosition="center" iconTextGap="4" modelName="sandwich" modelPosition="n" textColor="#000000" verticalTextPosition="bottom" visible="true" width="102.126953125" x="-17.0634765625" xml:space="preserve" y="-22.1328125">metric-hub</y:NodeLabel>
           <y:Image alphaImage="true" refid="2"/>
         </y:ImageNode>
       </data>

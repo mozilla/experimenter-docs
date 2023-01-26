@@ -10,7 +10,7 @@ title: Jetstream Architecture and Operations
 
 Jetstream is [scheduled to run in Airflow](https://github.com/mozilla/telemetry-airflow/blob/e5de501d8063cc366e9bb546135f3866136cb47d/dags/jetstream.py#L22) daily. The daily runs will analyze all experiments that are currently active or just ended the day before and write metrics, statistics and errors for each experiment to BigQuery. Active V1 experiments and V6 experiments (Nimbus experiments) are retrieved from the [Experimenter API](https://experimenter.services.mozilla.com/api/v1/experiments/).
 
-Jetstream also fetches custom experiment and outcome configs from [jetstream-config](https://github.com/mozilla/jetstream-config) for analysis. When a new custom config gets merged into jetstream-config, the CI will trigger Jetstream to re-run all analyses for the experiment affected by the config. CircleCI will report on the status of the analysis run and link to the Cloud Logging logs.
+Jetstream also fetches custom experiment and outcome configs from the `jetstream/` directory in [metric-hub](https://github.com/mozilla/metric-hub/tree/main/jetstream) for analysis. When a new custom config gets merged into metric-hub, the CI will trigger Jetstream to re-run all analyses for the experiment affected by the config. CircleCI will report on the status of the analysis run and link to the Cloud Logging logs.
 
 After writing analyses results to BigQuery, statistics data is exported to the `mozanalysis` bucket in GCS as JSON. The JSON data is accessed by the analysis dashboard to display results.
 

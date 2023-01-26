@@ -8,9 +8,9 @@ title: Configuring Jetstream
 There are two ways to customize the results that appear in Experimenter and [partybal] for an experiment.
 
 You can either reference an [outcome] while creating the experiment in the console,
-or file a [jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/boards/269) to collaborate with a data scientist commit a custom configuration to the [jetstream-config] repository.
+or file a [jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/boards/269) to collaborate with a data scientist commit a custom configuration for Jetstream to the [metric-hub] repository.
 
-Outcome definitions are also created in jetstream-config and use the same configuration language.
+Outcome definitions are also created in [metric-hub] and use the same configuration language.
 
 Custom experiment configurations are associated with an experiment by their filename,
 which should match the experiment slug, like `my-experiment-slug.toml`.
@@ -18,14 +18,14 @@ This works for both Normandy and Nimbus slugs.
 
 [partybal]: https://protosaur.dev/partybal/
 [outcome]: jetstream/outcomes.md
-[jetstream-config]: https://github.com/mozilla/jetstream-config
+[metric-hub]: https://github.com/mozilla/metric-hub/tree/main/jetstream
 
 ## Landing configurations
 
-To add or update a custom configuration, a data scientist will open a pull request against [jetstream-config]. 
+To add or update a custom configuration, a data scientist will open a pull request against [metric-hub]. 
 CI checks will validate the columns, data sources, and SQL syntax. Note that if the experiment has not yet launched, the CI checks will not pass.
-Once CI completes, you may merge the pull request, which will trigger Jetstream to re-run your analysis. 
-No additional review is necessary to land configurations. Results should be available in several hours, depending upon the complexity of the configuration.
+Once CI completes and the pull request gets automatically approved, you may merge the pull request, which will trigger Jetstream to re-run your analysis.
+No additional review is necessary to land configurations as long as no changes are made to [metric definitions that are considered  source of truth](https://github.com/mozilla/metric-hub/tree/main/definitions). These changes will require a review by a data scientist. Results should be available in several hours, depending upon the complexity of the configuration.
 
 Note that rerunning experiments may be costly!
 Don't let this stop you from doing your job,
@@ -138,8 +138,8 @@ The metrics section allows you to specify and define the metrics that you're col
 the statistical summaries that you'd like applied to them, and any filters that you need.
 See the [Jetstream docmentation at DTMO][jetstream-dtmo] for more details on the analysis window concept.
 
-You can use the names of pre-defined metrics defined in the `definitions/` directory of jetstream-config without redefining them.
-See what [pre-defined metrics are available](https://mozilla.github.io/jetstream-config/metrics/firefox_desktop/) for your platform.
+You can use the names of pre-defined metrics defined in the `jetstream/definitions/` directory of metric-hub without redefining them.
+See what [pre-defined metrics are available](https://mozilla.github.io/metric-hub/metrics/firefox_desktop/) for your platform.
 
 
 ```toml
@@ -178,7 +178,7 @@ For example, you could define a new metric based on a scalar named
 # Interpreted as a Jinja2 template. Various helper functions are available,
 # so you could equivalently write the expression below like:
 # select_expression = "{{agg_sum("payload.processes.parent.scalars.browser_engagment_cows_clicked")}} > 0"
-# See https://mozilla.github.io/jetstream-config/functions/ for details.
+# See https://mozilla.github.io/metric-hub/functions/ for details.
 select_expression = "SUM(COALESCE(payload.processes.parent.scalars.browser_engagement_cows_clicked)) > 0"
 
 # The data source to use. You can use the slug of a data source defined in `definitions/`,
@@ -248,7 +248,7 @@ data_source = "main"
 ### Defining data sources
 
 Most of the regular data sources are already defined in mozanalysis. 
-See what [pre-defined data sources are available](https://mozilla.github.io/jetstream-config/data_sources/firefox_desktop/) for your platform.
+See what [pre-defined data sources are available](https://mozilla.github.io/metric-hub/data_sources/firefox_desktop/) for your platform.
 You can also define a new one in a similar way to how new metrics are defined.
 
 

@@ -7,7 +7,7 @@ title: Troubleshooting Jetstream
 
 For checking on daily Jetstream runs, the `jetstream` DAG can be viewed via the [Airflow Web UI](https://workflow.telemetry.mozilla.org/tree?dag_id=jetstream). This show whether the run is still in progress or has completed.
 
-For checking on reruns after a config change, the [jetstream-config CI](https://app.circleci.com/pipelines/github/mozilla/jetstream-config?branch=main) will show all active runs and indicate whether a rerun has been successful or if there have been any errors.
+For checking on reruns after a config change, the [metric-hub CI](https://app.circleci.com/pipelines/github/mozilla/metric-hub?branch=main) will show all active runs and indicate whether a rerun has been successful or if there have been any errors.
 
 For viewing the Argo workflows Jetstream is running, connect to the Argo dashboard by running:
 
@@ -19,7 +19,7 @@ The dashboard can than be accessed via [127.0.0.1:8080](http://127.0.0.1:8080) t
 
 ### How do I know if something went wrong?
 
-Jetstream logs errors to the console and, optionally, to the `monitoring.logs` BigQuery table. Logging to BigQuery is enabled by default when running Jetstream via Airflow, as it allows for better alerting and monitoring of errors. It is by default disabled for runs triggered via the jetstream-config CI.
+Jetstream logs errors to the console and, optionally, to the `monitoring.logs` BigQuery table. Logging to BigQuery is enabled by default when running Jetstream via Airflow, as it allows for better alerting and monitoring of errors. It is by default disabled for runs triggered via the metric-hub CI.
 
 Errors can be viewed on the [Jetstream error dashboard] in Looker.
 
