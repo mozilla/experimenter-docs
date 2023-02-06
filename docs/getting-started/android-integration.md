@@ -12,14 +12,14 @@ This document shows you how to set up the Nimbus SDK with a new Android app. It 
 
 # Building with Nimbus
 
-Nimbus is distributed as part of the `android-components`, which in turn bundles Rust code as part of Mozilla's Application Services ["Megazord"](https://github.com/mozilla/application-services/blob/main/docs/design/megazords.md).
+Nimbus is distributed through bundled Rust code as part of Mozilla's Application Services ["Megazord"](https://github.com/mozilla/application-services/blob/main/docs/design/megazords.md).
 
 In `app/build.gradle`, in the `dependencies` block, include the `implementation` line for Nimbus:
 
 ```gradle
 dependencies {
     …
-    implementation "org.mozilla.components:service-nimbus:${Versions.mozilla_android_components}"
+    implementation "org.mozilla.appservices:nimbus:${Versions.mozilla_appservices}"
     …
 }
 ```
@@ -36,7 +36,7 @@ In your top-level `build.gradle`:
 ```gradle
 buildscript {
     dependencies {
-        classpath "org.mozilla.components:tooling-nimbus-gradle:${Versions.mozilla_android_components}"
+        classpath "org.mozilla.appservices:tooling-nimbus-gradle:${Versions.mozilla_appservices}"
     }
 }
 ```
@@ -44,7 +44,7 @@ buildscript {
 and in `app/build.gradle`:
 
 ```gradle
-apply plugin: "org.mozilla.components.nimbus-gradle-plugin"
+apply plugin: "org.mozilla.appservices.nimbus-gradle-plugin"
 
 nimbus {
     // The path to the Nimbus feature manifest file
