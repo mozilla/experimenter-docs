@@ -85,7 +85,7 @@ module.exports = {
                 "workflow/ios-custom-targeting",
                 {
                   "type": "category",
-                  "label": "Messaging Experiments",
+                  "label": "Messaging Experiments on Firefox Desktop",
                   items: [
                     "messaging/messaging-surfaces",
                     "messaging/display-logic",
@@ -106,9 +106,16 @@ module.exports = {
                       label: "Available Targeting",
                       href: "https://firefox-source-docs.mozilla.org/browser/components/newtab/content-src/asrouter/docs/targeting-attributes.html",
                     },
-                    "messaging/mobile-messaging"
-                  ]
+                  ],
                 },
+                {
+                  "type": "category",
+                  "label": "Messaging Experiments on Firefox for Mobile",
+                  items: [
+                    "messaging/mobile-messaging",
+                    "deep-dives/mobile/mobile-behavioral-targeting",
+                  ]
+                }
               ],
             },
             "workflow/configuring",
