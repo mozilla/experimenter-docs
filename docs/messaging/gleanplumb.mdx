@@ -23,6 +23,8 @@ It allows staff— most likely experiment owners, product owners, user research
 [fenix-attributes-eng]:          https://github.com/mozilla-mobile/fenix/blob/main/app/src/main/java/org/mozilla/fenix/gleanplumb/CustomAttributeProvider.kt#L29
 [fenix-trigger-expressions-fml]: https://github.com/mozilla-mobile/fenix/blob/main/messaging.fml.yaml#L49
 
+[behavioral-targeting]:         mobile-behavioral-targeting
+
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
@@ -34,6 +36,7 @@ It is also a living document:
 
  - the messaging system is under active development, and learning from its MVP.
  - attributes useful in triggers, and deeplink actions will accrue in each of the embedding apps.
+ - surfaces are being added to embedding apps.
 
 You can view a demo of sending a survey on mobile [here](https://mozilla.zoom.us/rec/share/CafQjaLn09BtbPvOphePVizKe49IrRF2QHtYcc5zs4XlbmEhHzulcohmvC1WUV49.ZBKmiSNkaw7kbIeJ)
 Access Passcode: 9Zx9Lg&M
@@ -43,10 +46,11 @@ Access Passcode: 9Zx9Lg&M
 
 - Changed `is_default_browser` to `is_default_browser_string`.
 - Renamed Glean messages to match the implementation.
+- Added notification surface and associated trigger expressions.
 
 ## Scene setting
 
-GleanPlumb is built on top of Nimbus, Mozilla's experimentation platform. Nimbus allows you to send bits of configuration to application features from Experimenter, the web-application staff use to launch and manage experiments and rollouts.
+Nimbus Mobile Messaging is built on top of Nimbus, Mozilla's experimentation platform. Nimbus allows you to send bits of configuration to application features from Experimenter, the web-application staff use to launch and manage experiments and rollouts.
 
 Using Experimenter in the general case is documented elsewhere, so this document is specifically concerned with configuring the `messaging` feature, via the Branches screen.
 
@@ -58,6 +62,7 @@ The messages that are sent are specified as JSON in the "Value" text area on thi
 {
     "messages": {
         "my-first-message": {
+            "surface": "homescreen",
             "trigger": [
                 "USER_EN_SPEAKER",
                 "USER_RECENTLY_UPDATED"
@@ -84,13 +89,14 @@ Messages have a number of components:
     - human readable. By convention, these are `kebab-case`.
 - the `trigger`. This is the conditions that must be `true` for the message to be eligible to be displayed.
 - the content of a message. This is the `title` of the message, the `text` and the `button-label`.
+- the `surface`. This is app specific.
 - the `action` that is performed if and when the user taps on the button.
 
 If any of these components are missing, then the message is considered _malformed_.
 
 ### Triggers
 
-The app provides the messaging system with [attributes](#list-of-attributes). We use JEXL expressions to query these attributes.
+The app provides the messaging system with [attributes](#list-of-attributes). We use JEXL expressions to query these attributes, or trigger messages based on [the user's behavior in the app][behavioral-targeting].
 
 To reduce errors and to allow re-use, the JEXL expressions are named. By convention, these names are in `SCREAMING_SNAKE_CASE`.
 
@@ -146,6 +152,40 @@ If `title` is missing, then the title is not displayed.
 
 If `button-label` is missing, then the button is not displayed, but the whole message is tappable.
 
+### Surfaces
+
+The `surface` of the message is the message surface on which the message will be displayed.
+
+These are app specific: the application provides the surface to draw the message on.
+
+<Tabs
+  defaultValue="fenix"
+  values={[
+    { label: "Firefox for Android", value: "fenix" },
+    { label: "Firefox for iOS", value: "fxios" },
+  ]
+}>
+<TabItem value="fenix">
+
+Surface | Description | Versions |
+----------|------|-------------|
+`homescreen`    | On the new tab/homescreen                                             | |
+`notification`  | A system notification. Permission is required for Android SDK > 13    | v111 |
+
+</TabItem>
+<TabItem value="fxios">
+
+Surface | Description | Versions |
+----------|------|-------------|
+`homescreen-banner`| On the new tab/homescreen      | |
+
+While there is only one surface, the surface attribute can be omitted.
+
+It is possible this table is out of date. The definitive source of truth for this in [the code][fxios-attributes-eng] itself.
+
+</TabItem>
+</Tabs>
+
 ### Actions
 
 Actions are performed when the user taps on the call to action (i.e. the button).
@@ -163,7 +203,7 @@ If the specified `action` property contains a `://` it is treated as a bare URL,
 
 Before the final URL is opened, a variable subsitution is made, so identifiers within a pair of braces may be made part of the URL.
 
-[Any attribute](#list-of-attributes) that GleanPlumb knows about can be used. For example:
+[Any attribute](#list-of-attributes) that Nimbus Mobile Messaging knows about can be used. For example:
 
 ```json
 {
@@ -197,7 +237,7 @@ There are additional message attributes which don't quite fit anywhere, yet. It 
 
 - `style` – this is a string key into the `styles` object. It will code for visual style, and/or priority.
 
-Current values are `DEFAULT`, `PERSISTENT`, `WARNING`, `URGENT`.
+Current values are `DEFAULT`, `PERSISTENT`, `WARNING`, `URGENT`, `NOTIFICATION`.
 
 This currently code for:
 
@@ -300,6 +340,7 @@ It is important that:
     "messages": {
         "my-l10n-message-en": {
             …
+            "surface": "notification",
             "trigger": [
                 …
                 "USER_EN_SPEAKER"
@@ -308,6 +349,7 @@ It is important that:
         },
         "my-l10n-message-de": {
             …
+            "surface": "notification",
             "trigger": [
                 …
                 "USER_DE_SPEAKER"
@@ -316,6 +358,7 @@ It is important that:
         },
         "my-l10n-message-es": {
             …
+            "surface": "notification",
             "trigger": [
                 …
                 "USER_ES_SPEAKER"
@@ -324,6 +367,7 @@ It is important that:
         },
         "my-l10n-message-fr": {
             …
+            "surface": "notification",
             "trigger": [
                 …
                 "USER_FR_SPEAKER"
@@ -351,6 +395,7 @@ The control is specified in a similar way to others:
     "messages": {
         "my-first-message": {
             "trigger": [ … ],
+            "surface": "notification",
             "is-control": true,
         }
     }
@@ -359,7 +404,10 @@ The control is specified in a similar way to others:
 
 Because `is-control` set to `true`, we don't need to specify a value for `message-under-experiment`. The system can deduce that the message is under experiment.
 
-**Important**: The control message must be _eligible_ whenever the treatment message would have been. This means that the `trigger` value of the control must match the `trigger` value of the treatment message.
+**Important**: The control message must be _eligible_ whenever the treatment message would have been. This means that:
+- the `trigger` value of the control must match the `trigger` value of the treatment message.
+- the `surface` value of the control must match the `surface` value of the treatment message.
+- the `style` value of the control must match the `style` value of the treatment message.
 
 For localized messages, we will need to provide a set of contol messages that matches the treatment messages, so that the control message is triggered for all and only the same circumstances as the treatment.
 
@@ -620,6 +668,23 @@ Expression name | JEXL expression | Discussion
 --- | --- | ---
 `I_AM_DEFAULT_BROWSER`       | `is_default_browser == true`  |  |
 `I_AM_NOT_DEFAULT_BROWSER`   | `is_default_browser == false` |  |
+`USER_ESTABLISHED_INSTALL`   | `number_of_app_launches >= 4` |  |
+`FUNNEL_PAID`                | `adjust_campaign != ''` |  |
+`FUNNEL_ORGANIC`             | `adjust_campaign == ''` |  |
+`INACTIVE_1_DAY`             | `'app_launched'\|eventLastSeen('Hours') >= 24`        | User has not launched the app for 24h or more |
+`INACTIVE_2_DAYS`            | `'app_launched'\|eventLastSeen('Days', 0) >= 2`       | User has not launched the app for 1 d or more |
+`INACTIVE_3_DAYS`            | `'app_launched'\|eventLastSeen('Days', 0) >= 3`       | User has not launched the app for 2 d or more |
+`INACTIVE_4_DAYS`            | `'app_launched'\|eventLastSeen('Days', 0) >= 4`       | User has not launched the app for 3 d or more |
+`INACTIVE_5_DAYS`            | `'app_launched'\|eventLastSeen('Days', 0) >= 5`       | User has not launched the app for 4 d or more |
+`FXA_SIGNED_IN`              | `'sync_auth.sign_in'\|eventLastSeen('Years', 0) <= 4` | User has signed in to FxA in the last 4 years |
+`FXA_NOT_SIGNED_IN`          | `'sync_auth.sign_in'\|eventLastSeen('Years', 0) > 4`  | User has not signed in to FxA in the last 4 years |
+`USER_INFREQUENT`            | `'app_launched'\|eventCountNonZero('Days', 28) >= 1 && 'app_launched'\|eventCountNonZero('Days', 28) < 7`  | [User definition][user-frequency] |
+`USER_CASUAL`                | `'app_launched'\|eventCountNonZero('Days', 28) >= 7 && 'app_launched'\|eventCountNonZero('Days', 28) < 14` | [User definition][user-frequency] |
+`USER_REGULAR`               | `'app_launched'\|eventCountNonZero('Days', 28) >= 14 && 'app_launched'\|eventCountNonZero('Days', 28) < 21`| [User definition][user-frequency] |
+`USER_CORE_ACTIVE`           | `'app_launched'\|eventCountNonZero('Days', 28) >= 21` | [User definition][user-frequency] |
+`LAUNCHED_ONCE_THIS_WEEK`    | `'app_launched'\|eventSum('Days', 7) == 1` |  |
+
+[user-frequency]: https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11469471/Core+Active
 
 It is possible this table is out of date. The definitive source of truth for this in [the code][fenix-trigger-expressions-fml] itself.
 
@@ -720,8 +785,8 @@ Attribute | Type | Description
 
 These attributes are application specific.
 
-Unfortunately, the JEXL evaluator used does not have support for [boolean equality][bool-equ] or [negation][bool-not],
-so boolean attributes should be simulated with strings or integers.
+Unfortunately, the JEXL evaluator used does not have support for [negation][bool-not],
+so boolean attributes use equality or inequality.
 
 [bool-equ]: https://github.com/mozilla/jexl-rs/issues/22
 [bool-not]: https://github.com/mozilla/jexl-rs/issues/15
@@ -776,64 +841,4 @@ It is possible this table is out of date. The definitive source of truth for thi
 <TabItem value="fxios">
 </TabItem>
 </Tabs>
-
-
-### YAMLs
-
-```yaml
-ENABLE_PRIVATE_BROWSING: enable_private_browsing
-INSTALL_SEARCH_WIDGET: install_search_widget
-MAKE_DEFAULT_BROWSER: make_default_browser
-VIEW_BOOKMARKS: urls_bookmarks
-VIEW_COLLECTIONS: home_collections
-VIEW_HISTORY: urls_history
-VIEW_HOMESCREEN: home
-OPEN_SETTINGS_ACCESSIBILITY: settings_accessibility
-OPEN_SETTINGS_ADDON_MANAGER: settings_addon_manager
-OPEN_SETTINGS_DELETE_BROWSING_DATA: settings_delete_browsing_data
-OPEN_SETTINGS_LOGINS: settings_logins
-OPEN_SETTINGS_NOTIFICATIONS: settings_notifications
-OPEN_SETTINGS_PRIVACY: settings_privacy
-OPEN_SETTINGS_SEARCH_ENGINE: settings_search_engine
-OPEN_SETTINGS_TRACKING_PROTECTION: settings_tracking_protection
-OPEN_SETTINGS_WALLPAPERS: settings_wallpapers
-OPEN_SETTINGS: settings
-TURN_ON_SYNC: turn_on_sync
-```
-
-```yaml
-USER_RECENTLY_INSTALLED: days_since_install < 7
-USER_RECENTLY_UPDATED: days_since_update < 7 && days_since_install != days_since_update
-USER_TIER_ONE_COUNTRY: ('US' in locale || 'GB' in locale || 'CA' in locale || 'DE' in locale || 'FR' in locale)
-USER_EN_SPEAKER: 'en' in locale
-USER_DE_SPEAKER: 'de' in locale
-USER_FR_SPEAKER: 'fr' in locale
-DEVICE_ANDROID: os == 'Android'
-DEVICE_IOS: os == 'iOS'
-ALWAYS: true
-NEVER: false
-```
-
-```yaml
-OPEN_SETTINGS:               ://deep-link?url=settings/general
-OPEN_SETTINGS_NEW_TAB:       ://deep-link?url=settings/newtab
-OPEN_SETTINGS_HOMESCREEN:    ://deep-link?url=settings/homepage
-OPEN_SETTINGS_WALLPAPERS:    ://deep-link?url=settings/wallpaper
-OPEN_SETTINGS_EMAIL:         ://deep-link?url=settings/mailto
-OPEN_SETTINGS_SEARCH_ENGINE: ://deep-link?url=settings/search
-OPEN_SETTINGS_PRIVACY:       ://deep-link?url=settings/clear-private-data
-OPEN_SETTINGS_FXA:           ://deep-link?url=settings/fxa
-OPEN_SETTINGS_THEME:         ://deep-link?url=settings/theme
-VIEW_BOOKMARKS:              ://deep-link?url=homepanel/bookmarks
-VIEW_TOP_SITES:              ://deep-link?url=homepanel/top-sites
-VIEW_READING_LIST:           ://deep-link?url=homepanel/reading-list
-VIEW_HISTORY:                ://deep-link?url=homepanel/history
-VIEW_DOWNLOADS:              ://deep-link?url=homepanel/downloads
-ENABLE_PRIVATE_BROWSING:     ://deep-link?url=homepanel/new-private-tab
-MAKE_DEFAULT_BROWSER:        ://deep-link?url=default-browser/system-settings
-```
 -->
-
-```
-Русский военный корабль, иди на хуй
-```
