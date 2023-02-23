@@ -17,6 +17,8 @@ slug: /desktop-targeting-debug
 
 ## Targeting
 
+Available targeting attributes are [documented in firefox-source-docs](https://firefox-source-docs.mozilla.org/browser/components/newtab/content-src/asrouter/docs/targeting-attributes.html).
+
 Inside the textarea targeting expressions can be written and evaluated using the `Evaluate` button.
 
 | Targeting expression                                                   | Status    | Result          | Observation                                                           |
