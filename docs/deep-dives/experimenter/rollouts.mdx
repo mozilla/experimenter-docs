@@ -72,10 +72,25 @@ There are two ways to make a rollout from the Experimenter UI. When I have a “
 
 ### Incrementing your rollout's population percentage
 
+#### Live editability
+
+The population percent ("Percentage of clients") on the Audience page of a rollout can be edited once a rollout is launched. To make changes to this field, open your rollout, and from the left sidebar click on the Audience page. From there, you will be able to make edits and save. Once an edit has been made, you will see a "Request update" button on the summary page under the available Actions:
+
+   <img title="Request a live update button" src="/img/deep-dives/request-live-update.png"/> 
+
+Once you request an update, you will follow the same review flow as launching an experiment (approval on Experimenter, and approval on Remote Settings).
+
+   <img title="Live update review flow" src="/img/deep-dives/live-update-review.png"/>
+
+Multiple edits can be made to your rollout without needing to request an update, and you will be able to see if there are unpublished changes by the red "Unpublished changes" status pill that is located by "Timeline":
+
+   <img title="Unpublished changes status pill" src="/img/deep-dives/unpublished-changes-pill.png"/>
+
+#### Without using live editability
+
 For each segment of the population that you are targeting, you will create a new rollout. For example, say that you have created a rollout entitled "Important spotlight rollout" and set the population percentage to 1%. When you increase the population percentage, you don't want the users who are already enrolled in "Important spotlight rollout" to be unenrolled when the population is increased (see [Bucketing](/bucketing) for more info on this topic). 
 
 Therefore, when it is time to increase your population percent, clone your existing rollout (tip: pick a helpful title such as "Important spotlight rollout - Phase 2") and set your population percentage to target your next segment of users. If you want to "increase" the population from 1% to 5%, this new "Phase 2" rollout will have a population percent equal to 4%.
-> 💡 Note: Live editability for rollouts is coming soon! See "Future work".
 
 ### Where can I find rollouts?
 
