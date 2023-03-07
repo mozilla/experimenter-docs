@@ -4,7 +4,7 @@ title: Sizing Experiments Using Mozanalysis
 slug: /experiment-sizing
 ---
 
-This page gives an overview of how Mozanalysis can be used to do experiment sizing. **[Mozanalysis]** is a library used to standardize experiment analysis at Mozilla. Mozanalysis contains the statistical tools used by [Jetstream] to produce results from experiments, as well as tools to pull historical data from BigQuery to calculated necessary sample sizes to carry out experiments. The results of the tool are the sample size and percent of the total target population required per branch of an experiment with a balanced design to achieve a given power.
+This page gives an overview of how Mozanalysis can be used to do experiment sizing. **[Mozanalysis]** is a library used to standardize experiment analysis at Mozilla. Mozanalysis contains the statistical tools used by [Jetstream] to produce results from experiments, as well as tools to pull historical data from BigQuery to calculate necessary sample sizes to carry out experiments. The results of the tool are the sample size and percent of the total target population required per branch of an experiment with a balanced design to achieve a given power.
 
 ## Experiment sizing paradigm
 
@@ -36,7 +36,7 @@ The time series data returned will contain a row for each client for each time s
 
 ## Targets and metrics
 
-Selecting clients for analysis is accomplished by using the [`Segment`](https://github.com/mozilla/mozanalysis/tree/main/src/mozanalysis/segments) objects in Mozanalysis; users can either reuse segments that currently exists in Mozanalysis or by defining one at runtime. Segments consist of a data source, either a table or view in BigQuery, and a SELECT expression to filter that data source; this SELECT expression must include a SQL aggregate function.
+Selecting clients for analysis is accomplished by using the [`Segment`](https://github.com/mozilla/mozanalysis/tree/main/src/mozanalysis/segments) objects in Mozanalysis; users can either reuse segments that currently exist in Mozanalysis or define one at runtime. Segments consist of a data source, either a table or view in BigQuery, and a SELECT expression to filter that data source; this SELECT expression must include a SQL aggregate function.
 
 Similarly, Mozanalysis experiment sizing reuses `Metric` objects from [Jetstream](jetstream/metrics.md), and users can reuse metrics that are currently implemented in [Mozanalysis](https://github.com/mozilla/mozanalysis/tree/main/src/mozanalysis/metrics) or in [Jetstream configs](https://github.com/mozilla/metric-hub/tree/main/jetstream), or users can define their own at runtime.
 
