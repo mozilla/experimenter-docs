@@ -70,7 +70,6 @@ module.exports = {
               "label": "Designing",
               "items": [
                 "workflow/localization-process",
-                "workflow/rollouts-faq",
               ]
             },
             {

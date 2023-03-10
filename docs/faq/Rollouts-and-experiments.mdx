@@ -1,21 +1,29 @@
 # Experiment + Rollout Interaction
 ## Enrolling
-See the [Rollout FAQ](https://experimenter.info/rollouts-faq) for general rollout information
+See the [Rollout FAQ](/deep-dives/experimenter/rollouts) for general rollout information
 
 
-*Question: Can a client be in a rollout and an experiment for the same feature at the same time?*
+**Question:** <br/>
+Can a client be in a rollout and an experiment for the same feature at the same time?
 
-Answer:  Yes, we have separate namespaces which means you can run rollouts and experiments simultaneously and each namespace does its 
+**Answer:** <br/>
+**Yes**, we have separate namespaces which means you can run rollouts and experiments simultaneously and each namespace does its 
 accounting for users separately. 
 You can run a 100% rollout and a 5% experiment and both will fill up, but everyone in the experiment is also in the rollout.
 
-*Question: If there is a concurrent experiment and rollout on the same featureId, once the experiment ends, assuming the rollout is at 100%, 
-a given client will immediately be put into the rollout.  Correct?*
+----
 
-Answer: The short answer is “yes”, in most situations.
-The long answer is: while both are running, an experiment client with actually be enrolled in both and the treatment they’ll receive will 
-be the combination of both. This enables clients in subsequent experiments to easily get rolled out winners of prior experiments.
-If both the experiment and the rollout are focused on the same fields of the treatment JSON, the experiment will take precedence 
-and in this case the behavior will be as you state: effectively, the client immediately joins the rollout.
+**Question:** <br/>
+If there is a concurrent experiment and rollout on the same featureId, once the experiment ends, assuming the rollout is at 100%, a given client will immediately be put into the rollout.  Correct?
+
+**Answer:** <br/>
+The short answer is **“yes”**, in most situations.
+
+The long answer is: while both are running, an experiment client with actually be enrolled in both and the treatment they’ll receive will be the combination of both. This enables clients in subsequent experiments to easily get rolled out winners of prior experiments.
+
+If both the experiment and the rollout are focused on the same fields of the treatment JSON, **the experiment will take precedence** and in this case the behavior will be as you state: effectively, the client immediately joins the rollout.
+
 If they’re focused on different fields of the JSON, the behavior the clients gets will go from “experiment+rollout” to “rollout only”.
 
+
+----
