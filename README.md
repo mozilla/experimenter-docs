@@ -12,8 +12,8 @@ The site is built using [Docusaurus v2](https://v2.docusaurus.io/) and is automa
 
 Relevant ADRs:
 
-- [Use Docusaurus + GH Pages for the Nimbus User Doc Hub](https://github.com/mozilla/experimenter/blob/main/app/experimenter/docs/adrs/0005-doc-hub.md)
-- [Location for the new Experiment "Docs Hub" codebase + docs](https://github.com/mozilla/experimenter/blob/main/app/experimenter/docs/adrs/0006-doc-hub-repo.md)
+- [Use Docusaurus + GH Pages for the Nimbus User Doc Hub](https://github.com/mozilla/experimenter/blob/main/docs/adrs/0005-doc-hub.md)
+- [Location for the new Experiment "Docs Hub" codebase + docs](https://github.com/mozilla/experimenter/blob/main/docs/adrs/0006-doc-hub-repo.md)
 
 ## Contributing
 
