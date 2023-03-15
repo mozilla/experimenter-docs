@@ -36,11 +36,6 @@ Messages shown inside about:privatebrowsing content area when new private window
 <br/>
 Short messages that appear on New Tab Page to highlight products, features and initiatives
 
-## Legacy Spotlight
-<img src="/img/messaging/legacy-spotlight.png" alt="Example of legacy spotlight component" className="img-sm" />
-<br/>
-This is a window level modal, all other interactions are prevented. The user is given a primary and a secondary button to interact with the modal. Legacy Spotlight modals can include a configurable icon above the title. This surface will likely be deprecated in favor of the more flexible Multistage Spotlight modal.
-
 ## Multistage Spotlight
 <img src="/img/messaging/spotlight-center-simple.png" alt="Example of spotlight component with single centered screen" className="img-sm-left" />
 <img src="/img/messaging/spotlight-qr-app-store.png" alt="Example of spotlight component with centered screen, QR code, email link, and app store buttons" className="img-sm" />
