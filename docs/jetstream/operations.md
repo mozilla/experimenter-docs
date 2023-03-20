@@ -56,7 +56,7 @@ Argo provides a Web UI to access running workflows. Users need to authenticate u
 * Get Bearer token and copy: `gcloud container clusters get-credentials jetstream --region=us-central1-a && kubectl -n argo exec $(kubectl get pod -n argo -l 'app=argo-server' -o jsonpath='{.items[0].metadata.name}') -- argo auth token` 
 * Connect to the Workflow UI using port forwarding: `kubectl -n argo port-forward svc/argo-server 2746:2746`
 * Open [https://localhost:2746](https://localhost:2746)
-* Use the generated Bearer token for authentication
+* Use the generated Bearer token (including the word `Bearer`) for authentication
 
 
 ## Cluster Updates
