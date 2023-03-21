@@ -444,5 +444,9 @@ window_end = "analysis_window_end"
 
 Results for exposure based metrics are currently not visualized in Experimenter. To access results, the BigQuery tables need to be queried directly.
 
+## Testing configurations
+
+For more information on how to test configurations see [Testing Jetstream Configs](jetstream/testing.md)
+
 
 [Nimbus exposure event]: ../mobile-feature-api#recording-exposure-events
