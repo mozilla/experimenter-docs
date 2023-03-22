@@ -36,7 +36,7 @@ These are defined for each platform in the metric-hub repository in [jetstream/d
 
 [Outcomes](outcomes.md) are collections of metrics that relate to each other.  You can associate an Outcome with your experiment in the Experiment Console - Metrics section.
 Data scientists can extend and define outcomes in the outcomes path of the
-[`metric-hub`](https://github.com/mozilla/metric-hub/tree/main/jetstream/outcomes) repository.  See what [Outcomes are available](https://github.com/mozilla/metric-hub/tree/main/jetstream//outcomes/firefox_desktop/firefox_suggest/).
+[`metric-hub`](https://github.com/mozilla/metric-hub/tree/main/jetstream/outcomes) repository.  See what [Outcomes are available](https://mozilla.github.io/metric-hub/outcomes/fenix/default-browser/).
 
 If the metrics you need are not covered by Guardrail/Core metrics or existing Outcomes - you can add a metric to your experiment by working with a data scientist to write a [custom configuration](configuration.md) for your experiment.
 
