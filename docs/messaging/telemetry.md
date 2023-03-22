@@ -14,7 +14,7 @@ Telemetry pings will include the message id, experiment and branch slug (if enro
 
 Telemetry from all messaging surfaces ([except doorhangers when not enrolled in an experiment](https://searchfox.org/mozilla-central/rev/65d4d3399afa79c8de5a0cc11752d2ba7c31edc1/browser/components/newtab/lib/TelemetryFeed.jsm#645)) includes client id in the event ping. **Special care should be taken not to associate any browsing history with messaging events: showing a message when the user visits a particular website is not allowed because it would accidentally leak information about that visit.**
 
-[Additional telemetryhttps://experimenter.info/telemetry/] is available when the message is delivered as an <u>experiment</u>:
+[Additional telemetry](https://experimenter.info/telemetry/) is available when the message is delivered as an <u>experiment</u>:
 - Exposure
 - Reach
 
