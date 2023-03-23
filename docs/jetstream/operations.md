@@ -58,6 +58,15 @@ Argo provides a Web UI to access running workflows. Users need to authenticate u
 * Open [https://localhost:2746](https://localhost:2746)
 * Use the generated Bearer token (including the word `Bearer`) for authentication
 
+### Deleting Old Workflows
+
+* The Workflow UI might get less responsive the more workflows have been run in the past
+* To delete workflows that are older than 4 days run:
+
+```
+kubectl get wf -o go-template -n argo --template '{{range .items}}{{.metadata.name}} {{.metadata.creationTimestamp}}{{"\n"}}{{end}}' | awk '$2 <= "'$(gdate -d '4 days ago' -Ins --utc | sed 's/+0000/Z/')'" { print $1 }' | gxargs --no-run-if-empty kubectl delete wf -n argo
+```
+
 
 ## Cluster Updates
 
