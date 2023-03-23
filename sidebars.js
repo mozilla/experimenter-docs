@@ -87,6 +87,7 @@ module.exports = {
                   "label": "Messaging Experiments on Firefox Desktop",
                   items: [
                     "messaging/messaging-surfaces",
+                    "messaging/messaging-journey",
                     "messaging/display-logic",
                     "messaging/telemetry",
                     "messaging/groups-and-campaigns",
