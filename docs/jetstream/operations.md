@@ -64,7 +64,7 @@ Argo provides a Web UI to access running workflows. Users need to authenticate u
 * To delete workflows that are older than 4 days run:
 
 ```
-kubectl get wf -o go-template -n argo --template '{{range .items}}{{.metadata.name}} {{.metadata.creationTimestamp}}{{"\n"}}{{end}}' | awk '$2 <= "'$(gdate -d '4 days ago' -Ins --utc | sed 's/+0000/Z/')'" { print $1 }' | gxargs --no-run-if-empty kubectl delete wf -n argo
+kubectl get wf -o go-template -n argo --template '{{range .items}}{{.metadata.name}} {{.metadata.creationTimestamp}}{{"\n"}}{{end}}' | awk '$2 <= "'$(gdate -d '30 days ago' -Ins --utc | sed 's/+0000/Z/')'" { print $1 }' | gxargs --no-run-if-empty kubectl delete wf -n argo
 ```
 
 
