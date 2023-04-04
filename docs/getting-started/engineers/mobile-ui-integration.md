@@ -1,7 +1,7 @@
 ---
-id: mobile-required-ui
+id: getting-started-mobile-required-ui 
 title: Required UI for Mobile Integration
-slug: /getting-started-mobile-required-ui
+slug: getting-started-mobile-required-ui
 ---
 
 # User Interface requirements
@@ -40,7 +40,7 @@ To allow testing of experiments before they are published, the client should all
 
 <img src="/img/fenix/preview-collection.png" width="300px" />
 
-The above shows a non-user visible settings screen in Fenix. The toggle sets a `Defaults`/`SharedPreferences` flag which is [read at startup to configure `Nimbus` startup](/getting-started-for-android-engineers#using-the-experiments-preview-collection).
+The above shows a non-user visible settings screen in Fenix. The toggle sets a `Defaults`/`SharedPreferences` flag which is [read at startup to configure `Nimbus` startup](/getting-started/engineers/getting-started-for-android-engineers#using-the-experiments-preview-collection).
 
 The preview collection is loaded on the next restart, and available to the app on the restart after that.
 

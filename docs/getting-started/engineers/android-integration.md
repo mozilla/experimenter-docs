@@ -1,7 +1,7 @@
 ---
 id: getting-started-for-android-engineers
 title: Getting Started for Android Engineers
-slug: /getting-started-for-android-engineers
+slug: getting-started-for-android-engineers
 ---
 
 # Introduction
