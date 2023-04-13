@@ -1,0 +1,13 @@
+---
+id: how-to-restart 
+title: Is this supported?
+slug: /how-to-restart
+---
+
+This is how it works when a feature requires a restart:
+* Session 1: Client enrolls, applies feature configuration, but the feature itself won't implement the changes until the next restart
+* Session 2: Client is enrolled, feature configuration is applied, feature now shows changes
+
+:::info
+IMPORTANT:  Please share that this experiment needs a restart in your data science Jira ticket and that there is custom work needed at analysis to exlude the pre-restart data.
+:::
