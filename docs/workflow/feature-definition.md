@@ -20,3 +20,4 @@ First, look at what is already defined in the manifest file:
     * [Fenix/Android](https://github.com/mozilla-mobile/fenix/blob/main/nimbus.fml.yaml)
     * [Firefox iOS](https://github.com/mozilla-mobile/firefox-ios/blob/main/nimbus.fml.yaml)
     * [Focus iOS](https://github.com/mozilla-mobile/focus-ios/blob/main/nimbus.fml.yaml)
+
