@@ -132,7 +132,6 @@ module.exports = {
               "type": "category",
               "label": "Testing",
               "items": [
-                "workflow/testing",
                 "workflow/preview",
                 "workflow/ios-preview-testing",
                 "workflow/android-frontend-testing",
