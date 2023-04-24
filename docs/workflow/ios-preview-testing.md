@@ -17,7 +17,7 @@ Follow the first few instructions on [the preview docs](preview.md) to get an ex
 
 Since we will be using the stage server, we want Firefox to look for experiments there. For iOS, you can do that on a local build, which you can get running by [following the instructions on the `firefox-ios` repository](https://github.com/mozilla-mobile/firefox-ios/blob/main/README.md#building-the-code)
 
-Once you have a local build using xcode, you should replace `NIMBUS_URL` with `https://settings.stage.mozaws.net/v1/`. You can set that on `info.plist`, which lies in the `Client` directory once you have the project setup. `NIMBUS_URL` will have an initial value of `$(NIMBUS_URL)`, replace that with the setting server's url.
+Once you have a local build using xcode, you should replace `NIMBUS_URL` with `https://firefox.settings.services.allizom.org/v1/`. You can set that on `info.plist`, which lies in the `Client` directory once you have the project setup. `NIMBUS_URL` will have an initial value of `$(NIMBUS_URL)`, replace that with the setting server's url.
 
 ## Accessing the secret menu
 
