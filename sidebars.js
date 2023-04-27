@@ -158,6 +158,7 @@ module.exports = {
             "jetstream/data-products",
             "jetstream/operations",
             "jetstream/troubleshooting",
+            "jetstream/testing",
             {
               type: "link",
               label: "GitHub Repo",
