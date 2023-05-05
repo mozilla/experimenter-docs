@@ -11,7 +11,7 @@ In order to make testing easier we created some helpers that can be accessed by 
 
 ```js
 const { ExperimentFakes } = ChromeUtils.import(
-  "resource://testing-common/NimbusTestUtils.jsm",
+  "resource://testing-common/NimbusTestUtils.sys.mjs",
 );
 ```
 
@@ -61,10 +61,10 @@ For writing tests you usually want to have the following modules imported:
 
 ```js
 const { ExperimentAPI, NimbusFeatures } = ChromeUtils.import(
-  "resource://nimbus/ExperimentAPI.jsm",
+  "resource://nimbus/ExperimentAPI.sys.mjs",
 );
 const { ExperimentFakes } = ChromeUtils.import(
-  "resource://testing-common/NimbusTestUtils.jsm",
+  "resource://testing-common/NimbusTestUtils.sys.mjs",
 );
 ```
 
@@ -74,18 +74,21 @@ Next this is how you would set up your feature to test integration with Desktop 
 // Ensure everything has finished initializing
 await ExperimentAPI.ready();
 // The actual setup
-const doCleanup = await ExperimentFakes.enrollWithRollout({
-  // Reference your feature id already defined in the FeatureManifest.yaml
-  featureId: "<YOUR FEATURE ID>",
-  value: {
-    variables: { enabled: true },
+const doCleanup = await ExperimentFakes.enrollWithFeatureConfig(
+  {
+    // Reference your feature id already defined in the FeatureManifest.yaml
+    featureId: "<YOUR FEATURE ID>",
+    value: {
+      variables: { enabled: true },
+    },
   },
-});
+  { isRollout: true }
+);
 
 // Now your feature integration is ready for testing
 
-// NimbusFeature.<YOUR FEATURE>.getVariable("enabled")
-// NimbusFeature.<YOUR FEATURE>.getAllVariables()
+// NimbusFeatures.<YOUR FEATURE>.getVariable("enabled")
+// NimbusFeatures.<YOUR FEATURE>.getAllVariables()
 
 await doCleanup(); // to remove the rollout
 ```
