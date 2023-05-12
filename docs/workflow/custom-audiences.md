@@ -13,13 +13,9 @@ They are:
 - Specific to a particular application (Not all audiences can target all applications)
 - Evaluated on clients via an expression language (`JEXL`)
 
-:::warning
-Right now, Desktop-only audiences will appear as options for mobile experiments. This is a [known issue](https://jira.mozilla.com/browse/EXP-1242)
-:::
-
 ### How to add a new custom audience
 
-Create a PR against [constants/nimbus.py](https://github.com/mozilla/experimenter/blob/main/app/experimenter/targeting/constants.py) that adds a new JEXL expression.
+Create a PR against [targeting/constants.py](https://github.com/mozilla/experimenter/blob/main/experimenter/experimenter/targeting/constants.py) that adds a new JEXL expression.
 
 Request review from a console core team member. It should be available in the Experimenter UI a few minutes after the PR has merged.
 
