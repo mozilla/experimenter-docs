@@ -34,6 +34,10 @@ This disqualifies existing enrollments. and breaks any connection with experimen
 
 ## QA tooling
 
+> The following are nice-to-haves, obviated by the use of the [`nimbus-cli`][nimbus-cli].
+
+[nimbus-cli]: https://github.com/mozilla/application-services/tree/main/components/support/nimbus-cli
+
 ### Preview Collection
 
 To allow testing of experiments before they are published, the client should allow configuring the Nimbus startup to use the `preview-collection`.

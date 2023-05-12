@@ -10,6 +10,8 @@ Nimbus is an experimentation platform from Mozilla.
 
 This document shows you how to set up the Nimbus SDK with a new Android app. It assumes that your app is already using the Glean SDK and Android Components.
 
+[nimbus-cli]: https://github.com/mozilla/application-services/tree/main/components/support/nimbus-cli
+
 # Building with Nimbus
 
 Nimbus is distributed through bundled Rust code as part of Mozilla's Application Services ["Megazord"](https://github.com/mozilla/application-services/blob/main/docs/design/megazords.md).
@@ -91,7 +93,7 @@ In Firefox for Android and Focus for Android, this is done at the beginning of t
 ```kotlin
 class MyApplication: Application() {
 
-    lateinit var nimbus: NimbusApi
+    lateinit var nimbus: NimbusInterface
 
     override fun onCreate() {
         beginNimbusSetup()
@@ -112,7 +114,7 @@ class MyApplication: Application() {
         nimbus.fetchExperiments()
     }
 
-    fun createNimbus(context: Context, urlString: String): NimbusApi {
+    fun createNimbus(context: Context, urlString: String): NimbusInterface {
         val isAppFirstRun = context.settings().isFirstRun
         val customTargetingAttibutes = JSONObject().apply {
             // Put any custom attributes you want to use to segment an audience on to
@@ -126,7 +128,7 @@ class MyApplication: Application() {
             customTargetingAttributes = customTargetingAttributes
         )
 
-        // Use the Nimbus builder to build a NimbusApi object.
+        // Use the Nimbus builder to build a NimbusInterface object.
         return NimbusBuilder(context).apply {
             url = urlString
             errorReporter = { message, e ->
@@ -154,49 +156,29 @@ By design, Nimbus is deliberately unobtrusive; if it fails then it should not cr
 The `errorReporter` callback is there to connect `Nimbus` to any error reporting framework in the rest of the app.
 
 ```kotlin
-        return NimbusBuilder(context).apply {
-            // …
-            errorReporter = { message, e ->
-                Logger.error("Nimbus error: $message", e)
-            }
-            // …
-        }.build(appInfo)
+    return NimbusBuilder(context).apply {
+        // …
+        errorReporter = { message, e ->
+            Logger.error("Nimbus error: $message", e)
+        }
+        // …
+    }.build(appInfo)
 ```
 
-### Connecting the `NimbusApi` to FML generated code
+### Connecting the `NimbusInterface` to FML generated code
 
-The FML generated code has a runtime dependency on the `NimbusApi`.
+The FML generated code has a runtime dependency on the `NimbusInterface`.
 
-Two callbacks can be provided to the `NimbusBuilder`, one to connect the `NimbusApi` object when it is created,
-and one to clear the caching in the generated code.
+To connect it to the Nimbus object, we need to tell the `NimbusBuilder`. In this case, the generated class is `FxNimbus`.
 
 ```kotlin
-        // Use the Nimbus builder to build a NimbusApi object.
-        return NimbusBuilder(context).apply {
-            // …
-            // Connect FxNimbus to the Nimbus SDK.
-            onCreateCallback = { nimbus ->
-                FxNimbus.initialize { nimbus }
-            }
-            onApplyCallback = {
-                FxNimbus.invalidateCachedValues()
-            }
-            // …
-        }.build(appInfo)
+    return NimbusBuilder(context).apply {
+        // …
+        // Connect FxNimbus to the Nimbus SDK.
+        featureManifest = FxNimbus
+        // …
+    }.build(appInfo)
 ```
-
-Note:
-
-`onApplyCallback` is a syntactic sugar for
-
-```kotlin
-nimbus.register(object : NimbusInterface.Observer {
-    // do after every applyPendingExperiments()
-    onApplyCallback(nimbus)
-})
-```
-
-However, `onApplyCallback` in `NimbusBuilder` is guaranteed to be executed on the first `applyPendingExperiments()`, i.e. on every startup.
 
 ### Handling First Run experiments
 
@@ -205,14 +187,13 @@ Since `fetchExperiments` from the remote settings URL is slow, and we wish to be
 Astute readers will notice that when `n = 0`, i.e. the very first time the app is run, there are no experiment recipes downloaded. If Remote Settings experiment recipes JSON payload is available as a `raw/` resource, it can be loaded in at first run:
 
 ```kotlin
-        // Use the Nimbus builder to build a NimbusApi object.
-        return NimbusBuilder(context).apply {
-            // …
-            isFirstRun = isAppFirstRun
-            initialExperiments = R.raw.initial_experiments
-            timeoutLoadingExperiment = TIME_OUT_LOADING_EXPERIMENT_FROM_DISK_MS // defaults to 200 (ms)
-            // …
-        }.build(appInfo)
+    return NimbusBuilder(context).apply {
+        // …
+        isFirstRun = isAppFirstRun
+        initialExperiments = R.raw.initial_experiments
+        timeoutLoadingExperiment = TIME_OUT_LOADING_EXPERIMENT_FROM_DISK_MS // defaults to 200 (ms)
+        // …
+    }.build(appInfo)
 ```
 
 The `initial_experiments.json` file can be downloaded, either as part of the build, or in an automated/timed job. e.g. this is the [Github Action workflow used by Fenix](https://github.com/mozilla-mobile/fenix/blob/main/.github/workflows/fenix-update-nimbus-experiments.yml).
@@ -221,10 +202,10 @@ The `initial_experiments.json` file can be downloaded, either as part of the bui
 
 The preview collection is a staging area for new experiments to be tested on the device. This should be toggleable via the UI, but should trigger a restart.
 
-Adding the `usePreviewCollection` flag allows the builder to configure a `NimbusApi` object connected to the experiment recipes in the preview collection.
+Adding the `usePreviewCollection` flag allows the builder to configure a `NimbusInterface` object connected to the experiment recipes in the preview collection.
 
 ```kotlin
-        // Use the Nimbus builder to build a NimbusApi object.
+        // Use the Nimbus builder to build a NimbusInterface object.
         return NimbusBuilder(context).apply {
             // …
             usePreviewCollection = context.settings().nimbusUsePreview
@@ -250,4 +231,25 @@ Adding the `usePreviewCollection` flag allows the builder to configure a `Nimbus
             FxNimbus.invalidateCachedValues()
         }
     }.build(appInfo)
+```
+
+## Instrumenting the app for testing
+
+The [`nimbus-cli`][nimbus-cli] allows QA and engineers to launch the app in different experimental configurations. It largely obviates the need for configuring Nimbus to use the preview collection, above.
+
+To connect the `NimbusInterface` object to the command line, we need to feed the intent from the app's launch activity to the `NimbusInterface`.
+
+```kotlin
+
+import org.mozilla.experiments.nimbus.initializeTooling
+
+open class HomeActivity : AppCompatActivity() {)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        // Find the nimbus singleton
+        val app = application as MyApplication
+        val nimbus = app.nimbus
+        // Pass it the launch intent
+        nimbus.initializeTooling(applicationContext, intent)
+        // …
+    }
 ```
