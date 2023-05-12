@@ -8,8 +8,9 @@ Engineers are typically tasked with implementing an experiment on a new surface 
 
 ## Integrating with a new app
 
- * [Getting started with Nimbus, for Android Engineers](/getting-started/engineers/getting-started-for-android-engineers)
- * [Mobile UI needed for Nimbus](/getting-started/engineers/getting-started-mobile-required-ui)
+* [Getting started with Nimbus, for Android Engineers](/getting-started/engineers/getting-started-for-android-engineers)
+* [Getting started with Nimbus for iOS Engineers](/getting-started/engineers/getting-started-for-ios-engineers)
+* [Mobile UI needed for Nimbus](/getting-started/engineers/getting-started-mobile-required-ui)
 
 ## To get started with implementation
 
