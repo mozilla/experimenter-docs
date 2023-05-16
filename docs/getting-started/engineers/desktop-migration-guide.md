@@ -51,8 +51,8 @@ aboutmyself:
 First, you will need to import `ExperimentAPI.jsm`:
 
 ```js
-XPCOMUtils.defineLazyModuleGetters(this, {
-  NimbusFeatures: "resource://nimbus/ExperimentAPI.jsm",
+ChromeUtils.defineESModuleGetters(this, {
+  NimbusFeatures: "resource://nimbus/ExperimentAPI.sys.mjs",
 });
 ```
 

@@ -105,8 +105,8 @@ Import the `NimbusFeatures` module:
 <TabItem value="js">
 
 ```js
-XPCOMUtils.defineLazyModuleGetters(this, {
-  NimbusFeatures: "resource://nimbus/ExperimentAPI.jsm",
+ChromeUtils.defineESModuleGetters(this, {
+  NimbusFeatures: "resource://nimbus/ExperimentAPI.sys.mjs",
 });
 ```
 
@@ -344,8 +344,8 @@ NimbusFeatures::OffUpdate("aboutwelcome"_ns, "skipFocus"_ns,
 If you need to know whether an experiment is active or get access to the experiment or branch identifier (for example, to report in `utm_params`), you can use `ExperimentAPI.getExperimentMetaData`:
 
 ```js
-XPCOMUtils.defineLazyModuleGetters(this, {
-  ExperimentAPI: "resource://nimbus/ExperimentAPI.jsm",
+ChromeUtils.defineESModuleGetters(this, {
+  NimbusFeatures: "resource://nimbus/ExperimentAPI.sys.mjs",
 });
 
 const data = ExperimentAPI.getExperimentMetaData({ featureId: "myFeature" });
