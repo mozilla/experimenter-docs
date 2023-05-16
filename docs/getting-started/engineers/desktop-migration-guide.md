@@ -48,7 +48,7 @@ aboutmyself:
 
 ## Step 2: Update your feature code
 
-First, you will need to import `ExperimentAPI.jsm`:
+First, you will need to import `ExperimentAPI.sys.mjs`:
 
 ```js
 ChromeUtils.defineESModuleGetters(this, {
