@@ -17,7 +17,7 @@ Responsibilities include:
 
 ## Where do I start?
 *  Watch the 5 minute video on [experiment workflow](https://experimenter.info/workflow/overview) for an overview of the experiment lifecycle to understand the stages / ordering.  Use the [Workflow Miro board](https://experimenter.info/workflow/overview) as your source for current links and guidance.
-*  <img width="703" alt="image" src="https://github.com/mozilla/experimenter-docs/assets/8192232/0da0573d-a38a-43fb-8bc9-13379841a127">
+<img width="703" alt="image" src="https://github.com/mozilla/experimenter-docs/assets/8192232/0da0573d-a38a-43fb-8bc9-13379841a127">
 
 *   You must watch the training video before writing your first experiment.  The training for new experiment owners is [here](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3bcc9a08-50a4-45bb-88fe-af2001116cb3) - the slide deck in the video is [here](https://docs.google.com/presentation/d/1ASlVAds63qOzCDnyLWlbKAcgvTkVfojDeGFqIYty4iI/edit?usp=share_link). 
 * *  Ask any questions in ask-experimenter (you will have questions the first few times).  Please ask for a shadow in #ask-experimenter you first time(s) through and someone will hop on zoom to write with you. We are happy to help people through the learning curve.
