@@ -124,6 +124,13 @@ module.exports = {
                     "messaging/mobile-messaging",
                     "deep-dives/mobile/mobile-behavioral-targeting",
                   ]
+                },
+                {
+                  "type": "category",
+                  "label": "Onboarding Experiments on Firefox for Mobile",
+                  items: [
+                    "onboarding/onboarding-feature-android",
+                  ]
                 }
               ],
             },
