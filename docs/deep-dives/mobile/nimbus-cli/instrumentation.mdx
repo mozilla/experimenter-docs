@@ -9,7 +9,7 @@ The `nimbus-cli` is a tool to communicate with the Nimbus SDK that is embedded i
 - [Instrumenting Android apps for testing](/getting-started/engineers/getting-started-for-android-engineers#instrumenting-the-app-for-testing).
 - [Instrumenting iOS apps for testing](/getting-started/engineers/getting-started-for-ios-engineers#instrumenting-the-app-for-testing).
 
-[Adding a new app to the cli](https://github.com/mozilla/application-services/blob/main/components/support/nimbus-cli/src/main.rs#L69-L170) is less straightforward. You should start collecting the following information:
+[Adding a new app to the cli](https://github.com/mozilla/application-services/blob/main/components/support/nimbus-cli/src/config.rs) is less straightforward, but not hard. You should start collecting the following information:
 
 For all apps:
 
@@ -18,6 +18,7 @@ For all apps:
 - the Github repo for the app
 - the location of the app's FML file within the Github repo.
 - the mapping between version names and branch names.
+- the Remote Settings collection names for both production and preview.
 
 For Android:
 

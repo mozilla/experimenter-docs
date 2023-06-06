@@ -1,0 +1,23 @@
+---
+id: nimbus-cli-test-feature
+title: Testing Features
+slug: /nimbus-cli/test-feature
+---
+
+The `nimbus-cli` provides features to download experiments from Remote Settings. However, sometimes you wish to do some exploratory testing of a feature without going through the experimenter interface.
+
+## `test-feature`
+
+The `test-feature` command allows you to specify a `feature-id` and one or more JSON files that correspond to the feature configuration for that feature: i.e. to exercise a feature.
+
+e.g.
+
+```sh
+nimbus-cli --app firefox_ios --channel developer test-feature messaging my-treatment.json my-control.json
+```
+
+For the above `nimbus-cli` will generate an experiment which will enroll in to the given app and channel for the `messaging`, with two branches: `my-treatment` and `my-control`. It will enroll in the first of the branches, i.e. `my-treatment`.
+
+The other branches are available to enroll using the `Experiments` screen available through the app's UI.
+
+By default, the app's feature manifest will be downloaded and used to validate each feature configuration. This can be overridden with the `--no-validate` option.

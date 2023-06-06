@@ -1,0 +1,112 @@
+---
+id: nimbus-cli-getting-started
+title: Getting Started
+slug: /nimbus-cli/getting-started
+---
+
+All `nimbus-cli` commands need an `--app` and `--channel` parameter. These should correspond to the app as it is installed on the simulator or emulator.
+
+| App Name  | `--app` value | Available values for `--channel` |
+| -| - | - |
+| Firefox for Android   | `fenix` | `developer`, `nightly`, `beta`, `release` |
+| Firefox for iOS  | `firefox_ios` | `developer`,`beta`, `release` |
+| Focus for Android  | `focus_android` | `developer`, `nightly`, `beta`, `release` |
+| Focus for iOS  | `focus_ios` | `developer`,`beta`, `release` |
+
+The `app` and `channel` are how they are known to Nimbus. The `channel` corresponds to the build type: e.g.
+
+- `fenix` `developer` is the Debug build variant of Firefox for Android.
+- `firefox_ios` `developer` is the `Fennec` build configuration of Firefox for iOS.
+
+You can also specify a `--device-id` for working with multiple simulator/emulator/device at the same time.
+
+## `list`
+
+You can find experiments you want to use by using the `list` command.
+
+```sh
+nimbus-cli --app fenix --channel developer list
+```
+
+The above command gives a formatted table of experiments, with the targeted channel, the affected features and names of the branches; here is an example:
+
+```
+Experiment slug                                                   | Channel   | Features                      | Branches
+------------------------------------------------------------------+-----------+-------------------------------+-------------------
+ android-research-surface-validation                              | release   | messaging                     | control, treatment
+ viewpoint-rolling-week-2-expansion-android                       | release   | messaging                     | treatment
+ release-android-onboarding-redesign                              | release   | juno-onboarding               | control, treatment-a
+ fx-release-android-re-engagement-notifications-114-rollout       | release   | re-engagement-notification    | control
+```
+
+You can see the preview collection, by adding a `preview` parameter.
+
+```sh
+nimbus-cli --app fenix --channel developer list preview
+```
+
+You can also use `stage` and `stage/preview` to see the staging server and the preview collection of the staging server.
+
+## `enroll`
+
+You can start the app enrolled in a branch of a given experiment.
+
+```sh
+nimbus-cli --app fenix --channel developer \
+    enroll $EXPERIMENT --branch $BRANCH
+```
+
+This will download the experiment from Remote Settings, and then make changes to it to make it inevitable that the Nimbus SDK will enroll the experiment with that branch:
+
+- changes the channel of the experiment to that of the installed app
+- set the targeting `"true"`
+- the bucketing for the particular branch as 100%
+- set the enrollment paused flag to `false`.
+
+Once these changes have been made, the app is launched, and the experiment is injected into the SDK.
+
+```sh
+nimbus-cli --app fenix --channel developer \
+    enroll android-research-surface-validation --branch treatment
+```
+
+If you're downloading the experiment from `preview`, `stage` or `stage/preview`, you should prepend the server slug to the experiment slug:
+
+```sh
+nimbus-cli --app fenix --channel developer \
+    enroll preview/mobile-default-browser-homepage-banner-copy-test --branch treatment-c
+```
+
+You can use the `--preserve-targeting` and `--preserve-bucketing` options to preserve the targeting and bucketing.
+
+Enrolled experiments should persist across restarts of the app, and fetching of new experiments is disabled.
+
+### Console output
+
+The corresponding `adb` commands and `xcrun` commands are shown in yellow. These can be useful for attaching to bug reports as part of the Steps To Reproduce (STR). The `nimbus-cli` command used will also be useful for STR.
+
+## `reset-app`
+
+The app can be put back into the just installed state. On Android, there is an `adb` command to do this, but not in iOS. For iOS:
+
+- the app container for the given simulator is deleted.
+- the app's group containers for the given simulator are all deleted.
+
+For both the command is the same:
+
+```sh
+nimbus-cli --app fenix --channel developer reset-app
+```
+
+```sh
+nimbus-cli --app firefox_ios --channel developer reset-app
+```
+
+## `unenroll`
+
+From time to time you may need to test how the app responds to unenrolling from an experiment. You can force the unenrollment from all previously enrolled experiments with this command.
+
+```sh
+nimbus-cli --app fenix --channel developer \
+    unenroll
+```

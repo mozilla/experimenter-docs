@@ -1,0 +1,67 @@
+---
+id: nimbus-cli-working-with-fml
+title: Working with Feature Manifests
+slug: /nimbus-cli/fml
+---
+
+The Feature Manifest Language is a powerful way of specify the shape of the feature configurations that each branch is made up of.
+
+The `nimbus-cli` knows about the feature manifests for each of the apps, and can validate experiments before they launch.
+
+## `validate`
+
+```sh
+nimbus-cli --app firefox_ios --channel release validate ios-sync-manager-integration
+```
+
+This downloads the feature manifest (the fml file), and checks each of the features in each of the branches.
+
+```sh
+✅ Loaded manifest from https://raw.githubusercontent.com/mozilla-mobile/firefox-ios/main/nimbus.fml.yaml
+✅ control           rust-sync-manager-component
+✅ rust-sync-manager rust-sync-manager-component
+```
+
+By default, this will download the version from `main`, however you can specify a version of the FML.
+
+```sh
+nimbus-cli --app firefox_ios --channel release validate preview/release-ios-re-engagement-notifications-ab-experiment-114 --version 114
+```
+
+Using the `--version` parameter, we can specify `114` which for `firefox_ios`, this currently translates to the `release/v114` tag.
+
+```sh
+✅ Loaded manifest from https://raw.githubusercontent.com/mozilla-mobile/firefox-ios/release/v114/nimbus.fml.yaml
+✅ control         messaging
+✅ treatment-a     messaging
+✅ treatment-b     messaging
+✅ treatment-c     messaging
+```
+
+Using the `--ref` parameter, we can a tag, a different branch or a commit hash.
+
+Alternatively, we can specify a local manifest file.
+
+```sh
+nimbus-cli --app firefox_ios --channel release validate preview/release-ios-re-engagement-notifications-ab-experiment-114 --manifest ./my-manifest.fml.yaml
+```
+
+## Other commands
+
+By default, the `enroll` and `test-feature` validates the experiments before sending them to the device.
+
+This can be overridden with the `--no-validate` option.
+
+### `enroll`
+
+```sh
+nimbus-cli --app firefox_ios --channel release enroll ios-sync-manager-integration --branch rust-sync-manager
+```
+
+The manifest itself is validated on load, so if there is a problem with that feature, you can skip validation with `--no-validate`.
+
+```sh
+nimbus-cli --app firefox_ios --channel developer enroll ios-set-to-default-in-onboarding-final --branch control --no-validate
+```
+
+Each of the `--manifest`, `--version` and `--ref` options work with `enroll` and `test-feature`.
