@@ -84,6 +84,33 @@ Argo updates should be tested on a separate cluster before applying them to prod
 		* Change version number to most recent release
 * The GKE cluster itself is updated automatically by GCP
 
+## Tooling and Metric Versioning
+
+Jetstream uses the same tooling and metric versions for an experiment across its entire analysis duration. This prevents inconsistent results, for example, when changes are made to how mozanalysis computes results or new default metrics are added in metric-hub mid-experiment.
+
+### Keeping track of tooling versions
+
+When a new version of jetstream is released, for example after some library updates, a new Docker container gets pushed to the [Artifact Registry](https://console.cloud.google.com/artifacts?project=moz-fx-data-experiments). The container installs a specific version of each library and can be uniquely identified by a SHA256 hash. A timestamp indicating when the container was uploaded is also available.
+
+Every time Jetstream runs and writes computed results to BigQuery, it tags the result tables with a last updated timestamp. However, the enrollments table won't update on new Jetstream runs, giving us an anchor from which to identify a consistent Jetstream image hash. 
+
+The last updated timestamp of the enrollments table is used to determine which Docker container was the most recently published one at that time. This container is then be used for all subsequent analyses.
+
+The Artifact Registry API is used to access image information and to determine the container to use for the analysis based on the last updated timestamp of the experiments enrollment table.
+
+Container hashes are passed to the Argo workflow config, which references docker containers used for execution.
+
+Jetstream can be run using a specific image version using the `--image_version` parameter. The image can also be changed using the `--image` parameter.
+
+### Keeping track on metric-hub versions
+
+Outcome and default configs can potentially change mid-experiment, leaving some experiments in an inconsistent state. Since these configs get pulled in dynamically and aren't installed as part of the Docker image the prior approach doesn't work here.
+
+Instead, `ConfigCollection.as_of(<date>)` is used checkout an earlier version of the repo as of the provided date. 
+This date will again be based on the last updated timestamp of the enrollments table. Calling `as_of()` will load the configs, defaults and outcomes that will subsequently be used for analysis. `as_of()` iterates through the commit history until it finds a commit that is in a non-broken state (configs can be loaded).
+
+When making changes to experiment-specific configs, jetstream will automatically rerun the affected experiments which will result in the enrollments table getting updated and the most recent configs in metric-hub being used.
+
 
 [jetstream]: https://github.com/mozilla/jetstream
 [jetstream error dashboard]: https://mozilla.cloud.looker.com/dashboards/246
