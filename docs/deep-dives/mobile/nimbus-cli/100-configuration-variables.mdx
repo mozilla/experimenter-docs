@@ -1,20 +1,19 @@
 ---
 id: nimbus-cli-environment-vars
-title: Configuration via environment variables
+title: Using Environment variables
 slug: /nimbus-cli/environment-variables
 ---
 
 ## `adb` and `xcrun`
 
-The app supposes that `adb` and `xcrun` are on the `PATH`. If they are not (or aren't spelled `adb` or `adb.exe`), then you can configure them via the `ADB_PATH` and `XCRUN_PATH` environment variables.
+`nimbus-cli` assumes that [`adb` and `xcrun` are on the `PATH`](/nimbus-cli/install#rerequisites). If they are not (or aren't spelled `adb` or `adb.exe`), then you can configure them via the `ADB_PATH` and `XCRUN_PATH` environment variables.
 
 ```sh
-ADB_PATH=C:\Program-Tools\bin\adb.exe nimbus-cli
+export ADB_PATH="/Applications/Android Studio.app/platform-tools/bin/adb"
 ```
 
 ```sh
-export XCRUN_PATH=$HOME/Library/CustomXcode/bin/xcrun
-nimbus-cli
+export XCRUN_PATH="$HOME/Library/CustomXcode/bin/xcrun"
 ```
 
 ## Remote Settings
@@ -49,3 +48,11 @@ export NIMBUS_MANIFEST_CACHE=$HOME/.local/state/fml/$(date -Idate)
 ```
 
 so as to only use the cache for one day.
+
+## Suppressing update checking
+
+The `nimbus-cli` periodically checks for a new version. This can be disabled by setting the following environment variable.
+
+```sh
+export NIMBUS_CLI_SUPPRESS_UPDATE_CHECK="true"
+```

@@ -8,9 +8,13 @@ The `nimbus-cli` is a command line tool for interacting with the Nimbus SDK embe
 
 It aims to provide a uniform way of interacting with an app, no matter what the app or the platform.
 
+:::tip
+If you're looking for installation instructions, start [here](/nimbus-cli/install).
+:::
+
 ### Goals
 
-The principle goals for the nimbus-cli is to make testing and developing experiments easier:
+The principle goals for the `nimbus-cli` is to make testing and developing experiments easier:
 
  - to force the app [to enroll into a given experiment](/nimbus-cli/getting-started#enroll), regardless of where the experiment is in its lifecycle
  - [to find the names of experiments and branches](/nimbus-cli/getting-started#list)
@@ -31,13 +35,3 @@ The tool works by using the existing tooling provided by platform vendors (for A
 No attempt is made to help installing or uninstalling of the apps on to devices.
 
 Since `simctl` is not able to interact with iOS devices, then neither is the `nimbus-cli`.
-
-## Installation
-
-The easy way of installing is to paste the following into a terminal:
-
-```sh
-curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/mozilla/application-services/main/install-nimbus-cli.sh | bash
-```
-
-More detailed instructions can be found on [this page](/nimbus-cli/install).
