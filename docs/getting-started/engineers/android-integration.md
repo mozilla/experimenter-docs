@@ -235,7 +235,7 @@ Adding the `usePreviewCollection` flag allows the builder to configure a `Nimbus
 
 ## Instrumenting the app for testing
 
-The [`nimbus-cli`][nimbus-cli] allows QA and engineers to launch the app in different experimental configurations. It largely obviates the need for configuring Nimbus to use the preview collection, above.
+The [`nimbus-cli`](/nimbus-cli) allows QA and engineers to launch the app in different experimental configurations. It largely obviates the need for configuring Nimbus to use the preview collection, above.
 
 To connect the `NimbusInterface` object to the command line, we need to feed the intent from the app's launch activity to the `NimbusInterface`.
 

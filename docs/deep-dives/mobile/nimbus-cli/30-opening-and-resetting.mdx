@@ -1,0 +1,78 @@
+---
+id: nimbus-cli-opening-and-resetting
+title: Opening and resetting the app
+slug: /nimbus-cli/opening-and-resetting
+---
+
+The commands that open the app do so by simulating the app's launch as if the user tapped on the app icon on the phone; these are:
+
+- `enroll`
+- `unenroll`
+- `test-feature`
+- `apply-file`
+- `log-state`
+- `open`.
+
+In addition, the `enroll`, `open` and `test-feature` commands, can launch the app with a deeplink.
+
+# Deeplinking
+
+`nimbus-cli` knows the apps' deeplinking schemes, and if no `://` is detected in the deeplink, then the deeplink scheme is appended.
+
+## `open`
+
+For example:
+
+```sh
+nimbus-cli --app firefox_ios --channel developer open
+```
+
+launches the app with `simctl`:
+
+```sh
+$ xcrun simctl launch \
+        booted \
+        org.mozilla.ios.Fennec \
+        --nimbus-cli \
+        --version \
+        1
+```
+
+```sh
+nimbus-cli --app firefox_ios --channel developer open --deeplink deep-link?url=settings/general
+```
+
+opens the deeplink (i.e. not sending directly to the app) with:
+
+```sh
+$ xcrun simctl openurl \
+        booted \
+        fennec://deep-link?url=settings/general
+```
+
+By default, each of the commands that launches the app also kills the app right before; with the `open` command you can send the app a deeplink without killing it, using the `--no-clobber` property.
+
+```
+nimbus-cli --app firefox_ios --channel developer enroll ios-set-to-default-in-onboarding-final --branch treatment-a
+nimbus-cli --app firefox_ios --channel developer open --deeplink deep-link?url=onboarding/privacy-first --no-clobber
+```
+
+### Deeplinks for other commands:
+
+> iOS `simctl` does not support command line arguments with the `openurl` command. Opening with a deeplink while enrolling in an experiment is not supported.
+
+## `enroll`
+
+For Android, opening a deeplink uses the same mechanism as launching the app: using Intents. Thus, we can enroll in an experiment and then open the app with a deeplink.
+
+```sh
+nimbus-cli --app fenix --channel developer enroll release-android-onboarding-redesign --branch treatment-a --deeplink onboarding/privacy-first
+```
+
+## `test-feature`
+
+Similarly, you can use a `--deeplink` to enroll a [`test-feature`](/nimbus-cli/test-feature) experiment.
+
+# Terminating and Resetting the app
+
+`open`, `enroll` and `test-feature` all support a `--reset-app` option, which serves to reset the app back to its just-installed state before opening.

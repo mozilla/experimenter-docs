@@ -1,0 +1,58 @@
+---
+id: nimbus-cli-working-with-files
+title: Working with Files
+slug: /nimbus-cli/working-with-files
+---
+
+## `fetch`
+
+You can download from a server the current list of all experiments:
+
+```sh
+nimbus-cli --app fenix --channel developer fetch archived.json
+```
+
+Use `preview`, `stage` or `stage/preview` to specify a Remote Settings instance.
+
+```sh
+nimbus-cli --app fenix --channel developer fetch --server preview archived.json
+```
+
+Alternatively, you can specify one or more recipes:
+
+```sh
+nimbus-cli --app fenix --channel developer \
+    fetch \
+    --recipe android-notification-surface-validation \
+    --recipe preview/android-research-surface-validation \
+    archived.json
+```
+
+This might be useful for attaching to bug reports.
+
+## `list`
+
+The `list` command takes a `--file` parameter to make working with these files a little easier:
+
+```sh
+nimbus-cli --app fenix --channel developer list --file archived.json
+```
+
+## `enroll`
+
+The `enroll` command takes `--file` parameter, so you can enroll from recipes stored locally:
+
+```sh
+nimbus-cli --app fenix --channel developer \
+    --file archived.json \
+    enroll android-research-surface-validation --branch treatment
+```
+
+## `apply-file`
+
+You can also upload the whole file straight to the SDK:
+
+```sh
+nimbus-cli --app fenix --channel developer \
+    apply-file archived.json
+```

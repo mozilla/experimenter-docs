@@ -1,0 +1,37 @@
+---
+id: nimbus-cli-introduction
+title: Introduction
+slug: /nimbus-cli
+---
+
+The `nimbus-cli` is a command line tool for interacting with the Nimbus SDK embedded in Mozilla's mobile applications.
+
+It aims to provide a uniform way of interacting with an app, no matter what the app or the platform.
+
+:::tip
+If you're looking for installation instructions, start [here](/nimbus-cli/install).
+:::
+
+### Goals
+
+The principle goals for the `nimbus-cli` is to make testing and developing experiments easier:
+
+ - to force the app [to enroll into a given experiment](/nimbus-cli/getting-started#enroll), regardless of where the experiment is in its lifecycle
+ - [to find the names of experiments and branches](/nimbus-cli/getting-started#list)
+ - to [reset the app](/nimbus-cli/getting-started#reset-app) back to a just-installed state
+ - to allow more concise Steps to Reproduce in bug reports.
+
+Additionally, it is useful to be developers to investigate problems with the apps and with the internal state of the Nimbus SDK:
+
+ - to [test feature configurations](/nimbus-cli/test-feature) without needing to interact with experimenter
+ - to [validate experiments and feature configurations](/nimbus-cli/fml) against the app's feature manifest
+ - to [display and capture the logs](/nimbus-cli/working-with-logs) of the device
+ - to [display the state of the Nimbus SDK in the logs](/nimbus-cli/working-with-logs#log-state).
+
+### Non-goals
+
+The tool works by using the existing tooling provided by platform vendors (for Android, `adb`; for iOS, `simctl`) to communicate with an installed app on a device, emulator or simulator.
+
+No attempt is made to help installing or uninstalling of the apps on to devices.
+
+Since `simctl` is not able to interact with iOS devices, then neither is the `nimbus-cli`.

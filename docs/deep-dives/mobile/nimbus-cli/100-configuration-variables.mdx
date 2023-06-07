@@ -1,0 +1,58 @@
+---
+id: nimbus-cli-environment-vars
+title: Using Environment variables
+slug: /nimbus-cli/environment-variables
+---
+
+## `adb` and `xcrun`
+
+`nimbus-cli` assumes that [`adb` and `xcrun` are on the `PATH`](/nimbus-cli/install#rerequisites). If they are not (or aren't spelled `adb` or `adb.exe`), then you can configure them via the `ADB_PATH` and `XCRUN_PATH` environment variables.
+
+```sh
+export ADB_PATH="/Applications/Android Studio.app/platform-tools/bin/adb"
+```
+
+```sh
+export XCRUN_PATH="$HOME/Library/CustomXcode/bin/xcrun"
+```
+
+## Remote Settings
+
+Remote Settings is hardcoded into `nimbus-cli` for both the stage and release versions. However, just occassionally you may want to change the URLs.
+
+e.g.
+
+```sh
+export NIMBUS_URL=https://no-cdn.remote-settings.mozilla.com
+export NIMBUS_STAGE_URL=https://no-cdn.stage-remote-settings.mozilla.com
+```
+
+This has been helpful in the past when trying to debug a problem with CDN, or Remote Settings has moved.
+
+## Manifest Cache Directory
+
+The manifest downloading happens on each invocation of the `enroll`, `validate` and `test-feature` commands.
+
+You can speed this up by setting directory as the cache for downloading the manifests:
+
+```sh
+export NIMBUS_MANIFEST_CACHE=./caches/fml
+```
+
+However, it should be noted that for some files (especially downloading from `main`), they change even though the URL remains the same.
+
+For this, you should consider putting into your `.profile` file something like
+
+```sh
+export NIMBUS_MANIFEST_CACHE=$HOME/.local/state/fml/$(date -Idate)
+```
+
+so as to only use the cache for one day.
+
+## Suppressing update checking
+
+The `nimbus-cli` periodically checks for a new version. This can be disabled by setting the following environment variable.
+
+```sh
+export NIMBUS_CLI_SUPPRESS_UPDATE_CHECK="true"
+```
