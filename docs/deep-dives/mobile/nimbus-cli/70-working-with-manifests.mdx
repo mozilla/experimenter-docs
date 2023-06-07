@@ -22,6 +22,14 @@ This downloads the feature manifest (the fml file), and checks each of the featu
 ✅ rust-sync-manager rust-sync-manager-component
 ```
 
+In the event of an invalid feature config, it is reported with the error. In the following example, the `juno-onboarding` feature has an error in the `default-browser` card.
+
+```sh
+✅ Loaded manifest from https://raw.githubusercontent.com/mozilla-mobile/firefox-android/releases_v114/fenix/app/nimbus.fml.yaml
+✅ control         juno-onboarding
+❎ treatment-a     juno-onboarding: Validation Error at features/juno-onboarding.cards['default-browser']#OnboardingCardData: Default includes key image-is-illustration that doesn't exist in OnboardingCardData's object definition
+```
+
 By default, this will download the version from `main`, however you can specify a version of the FML.
 
 ```sh

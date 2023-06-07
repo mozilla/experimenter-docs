@@ -10,9 +10,11 @@ Log files are especially helpful to developers, but not always very easy to acce
 
 These logs are useful when examining the internal state of the app, or attaching to bug reports.
 
-> For iOS the logs that are displayed and captured are the app's logs.
-> For Android, the logs are for the whole device.
-> For Android devices also used for personal usage, you should probably not upload such logs anywhere.
+:::info
+For iOS the logs that are displayed and captured are the app's logs.
+For Android, the logs are for the whole device.
+For Android devices also used for personal usage, you should probably not upload such logs anywhere.
+:::
 
 ## `capture-logs`
 
@@ -47,7 +49,8 @@ This command is an analog for the experiments menu in the secret settings of Fen
 
 It relaunches the app, then asks the SDK to dump the state of the Nimbus SDK to the logs. For example:
 
-For example, this is the
+For example, this is a section of logs captured on an Android device shortly after `log-state`, and an enrollment into the `viewpoint-rolling-week-2-expansion-android` experiment:
+
 ```
 06-05 12:12:47.177 12737 12737 D nimbus::nimbus_client: nimbus_18d_NimbusClient_dump_state_to_log
 06-05 12:12:47.177 12737 12737 I nimbus::nimbus_client: Slug                                                             | Features                      | Branch
@@ -68,3 +71,5 @@ or
 nimbus-cli --app fenix --channel developer log-state
 nimbus-cli --app fenix --channel developer capture-logs logs.txt
 ```
+
+By default, `log-state` is called at the same time as the `enroll` command.

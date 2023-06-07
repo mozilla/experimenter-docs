@@ -6,19 +6,19 @@ slug: /nimbus-cli/working-with-files
 
 ## `fetch`
 
-You can download from a server either the current list of all experiments:
+You can download from a server the current list of all experiments:
 
 ```sh
 nimbus-cli --app fenix --channel developer fetch archived.json
 ```
 
-Use `preview`, `stage` or `stage/preview` to specify a Remote Settings instance.
+Use `preview`, `stage` or `stage/preview` to specify a Remote Settings instance with the `--server` parameter:
 
 ```sh
 nimbus-cli --app fenix --channel developer fetch --server preview archived.json
 ```
 
-Alternatively, you can specify one or more recipes:
+Alternatively, you can specify one or more recipes, using the `--recipe` option:
 
 ```sh
 nimbus-cli --app fenix --channel developer \

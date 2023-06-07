@@ -17,9 +17,7 @@ In addition, the `enroll`, `open` and `test-feature` commands, can launch the ap
 
 # Deeplinking
 
-`nimbus-cli` knows the apps` deeplinking schemes, and if no `://` is detected in the deeplink, then the deeplink scheme is appended.
-
-For each of the following, a `--reset-app`
+`nimbus-cli` knows the apps' deeplinking schemes, and if no `://` is detected in the deeplink, then the deeplink scheme is prepended.
 
 ## `open`
 
@@ -52,7 +50,7 @@ $ xcrun simctl openurl \
         fennec://deep-link?url=settings/general
 ```
 
-By default, each of the commands that launches the app also kills the app right before; you can send the app a deeplink without killing it, using the `--no-clobber` property.
+By default, each of the commands that launches the app also kills the app right before; with the `open` command you can send the app a deeplink without killing it, using the `--no-clobber` option.
 
 ```
 nimbus-cli --app firefox_ios --channel developer enroll ios-set-to-default-in-onboarding-final --branch treatment-a
@@ -73,7 +71,7 @@ nimbus-cli --app fenix --channel developer enroll release-android-onboarding-red
 
 ## `test-feature`
 
-Similarly, you can use a `--deeplink` to enroll a []`test-feature`](/nimbus-cli/test-feature) experiment:
+Similarly, you can use a `--deeplink` to enroll a [`test-feature`](/nimbus-cli/test-feature) experiment.
 
 # Terminating and Resetting the app
 

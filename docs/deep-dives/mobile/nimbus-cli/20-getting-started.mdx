@@ -45,7 +45,12 @@ You can see the preview collection, by adding a `preview` parameter.
 nimbus-cli --app fenix --channel developer list preview
 ```
 
-You can also use `stage` and `stage/preview` to see the staging server and the preview collection of the staging server.
+You can also use:
+
+ - `production` or `release`, or nothing to specify the production server.
+ - `preview` or `production/preview` to specify the `preview` collection
+ - `stage` to specify the staging server
+ - `stage/preview` to see the staging server and the preview collection of the staging server.
 
 ## `enroll`
 
@@ -80,6 +85,22 @@ nimbus-cli --app fenix --channel developer \
 You can use the `--preserve-targeting` and `--preserve-bucketing` options to preserve the targeting and bucketing.
 
 Enrolled experiments should persist across restarts of the app, and fetching of new experiments is disabled.
+
+### Validating experiments
+
+By default, the experiment branches will be validated against the feature manifest. This [can be configured with `--version VERSION`, `--ref REF` and `--manifest FILE` parameters](/nimbus-cli/fml), or disabled with the `--no-validate` parameter.
+
+### Testing interactions between experiments and rollouts
+
+In addition to an experiment slug and branch, zero or more experiment slugs can be specified.
+
+These _must_ be rollouts. This is to test the interactions between rollouts and experiments acting upon the same feature.
+
+```sh
+nimbus-cli --app fenix --channel developer enroll mobile-default-browser-cta-copy-test --branch treatment viewpoint-rolling-week-2-expansion-android
+```
+
+The `--preserve-targeting` and `--preserve-bucketing` options act on these rollouts too.
 
 ### Console output
 
