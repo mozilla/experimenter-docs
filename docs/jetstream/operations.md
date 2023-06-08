@@ -86,7 +86,7 @@ Argo updates should be tested on a separate cluster before applying them to prod
 
 ## Tooling and Metric Versioning
 
-Jetstream uses the same tooling and metric versions for an experiment across its entire analysis duration. This prevents inconsistent results, for example, when changes are made to how mozanalysis computes results or new default metrics are added in metric-hub mid-experiment.
+Jetstream uses the same tooling and metric versions for an experiment across its entire analysis duration. This prevents inconsistent results, for example, when changes are made to how [mozanalysis] computes results or new default metrics are added in metric-hub mid-experiment.
 
 ### Keeping track of tooling versions
 
@@ -102,15 +102,17 @@ Container hashes are passed to the Argo workflow config, which references docker
 
 Jetstream can be run using a specific image version using the `--image_version` parameter. The image can also be changed using the `--image` parameter.
 
-### Keeping track on metric-hub versions
+### Keeping track of metric-hub versions
 
 Outcome and default configs can potentially change mid-experiment, leaving some experiments in an inconsistent state. Since these configs get pulled in dynamically and aren't installed as part of the Docker image the prior approach doesn't work here.
 
-Instead, `ConfigCollection.as_of(<date>)` is used checkout an earlier version of the repo as of the provided date. 
-This date will again be based on the last updated timestamp of the enrollments table. Calling `as_of()` will load the configs, defaults and outcomes that will subsequently be used for analysis. `as_of()` iterates through the commit history until it finds a commit that is in a non-broken state (configs can be loaded).
+Instead, `ConfigCollection.as_of(<date>)` is used to checkout an earlier version of the repo as of the provided date. 
+This date will again be based on the last updated timestamp of the enrollments table. Calling `as_of()` will load the configs, defaults and outcomes that will subsequently be used for analysis. `as_of()` iterates through the commit history until it finds the first commit from before the last updated timestamp. If this commit is in a broken state (i.e., configs cannot be successfully loaded), `as_of` works forward from this point to find the closest working commit.
 
 When making changes to experiment-specific configs, jetstream will automatically rerun the affected experiments which will result in the enrollments table getting updated and the most recent configs in metric-hub being used.
 
+More information on how to use the most recent tooling and metric versions can be found [here](jetstream.md/#how-to-use-the-latest-tooling-and-metric-definitions).
 
 [jetstream]: https://github.com/mozilla/jetstream
 [jetstream error dashboard]: https://mozilla.cloud.looker.com/dashboards/246
+[mozanalysis]: https://github.com/mozilla/mozanalysis

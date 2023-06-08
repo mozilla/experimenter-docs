@@ -109,10 +109,14 @@ Statistics data is written to BigQuery and later exported to GCS as JSON.
 Jetstream ensures that results get computed consistently across the entire analysis duration of an experiment.
 It prevents sudden changes of how results are computed after tooling (such as [mozanalysis] which Jetstream depends on) or default metrics get updated by using the same versions as when the analysis initially started until the experiment completes.
 
-To force jetstream to use new tooling or metric versions for an experiment, there are a few options:
-* do nothing: only experiments that are launched after the new tooling release will use the most recent version of the tooling 
-* use new tooling version without rerunning: install the [jetstream command line tooling](https://pypi.org/project/mozilla-jetstream/) locally and run `jetstream rerun-skip --experiment_slug=<slug>`. This command pretends to rerun the experiment actually re-running the queries. Rerunning an experiment will always force new versions to be used for experiments. 
-* rerun experiment: re-running an experiment will always use the most recent version of the tooling on the rerun and update the last updated timestamps of the result tables
+### How to use the latest tooling and metric definitions?
+
+When tooling or metrics are updated, there are a few options with different consequences for how Jetstream treats existing experiments:
+1. **do nothing**: only experiments that are launched after the new tooling release will use the most recent version of the tooling 
+1. **use new tooling version without rerunning**: install the [jetstream command line tooling](https://pypi.org/project/mozilla-jetstream/) locally and run `jetstream rerun-skip --experiment_slug=<slug>`. This command pretends to rerun the experiment without actually re-running the queries, which will update the date used to determine which tooling and metric versions to use. Rerunning an experiment will always force new versions to be used for experiments. 
+1. **rerun experiment**: re-running an experiment will always use the most recent version of the tooling on the rerun and update the last updated timestamps of the result tables
+
+More detailled information around versioning is available in [Jetstream Operations].
 
 ## Datasets
 
@@ -128,3 +132,4 @@ is available in the Mozilla data docs.
 [metrics]: metrics.md
 [outcome]: outcomes.md
 [mozanalysis]: https://github.com/mozilla/mozanalysis
+[Jetstream Operations]: operations.md/#tooling-and-metric-versioning
