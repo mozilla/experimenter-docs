@@ -15,11 +15,11 @@ The commands that open the app do so by simulating the app's launch as if the us
 
 In addition, the `enroll`, `open` and `test-feature` commands, can launch the app with a deeplink.
 
-# Deeplinking
+## Deeplinking
 
 `nimbus-cli` knows the apps' deeplinking schemes, and if no `://` is detected in the deeplink, then the deeplink scheme is appended.
 
-## `open`
+### `open`
 
 For example:
 
@@ -57,11 +57,11 @@ nimbus-cli --app firefox_ios --channel developer enroll ios-set-to-default-in-on
 nimbus-cli --app firefox_ios --channel developer open --deeplink deep-link?url=onboarding/privacy-first --no-clobber
 ```
 
-### Deeplinks for other commands:
+#### Deeplinks for other commands:
 
 > iOS `simctl` does not support command line arguments with the `openurl` command. Opening with a deeplink while enrolling in an experiment is not supported.
 
-## `enroll`
+### `enroll`
 
 For Android, opening a deeplink uses the same mechanism as launching the app: using Intents. Thus, we can enroll in an experiment and then open the app with a deeplink.
 
@@ -69,10 +69,118 @@ For Android, opening a deeplink uses the same mechanism as launching the app: us
 nimbus-cli --app fenix --channel developer enroll release-android-onboarding-redesign --branch treatment-a --deeplink onboarding/privacy-first
 ```
 
-## `test-feature`
+### `test-feature`
 
-Similarly, you can use a `--deeplink` to enroll a [`test-feature`](/nimbus-cli/test-feature) experiment.
+Similarly, you can use a `--deeplink` to enroll a [`test-feature`](/nimbus-cli/working-with-features) experiment.
 
-# Terminating and Resetting the app
+## Terminating and Resetting the app
 
 `open`, `enroll` and `test-feature` all support a `--reset-app` option, which serves to reset the app back to its just-installed state before opening.
+
+## Passthrough parameters
+
+Opening apps with `nimbus-cli` provides an abstraction over `adb shell start am` and `xcrun simctl launch`.
+
+Passthrough parameters offer a small escape hatch from this abstraction.
+
+### Trailing parameters for apps
+
+You may want to send additional command line parameters to these commands. You can do this by appending them after `--` for `open`, `enroll` and `test-feature`:
+
+```sh
+nimbus-cli --app firefox_ios --channel developer open --reset-app -- FIREFOX_TEST FIREFOX_SKIP_INTRO
+```
+
+This produces an `xcrun` command:
+
+```sh
+$ xcrun simctl launch \
+        booted \
+        org.mozilla.ios.Fennec \
+        FIREFOX_TEST \
+        FIREFOX_SKIP_INTRO
+```
+
+These are entirely app specific. e.g. Firefox for iOS has the launch parameters available in [`LaunchArguments.swift`](https://github.com/mozilla-mobile/firefox-ios/blob/main/Shared/LaunchArguments.swift).
+
+For Android apps, you can modify the intent being sent to the device with [intent arguments](https://developer.android.com/tools/adb#IntentSpec). The most saliant are reproduced here:
+
+| Extra parameters | Description |
+| - | - |
+| `--esn extra_key` | Add a null extra. This option is not supported for URI intents. |
+| `--es extra_key extra_string_value` | Add string data as a key-value pair. |
+| `--ez extra_key extra_boolean_value` |  Add boolean data as a key-value pair. |
+| `--ei extra_key extra_int_value` | Add integer data as a key-value pair. |
+| `--el extra_key extra_long_value` |  Add long data as a key-value pair. |
+
+For a fictional example:
+
+```sh
+nimbus-cli --app fenix --channel developer open --reset-app -- --esn SKIP_INTRO
+```
+
+produces an `adb` command:
+
+```sh
+$ adb shell "am start -n org.mozilla.fenix.debug/.App \
+        -a android.intent.action.MAIN \
+        -c android.intent.category.LAUNCHER \
+        --esn \
+        SKIP_INTRO"
+```
+
+### Leading parameters
+
+For finer control of `xcrun` and `adb`, you can use `{}` as a positional indicator:
+
+For example, to enable debugging, you need to pass the `-D` parameter:
+
+```sh
+nimbus-cli --app fenix --channel developer open -- -D {}
+```
+
+This produces an `adb` command:
+
+```sh
+ adb shell "am start -D \
+        -n org.mozilla.fenix.debug/.App \
+        -a android.intent.action.MAIN \
+        -c android.intent.category.LAUNCHER"
+```
+
+Leading and trailing parameters can be combined, and used with any combination of `open`, `test-feature` and `enroll`.
+
+```sh
+nimbus-cli --app firefox_ios --channel developer \
+        enroll ios-search-bar-placement-v2-treatment-a-rollout --branch treatment-a \
+        -- \
+        --console-pty {} FIREFOX_SKIP_INTRO
+```
+
+#### Platform specific passthrough parameters
+
+Leading parameters are platform specific:
+
+`adb shell am` can be configured with:
+
+- `-D`: Enable debugging.
+- `-W`: Wait for launch to complete.
+- `--start-profiler file`: Start profiler and send results to `file`.
+- `-P file`: Like `--start-profiler`, but profiling stops when the app goes idle.
+- `-R count`: Repeat the activity launch `count` times. Prior to each repeat, the top activity will be finished.
+- `-S`: Force stop the target app before starting the activity.
+- `--opengl-trace`: Enable tracing of OpenGL functions.
+- `--user user_id | current`: Specify which user to run as; if not specified, then run as the current user.
+
+`xcrun simctl launch` can be configured with:
+
+- `--console` Block and print the application's stdout and stderr to the current terminal.
+		Signals received by simctl are passed through to the application.
+		(Cannot be combined with --stdout or --stderr)
+- `--console-pty` Block and print the application's stdout and stderr to the current terminal via a PTY.
+		Signals received by simctl are passed through to the application.
+		(Cannot be combined with --stdout or --stderr)
+- `--stdout=<path>` Redirect the application's standard output to a file.
+- `--stderr=<path>` Redirect the application's standard error to a file.
+- `--terminate-running-process` Terminate any running copy of the application.
+		Note: Log output is often directed to stderr, not stdout.

@@ -28,18 +28,33 @@ You can find experiments you want to use by using the `list` command.
 nimbus-cli --app fenix --channel developer list
 ```
 
-The above command gives a formatted table of experiments, with the targeted channel, the affected features and names of the branches; here is an example:
+The above command gives a formatted table of experiments:
+
+- with the targeted channel,
+- the percentage of eligible users will be enrolled
+- the affected features
+- whether the recipe is an experiment or a rollout (`R`)
+- names of the branches
+
+Here is an example:
 
 ```
-Experiment slug                                                   | Channel   | Features                      | Branches
-------------------------------------------------------------------+-----------+-------------------------------+-------------------
- android-research-surface-validation                              | release   | messaging                     | control, treatment
- viewpoint-rolling-week-2-expansion-android                       | release   | messaging                     | treatment
- release-android-onboarding-redesign                              | release   | juno-onboarding               | control, treatment-a
- fx-release-android-re-engagement-notifications-114-rollout       | release   | re-engagement-notification    | control
+Experiment slug                                                   | Channel |     % | Features                      |   | Branches
+------------------------------------------------------------------+---------+-------+-------------------------------+---+----------------------
+ viewpoint-rolling-week-4-expansion-android                       | release |   3 % | messaging                     |   | treatment
+ mobile-default-browser-cta-copy-test                             | release |  90 % | messaging                     |   | control, treatment
+ lifestyles-images-onboarding-experiment-v3                       | release | 100 % | juno-onboarding               |   | control, treatment-a
+ android-research-surface-validation                              | release |  10 % | messaging                     |   | control, treatment
+ release-android-onboarding-redesign                              | release | 100 % | juno-onboarding               |   | control, treatment-a
+ fx-release-android-re-engagement-notifications-114-rollout       | release | 100 % | re-engagement-notification    | R | control
+ notification-worker-validation-experiment                        | nightly | 100 % | messaging                     |   | control, treatment-a
 ```
 
 You can see the preview collection, by adding a `preview` parameter.
+
+By default, this lists what the apps can see: this is coming straight from Remote Settings.
+
+If you want to see what is available via the API, then use `--use-api`. It should be noted that this is all experiments, including completed ones, so is likely fairly large, and slow.
 
 ```sh
 nimbus-cli --app fenix --channel developer list preview
@@ -52,16 +67,18 @@ You can also use:
  - `stage` to specify the staging server
  - `stage/preview` to see the staging server and the preview collection of the staging server.
 
+More information about the experiment can be found with the [`info`](#info) command.
+
 ## `enroll`
 
 You can start the app enrolled in a branch of a given experiment.
 
 ```sh
 nimbus-cli --app fenix --channel developer \
-    enroll $EXPERIMENT --branch $BRANCH
+    enroll $EXPERIMENT_SLUG --branch $BRANCH
 ```
 
-This will download the experiment from Remote Settings, and then make changes to it to make it inevitable that the Nimbus SDK will enroll the experiment with that branch:
+This will download the experiment from Experimenter, and then make changes to it to make it inevitable that the Nimbus SDK will enroll the experiment with that branch:
 
 - changes the channel of the experiment to that of the installed app
 - set the targeting `"true"`
@@ -85,6 +102,8 @@ nimbus-cli --app fenix --channel developer \
 You can use the `--preserve-targeting` and `--preserve-bucketing` options to preserve the targeting and bucketing.
 
 Enrolled experiments should persist across restarts of the app, and fetching of new experiments is disabled.
+
+Occassionally, you may want to get the experiment from Remote Settings rather than Experimenter. You can do this by adding the `--use-rs` flag.
 
 ### Validating experiments
 
@@ -131,3 +150,66 @@ From time to time you may need to test how the app responds to unenrolling from 
 nimbus-cli --app fenix --channel developer \
     unenroll
 ```
+
+## `info`
+
+When you're starting from just the experiment slug, you can use the `info` command to get more information:
+
+```sh
+nimbus-cli --app fenix --channel developer info mobile-default-browser-cta-copy-test
+```
+
+```sh
+Slug        mobile-default-browser-cta-copy-test
+Name        Mobile Default Browser CTA Copy test
+Description A copy test on the default browser message on homepage.
+URL         https://experimenter.services.mozilla.com/nimbus/mobile-default-browser-cta-copy-test/summary
+App         fenix
+Channel     release
+E/R         Experiment with 2 branches
+Enrollment  2023-06-06 ➞ 2023-06-14 (paused)
+Observing   2023-06-06, proposed ending after 29 days
+Targeting   "(app_version|versionCompare('112.!') >= 0) && (language in ['en'])"
+Bucketing    90 %
+Branches    control, treatment
+Features    messaging
+```
+
+Notice:
+    - `E/R` stands for Experiment or Rollout.
+    - the targeting string is a JEXL expression, generated by Experimenter, and is the test all clients must pass in order to be considered _eligible_ for this experiment.
+    - the bucketing is the percentage of eligible clients that will enroll in the experiment, across all branches.
+
+You can also get this outputed to a file as JSON or YAML with the `--output` parameter.
+
+```sh
+nimbus-cli --app fenix --channel developer info mobile-default-browser-cta-copy-test --output info.json
+```
+
+:::tip Experiment Slugs
+
+Experiment identifiers, or slugs, are used to identify experiments and rollouts throughout Nimbus and `nimbus-cli`.
+
+You can copy the slug to the clipboard in Experimenter by pressing the <img src="https://raw.githubusercontent.com/mozilla/experimenter/main/experimenter/experimenter/nimbus-ui/src/components/CopyToClipboardButton/copy.svg" width="20"/> icon next to the experiment slug at the top of the summary page:
+
+<img title="Clicking on the copy to clipboard button shows a Copied to Clipboard tooltip" src="/img/nimbus-cli/copy-to-clipboard-copied.png" width="40%"/>
+
+Alternatively, you can use the link you get from Experimenter.
+
+e.g.
+
+```sh
+nimbus-cli --app fenix --channel developer \
+    enroll \
+    https://experimenter.services.mozilla.com/nimbus/mobile-default-browser-cta-copy-test/summary \
+    --branch treatment
+```
+
+or
+
+```sh
+nimbus-cli --app fenix --channel developer \
+    info \
+    https://experimenter.services.mozilla.com/nimbus/viewpoint-rolling-week-4-expansion-android
+```
+:::

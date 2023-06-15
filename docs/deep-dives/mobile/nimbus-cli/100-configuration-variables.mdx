@@ -16,9 +16,20 @@ export ADB_PATH="/Applications/Android Studio.app/platform-tools/bin/adb"
 export XCRUN_PATH="$HOME/Library/CustomXcode/bin/xcrun"
 ```
 
-## Remote Settings
+## Experimenter URLs
 
-Remote Settings is hardcoded into `nimbus-cli` for both the stage and release versions. However, just occassionally you may want to change the URLs.
+Experimenter URLs are used for accessing experiments via the `/api/v6` endpoints. They're hardcoded into `nimbus-cli` for both stage and production versions. However, just occassionally you may want to change these URLs.
+
+e.g.
+
+```sh
+export NIMBUS_API_URL=https://no-cdn.experimenter.mozilla.com
+export NIMBUS_API_STAGE_URL=https://no-cdn.stage-experimenter.mozilla.com
+```
+
+## Remote Settings URLs
+
+URLs for Remote Settings are also hardcoded into `nimbus-cli` for both the stage and release versions. Like Experimenter, you may occassionally want to change these URLs.
 
 e.g.
 
