@@ -122,17 +122,17 @@ The conditions table is a set of triggers, like messaging, that can be used on c
 
 ## Card definition
 
-| Attribute     | Type                    | Description                                                                                  | Default Value                                                  |
-|:--------------|:------------------------|:---------------------------------------------------------------------------------------------|----------------------------------------------------------------|
-| title         | Free text or TextID     | The title text displayed to the user                                                         | ""                                                             |
-| body          | Free text or TextID     | The body text displayed to the user                                                          | ""                                                             |
-| order         | Int                     | Used for sequencing cards                                                                    | 10                                                             |
-| image         | ImageID                 | The image to show for a particular card                                                      | welcome-globe                                                  |
-| link          | NimbusOnboardingLink    | An optional link. If available, it will appear on the card. If not, no link will be present. | null                                                           |
-| buttons       | NimbusOnboardingButtons | The configuartion for buttons.                                                               | A Skip button with a default action of going to the next card. |
-| prerequisites | List of JEXL keys       | The list of JEXL keys guiding whether a card can show up for certain users.                  | []                                                             |
-| disqualifiers | List of JEXL keys       | The list of JEXL keys guiding a card should not show up for certain users.                   | []                                                             |
-| type          | TypeID                  | The type of onboarding the user is seeing.                                                   | fresh-install                                                  |
+| Attribute     | Type                    | Description                                                                                                                           | Default Value                                                  |
+|:--------------|:------------------------|:--------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
+| title         | Free text or TextID     | The title text displayed to the user                                                                                                  | ""                                                             |
+| body          | Free text or TextID     | The body text displayed to the user                                                                                                   | ""                                                             |
+| order         | Int                     | Used for sequencing cards                                                                                                             | 10                                                             |
+| image         | ImageID                 | The image to show for a particular card                                                                                               | welcome-globe                                                  |
+| link          | NimbusOnboardingLink    | An optional link. If available, it will appear on the card. If not, no link will be present.                                          | null                                                           |
+| buttons       | NimbusOnboardingButtons | The configuartion for buttons.                                                                                                        | A Skip button with a default action of going to the next card. |
+| prerequisites | List of JEXL keys       | The list of JEXL keys guiding whether a card can show up for certain users. All prerequisites must be true for a card to show.        | []                                                             |
+| disqualifiers | List of JEXL keys       | The list of JEXL keys guiding a card should not show up for certain users. If any disqualifiers are met, then the card will not show. | []                                                             |
+| type          | TypeID                  | The type of onboarding the user is seeing.                                                                                            | fresh-install                                                  |
 
 ### Default cards
 By default, the app is bundled with a collection of pre-defined cards which will be used if no other configuration is provided for the cards. See the [appendix](#default-welcome-card) for an overview of the default cards or the [code](https://github.com/mozilla-mobile/firefox-ios/blob/main/nimbus-features/onboardingFrameworkFeature.yaml) the most up-to-date configuration.
