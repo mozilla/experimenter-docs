@@ -155,6 +155,16 @@ By default, the app is bundled with a collection of pre-defined cards which will
 | title  | Free text or StringID | The title of the button          | "Skip"    |
 | action | OnboardingActions     | The action the button will take. | next-card |
 
+##### OnboardingActions
+| Action                     | Description                                                                         |
+|:---------------------------|:------------------------------------------------------------------------------------|
+| next-card                  | Will take the user to the next card                                                 |
+| sync-sign-in               | Will take the user to the sync sign in flow                                         |
+| request-notifications      | Will request to allow notifications from the user                                   |
+| set-default-browser        | Will send the user to settings to set Firefox as their default browser              |
+| open-default-browser-popup | Will open up a popup with instructions for setting Firefox as their default browser |
+| read-privacy-policy        | Will open a webview where the user can read the privacy policy                      |
+
 ## Dismissable
 This is a property for the whole onboarding, and controls whether there is an `x` at the top of the screen or not. This is a simple boolean value. ex:
 
