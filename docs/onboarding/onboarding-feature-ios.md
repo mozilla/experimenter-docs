@@ -30,7 +30,7 @@ It is also a living document:
 
 The onboarding feature is built on top of Nimbus, Mozilla's experimentation platform. Nimbus allows you to send bits of configuration to application features from Experimenter, the web-application staff use to launch and manage experiments and rollouts.
 
-Using Experimenter in the general case is documented elsewhere, so this document is specifically concerned with configuring the onboarding feature. [Example experiment](https://experimenter.services.mozilla.com/nimbus/lifestyles-images-onboarding-experiment/summary)
+Using Experimenter in the general case is documented elsewhere, so this document is specifically concerned with configuring the onboarding feature.
 
 # References
 For the most up-to-date configurations, the main code base will always be the best place to check.
@@ -203,46 +203,52 @@ Free text may also be used instead of a string resource.
 ## Default cards overview
 
 ### Default Welcome Card
-| Attribute     | Value                                                 |
-|---------------|-------------------------------------------------------|
-| type          | fresh-install                                         |
-| title         | Onboarding/Onboarding.Welcome.Title.v114              |
-| body          | Onboarding/Onboarding.Welcome.Description.v114        |
-| link          | title: Onboarding/Onboarding.Welcome.Link.Action.v114 |
-|               | url: "https://www.mozilla.org/privacy/firefox/"       |
-| image         | welcome-globe                                         |
-| ordering      | 10                                                    |
-| buttons       |                                                       |
-| - primary     | title: Onboarding/Onboarding.Welcome.Action.v114      |
-|               | action: next-card                                     |
-| prerequisites | ALWAYS                                                |
+| Attribute     | Value                                          |
+|---------------|------------------------------------------------|
+| type          | fresh-install                                  |
+| title         | Onboarding/Onboarding.Welcome.Title.v114       |
+| body          | Onboarding/Onboarding.Welcome.Description.v114 |
+| link          |                                                |
+| - title       | Onboarding/Onboarding.Welcome.Link.Action.v114 |
+| - url         | "https://www.mozilla.org/privacy/firefox/"     |
+| image         | welcome-globe                                  |
+| ordering      | 10                                             |
+| buttons       |                                                |
+| - primary     |                                                |
+| -- title      | Onboarding/Onboarding.Welcome.Action.v114      |
+| -- action     | next-card                                      |
+| prerequisites | ALWAYS                                         |
 
 ### Default Sync card
-| Attribute     | Value                                                |
-|---------------|------------------------------------------------------|
-| type          | fresh-install                                        |
-| title         | Onboarding/Onboarding.Sync.Title.v114                |
-| body          | Onboarding/Onboarding.Sync.Description.v114          |
-| image         | sync-devices                                         |
-| ordering      | 20                                                   |
-| buttons       |                                                      |
-| - primary     | title: Onboarding/Onboarding.Sync.SignIn.Action.v114 |
-|               | action: sync-sign-in                                 |
-| - secondary   | title: Onboarding/Onboarding.Sync.Skip.Action.v114   |
-|               | action: next-card                                    |
-| prerequisites | ALWAYS                                               |
+| Attribute     | Value                                         |
+|---------------|-----------------------------------------------|
+| type          | fresh-install                                 |
+| title         | Onboarding/Onboarding.Sync.Title.v114         |
+| body          | Onboarding/Onboarding.Sync.Description.v114   |
+| image         | sync-devices                                  |
+| ordering      | 20                                            |
+| buttons       |                                               |
+| - primary     |                                               |
+| -- title      | Onboarding/Onboarding.Sync.SignIn.Action.v114 |
+| -- action     | sync-sign-in                                  |
+| - secondary   |                                               |
+| -- title      | Onboarding/Onboarding.Sync.Skip.Action.v114   |
+| -- action     | next-card                                     |
+| prerequisites | ALWAYS                                        |
 
 ### Default Notification card
-| Attribute     | Value                                                                     |
-|---------------|---------------------------------------------------------------------------|
-| type          | fresh-install                                                             |
-| title         | Onboarding/Onboarding.Notification.Title.v114                             |
-| body          | Onboarding/Onboarding.Notification.Description.v114                       |
-| image         | notifications                                                             |
-| ordering      | 30                                                                        |
-| buttons       |                                                                           |
-| - primary     | title: Onboarding/Onboarding.Notification.TurnOnNotifications.Action.v114 |
-|               | action: request-notifications                                             |
-| - secondary   | title: Onboarding/Onboarding.Notification.Skip.Action.v115                |
-|               | action: next-card                                                         |
-| prerequisites | ALWAYS                                                                    |
+| Attribute     | Value                                                              |
+|---------------|--------------------------------------------------------------------|
+| type          | fresh-install                                                      |
+| title         | Onboarding/Onboarding.Notification.Title.v114                      |
+| body          | Onboarding/Onboarding.Notification.Description.v114                |
+| image         | notifications                                                      |
+| ordering      | 30                                                                 |
+| buttons       |                                                                    |
+| - primary     |                                                                    |
+| -- title      | Onboarding/Onboarding.Notification.TurnOnNotifications.Action.v114 |
+| -- action     | request-notifications                                              |
+| - secondary   |                                                                    |
+| -- title      | Onboarding/Onboarding.Notification.Skip.Action.v115                |
+| -- action     | next-card                                                          |
+| prerequisites | ALWAYS                                                             |
