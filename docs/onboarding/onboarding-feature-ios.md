@@ -35,10 +35,9 @@ Using Experimenter in the general case is documented elsewhere, so this document
 # References
 For the most up-to-date configurations, the main code base will always be the best place to check.
 - [Nimbus manifest](https://github.com/mozilla-mobile/firefox-ios/blob/main/nimbus.fml.yaml)
-- [onboarding feature manifest](https://github.com/mozilla-mobile/firefox-ios/blob/main/nimbus-features/onboardingFrameworkFeature.yaml)
+- [Onboarding feature manifest](https://github.com/mozilla-mobile/firefox-ios/blob/main/nimbus-features/onboardingFrameworkFeature.yaml)
 
-⚠️ The onboarding feature is a **first run experiment**.
-- [for information on first run experiment](https://experimenter.info/mobile-first-run-experiments)
+⚠️ The onboarding feature is a [first run experiment](https://experimenter.info/mobile-first-run-experiments)
 
 # Creating an experiment
 Only **values that differ** from the card's default values need to be provided to Experimenter. E.g:
@@ -111,7 +110,7 @@ The onboarding feature is split into several values:
 - dismissable
 
 ## Conditions
-The conditions table is a set of triggers, like messaging, that can be used on cards to include or exclude them from appearing. The coditions list is a json of valid JEXL expressions. These expressions can be used in the `prerequisites` or the `disqualifiers` fields in cards. Eg:
+The conditions table is a set of triggers, like messaging, that can be used on cards to include or exclude them from appearing. The conditions list is a json of valid JEXL expressions. These expressions can be used in the `prerequisites` or the `disqualifiers` fields in cards. E.g.:
 
 ```json
 "conditions": {
@@ -166,7 +165,7 @@ By default, the app is bundled with a collection of pre-defined cards which will
 | read-privacy-policy        | Will open a webview where the user can read the privacy policy                      |
 
 ## Dismissable
-This is a property for the whole onboarding, and controls whether there is an `x` at the top of the screen or not. This is a simple boolean value. ex:
+This is a property for the whole onboarding, and controls whether there is an `x` at the top of the screen or not. This is a simple boolean value:
 
 ```json
 {
