@@ -20,11 +20,11 @@ export XCRUN_PATH="$HOME/Library/CustomXcode/bin/xcrun"
 
 Experimenter URLs are used for accessing experiments via the `/api/v6` endpoints. They're hardcoded into `nimbus-cli` for both stage and production versions. However, just occassionally you may want to change these URLs.
 
-e.g.
+e.g. for a local development version of experimenter with `localhost`:
 
 ```sh
-export NIMBUS_API_URL=https://no-cdn.experimenter.mozilla.com
-export NIMBUS_API_STAGE_URL=https://no-cdn.stage-experimenter.mozilla.com
+export NIMBUS_API_URL=https://localhost:8080
+export NIMBUS_API_STAGE_URL=https://localhost:3030
 ```
 
 ## Remote Settings URLs
@@ -39,6 +39,8 @@ export NIMBUS_STAGE_URL=https://no-cdn.stage-remote-settings.mozilla.com
 ```
 
 This has been helpful in the past when trying to debug a problem with CDN, or Remote Settings has moved.
+
+Note: while the Remote Settings represents what the live apps see, there is approximately 1 hour latency between changing an experiment on Experimenter and it being synced to Remote Settings.
 
 ## Manifest Cache Directory
 

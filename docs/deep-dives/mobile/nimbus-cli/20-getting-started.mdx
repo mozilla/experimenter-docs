@@ -54,7 +54,7 @@ You can see the preview collection, by adding a `preview` parameter.
 
 By default, this lists what the apps can see: this is coming straight from Remote Settings.
 
-If you want to see what is available via the API, then use `--use-api`. It should be noted that this is all experiments, including completed ones, so is likely fairly large, and slow.
+If you want to see what is available via the API, then use `--use-api`. It should be noted that this is shows both live and completed experiments, so is likely fairly large, and slow. It will not show `preview` experiments.
 
 ```sh
 nimbus-cli --app fenix --channel developer list preview
@@ -67,7 +67,9 @@ You can also use:
  - `stage` to specify the staging server
  - `stage/preview` to see the staging server and the preview collection of the staging server.
 
+:::tip
 More information about the experiment can be found with the [`info`](#info) command.
+:::
 
 ## `enroll`
 
@@ -103,7 +105,9 @@ You can use the `--preserve-targeting` and `--preserve-bucketing` options to pre
 
 Enrolled experiments should persist across restarts of the app, and fetching of new experiments is disabled.
 
+:::tip
 Occassionally, you may want to get the experiment from Remote Settings rather than Experimenter. You can do this by adding the `--use-rs` flag.
+:::
 
 ### Validating experiments
 
@@ -190,7 +194,7 @@ nimbus-cli --app fenix --channel developer info mobile-default-browser-cta-copy-
 
 Experiment identifiers, or slugs, are used to identify experiments and rollouts throughout Nimbus and `nimbus-cli`.
 
-You can copy the slug to the clipboard in Experimenter by pressing the <img src="https://raw.githubusercontent.com/mozilla/experimenter/main/experimenter/experimenter/nimbus-ui/src/components/CopyToClipboardButton/copy.svg" width="20"/> icon next to the experiment slug at the top of the summary page:
+You can copy the slug to the clipboard in Experimenter by pressing the <img src="/img/nimbus-cli/copy.svg" width="20"/> icon next to the experiment slug at the top of the summary page:
 
 <img title="Clicking on the copy to clipboard button shows a Copied to Clipboard tooltip" src="/img/nimbus-cli/copy-to-clipboard-copied.png" width="40%"/>
 

@@ -14,11 +14,29 @@ nimbus-cli --app fenix --channel developer fetch --output archived.json android-
 
 You can use `stage`/`production` to specify a Nimbus API instance.
 
+This command fetches the `android-research-surface-validation` experiment from production and `crolloutmobile` from stage, and puts it in `archived.json`.
+
 ```sh
 nimbus-cli --app fenix --channel developer fetch --output archived.json android-research-surface-validation stage/crolloutmobile
 ```
 
 This might be useful for attaching to bug reports.
+
+:::tip
+If `--output` is missing, the file is printed to the console.
+
+You can get a view of the experiment JSON from an experimenter URL like this:
+
+```sh
+nimbus-cli --app fenix --channel developer fetch https://experimenter.services.mozilla.com/nimbus/release-android-onboarding-redesign
+```
+
+This may be helpful when `info` isn't enough.
+
+```sh
+nimbus-cli --app fenix --channel developer info https://experimenter.services.mozilla.com/nimbus/release-android-onboarding-redesign
+```
+:::
 
 ## `fetch-list`
 
@@ -32,7 +50,9 @@ nimbus-cli --app fenix --channel developer \
 
 By default, this uses Remote Settings: you can see the contents of that the apps are currently seeing.
 
-You can get all experiments from the API (past and pesent!) using the `--use-api` flag.
+This is quick— it shows only live experiments, but changes in the experiments in Experimenter aren't reflected in Remote Settings for approximately an hour.
+
+You can get all experiments from the API— both live and completed— using the `--use-api` flag.
 
 ## `list`
 
