@@ -1,0 +1,16 @@
+---
+id: nimbus-cli-changelog
+title: What's New
+slug: /nimbus-cli/whats-new
+---
+
+### `0.3.0`
+
+- Now using the Experimenter API to get experiments, instead of Remote Settings. This saves time waiting for the sync between Experimenter and RS.
+- Split `fetch` into a [`fetch`](/nimbus-cli/working-with-files#fetch) for named recipes and [`fetch-list`](/nimbus-cli/working-with-files#fetch-list) for getting a list; this changes the parameters for `fetch`.
+- [Passthrough parameters](/nimbus-cli/opening-and-resetting#passthrough-parameters) for finer control of the app launch process. Thanks Ben, for the suggestion.
+- A new [`features` command](/nimbus-cli/working-with-features#features) to get the feature configuration out of the experiment. You can also [merge with the defaults](/nimbus-cli/fml#features) from the manifest.
+- A new [`defaults` command](/nimbus-cli/fml#defaults) to get the defaults from the manifest.
+- A new [`info` command](/nimbus-cli/getting-started#info) to get information about the experiment. This can be good for investigations.
+- Experiment slugs can be derived from Experimenter URLs.
+- Where you can read and write JSON, you can now read and write YAML.
