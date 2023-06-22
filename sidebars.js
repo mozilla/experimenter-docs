@@ -130,6 +130,7 @@ module.exports = {
                   "label": "Onboarding Experiments on Firefox for Mobile",
                   items: [
                     "onboarding/onboarding-feature-android",
+                    "onboarding/onboarding-feature-ios",
                   ]
                 }
               ],
