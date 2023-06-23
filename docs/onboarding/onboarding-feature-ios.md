@@ -1,7 +1,7 @@
 ---
 id: onboarding-feature-ios
 title: Onboarding Feature for iOS
-slug: /onboarding
+slug: /onboarding-feature-ios
 ---
 
 # Introduction

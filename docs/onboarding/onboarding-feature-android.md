@@ -1,7 +1,7 @@
 ---
 id: onboarding-feature-android
 title: Onboarding Feature for Android
-slug: /onboarding
+slug: /onboarding-feature-android
 ---
 
 # Introduction
