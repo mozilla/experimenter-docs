@@ -203,6 +203,13 @@ description = "Number of cows clicked"
 # user experience as a result of the experiment; it is a subset of enrollments.
 # We may default to an exposures basis in the future.
 exposure_basis = ["exposures", "enrollments"]
+
+# Metrics can depend on other metrics that need to be referenced.
+# When a metric depends on upstream metrics, select_expression and
+# data_source are optional. Usually, upstream metrics get used when computing statistics.
+# At the moment `select_expression` takes precedence over `depends_on` in cases
+# where both are defined.
+depends_on = ["moos", "clicks"]
 ```
 
 You should also add some sections to describe how your new metrics should be summarized for reporting.
@@ -229,6 +236,11 @@ This looks like:
 
 # You can also change the default width of the confidence interval.
 ci_width = 0.95
+
+[metrics.ever_clicked_cows.statistics.population_ratio]
+# certain statistics use results from metrics that are specified as dependencies in depends_on
+numerator = "moos"
+denominator = "clicks"
 ```
 
 
