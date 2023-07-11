@@ -35,7 +35,7 @@ The client did not match the criteria set forth by the targeting string.
 
 #### Opt Out
 
-The client has opted out of experimentation.
+The client has opted out of experimentation at the application level.
 
 #### EnrollmentsPaused
 
@@ -54,10 +54,6 @@ This state and its reasons are for enrollments that were previously in one of th
 #### Not Targeted
 
 _See [NotEnrolled::NotTargeted](#not-targeted)_
-
-#### Not Selected _(NEW 7/7/2023)_
-
-_See [NotEnrolled::NotSelected](#not-selected)_
 
 #### Opt Out
 
@@ -114,55 +110,6 @@ stateDiagram-v2
     on_experiment_ended --> was_enrolled: on experiment ended
 
     was_enrolled --> [*]: on garbage\ncollect (1yr)
-
-    state if_enrollment_not_paused <<choice>>
-    not_enrolled --> if_enrollment_not_paused
-    error --> if_enrollment_not_paused
-    if_enrollment_not_paused --> enrolled: if enrollment is not paused
-
-    state on_error <<join>>
-    not_enrolled --> on_error
-    enrolled --> on_error
-    on_error --> error: on error
-```
-
-### Rollouts
-
-Rollouts and experiments have _almost_ the same state machine, but rollouts have additional functionality surrounding disqualified states.
-An enrollment for a rollout can end up in the `NotSelected` and `NotTargeted` disqualified reasons as the result of bucketing or targeting changing.
-Unlike experiments, where the parent disqualified state acts as a temporary end point for that enrollment, these two disqualified states can still result in re-enrollment if bucketing were to be increased again after being decreased, or if targeting once again matches the targeting criteria after previously falling off.
-
-```mermaid
-stateDiagram-v2
-    direction LR
-
-    [*] --> enrolled
-    [*] --> not_enrolled
-
-    enrolled: Enrolled
-    not_enrolled: Not Enrolled
-    was_enrolled: Was Enrolled
-    error: Error
-
-    state Disqualified {
-        dq_not_targeted: Not Targeted
-        dq_not_selected: Not Selected
-        dq_other: ...
-    }
-
-    state if_re_qualified <<choice>>
-    dq_not_selected --> if_re_qualified
-    dq_not_targeted --> if_re_qualified
-    if_re_qualified --> enrolled: if the client once again meets\nbucketing/targeting criteria
-
-    state on_experiment_ended <<join>>
-    enrolled --> on_experiment_ended
-    Disqualified --> on_experiment_ended
-    on_experiment_ended --> was_enrolled: on experiment ended
-
-    was_enrolled --> [*]: on garbage\ncollect (1yr)
-
-    enrolled --> Disqualified
 
     state if_enrollment_not_paused <<choice>>
     not_enrolled --> if_enrollment_not_paused
