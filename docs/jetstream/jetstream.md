@@ -1,6 +1,7 @@
 ---
 id: jetstream
 title: Jetstream overview
+slug: /jetstream/jetstream
 ---
 
 **[Jetstream]** is an analysis framework for experiments.
