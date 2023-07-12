@@ -111,13 +111,9 @@ stateDiagram-v2
 
     was_enrolled --> [*]: on garbage\ncollect (1yr)
 
-    state if_enrollment_not_paused <<choice>>
-    not_enrolled --> if_enrollment_not_paused
-    error --> if_enrollment_not_paused
-    if_enrollment_not_paused --> enrolled: if enrollment is not paused
+    not_enrolled --> enrolled: if enrollment is not paused
+    error --> enrolled: if enrollment is not paused
 
-    state on_error <<join>>
-    not_enrolled --> on_error
-    enrolled --> on_error
-    on_error --> error: on error
+    not_enrolled --> error: on error
+    enrolled --> error: on error
 ```
