@@ -43,6 +43,8 @@ However, there is one rule:
 > *For a given user each feature can only be involved in one experiment at a time*.
 >
 > If we see user change behavior after being exposed to an experimental treatment we need to be able to attribute it to that treatment, not another from a different experiment.
+> 
+> There is one exception to this rule, which we will discuss [later](#the-exception-to-the-rule)
 
 One easy way to start thinking about features, would be to identify user-visible surfaces of the app: the `new-tab` screen, the `app-menu`, the `context-menu`, the `onboarding`.
 
@@ -391,9 +393,10 @@ The feature itself may be configurable, but we don't have to limit feature confi
 
 We can imagine a world where we have multiple configurable features, say: an `app-menu`, `onboarding` and `newtab`. On each of these features we have a messaging surface, and we want to run an experiment to find which is the best surface to show the message about a behavior we wish to maximize: setting the browser to be the device default.
 
-Q Can we configure an experiment to test each of the message on each of these messaging surfaces?
-
-A This would be done with an experiment that has three branches, and each branch configures exactly one feature. The application code doesn't have to know about the linkage between the features in this experiment, just get its configuration from Nimbus.
+> **Q** Can we configure an experiment to test each of the message on each of these messaging surfaces?
+>
+> **A** This would be done with an experiment that has three branches, and each branch configures exactly one feature. The application code doesn't have to know about the linkage between the features in this experiment, just get its configuration from Nimbus.
+> 
 
 If a user is enrolled in that experiment, no other experiment is allowed to use the features involved.
 
@@ -406,10 +409,19 @@ Both teams require the `onboarding` feature. This allows each team to run their 
 > ⛅️🔬🔭  Concept
 >
 > While for any given user a feature may be involved in only one experiment, one experiment should be able to configure multiple features.
+>
 
 Because both product teams' experiments require the `onboarding` experiment, no user will be involved in _both_ experiments.
 
 For such an experiment, an experiment would have two branches, each of which configure two features.
+
+### The exception to the rule...
+
+>
+> "If a user is enrolled in that experiment, no other experiment is allowed to use the features involved." - this document, above.
+> 
+
+As always, there will be an exception to the rule. In the case of feature enrollment, there is a way to allow **certain features** to be co-enrolled. [This document](/fml/coenrolling-features) will give you more information about defining co-enrolling features and which features are currently instrumented to be co-enrollable.
 
 ## 🔧⚙️ Working with configurable features
 

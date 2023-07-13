@@ -329,14 +329,6 @@ data class SpotlightSearch(private val variables: Variables? = null) {
 
 Variables are evaluated lazily.
 
-### Features can support co-enrollment
-
-:::caution
-Co-enrollment is only available for messaging at this time.
-:::
-
-A feature which allows co-enrollment allows a client to be enrolled in any number of experiments/rollouts for that feature. See [Co-enrolling Features](/messaging/coenrolling-features) for more information.
-
 ### Enumerations
 
 Using the same `spotlight-search` feature from above. We notice that the we can include an icon in the search results.
@@ -735,3 +727,8 @@ import:
 The `value` used by the imported code will come from the importing code.
 
 [More](/fml-imports-and-includes#the-import-list)
+
+
+### Feature co-enrollment
+
+A feature which allows co-enrollment allows a client to be enrolled in any number of experiments/rollouts for that feature. See [Co-enrolling Features](/fml/coenrolling-features) for more information.
