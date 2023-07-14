@@ -47,6 +47,7 @@ Access Passcode: 9Zx9Lg&M
 - Changed `is_default_browser` to `is_default_browser_string`.
 - Renamed Glean messages to match the implementation.
 - Added notification surface and associated trigger expressions.
+- v117 - added `experiment` property to message, removed `message-under-experiment`.
 
 ## Scene setting
 
@@ -169,15 +170,18 @@ These are app specific: the application provides the surface to draw the message
 
 Surface | Description | Versions |
 ----------|------|-------------|
-`homescreen`    | On the new tab/homescreen                                             | |
-`notification`  | A system notification. Permission is required for Android SDK > 13    | v111 |
+`homescreen`   | On the new tab/homescreen                                             | |
+`notification` | A system notification. Permission is required for Android SDK > 13    | v111 |
+`survey`       | A screen that is shown at startup                                     | |
 
 </TabItem>
 <TabItem value="fxios">
 
 Surface | Description | Versions |
 ----------|------|-------------|
-`homescreen-banner`| On the new tab/homescreen      | |
+`new-tab-card`| On the new tab/homescreen         | |
+`notification`| A system notification.            | |
+`survey`      | A screen that is shown at startup | |
 
 While there is only one surface, the surface attribute can be omitted.
 
@@ -309,22 +313,20 @@ In this manner the locale can be only one value at a time, and only one version 
 
 So far, we have talked about using Experimenter to push out messages as single branch experiments.
 
-When running experiments, we'll need to configure two or more branches. By convention, each branch will have the same message keys (in the example below `my-first-message`.
+When running experiments, we'll need to configure two or more branches. By convention, each branch will have the same message keys— in the example below: `my-first-message`.
 
-We should also tell the system that a particular message is under experiment.
+We should also tell the system that the message is under experiment. This is done by annotating each message with the experiment it came from. For convenience, the system replaces the string `{experiment}` with the experiment slug at enrollment, so annotating the message with the experiment is done like so:
 
 ```json
 {
     "messages": {
-        "my-first-message": { … }
+        "my-first-message": {
+            "experiment": "{experiment}"
+            …
+        }
     },
-    "message-under-experiment": "my-first-message"
 }
 ```
-
-It is important that the message key matches the `message-under-experiment` value: when message with this key is displayed to the user, Nimbus exposure events are recorded.
-
-N.B. It's a feature of Nimbus to ensure that any one user will only be exposed to one experimental message at a time.
 
 ### Experimenting with localized messages
 
@@ -339,6 +341,7 @@ It is important that:
 {
     "messages": {
         "my-l10n-message-en": {
+            "experiment": "{experiment}",
             …
             "surface": "notification",
             "trigger": [
@@ -348,6 +351,7 @@ It is important that:
             …
         },
         "my-l10n-message-de": {
+            "experiment": "{experiment}",
             …
             "surface": "notification",
             "trigger": [
@@ -357,6 +361,7 @@ It is important that:
             …
         },
         "my-l10n-message-es": {
+            "experiment": "{experiment}",
             …
             "surface": "notification",
             "trigger": [
@@ -366,6 +371,7 @@ It is important that:
             …
         },
         "my-l10n-message-fr": {
+            "experiment": "{experiment}",
             …
             "surface": "notification",
             "trigger": [
@@ -375,18 +381,14 @@ It is important that:
             …
         }
     }
-
-    "message-under-experiment": "my-l10n-message-"
 }
 ```
-
-If the `message-under-experiment` property ends in a `-`, then any message with a message key which is prefixed by that value is considered under experiment.
 
 Since these triggers are mutually exclusive, the user will only ever be exposed to one message under experiment.
 
 ### Control messages
 
-For most messages, we'll need to specify a control message.
+For most messages in experiments, we'll need to specify a control message.
 
 The control is specified in a similar way to others:
 
@@ -396,13 +398,12 @@ The control is specified in a similar way to others:
         "my-first-message": {
             "trigger": [ … ],
             "surface": "notification",
+            "experiment": "{experiment}",
             "is-control": true,
         }
     }
 }
 ```
-
-Because `is-control` set to `true`, we don't need to specify a value for `message-under-experiment`. The system can deduce that the message is under experiment.
 
 **Important**: The control message must be _eligible_ whenever the treatment message would have been. This means that:
 - the `trigger` value of the control must match the `trigger` value of the treatment message.
@@ -415,6 +416,7 @@ For localized messages, we will need to provide a set of contol messages that ma
 {
     "messages": {
         "my-l10n-message-en": {
+            "experiment": "{experiment}",
             "is-control": true,
             "trigger": [
                 …
@@ -422,6 +424,7 @@ For localized messages, we will need to provide a set of contol messages that ma
             ]
         },
         "my-l10n-message-de": {
+            "experiment": "{experiment}",
             "is-control": true,
             "trigger": [
                 …
@@ -429,6 +432,7 @@ For localized messages, we will need to provide a set of contol messages that ma
             ]
         },
         "my-l10n-message-es": {
+            "experiment": "{experiment}",
             "is-control": true,
             "trigger": [
                 …
@@ -437,6 +441,7 @@ For localized messages, we will need to provide a set of contol messages that ma
             …
         },
         "my-l10n-message-fr": {
+            "experiment": "{experiment}",
             "is-control": true,
             "trigger": [
                 …
@@ -447,6 +452,8 @@ For localized messages, we will need to provide a set of contol messages that ma
 }
 ```
 
+Control messages (i.e. messages with `is-control` set to `true`) that do not have an `experiment` set to `{experiment}` will be reported by the client as malformed, since we can't ascertain which experiment they came from.
+
 ### Displaying the control message
 
 The control message is the placebo, so doesn't make any sense to display to the user, so when a control message is selected for display, what should a message surface actually display?
@@ -456,6 +463,7 @@ The control message is the placebo, so doesn't make any sense to display to the 
     "messages": {
         "my-first-message": {
             "trigger": [ … ],
+            "experiment": "{experiment}",
             "is-control": true,
         }
     },
@@ -471,6 +479,41 @@ The `on-control` property controls what happens in this case:
 
 By default, `on-control` is set to `show-next-message`.
 
+### Advanced uses of the `{experiment}` subsitution
+
+The literal string `{experiment}` can appear anywhere in the feature configuration, including the message key allows for some deduplication. For example, a regularly repeating message could be set up with message keys derived from the experiment slug.
+
+```json
+{
+    "messages": {
+        "{experiment}-en": {
+            "triggers": [
+                "USER_EN_SPEAKER"
+            ],
+            …
+        },
+        "{experiment}-fr": {
+            "triggers": [
+                "USER_FR_SPEAKER"
+            ],
+            …
+        },
+        "{experiment}-es": {
+            "triggers": [
+                "USER_ES_SPEAKER"
+            ],
+            …
+        },
+        "{experiment}-de": {
+            "triggers": [
+                "USER_DE_SPEAKER"
+            ],
+            …
+        }
+    }
+}
+```
+
 ## Events emitted
 
 ### Nimbus Events
@@ -481,7 +524,7 @@ Enrollment is a decision taken at start-up about whether the user is eligible fo
 
 Exposure evnts happen when the user is enrolled in the experiment, and the subsequently exposed to the treatment (or the control).
 
-In the case of messaging, exposure events are emitted when the user is enrolled, and the message in one of the message is shown. For other messages that aren't from an experiment, no exposure events are emitted.
+In the case of messaging, exposure events are emitted when a message from one of the branches of an enrolled experiment is shown. For other messages that aren't from an experiment, no exposure events are emitted.
 
 ### Message Events
 
