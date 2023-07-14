@@ -3,6 +3,7 @@ id: overview
 title: Workflow
 sidebar_label: Overview
 slug: overview
+sidebar_position: 1
 ---
 
 ## Experimentation Workflow 

@@ -9,7 +9,7 @@ Nimbus is a full-featured experimentation platform that provides configuration, 
 
 ## Experimenter Console
 - Simple experiment configuration UI
-- [Pre-launch testing support](/workflow/preview)
+- [Pre-launch testing support](/previewing-experiments)
 - Multifeature experiments
 - [Rollouts](/deep-dives/experimenter/rollouts.mdx)
 - Simple targeting
