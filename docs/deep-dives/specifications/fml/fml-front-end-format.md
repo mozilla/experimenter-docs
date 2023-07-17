@@ -1,7 +1,7 @@
 ---
 id: fml-front-end-format
 title: Feature Manifest Language Front-end Format As YAML
-slug: /fml-front-end-format
+slug: /fml/fml-front-end-format
 ---
 
 - Status: accepted

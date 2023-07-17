@@ -1,7 +1,7 @@
 ---
 id: fml-paths
 title: Using paths in FML
-slug: /fml-paths
+slug: /fml/fml-paths
 ---
 
 # Paths and URLs
