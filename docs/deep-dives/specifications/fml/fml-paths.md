@@ -2,6 +2,7 @@
 id: fml-paths
 title: Using paths in FML
 slug: /fml/fml-paths
+sidebar_position: 2
 ---
 
 # Paths and URLs

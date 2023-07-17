@@ -2,6 +2,7 @@
 id: fml-front-end-format
 title: Feature Manifest Language Front-end Format As YAML
 slug: /fml/fml-front-end-format
+sidebar_position: 5
 ---
 
 - Status: accepted
