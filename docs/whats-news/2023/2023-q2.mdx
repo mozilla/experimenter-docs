@@ -1,0 +1,53 @@
+---
+id: 2023-Q2
+title: What's New in Nimbus - Q2 2023
+slug: /whats-news/2023-Q2
+---
+
+## The `nimbus-cli`
+
+🔥 The `nimbus-cli` was conceived at the team's Q2 workweek. It is designed to help QA engineers test mobile first run experiments, but has become a tool useful for interacting, inspecting and testing all experiments running on the supported mobile apps, and any feature that those apps configure via Nimbus.
+
+Installation is:
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/mozilla/application-services/main/install-nimbus-cli.sh | bash
+```
+
+Further details are at [https://experimenter.info/nimbus-cli](/nimbus-cli).
+
+## Jetstream
+
+### Computing the date for expected results
+
+🔧 We are now computing the date that the Jetstream results will be available for a given experiment. This new value is based on enrollment end date (or proposed enrollment end date if enrollment is not yet ended).
+
+<img style={{border:"1px solid grey"}} title="expected-results" src="/img/whats-news/expected-results.png"/>
+
+## Experimenter
+
+### Release date for First Run experiments
+
+Our approach for calculating dates and duration for experiments did not previously take the release trains into account. For example, a first run experiment targeting Firefox desktop v123 might be launched (status=Live) on 1/2/2023. However, v123 might not be released until 1/15/2023. The start_date for this experiment will therefore be 1/2/2023, but users will not start seeing it until 1/15 when the version is released. 
+
+We added another date, "proposed release date" or "first run release date", for first-run mobile experiments which will represent the [release date of the browser version](http://whattrainisitnow.com/) that is being targeted by the user. 
+
+This date gives us the ability to:
+* 📈 Correctly compute enrollment and proposed end dates based on when users will actually start getting the release version
+* ⏰ Send reminder emails to experiment owners at the right time so that they can end enrollment/end experiments
+
+This new field shows up on the Audience page of the experiment, and is also viewable on the Summary page and on the timeline:
+
+<img style={{border:"1px solid grey"}} title="release_date_audience" src="/img/whats-news/release_date_audience.png"/>
+<p align="center"> <em>"First Run Release Date" field on the Audience page</em> </p>
+<br/>
+<img style={{border:"1px solid grey"}} title="release_date_timeline" src="/img/whats-news/release_date_timeline.png"/>
+<p align="center"> <em>"Release Date" field on the Summary page timeline</em> </p>
+<br/>
+<img style={{border:"1px solid grey"}} title="release_date_summary" src="/img/whats-news/release_date_summary.png"/>
+<p align="center"> <em>"Release Date" field in the Audience section of the Summary page</em> </p>
+
+## Desktop Rollout re-enrollment and resizing
+
+ * 📈 You can now re-enroll in rollouts that have increased in size ([Bug 1833248](https://bugzilla.mozilla.org/show_bug.cgi?id=1833248))
+ * 💪 When force-enrolling you can add `&apply_targeting` to the URL to check the targeting instead of skipping it ([Bug 1736587](https://bugzilla.mozilla.org/show_bug.cgi?id=1736587))
