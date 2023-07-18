@@ -1,0 +1,22 @@
+---
+id: rollouts-bucketing-warning
+title: Rollout bucketing warning
+slug: /rollouts/rollouts-bucketing-warning
+---
+
+:::tip
+See the [Rollout FAQ](/deep-dives/experimenter/rollouts) for general rollout information
+:::
+
+### Question
+What does this warning mean?
+
+<p/>
+   <img title="Duplicate bucket warning" src="/img/faq/dupe-rollout-warning.png" align="center"/>
+
+### Answer
+If you are using the [multiple-rollout approach](/deep-dives/experimenter/rollouts#without-using-live-editability), this warning can be safely ignored because you are explicitly creating more than one rollout in the same bucket. 
+
+However, if you are using [live editability for rollouts](/deep-dives/experimenter/rollouts#live-editability), this warning tells you that there is a rollout that is **already live** that has the same application, channel, feature, and advanced targeting as the rollout that you are creating. This means that there will be collision, and your rollout will not function as-is. Users are already enrolled in the live rollout with the same criteria, and they will not be able to enroll in your rollout.
+
+If you are encountering this and you would still like to proceed with your rollout, feel free to reach out to us in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03) on Slack  and we will be able to provide more guidance.

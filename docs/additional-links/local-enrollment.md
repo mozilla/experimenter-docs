@@ -1,4 +1,8 @@
-# Local configuration for natural enrollments
+---
+id: local-enrollment
+title: Local configuration for natural enrollments
+slug: /local-enrollment
+---
 
 ## Desktop
 Preferences to set in Firefox

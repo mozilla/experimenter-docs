@@ -1,7 +1,7 @@
 ---
 id: rollouts-and-experiments 
 title: Rollouts and Experiment Interaction 
-slug: /rollouts-and-experiments
+slug: /rollouts/rollouts-and-experiments
 ---
 
 :::tip
@@ -33,12 +33,9 @@ If they’re focused on different fields of the JSON, the behavior the clients g
 ----
 
 ### Question
-What does this warning mean?
-
-<p/>
-   <img title="Duplicate bucket warning" src="/img/faq/dupe-rollout-warning.png" align="center"/>
+I have a feature that is now on by default in v115, and I want to wait until it has saturated the user base before shutting off the rollout. Do we have a standard around how long we should keep a rollout going in a situation like this?
 
 ### Answer
-If you are using the [multiple-rollout approach](/deep-dives/experimenter/rollouts#without-using-live-editability), this warning can be safely ignored because you are explicitly creating more than one rollout in the same bucket. However, if you are using [live editability for rollouts](/deep-dives/experimenter/rollouts#live-editability), this warning tells you that there is a rollout that is **already live** that has the same application, channel, feature, and advanced targeting as the rollout that you are creating. This means that there will be collision, and your rollout will not function as-is. Users are already enrolled in the live rollout with the same criteria, and they will not be able to enroll in your rollout.
+We typically wait 1-3 releases for the upgrade tail to catch up. You'll probably have the vast majority, so it just depends on the ramifications if people have it enabled on 114 and then lose it.
 
-If you are encountering this and you would still like to proceed with your rollout, feel free to reach out to us in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03) on Slack  and we will be able to provide more guidance.
+If it's **not** a big deal, turn off the rollout in 116 and most people will have it and the stragglers will get it when they upgrade.  If it **is** a big deal - turn off in 117 or 118 and you'll have reached a few percent more with each release.
