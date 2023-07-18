@@ -1,10 +1,8 @@
 ---
 id: desktop-pref-experiments
-title: Desktop Pref Experiments
+title: Running Pref-setting Experiments on Desktop
 slug: /desktop-pref-experiments
 ---
-
-# Running Pref-setting Experiments on Desktop
 
 As of Firefox 107, Nimbus supports experiments that set preferences on Desktop.
 Unlike Normandy, Nimbus cannot set arbitrary preferences; instead, the

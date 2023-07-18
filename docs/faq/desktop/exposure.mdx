@@ -1,0 +1,17 @@
+---
+id: exposure
+title: Exposure
+slug: /desktop/exposure
+---
+
+:::tip
+See the [deep dive on growable collections](/cookbook/fml/growable-collections#exposure-events) and [Jetstream enrollment vs. exposure](/jetstream/jetstream/#enrollment-vs-exposure) for more information
+:::
+
+### Question
+How do I decide whether I want `hasExposure` to be `true`/`false` on desktop? What's the value of these events or the cases where I might/might not want to use them?
+
+### Answer
+Exposure events are most valuable when a good proportion of enrolled users won’t see the treatment. For example, if seeing the treatment relies on a user action like opening a PDF or using picture in picture.
+
+Sometimes an experiment might have a large impact on the set of users who saw it, but relatively few users did the action to see the treatment. So the “overall” impact of the experiment might be small, but with exposure events we can see that there was indeed a large impact on users who saw the treatment.

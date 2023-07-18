@@ -1,0 +1,17 @@
+---
+id: saturation
+title: Rollout feature saturation
+slug: /rollouts/saturation
+---
+
+:::tip
+See the [Rollout FAQ](/deep-dives/experimenter/rollouts) for general rollout information
+:::
+
+### Question
+I have a feature that is now **on by default** in v115, and I want to wait until it has saturated the user base before shutting off the rollout. Do we have a standard around how long we should keep a rollout going in a situation like this?
+
+### Answer
+**Yes**, we typically wait 1-3 releases for the upgrade tail to catch up. You'll probably have the vast majority, so it just depends on the ramifications if people have it enabled on 114 and then lose it.
+
+If it's **not** a big deal, turn off the rollout in 116 and most people will have it and the stragglers will get it when they upgrade.  If it **is** a big deal - turn off in 117 or 118 and you'll have reached a few percent more with each release.
