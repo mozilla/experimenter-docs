@@ -12,9 +12,18 @@ See the [Rollout FAQ](/deep-dives/experimenter/rollouts) for general rollout inf
 Can a client be in a rollout and an experiment for the same feature at the same time?
 
 ### Answer
-**Yes**, we have separate namespaces which means you can run rollouts and experiments simultaneously and each namespace does its 
-accounting for users separately. 
-You can run a 100% rollout and a 5% experiment and both will fill up, but everyone in the experiment is also in the rollout.
+**Yes**, we have separate namespaces which means you can run rollouts and experiments for the same feature simultaneously and each namespace does its accounting for users separately. 
+You can run a 100% rollout and a 5% experiment and both will fill up, but everyone in the experiment is also in the rollout.  When a user is in both an experiment and a rollout for the same feature - they will get see the experiment.  When the experiment ends - the rollout will apply.
+
+The rules:
+- Users can be in only 1 experiment for each feature at a time.
+- Users can only be in 1 rollout for each feature at a time.
+- Users CAN be in multiple experiments + rollouts on DIFFERENT Features.
+
+After 100% of users are in a Feature Rollout - users will not enroll for new rollouts for that same feature.  New Experiments or rollouts that launch (when their feature's experiment or rollout respectively is at 100%) will see low to no enrollment.
+
+
+<img width="219" alt="image" src="https://github.com/mozilla/experimenter-docs/assets/8192232/ea351529-9b2b-446c-a671-2eb4d203dae0">
 
 ----
 
