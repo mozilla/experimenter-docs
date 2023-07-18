@@ -1,17 +1,13 @@
 ---
 id: fml-spec
-title: The Feature Manifest Language spec
+title: The Feature Manifest Language
 slug: /fml-spec
+sidebar_position: 1
 ---
-
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
-
-# The Feature Manifest Language
 
 ## About this document
 
-This document is the specification for the Feature Manifest Language for use with the Nimbus SDK. It is implemented by the `nimbus-fml` tool, which is a Rust [command line app run](/fml-cli) at build time of a mobile app.
+This document is the specification for the Feature Manifest Language for use with the Nimbus SDK. It is implemented by the `nimbus-fml` tool, which is a Rust [command line app run](/fml/fml-cli) at build time of a mobile app.
 
 ## Introduction
 
@@ -171,7 +167,7 @@ The [Feature Manifest Language is a dialect of YAML][fml-is-yaml]. The manifest 
 
 YAML was chosen, in part, because it allows comments, there are many high quality parsers, and is a superset of JSON; JSON is used extensively in the configuration of features.
 
-[fml-is-yaml]: fml-front-end-format.md
+[fml-is-yaml]: /fml/fml-front-end-format
 
 At a minimum the `nimbus.fml.yaml` file defines some data about the generated file, a list of the channels and a map of features.
 
@@ -682,11 +678,11 @@ include:
     - @mozilla/nimbus-shared/fml/messaging.yaml
 ```
 
-Notice the `@` in the second entry: by default this will be interpreted as a GitHub repository, with the file path on the `main` branch. More about [using `@` paths here](/fml-paths).
+Notice the `@` in the second entry: by default this will be interpreted as a GitHub repository, with the file path on the `main` branch. More about [using `@` paths here](/fml/fml-paths).
 
 In this example, two files are merged into this one: the `features`, `enums` and `objects` from each are added to the corresponding objects in this one.
 
-[More](/fml-imports-and-includes#the-include-list)
+[More](/fml/fml-imports-and-includes#the-include-list)
 
 ## Linking files from other components
 
@@ -726,7 +722,7 @@ import:
 
 The `value` used by the imported code will come from the importing code.
 
-[More](/fml-imports-and-includes#the-import-list)
+[More](/fml/fml-imports-and-includes#the-import-list)
 
 
 ### Feature co-enrollment

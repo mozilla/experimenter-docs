@@ -1,7 +1,8 @@
 ---
 id: fml-cli
 title: Nimbus FML command line interface
-slug: /fml-cli
+slug: /fml/fml-cli
+sidebar_position: 4
 ---
 
 # Commands
@@ -25,7 +26,7 @@ This command should be called at build time of components and the build time of 
 
 ### Adding `repo-file`s
 
-Adding [repo files](fml-paths) can be done with one or more `--repo-file` argument.
+Adding [repo files](/fml/fml-paths) can be done with one or more `--repo-file` argument.
 
 ```
 % nimbus-fml generate --language <LANGUAGE> --repo-file ./app-structure.json <INPUT> <OUTPUT>
@@ -37,7 +38,7 @@ Adding [repo files](fml-paths) can be done with one or more `--repo-file` argume
 % nimbus-fml generate --language <LANGUAGE> --channel CHANNEL --cache-dir ./build/cache-dir <INPUT> <OUTPUT>
 ```
 
-[For `include` and `import` directives in the FML](/fml-imports-and-includes), a remote file may be referenced. The cache directory is a local cache of these remote files.
+[For `include` and `import` directives in the FML](/fml/fml-imports-and-includes), a remote file may be referenced. The cache directory is a local cache of these remote files.
 
 
 ## Generating a manifest file for experimenter
