@@ -13,7 +13,6 @@ module.exports = {
         {
             indexDocs: true,
             language: "en",
-            maxSearchResults: 6,
             indexDocSidebarParentCategories: 3,
         },],
     ],
