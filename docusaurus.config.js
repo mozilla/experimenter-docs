@@ -8,6 +8,15 @@ module.exports = {
     favicon: "img/favicon.ico",
     organizationName: "mozilla",
     projectName: "experimenter-docs",
+    plugins: [
+        ["@cmfcmf/docusaurus-search-local",
+        {
+            indexDocs: true,
+            language: "en",
+            maxSearchResults: 6,
+            indexDocSidebarParentCategories: 3,
+        },],
+    ],
     themeConfig: {
         prism: {
             additionalLanguages: ["kotlin", "swift", "rust", "toml"]
@@ -50,11 +59,6 @@ module.exports = {
         },
         footer: {
             copyright: `Copyright © ${new Date().getFullYear()} Mozilla Corporation`,
-        },
-        algolia: {
-            appId: 'experimenter',
-            apiKey: "cce683dfea9772207408c2b161a22641",
-            indexName: "experimenter",
         },
     },
     presets: [
