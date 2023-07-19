@@ -1,0 +1,35 @@
+---
+id: experiment-enrollment
+title: Experiment enrollment
+slug: /enrollment/experiment-enrollment
+---
+
+### Question
+When a user receives a recipe, are they enrolled immediately or at the next session?
+
+### Answer
+
+For [first run experiments](/mobile-first-run-experiments), the recipe is bundled with the app.
+
+For existing users, the flow is: 
+> 1) Firefox starts
+>
+> 2) Existing enrollments are applied fast
+> 
+> 3) Browser continues to start
+> 
+> 4) Nimbus syncs and computes new enrollments
+> 
+> 5) New enrollment prefs are set
+
+So if your feature only reads prefs right at startup, then the pref wouldn't be applied until the following session.
+
+:::tip
+You can use `isEarlyStartup` to persist the prefs to disk so that they are available as soon as possible at startup.
+:::
+
+### Question
+If a client is unenrolled from an experiment (say they opt out of that experiment specifically) will they be able to enroll again if they meet the criteria?
+
+### Answer
+**No**. Once a user is disqualified by opting out (or through targeting, etc.) the client keeps a record of that and won't enroll back into the same experiment. 

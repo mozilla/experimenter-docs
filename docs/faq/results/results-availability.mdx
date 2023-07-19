@@ -1,0 +1,35 @@
+---
+id: results-availability
+title: Results
+slug: /results-availability
+---
+
+### Question
+Is there a straightforward way to get the results from an experiment programmatically? Like a JSON object or something that I could convert into a dataframe?
+
+### Answer
+**Yes.** Results are available in bigquery and GCS, though what you see in Experimenter has been transformed a bit.
+
+Daily, weekly and overall results are in this bucket as JSON (you may need to request permission to access this data): 
+* https://storage.cloud.google.com/mozanalysis/statistics/statistics_device_migration_new_user_onboarding_pt_2_daily.json 
+* https://console.cloud.google.com/storage/browser/_details/mozanalysis/statistics/statistics_device_migration_new_user_onboarding_pt_2_daily.json;tab=live_object?project=moz-fx-data-experiments 
+
+Example query:
+
+```
+from jetstream.bigquery_client import BigQueryClient
+PROJECT_ID = ‘moz-fx-data-experiments’
+DATASET_ID = ‘mozanalysis’
+client = BigQueryClient(PROJECT_ID, DATASET_ID)
+df = client.table_to_dataframe(‘statistics_<slug>_overall_1’)
+```
+
+If you already have `mozanalysis` set up, here's another example query:
+```
+slug = "device-migration-new-user-onboarding-pt-2".replace("-", "_")
+results_query = f"""
+SELECT *
+  FROM `moz-fx-data-experiments.mozanalysis.statistics_{slug}_overall_1`
+"""
+results_df = bq_context.run_query(results_query).to_dataframe()
+```
