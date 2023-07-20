@@ -1,0 +1,23 @@
+---
+id: mobile-faq
+title: Mobile
+slug: /faq/mobile-faq
+---
+
+### Question
+As a mobile engineer, how do I add a dot release version?
+
+### Answer
+* Add a new `Version` to the [constants.py file](https://github.com/mozilla/experimenter/blob/main/experimenter/experimenter/experiments/constants.py) in Experimenter 
+* Run `make generate_types` to generate the new version in `schema.graphql` and `globalTypes.ts`
+* [Example PR](https://github.com/mozilla/experimenter/pull/8870/files)
+
+----
+
+### Question
+For Mobile first-run experiments, can I run multiple experiments in the same version as long as they are on different surfaces? 
+
+### Answer
+**Yes**, we can run multiple mobile first-run experiments on the same version so long as they are using different surfaces (different Nimbus features, e.g. onboarding-feature or search or messaging). We could even technically run multiple on the same surface, but we don’t usually have enough users to get significance if we split like that.
+
+If multiple first run experiments are configuring the same feature, the same user will only get a maximum of one of those experiments. If they configure the different features, then the same user could get the both experiments.
