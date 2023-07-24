@@ -10,23 +10,23 @@ This page gives an overview of how Mozanalysis can be used to do experiment sizi
 
 Experiment sizing in Mozanalysis retrieves historical data from BigQuery in a way that mimics how experiment enrollment and analysis is conducted by [Jetstream]: an enrollment period is defined, during which clients that satisfy certain target conditions are recorded; following enrollment, metrics are calculated for those clients over a defined analysis period. Following collection of metrics, sample size calculation is performed that corresponds to the statistical tests to be used in analyzing the eventual experiment.
 
-<img src="/img/mozanalysis/mozanalysis-sizing.png" alt="Mozanalysis sizing workflow" className="img-lg"/>
+\!\[Mozanalysis sizing workflow](/img/mozanalysis/mozanalysis-sizing.png)
 
 ### Enrollment and analysis
 
 Similar to how experiments use an enrollment period to select clients for a study before collecting metrics for a period of time, Mozanalysis experiment sizing records all clients that satisfy the target conditions during an enrollment period, set by the user based on the analysis start date and the number of dates to enroll. Metrics are then recorded for a user-defined number of days for the analysis.
 
-<img src="/img/mozanalysis/enrollment-period.png" alt="Analysis with an enrollment period" className="img-lg"/>
+\!\[Analysis with an enrollment period](/img/mozanalysis/enrollment-period.png)
 
 An alternative to using an enrollment period to select clients is to use continuous enrollment, where any client that satisfies the targeting criteria during the entire analysis period is enrolled; metrics are collected from each client's enrollment date to the end of the analysis period.
 
-<img src="/img/mozanalysis/continuous-enrollment.png" alt="Analysis with continuous enrollment" className="img-lg"/>
+\!\[Analysis with continuous enrollment](/img/mozanalysis/continuous-enrollment.png)
 
 ### Time series of metrics
 
 In some cases, experiments will require client-level time series data. Mozanalysis can split the analysis period into time series periods (either daily, weekly, or monthly).
 
-<img src="/img/mozanalysis/time-series.png" alt="Time series metrics" className="img-lg"/>
+\!\[Time series metrics](/img/mozanalysis/time-series.png)
 
 The time series data returned will contain a row for each client for each time series period, so the number of rows in the time series results will be (number of periods) times larger than the results for a single analysis window. Mozanalysis offers a few options to retrieve this data:
 
@@ -50,7 +50,6 @@ Mozanalysis contains functions that take the results from pulling historical dat
 * Z test for difference in proportions for independent samples
 * Test for difference of Poisson rates
 * Empirical effect size Wilcoxen-Mann-Whitney U test, based on an effect size calculated as the 90th percentile of week-to-week changes in the metric
-
 
 ## Example Colab notebooks
 
