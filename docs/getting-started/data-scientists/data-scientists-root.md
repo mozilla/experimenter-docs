@@ -1,107 +1,61 @@
 ---
-id: data-scientists-root
-title: Experimentation for data scientists
-slug: /data-scientists
+id: auto-sizing-cli
+title: Understanding the Experiment Sizing Command-line Interface
+slug: /auto-sizing-cli
 ---
 
-This page describes the roles data scientists play in experimentation at Mozilla.
+The [Mozanalysis] library includes a feature that allows for sample size calculation. This can be accessed using a command-line interface (CLI), called **[auto-sizing]**. The purpose of this interface is to facilitate quick analyses for experiments that are either straightforward or similar to previous ones.
 
-Some other things you may be looking for are:
+## How to Configure the Sizing Job
 
-* Documentation about using [Jetstream](jetstream/jetstream.md), Mozilla's experiment analysis tool
-* Technical documentation about [datasets used in experimentation](https://docs.telemetry.mozilla.org/tools/experiments.html)
-* [Process documentation](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/overview) for the Mozilla data science organization
-  (internal link)
+The sizing CLI operates based on a local TOML file, which provides the necessary information for the job. This TOML file details the metrics, segments, and parameters that will be employed for the analysis. The sample sizes are computed based on these parameters using the [`mozanalysis.frequentist_stats.sample_size.z_or_t_ind_sample_size_calc`](https://mozilla.github.io/mozanalysis/api/frequentist_stats/sample_size.html#mozanalysis.frequentist_stats.sample_size.z_or_t_ind_sample_size_calc) method. It's worth noting that within Mozanalysis, 'segments' refer to filters that identify suitable clients for an experiment. On the other hand, 'segments' in Jetstream pertain to groups of clients examined during post-experiment analysis.
 
-## What is the role of experimentation at Mozilla?
+### Understanding the TOML File Layout
 
-Experimentation informs product decision-making at Mozilla.
-This suite of experimentation tools is designed for product managers and other investigation owners to A/B test hypotheses they have about new and existing products and features.
-[Experimenter](https://experimenter.services.mozilla.com/nimbus/) (internal link)
-and the [experiment review repository](https://mozilla-hub.atlassian.net/wiki/spaces/FIREFOX/pages/11043456/Experiments+Previously+Reviewed) (internal link)
-contain examples of completed and active experiments.
+The TOML configuration file needs to contain four sections - `metrics`, `data_sources`, `segments`, and `segments.data_sources`. Each of these sections should define what is necessary for the experiment. The definitions follow the same format as [Jetstream], and a guide to create your own within the TOML file is available [here](https://experimenter.info/jetstream/configuration#defining-metrics).
 
-## Collaborating with experiment owners
+In addition to this, the TOML file can include references to metrics, segments, data sources, and segment data sources that are already a part of the [metric-hub]. To call these pre-defined objects, an `import_from_metric_hub` list can be incorporated in the TOML file. As an example, to import the `active_hours` metric for Firefox Desktop, the following code is added to the TOML config file:
 
-Data scientists support experiment owners in setting up and interpreting their experiments.
-[The Firefox experiment design process](https://mozilla-hub.atlassian.net/wiki/spaces/FIREFOX/pages/11043391/Experiment+Design+Process) (internal link)
-describes the process for both data scientists and stakeholders.
+\`\`\`
+[metrics.import_from_metric_hub]
+firefox_desktop = ["active_hours"]
+\`\`\`
 
-[The Nimbus onboarding guide](https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws/edit#)
-explains how to set up an experiment in the experiment console.
+For defining the data collection period for the analysis and the parameters used to calculate sample sizes, a `parameters` section is included in the TOML file. It is divided into two subsections: `parameters.sizing` and `parameters.dates`:
 
-The support that experiment owners need from data scientists during experiment set-up includes:
+1. `parameters.sizing`: Contains two tags, `power` and `effect_size`. These tags should include lists of values for each parameter. Sample sizes will be calculated for all the metrics given in the TOML file for each combination of power and effect size in those lists.
+2. `parameters.dates`: Holds the `start_date` (presented in "%Y-%m-%d" format, e.g., "2023-01-01"), `num_dates_enrollment`, and `analysis_length` values. For more information on how these values are used to retrieve historical data, refer to the [Mozanalysis documentation](https://experimenter.info/experiment-sizing).
 
-* validating that the experimental design will answer their questions
-* consulting on telemetry specifications
-* sample size recommendations
-* writing [custom metrics](jetstream/metrics.md) if needed
-* guidance about interpretation
+## Using CLI Commands
 
-## Sampling framework
+To start the sizing CLI, use the command `auto_sizing run`. Here are the options available at the invocation:
 
-Each experiment begins with an enrollment period with fixed start and end dates during which clients can enroll in the experiment. After the declared enrollment period ends, we modify the recipe to instruct clients to stop enrolling, and ignore clients that report enrollment anyway. Because enrollment depends on the client checking for software updates, samples will be skewed towards active users at the beginning of the enrollment period. We typically leave enrollment open for a week to account for weekly seasonality (e.g. weekday vs. weekend users) and to give clients who are active less often a chance to enroll. This makes our experiment population essentially a sample of the weekly active users (WAU).
+| Option      | Description |
+| ----------- | ----------- |
+| `--project_id`, `--project-id` | Specifies the BigQuery project to store the metrics table |
+| `--dataset_id`, `--dataset-id` | Determines the BigQuery dataset to hold the metrics table |
+| `--bucket` | Defines the GCP bucket to save the output JSON. If left blank, the JSON will be saved in the same directory as the config TOML |
+| `--target_slug` | Gives a name to the experiment, used when naming the metrics table and output file |
+| `--local_config` | Specifies the path to the configuration TOML file |
 
-For each client, experiment metrics are analyzed over a defined period of time from enrollment. We report results for an analysis period (e.g. the first day after enrollment) after all clients have had a chance to experience the treatment for that duration. The [Jetstream overview](jetstream/jetstream.md#analysis-paradigm) describes the analysis paradigm in more depth and how it relates to the length of an experiment.
+## Understanding CLI Output
 
-For more nuances about sampling, enrollment and exposure (whether or not the client actually saw the treatment or control), see [the experiment lifecycle overview](deep-dives/specifications/client-sdk-states-and-lifecycle.mdx).
+The results of the experiment sizing are saved in a JSON format. If a GCP bucket is provided in the `--bucket` option at invocation, this JSON file is stored in a `sample_sizes` folder in that bucket. If no bucket is given, the JSON results are saved in the same directory as the TOML configuration file.
 
-## Sample size recommendations
+The results JSON will have an entry for each combination of power and effect size given in the config file. Each of these has an entry for each metric, where the required population percentage and sample size per branch needed to achieve that power with that effect size is recorded. Lastly, a tag is included with a parameters dictionary that stores the power and effect size values. The example below shows the results for a sizing job with the metrics `uri_count` and `active_hours`:
 
-Sample size recommendations are operationalized as the fraction of the Firefox population that should consider enrolling in your recipe.  This is determined by discussing your [experiment design document](https://docs.google.com/document/d/1_bWn_1y5x1zf6zl7Loj4O1qKnVdxzIMXOawIpf32CsM/edit) at either [desktop or mobile data science office hours](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours).
+\`\`\`
+{"Power0.8EffectSize0.01": {
+        "uri_count": {"sample_size_per_branch": 475269, "population_percent_per_branch": 6.25}, 
+        "active_hours": {"sample_size_per_branch": 327233, "population_percent_per_branch": 4.3}, 
+        "parameters": {"power": 0.8, "effect_size": 0.01}}, 
+"Power0.8EffectSize0.02": {
+        "uri_count": {"sample_size_per_branch": 118817, "population_percent_per_branch": 1.56}, 
+        "active_hours": {"sample_size_per_branch": 81808, "population_percent_per_branch": 1.08}, 
+        "parameters": {"power": 0.8, "effect_size": 0.02}}}
+\`\`\`
 
-### Filtering
-Nimbus can filter on several factors, including:
-
-- channel
-- minimum version
-- country
-- locale
-- OS
-- client preference values (on desktop)
-- other factors
-
-This additional filtering always happens logically _after_ a client passes the sizing filter.
-You must inflate your population fraction to account for filtering.
-
-For a concrete example, imagine that Firefox WAU is 1,000 clients. 20% of WAU is from Canada. You wish to deploy an experiment to Canadian users. Your power analysis says that you need 50 clients in total to enroll. You should specify a population fraction of at least 25%, because 1,000 \* 0.2 (from Canada) \* 0.25 (your filter) = 50.
-
-### Multiple experiments on the same feature
-If there are already Live experiments on the same feature as your experiment, you **sometimes** need to inflate the sample size to account for clients enrolled in the existing Live experiments that the Nimbus front-end is not aware of. Instructions below.
-
-1. Find the most recent experiment that launched for your feature on your channel.
-2. Go to the recipe JSON for that experiment. You'll see something like:
-`
- "bucketConfig": {
-    "count": 3478,
-    "namespace": "firefox-desktop-urlbar-release-2",
-    "randomizationUnit": "normandy_id",
-    "start": 3678,
-    "total": 10000
-  },
-`
-3. The example JSON above shows that the most recent experiment used buckets 3678 to 7156 (= 3678 + 3478). If your new experiment needs less than 28.44% (= (10,000 - 7156)/100) of the clients, then you do not need to inflate the percentage to account for Nimbus being unaware of clients enrolled in previous experiments.
-4. If your new experiment needs more than 28.44% of the clients, then you must inflate the percentage to account for 71.56% of the clients already being enrolled in experiments. For example, if your new experiment needs 30% of the clients, then you must input 41.92% (= 30% / 71.56%) into "Population %" in the Nimbus front-end.
-
-### Non-normal distributions
-Most of our telemetry metrics are not normally distributed. A couple approaches that you may find helpful are:
-
-* powering a Mann-Whitney U-test. [Gpower](https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower) implements the Mann-Whitney U-test.
-* log-transforming the data and the expected difference and powering a _t_ test in log space.
-
-## Metrics and statistics
-
-Two weeks after the beginning of the enrollment period, Jetstream will begin to produce auto-generated reports summarizing the results of the experiment. [Here is one such report](https://experimenter.services.mozilla.com/nimbus/custom-messaging-in-aboutwelcome-for-chrome-users-to-import/results) (internal link).
-
-To see which metrics are included by default to this auto-generated report as well as information on adding custom and default metrics, statistics and confidence, see the [Jetstream documentation](jetstream/jetstream.md).
-
-If you want to perform some analysis by hand, [Jetstream datasets](https://docs.telemetry.mozilla.org/datasets/jetstream.html) are also available in BigQuery. Many telemetry datasets also include an `experiments` field, which when filtered on the experiment slug, can identify rows in the dataset enrolled in the experiment.
-
-For certain experiments, data scientists may need to construct confidence intervals for relative or percent differences. Example implementations can be found in [this notebook](https://colab.research.google.com/drive/1sVOdVdraPwec_Hit4OiaDDH4TJGzaIcc?usp=sharing).
-
-## Watch out for
-
-Here are other things to watch out for:
-- Are there other experiments taking place at the same time as yours? How might that affect the interpretation of your results, or limit your sample sizes?
-- Are there multiple implementation phases to this new feature? Does Product want to compare results from one phase to another?
-- ...
+[Jetstream]: jetstream/jetstream.md
+[metric-hub]: https://github.com/mozilla/metric-hub
+[mozanalysis]: https://github.com/mozilla/mozanalysis
+[auto-sizing]: https://github.com/mozilla/auto-sizing
