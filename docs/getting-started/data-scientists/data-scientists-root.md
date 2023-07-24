@@ -1,61 +1,51 @@
 ---
-id: auto-sizing-cli
-title: Understanding the Experiment Sizing Command-line Interface
-slug: /auto-sizing-cli
+id: experiment-sizing
+title: Sizing Experiments Using Mozanalysis
+slug: /experiment-sizing
 ---
 
-The [Mozanalysis] library includes a feature that allows for sample size calculation. This can be accessed using a command-line interface (CLI), called **[auto-sizing]**. The purpose of this interface is to facilitate quick analyses for experiments that are either straightforward or similar to previous ones.
+This page is about using Mozanalysis for experiment sizing. **Mozanalysis** is a toolkit that Mozilla uses to ensure the consistency of experiment results. This toolkit includes features that fetch historical data from BigQuery. The data helps to determine how many subjects we need for a particular experiment to ensure the results are reliable. The results of this process include the sample size and the percentage of the total target population required for each branch of an experiment. The experiment should have a balanced design to achieve a specific power.
 
-## How to Configure the Sizing Job
+## How We Size Experiments
 
-The sizing CLI operates based on a local TOML file, which provides the necessary information for the job. This TOML file details the metrics, segments, and parameters that will be employed for the analysis. The sample sizes are computed based on these parameters using the [`mozanalysis.frequentist_stats.sample_size.z_or_t_ind_sample_size_calc`](https://mozilla.github.io/mozanalysis/api/frequentist_stats/sample_size.html#mozanalysis.frequentist_stats.sample_size.z_or_t_ind_sample_size_calc) method. It's worth noting that within Mozanalysis, 'segments' refer to filters that identify suitable clients for an experiment. On the other hand, 'segments' in Jetstream pertain to groups of clients examined during post-experiment analysis.
+When sizing experiments, Mozanalysis uses historical data from BigQuery. The process is similar to how an experiment's enrollment and analysis would occur through **Jetstream**: an enrollment period is defined, during which we note the clients that meet certain conditions. We then collect and calculate metrics for these clients over a specified analysis period. After we've collected the metrics, we calculate the required sample size that corresponds to the statistical tests we'll be using when we analyze the experiment later.
 
-### Understanding the TOML File Layout
+### Enrollment and Analysis Process
 
-The TOML configuration file needs to contain four sections - `metrics`, `data_sources`, `segments`, and `segments.data_sources`. Each of these sections should define what is necessary for the experiment. The definitions follow the same format as [Jetstream], and a guide to create your own within the TOML file is available [here](https://experimenter.info/jetstream/configuration#defining-metrics).
+Just as experiments have an enrollment period before collecting metrics, Mozanalysis also records all clients that meet the target conditions during a user-defined enrollment period. This period is set based on the analysis start date and the number of dates to enroll. We then record metrics for a user-defined number of days for the analysis.
 
-In addition to this, the TOML file can include references to metrics, segments, data sources, and segment data sources that are already a part of the [metric-hub]. To call these pre-defined objects, an `import_from_metric_hub` list can be incorporated in the TOML file. As an example, to import the `active_hours` metric for Firefox Desktop, the following code is added to the TOML config file:
+An alternative approach is continuous enrollment. In this approach, any client that meets the targeting conditions throughout the entire analysis period is enrolled. We collect metrics from each client from the date of their enrollment until the end of the analysis period.
 
-```
-[metrics.import_from_metric_hub]
-firefox_desktop = ["active_hours"]
-```
+### Collecting Metrics Over Time
 
-For defining the data collection period for the analysis and the parameters used to calculate sample sizes, a `parameters` section is included in the TOML file. It is divided into two subsections: `parameters.sizing` and `parameters.dates`:
+Sometimes, experiments need data that shows how things change over time at the client level. Mozanalysis can divide the analysis period into time series periods (daily, weekly, or monthly). This data will have a row for each client for each time series period, making the number of rows in the time series results (number of periods) times larger than the results for a single analysis window.
 
-1. `parameters.sizing`: Contains two tags, `power` and `effect_size`. These tags should include lists of values for each parameter. Sample sizes will be calculated for all the metrics given in the TOML file for each combination of power and effect size in those lists.
-2. `parameters.dates`: Holds the `start_date` (presented in "%Y-%m-%d" format, e.g., "2023-01-01"), `num_dates_enrollment`, and `analysis_length` values. For more information on how these values are used to retrieve historical data, refer to the [Mozanalysis documentation](https://experimenter.info/experiment-sizing).
+## Choosing Targets and Metrics
 
-## Using CLI Commands
+We use the `Segment` objects in Mozanalysis to select clients for analysis. Users can either reuse existing segments in Mozanalysis or define one at runtime. Segments include a data source, either a table or view in BigQuery, and a SELECT expression to filter that data source. This SELECT expression must include a SQL aggregate function.
 
-To start the sizing CLI, use the command `auto_sizing run`. Here are the options available at the invocation:
+Just as with targets, Mozanalysis experiment sizing reuses `Metric` objects from **Jetstream**, and users can either reuse metrics that are currently used in **Mozanalysis** or in **Jetstream configs**, or they can define their own at runtime.
 
-| Option      | Description |
-| ----------- | ----------- |
-| `--project_id`, `--project-id` | Specifies the BigQuery project to store the metrics table |
-| `--dataset_id`, `--dataset-id` | Determines the BigQuery dataset to hold the metrics table |
-| `--bucket` | Defines the GCP bucket to save the output JSON. If left blank, the JSON will be saved in the same directory as the config TOML |
-| `--target_slug` | Gives a name to the experiment, used when naming the metrics table and output file |
-| `--local_config` | Specifies the path to the configuration TOML file |
+Metrics and target segments are given to Mozanalysis experiment sizing as lists of `Segment` or `Metric` objects. Users can include multiple of each in the analysis. When multiple `Segment` objects are used, Mozanalysis identifies clients that meet the conditions of **all** targets in the list. If users want to run analyses where `Segment`s are joined with OR rather than AND, they should complete multiple experiment sizing tasks for each condition in the OR statement. They then aggregate the results from each separate study.
 
-## Understanding CLI Output
+## Sample Size Calculators
 
-The results of the experiment sizing are saved in a JSON format. If a GCP bucket is provided in the `--bucket` option at invocation, this JSON file is stored in a `sample_sizes` folder in that bucket. If no bucket is given, the JSON results are saved in the same directory as the TOML configuration file.
+Mozanalysis includes functions that take the results from pulling historical data and the list of metrics from the results and produce sample size estimates for each metric. The estimations are based on the desired power, significance level, and expected relative effect size—a percent change in a metric's statistic. The tests in Mozanalysis provide the necessary sample size per branch of the experiment, assuming the experiment has two branches with an equal number of clients.
 
-The results JSON will have an entry for each combination of power and effect size given in the config file. Each of these has an entry for each metric, where the required population percentage and sample size per branch needed to achieve that power with that effect size is recorded. Lastly, a tag is included with a parameters dictionary that stores the power and effect size values. The example below shows the results for a sizing job with the metrics `uri_count` and `active_hours`:
+The following tests have sample size calculators implemented:
 
-```
-{"Power0.8EffectSize0.01": {
-        "uri_count": {"sample_size_per_branch": 475269, "population_percent_per_branch": 6.25}, 
-        "active_hours": {"sample_size_per_branch": 327233, "population_percent_per_branch": 4.3}, 
-        "parameters": {"power": 0.8, "effect_size": 0.01}}, 
-"Power0.8EffectSize0.02": {
-        "uri_count": {"sample_size_per_branch": 118817, "population_percent_per_branch": 1.56}, 
-        "active_hours": {"sample_size_per_branch": 81808, "population_percent_per_branch": 1.08}, 
-        "parameters": {"power": 0.8, "effect_size": 0.02}}}
-```
+* Z or T test for difference in means for independent samples
+* Z test for difference in proportions for independent samples
+* Test for difference of Poisson rates
+* Empirical effect size Wilcoxen-Mann-Whitney U test, based on an effect size calculated as the 90th percentile of week-to-week changes in the metric
+
+## Example Notebooks
+
+1. [Example with explanations for setting up sizing for a simple experiment](https://colab.research.google.com/drive/1VQDrnVWvR_r-oKD8vD3hwNcZWx8Txg1N?usp=sharing)
+2. [Replicating the sizing for the MR holdback](https://colab.research.google.com/drive/1r14UMw_lEjtiyc0VVEvQuhadrDLzIyzn?usp=sharing)
+3. [Sizing a mobile experiment](https://colab.research.google.com/drive/1wUdfqCoB-mN7Gk1b6_zkAd2KWu8dp8V_?usp=sharing)
+4. [Replicating sizing for Waldo, which uses continuous enrollment](https://colab.research.google.com/drive/1_R4zBUnucRPmHwIVLlPTYInDZwTbCn-F?usp=sharing)
+5. [Pulling time series historical data and sizing with empirical sample size calculation](https://colab.research.google.com/drive/1-XT2DMfGSqiCS18yGPIGCs_YWg75qZzn?usp=sharing)
 
 [Jetstream]: jetstream/jetstream.md
-[metric-hub]: https://github.com/mozilla/metric-hub
 [mozanalysis]: https://github.com/mozilla/mozanalysis
-[auto-sizing]: https://github.com/mozilla/auto-sizing
