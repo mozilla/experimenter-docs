@@ -16,10 +16,10 @@ The TOML configuration file needs to contain four sections - `metrics`, `data_so
 
 In addition to this, the TOML file can include references to metrics, segments, data sources, and segment data sources that are already a part of the [metric-hub]. To call these pre-defined objects, an `import_from_metric_hub` list can be incorporated in the TOML file. As an example, to import the `active_hours` metric for Firefox Desktop, the following code is added to the TOML config file:
 
-\`\`\`
+```
 [metrics.import_from_metric_hub]
 firefox_desktop = ["active_hours"]
-\`\`\`
+```
 
 For defining the data collection period for the analysis and the parameters used to calculate sample sizes, a `parameters` section is included in the TOML file. It is divided into two subsections: `parameters.sizing` and `parameters.dates`:
 
@@ -44,7 +44,7 @@ The results of the experiment sizing are saved in a JSON format. If a GCP bucket
 
 The results JSON will have an entry for each combination of power and effect size given in the config file. Each of these has an entry for each metric, where the required population percentage and sample size per branch needed to achieve that power with that effect size is recorded. Lastly, a tag is included with a parameters dictionary that stores the power and effect size values. The example below shows the results for a sizing job with the metrics `uri_count` and `active_hours`:
 
-\`\`\`
+```
 {"Power0.8EffectSize0.01": {
         "uri_count": {"sample_size_per_branch": 475269, "population_percent_per_branch": 6.25}, 
         "active_hours": {"sample_size_per_branch": 327233, "population_percent_per_branch": 4.3}, 
@@ -53,7 +53,7 @@ The results JSON will have an entry for each combination of power and effect siz
         "uri_count": {"sample_size_per_branch": 118817, "population_percent_per_branch": 1.56}, 
         "active_hours": {"sample_size_per_branch": 81808, "population_percent_per_branch": 1.08}, 
         "parameters": {"power": 0.8, "effect_size": 0.02}}}
-\`\`\`
+```
 
 [Jetstream]: jetstream/jetstream.md
 [metric-hub]: https://github.com/mozilla/metric-hub
