@@ -5,7 +5,100 @@ slug: /whats-news/2023-Q2
 sidebar_label: What's Newsletter Q2 2023
 ---
 
-## The `nimbus-cli`
+This is a non-exhaustive list of the Nimbus team's accomplishments in Q2, including some deep dives into a few of the more exciting features that have landed.
+
+## Mobile 
+
+🤖 [Android Messaging Surface Configurations](https://mozilla-hub.atlassian.net/browse/EXP-2819)
+
+   > Adds **native notifications** as a messaging surface that can be targeted by the mobile-messaging system for the Retention/Growth Push Campaigns, and includes the pre-permission prompt shown to users before asking for Notification permission. This covers work in Fenix as well as in the Nimbus SDK. (jhugman)
+
+🍏 [Simplify Startup (iOS)](https://mozilla-hub.atlassian.net/browse/EXP-2820)
+
+   > The startup sequence currently lives across the app and Application Services, requiring coordination with multiple repos. This makes it very hard to test and difficult to reason about state close to startup performance. This work moves Nimbus Startup out of the iOS apps, making it possible to move it to the beginning of the app startup, and makes the initialization API simpler and more stable. (jhugman)
+
+🍏🤖 [Improve Mobile experiment QA](https://mozilla-hub.atlassian.net/browse/EXP-2925)
+
+   > As we improve our feature set and support for mobile clients, testing the experiments created using these features will grow in complexity and length. Ensuring that these experiments can be tested in a reasonable time frame is key to allowing us to be able to get more experiments out. These improvements to the mobile clients will allow Softvision to test **more** experiments **quicker**, as well as lend a hand to future automation. (b4hand) 
+
+🍏🤖 [First-run Testing Tools](https://mozilla-hub.atlassian.net/browse/EXP-3388)
+
+   > The **Nimbus CLI** (see below) was created to help with first-run testing. First-run is a frequently used, high value surface that requires the experiment configuration to ship with the mobile build, so it is crucial to have support for these experiments to test before shipping. (jhugman)
+
+🍏🤖 [Deprecate Feature Keys in v6 API](https://mozilla-hub.atlassian.net/browse/EXP-3608)
+
+   > To prepare for the switch from single feature to multi-feature, the V6 serializer needed to switch over from using the `feature` key in the branch schema to using the `features` key. Desktop had already switched to `features`, but mobile was still using singular `feature`. This work switches the V6 serializer to always use the `features` key. (brennie)
+
+🍏🤖 [First-run Release Date](https://mozilla-hub.atlassian.net/browse/EXP-3492)
+
+   > Adds a Release Date field for mobile first run experiments to accurately calculate enrollment and durations to save multiple manual calculations. (erichards)
+
+🍏🤖 [Supporting Mobile Teams](https://mozilla-hub.atlassian.net/browse/EXP-3231)
+
+   > Ongoing support for mobile engineers using Nimbus. (jhugman)
+
+🍏🤖 [Core Active Behavioral Targeting](https://mozilla-hub.atlassian.net/browse/EXP-2600)
+
+   > Applications are now able to share information with Nimbus necessary for the categorization of users as “core-active” and experiments/messaging are able to target based on this categorization. (chumphreys)
+
+## Desktop
+
+💻 [Desktop Localization](https://mozilla-hub.atlassian.net/browse/EXP-3164)
+
+   > Enables localized experiments on the Nimbus Desktop client. (brennie)
+
+## Jetstream & Results Analysis
+
+📈 [Improve Results Links](https://mozilla-hub.atlassian.net/browse/EXP-3145)
+
+   > Experimenter links to Results page are now disabled for experiments that have no results, and the Results page redirects to the Summary and shows appropriate messages to the user when there are no results. (mikew)
+
+📈 [Shared Schema for Jetstream Results](https://mozilla-hub.atlassian.net/browse/EXP-3423)
+
+   > Define and create a new shared schema for consumption by Experimenter and Jetstream, ingestion of analysis results, and export of analysis results from Jetstream. (mikew)
+
+## Cirrus
+
+☁️ [Cirrus API Core Behavior](https://mozilla-hub.atlassian.net/browse/EXP-3469)
+
+   > Implements the core behaviour of the Cirrus API such that it receives a request from the client and can respond with the features and feature values. This requires fetching active experiments from Remote Setting, using the Nimbus SDK to compute enrollment, and using the FML to evaluate feature configurations. (ykhurana)
+
+☁️  [Nimbus FML for Cirrus](https://mozilla-hub.atlassian.net/browse/EXP-3454)
+
+   > Creates FML client and Python bindings for Cirrus. (chumphreys)
+
+☁️  [Nimbus SDK for Cirrus](https://mozilla-hub.atlassian.net/browse/EXP-3158)
+
+   > Given the existing Nimbus SDK library, this work creates an extensible, shared Nimbus library in which the majority of the functions are static as opposed to the stateful functions within the existing library. (chumphreys)
+
+☁️  [Cirrus Documentation](https://mozilla-hub.atlassian.net/browse/EXP-3121)
+
+   > Document/create ADRs for requirements, implementations, and system design diagrams. (ykhurana)
+
+## Experimenter
+
+🙌 [Outreachy contributions](https://mozilla-hub.atlassian.net/browse/EXP-3318)
+
+   > Tasks that were completed by Outreachy intern applicants to improve the Experimenter UI. (ykhurana)
+
+🙌  [Outreachy History Tracker Project](https://mozilla-hub.atlassian.net/browse/EXP-3222) [in progress]
+
+   > This work is being completed by our Outreachy intern. This will introduce a new page which show the changelogs of a particualr experiment within the existing project. The primary goal is to introduce a new page that leverages Django, Tailwind CSS, and Alpine.js (new pattern!) to enhance the functionality and user experience of the application. (ykhurana, avi-88)
+
+🔧 [Multifeature](https://mozilla-hub.atlassian.net/browse/EXP-1610)
+
+   > Enables users to to run experiments that target multiple features at once. We modified experiment creation pages to be able to select multiple features via a multiselect at the top of the page (before editing branches). Each feature value is validated against its respective schema as before. Modified client and API to support multiple features in each branch and ensure existing experiments that are already published continue to use the single feature branch type without impact. (brennie, jlockhart)
+
+🔧 [Additional Rollouts Improvements](https://mozilla-hub.atlassian.net/browse/EXP-3327)
+
+   > Non-user facing work for rollouts, including improved backend logic to handle the Dirty state, integration tests, updated state diagrams and sequence diagrams. (erichards)
+
+
+----
+
+## Deeper Dives
+
+### The `nimbus-cli`
 
 🔥 The `nimbus-cli` was conceived at the team's Q2 workweek. It is designed to help QA engineers test mobile first run experiments, but has become a tool useful for interacting, inspecting and testing all experiments running on the supported mobile apps, and any feature that those apps configure via Nimbus.
 
@@ -17,15 +110,11 @@ curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/mozilla/a
 
 Further details are at [https://experimenter.info/nimbus-cli](/nimbus-cli).
 
-## Jetstream
-
 ### Computing the date for expected results
 
 🔧 We are now computing the date that the Jetstream results will be available for a given experiment. This new value is based on enrollment end date (or proposed enrollment end date if enrollment is not yet ended).
 
 <img style={{border:"1px solid grey"}} title="expected-results" src="/img/whats-news/expected-results.png"/>
-
-## Experimenter
 
 ### Release date for First Run experiments
 
@@ -48,7 +137,7 @@ This new field shows up on the Audience page of the experiment, and is also view
 <img style={{border:"1px solid grey"}} title="release_date_summary" src="/img/whats-news/release_date_summary.png"/>
 <p align="center"> <em>"Release Date" field in the Audience section of the Summary page</em> </p>
 
-## Desktop Rollout re-enrollment and resizing
+### Desktop Rollout re-enrollment and resizing
 
  * 📈 You can now re-enroll in rollouts that have increased in size ([Bug 1833248](https://bugzilla.mozilla.org/show_bug.cgi?id=1833248))
  * 💪 When force-enrolling you can add `&apply_targeting` to the URL to check the targeting instead of skipping it ([Bug 1736587](https://bugzilla.mozilla.org/show_bug.cgi?id=1736587))
