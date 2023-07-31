@@ -4,6 +4,15 @@ title: What's New
 slug: /nimbus-cli/whats-new
 ---
 
+### `0.4.0`
+
+- `--app` and `--channel` parameters are now optional. If a command needs them and you haven't specified them, then it will error.
+- `list` and `fetch-list` now have filters. You can filter on [slug, feature, is-rollout, active-on date, and enroll date](/nimbus-cli/getting-started#list).
+- [`--patch FILE`](/nimbus-cli/working-with-patch-files) is now available for any command which accepts an experiment.
+- [`start-server`](/nimbus-cli/on-devices) – a new command to start a web server, which devices can connect to. Firefox for iOS and Android support this from v117.
+    - `pbcopy` adds to the clipboard a URL with experiments encoded in them.
+    - `pbpaste` sends the URL to the server. In this way, we can open enroll apps on device into experiments with the CLI.
+
 ### `0.3.0`
 
 - Now using the Experimenter API to get experiments, instead of Remote Settings. This saves time waiting for the sync between Experimenter and RS.

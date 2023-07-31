@@ -4,7 +4,7 @@ title: Getting Started
 slug: /nimbus-cli/getting-started
 ---
 
-All `nimbus-cli` commands need an `--app` and `--channel` parameter. These should correspond to the app as it is installed on the simulator or emulator.
+Most `nimbus-cli` commands need an `--app` and `--channel` parameter. These should correspond to the app as it is installed on the simulator or emulator.
 
 | App Name  | `--app` value | Available values for `--channel` |
 | -| - | - |
@@ -70,6 +70,26 @@ You can also use:
 :::tip
 More information about the experiment can be found with the [`info`](#info) command.
 :::
+
+You can also filter the experiment list by slug, features, channel, or activity status:
+
+Here we do a substring match on features, looking for `onboarding` in any of the features, for experiments in the release channel.
+
+```sh
+nimbus-cli --app firefox_ios list --feature onboarding --channel release
+```
+
+Here we look for any experiments active (either enrolling or observing). We use the `--use-api` flag because the experiments may not be live anymore.
+
+```sh
+nimbus-cli --app firefox_ios list --use-api --active-on 2023-05-01
+```
+
+We can use `today` as a shortcut for the current date.
+
+```sh
+nimbus-cli --app firefox_ios list --enrolling-on today
+```
 
 ## `enroll`
 
