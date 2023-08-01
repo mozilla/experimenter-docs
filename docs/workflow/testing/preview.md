@@ -5,7 +5,8 @@ slug: /previewing-experiments
 sidebar_position: 1
 ---
 
-This guide will help you preview what each branch of an experiment will look like for users in the target application.
+This guide will help you preview what each branch of an experiment will look like for users in the target application.  
+Preview does NOT launch your experiment to external users.  Preview enables you to self test your experiment and for QA to test.
 
 :::warning
 These steps only apply to Firefox Desktop Version 90+. You can find [instructions for iOS here](ios-preview-testing.md), Fenix instructions are coming soon!
