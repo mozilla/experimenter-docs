@@ -1,0 +1,59 @@
+---
+id: nimbus-cli-working-with-devices
+title: Working with Devices
+slug: /nimbus-cli/on-devices
+---
+
+`nimbus-cli` works best with iOS when working directly with the simulator, via `xcrun simctl`.
+
+However, there are times when limitations in the simulator mean that it is not possible to use. These are:
+
+- working on iOS devices
+- opening deeplinks *and* enrolling in experiments.
+
+For these important use-cases, the `nimbus-cli` and associated tooling supports experiment enrollment via URL.
+
+You can see the URL used with the `--pbcopy` option for any command that sends experiments to the app; for example:
+
+```sh
+nimbus-cli --app firefox_ios --channel release enroll viewpoint-survey-2023-april-ios --branch treatment --pbcopy
+```
+
+gives this output:
+
+```
+✅ Loaded manifest from https://raw.githubusercontent.com/mozilla-mobile/firefox-ios/main/nimbus.fml.yaml
+✅ treatment       messaging
+$ # Enrolling in the 'treatment' branch of 'viewpoint-survey-2023-april-ios'
+$ # Copied a deeplink URL (7609 characters) in to the clipboard
+```
+
+Note the size of the URL which has been copied to the clipboard.
+
+Once on your clipboard, this must be sent to the device; users have reported success with third-party chat apps.
+
+However, this is error prone, and a URL of that length may easily be truncated, corrupting the experiment that is encoded within it.
+
+Instead, we can start a server embedded with `nimbus-cli`.
+
+```sh
+nimbus-cli start-server
+```
+
+gives the following output:
+
+```
+Copy the address http://192.168.1.199:8080/ into your mobile browser
+```
+
+Once you open the webpage at the specified URL in Safari or Chrome, any command used to send experiments to the app (`apply-file`, `enroll`, `log-state`, `open`, `test-feature`, `unenroll`) can have the `--pbpaste` option, which will encode the experiments as URLs, update the server, and then the webpage will open the URL on the device.
+
+The webpage is one button: if you issued a command while the browser was in the background, then you can hit the button when you return.
+
+If the webpage is in the foreground when the command is issued, then you should get a dialog asking you if you want to open the app.
+
+:::note
+The protocol to talk to the device is very limited; we can only work with what we can encode in a URL and send to the app.
+
+Resetting the app, terminating the app, working with passthrough args, getting logs out of the app: none of this is possible on iOS devices from the command line.
+:::

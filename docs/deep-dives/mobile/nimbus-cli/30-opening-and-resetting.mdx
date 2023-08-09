@@ -57,9 +57,13 @@ nimbus-cli --app firefox_ios --channel developer enroll ios-set-to-default-in-on
 nimbus-cli --app firefox_ios --channel developer open --deeplink deep-link?url=onboarding/privacy-first --no-clobber
 ```
 
-#### Deeplinks for other commands:
+:::info Deeplinks for other commands:
 
-> iOS `simctl` does not support command line arguments with the `openurl` command. Opening with a deeplink while enrolling in an experiment is not supported.
+iOS `simctl` does not support command line arguments with the `openurl` command, and only supports a URL length of 2047.
+
+Opening with a deeplink while enrolling in an experiment is supported but requires a different route. See [Working with Devices](/nimbus-cli/on-devices).
+
+:::
 
 ### `enroll`
 

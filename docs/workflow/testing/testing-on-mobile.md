@@ -14,6 +14,12 @@ Testing the Nimbus system is out of the scope of this document.
 
 At this point, there are few if any tools for QA to use to test either of 1, or 3.
 
+:::info
+Much of this document can now be considered deprecated: the manual steps below are now done for you using the `nimbus-cli` tooling.
+
+Please refer to the documentation for [`nimbus-cli`](/nimbus-cli).
+:::
+
 However, using a local build, and by changing the `NIMBUS_URL` to the Remote Settings staging server at https://firefox.settings.services.allizom.org we can effectively vary the experiments definition document to test the app, and to replicate the experiment definition document used in production. This is [documented here][nimbus-url].
 
 Building Fenix locally is [documented in the Fenix repository][local-build].
