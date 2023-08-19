@@ -40,6 +40,7 @@ Adding [repo files](/fml/fml-paths) can be done with one or more `--repo-file` a
 
 [For `include` and `import` directives in the FML](/fml/fml-imports-and-includes), a remote file may be referenced. The cache directory is a local cache of these remote files.
 
+For each of the following, `--cache-dir` and `--repo-file` flags are supported.
 
 ## Generating a manifest file for experimenter
 
@@ -54,3 +55,44 @@ For legacy reasons, this is a different format of yaml file, which should be che
 This should only be called at the application level, with the one main fml file as an input.
 
 `--cache-dir` and `--repo-file` arguments are also supported.
+
+## Validating a manifest file
+
+```
+% nimbus-fml validate <INPUT>
+```
+
+This gives a view of the validation process for all channels.
+
+```
+% nimbus-fml validate @mozilla-mobile/firefox-android/fenix/app/nimbus.fml.yaml
+```
+
+gives
+
+```
+ℹ️ Loaded modules:
+- https://raw.githubusercontent.com/mozilla-mobile/firefox-android/main/fenix/app/onboarding.fml.yaml
+- https://raw.githubusercontent.com/mozilla-mobile/firefox-android/main/fenix/app/nimbus.fml.yaml
+- https://raw.githubusercontent.com/mozilla-mobile/firefox-android/main/fenix/app/pbm.fml.yaml
+- https://raw.githubusercontent.com/mozilla-mobile/firefox-android/main/android-components/components/browser/engine-gecko/geckoview.fml.yaml
+- https://raw.githubusercontent.com/mozilla-mobile/firefox-android/main/android-components/components/service/nimbus/messaging.fml.yaml
+
+Validating manifest for different channels:
+✅ release.............valid
+✅ beta................valid
+✅ nightly.............valid
+✅ developer...........valid
+```
+
+## Re-write a complicated distributed manifest into a single file
+
+The FML spec allows you to [import and include dependencies' manifests](/fml/fml-imports-and-includes). This is convenient for engineers to place the feature manifest close to where the feature code lives.
+
+However, for some circumstances, it may not be good for packagers or distributers of the software: e.g. if the file is to be distributed with the software.
+
+To help this, the `single-file` command is used to merge all imports and includes into the top level file, with a single channel.
+
+```
+% nimbus-fml single-file --channel release @mozilla-mobile/firefox-android/fenix/app/nimbus.fml.yaml single-file.fml.yaml
+```

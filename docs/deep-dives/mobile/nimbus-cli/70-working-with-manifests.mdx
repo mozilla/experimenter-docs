@@ -142,3 +142,35 @@ nimbus-cli --app firefox_ios --channel developer enroll ios-set-to-default-in-on
 ```
 
 Each of the `--manifest`, `--version` and `--ref` options work with `enroll`, `test-feature`, `features` and `defaults`.
+
+## Working with the `nimbus-fml` command line
+
+The Feature Manifest Language has its own [command line interface](/fml/fml-cli). This can be used to validate manifest files, generate code, and rationalize manifests in to a single file.
+
+For example:
+
+```sh
+nimbus-cli fml validate @mozilla/blurts-server/config/nimbus.yaml
+```
+
+[The documentation there is better placed to explain how to use it](/fml/fml-cli), however there is one caveat: flags (i.e. modifiers that begin with `--`) are caught by the `nimbus-cli` command line, rather than passed to the `nimbus-fml` command line.
+
+Thus, you should use `--` before their first use. For example:
+
+```sh
+nimbus-cli fml -- --help
+```
+
+will display the `nimbus-fml` help message.
+
+You can put the `--` anywhere before the first modifier: the following two commands are equivalent.
+
+```sh
+nimbus-cli fml -- generate-experimenter --channel release @mozilla/blurts-server/config/nimbus.yaml blurts.experimenter.yaml
+```
+
+and
+
+```sh
+nimbus-cli fml generate-experimenter @mozilla/blurts-server/config/nimbus.yaml blurts.experimenter.yaml -- --channel release
+```
