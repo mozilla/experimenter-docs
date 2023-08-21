@@ -63,3 +63,23 @@ The `nimbus-fml` command line can accept multiple repo-files at a time, resolvin
 ```sh
 nimbus-fml generate --repo-file ./app-structure.json --repo-file @mozilla-mobile/dependency-versions/v102.0.json --language swift ./input.fml.yaml output-dir
 ```
+
+## The `fetch` command
+
+The FML command line interface includes a `fetch` command to help build intuition around how these paths work.
+
+```sh
+nimbus-fml fetch @mozilla/application-services/Cargo.toml
+```
+
+It takes a single `INPUT` file, and any number of `--repo-file` options and outputs the file (if found) to `stdout`.
+
+In this case, the file will be from `https://raw.githubusercontent.com/mozilla/application-services/main/Cargo.toml`
+
+Using the repo file from above, the command
+
+```sh
+nimbus-fml fetch --repo-file v102.0.json @mozilla/application-services/Cargo.toml
+```
+
+would fetch from `https://raw.githubusercontent.com/mozilla/application-services/v93.1.0/Cargo.toml`
