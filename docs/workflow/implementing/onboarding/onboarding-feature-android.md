@@ -28,7 +28,7 @@ It is also a living document:
 
 The onboarding feature is built on top of Nimbus, Mozilla's experimentation platform. Nimbus allows you to send bits of configuration to application features from Experimenter, the web-application staff use to launch and manage experiments and rollouts.
 
-Using Experimenter in the general case is documented elsewhere, so this document is specifically concerned with configuring the onboarding feature. [Example experiment](https://experimenter.services.mozilla.com/nimbus/lifestyles-images-onboarding-experiment/summary)
+Using Experimenter in the general case is documented elsewhere, so this document is specifically concerned with configuring the onboarding feature.
 
 # References
 For the most up-to-date configurations, the main code base will always be the best place to check.
@@ -53,7 +53,6 @@ Only **values that differ** from the default card(s) needs providing by the Expe
          "body":"juno_onboarding_default_browser_description_nimbus",
          "link-text":"juno_onboarding_default_browser_description_link_text",
          "image-res":"ic_onboarding_welcome",
-         "image-is-illustration":true,
          "primary-button-label":"juno_onboarding_default_browser_positive_button",
          "secondary-button-label":"juno_onboarding_default_browser_negative_button"
       }
@@ -66,8 +65,8 @@ Only **values that differ** from the default card(s) needs providing by the Expe
 {
    "cards":{
       "default-browser":{
+         "ordering":15,
          "image-res":"onboarding_default_browser",
-         "image-is-illustration":false
       }
    }
 }
@@ -79,11 +78,10 @@ Only **values that differ** from the default card(s) needs providing by the Expe
       "default-browser":{
          "card-type":"default-browser",
          "title":"juno_onboarding_default_browser_title_nimbus",
-         "ordering":10,
+         "ordering":15,
          "body":"juno_onboarding_default_browser_description_nimbus",
          "link-text":"juno_onboarding_default_browser_description_link_text",
          "image-res":"onboarding_default_browser",
-         "image-is-illustration":false,
          "primary-button-label":"juno_onboarding_default_browser_positive_button",
          "secondary-button-label":"juno_onboarding_default_browser_negative_button"
       }
@@ -93,12 +91,11 @@ Only **values that differ** from the default card(s) needs providing by the Expe
 # Card definition
 | Attribute              | Type                        | Description                                  | Notes                                                                                                         |       
 |------------------------|-----------------------------|----------------------------------------------|---------------------------------------------------------------------------------------------------------------|
-| card-type              | Card Type                   | The type of the card                         | [See defined cards types](#card-types)                                                                                     |
+| card-type              | Card Type                   | The type of the card                         | [See defined cards types](#card-types)                                                                        |
 | title                  | Free text  or   Resource ID | The title text displayed to the user         |                                                                                                               | 
 | body                   | Free text  or  Resource ID  | The message text displayed to the user       | May contain linkable text                                                                                     | 
 | link-text (optional)   | Free text or  Resource ID   | The text to link from the ‘body’ text        | Must match the linkable text from the ‘body’ exactly e.g. body: This is a policy link, link-text: policy link |
 | image-res              | Resource ID                 | The resource ID of the image to be displayed |                                                                                                               | 
-| image-is-illustration  | Boolean                     | True if the image type is an illustration    |                                                                                                               |
 | ordering               | Integer                     | Used to sequence the cards                   | The system used for ordering is counting in tens, e.g. 10, 20, 30…                                            |
 | primary-button-label   | Free text  or  Resource ID  | The text to display on the primary button    |                                                                                                               | 
 | secondary-button-label | Free text or  Resource ID   | The text to display on the secondary button  |                                                                                                               | 
@@ -121,20 +118,12 @@ Free text may also be used instead of a string resource.
 
 ## Image resources
 
-### Campaign - Default (Illustrations)
+### Campaign - Default
 | Card type               | Resource ID                |
 |-------------------------|----------------------------|
 | default-browser         | ic_onboarding_welcome      |
 | sync-sign-in            | ic_onboarding_sync         |
 | notification-permission | ic_notification_permission |
-
-### Campaign - Lifestyle (Photographic)
-
-| Card type               | Resource ID                                                                                                                                                               |
-|-------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| default-browser         | [onboarding_default_browser](https://raw.githubusercontent.com/mozilla-mobile/firefox-android/main/fenix/app/src/main/res/drawable-xxhdpi/onboarding_default_browser.webp)| 
-| sync-sign-in            | [onboarding_sync](https://raw.githubusercontent.com/mozilla-mobile/firefox-android/main/fenix/app/src/main/res/drawable-xxhdpi/onboarding_sync.webp)                      |
-| notification-permission | [onboarding_notification](https://raw.githubusercontent.com/mozilla-mobile/firefox-android/main/fenix/app/src/main/res/drawable-xxhdpi/onboarding_notification.webp)      |
 
 # Appendix
 
@@ -148,7 +137,6 @@ Free text may also be used instead of a string resource.
 | body                   | juno_onboarding_default_browser_description_nimbus    |
 | link-text (optional)   | juno_onboarding_default_browser_description_link_text |
 | image-res              | ic_onboarding_welcome                                 |
-| image-is-illustration  | true                                                  |
 | ordering               | 10                                                    |
 | primary-button-label   | juno_onboarding_default_browser_positive_button       |
 | secondary-button-label | juno_onboarding_default_browser_negative_button       |
@@ -161,7 +149,6 @@ Free text may also be used instead of a string resource.
 | body                   | juno_onboarding_sign_in_description     |
 | link-text (optional)   | null                                    |
 | image-res              | ic_onboarding_sync                      |
-| image-is-illustration  | true                                    |
 | ordering               | 20                                      |
 | primary-button-label   | juno_onboarding_sign_in_positive_button |
 | secondary-button-label | juno_onboarding_sign_in_negative_button |
@@ -174,7 +161,6 @@ Free text may also be used instead of a string resource.
 | body                   | juno_onboarding_enable_notifications_description_nimbus |
 | link-text (optional)   | juno_onboarding_default_browser_description_link_text   |
 | image-res              | ic_notification_permission                              |
-| image-is-illustration  | true                                                    |
 | ordering               | 30                                                      |
 | primary-button-label   | juno_onboarding_enable_notifications_positive_button    |
 | secondary-button-label | juno_onboarding_enable_notifications_negative_button    |
