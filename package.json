@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@cmfcmf/docusaurus-search-local": "^1.1.0",
-    "@docusaurus/core": "^2.4.1",
+    "@docusaurus/core": "^2.4.3",
     "@docusaurus/preset-classic": "^2.4.1",
     "@docusaurus/theme-mermaid": "^2.4.1",
     "clsx": "^1.2.1",
