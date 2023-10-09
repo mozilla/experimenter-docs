@@ -55,6 +55,10 @@ This state and its reasons are for enrollments that were previously in one of th
 
 _See [NotEnrolled::NotTargeted](#not-targeted)_
 
+#### Not Selected
+
+_See [NotEnrolled::NotSelected](#not-selected)_
+
 #### Opt Out
 
 The client manually opted out of the recipe<sup><a href="#notes">[2]</a></sup>.
@@ -108,6 +112,8 @@ stateDiagram-v2
     enrolled --> on_experiment_ended
     disqualified --> on_experiment_ended
     on_experiment_ended --> was_enrolled: on experiment ended
+    
+    disqualified --> enrolled: rollouts only
 
     was_enrolled --> [*]: on garbage\ncollect (1yr)
 
