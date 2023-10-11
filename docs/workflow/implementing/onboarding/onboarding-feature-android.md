@@ -48,6 +48,7 @@ Only **values that differ** from the default card(s) needs providing by the Expe
    "cards":{
       "default-browser":{
          "card-type":"default-browser",
+         "enabled":"true"
          "title":"juno_onboarding_default_browser_title_nimbus",
          "ordering":10,
          "body":"juno_onboarding_default_browser_description_nimbus",
@@ -77,6 +78,7 @@ Only **values that differ** from the default card(s) needs providing by the Expe
  "cards":{
       "default-browser":{
          "card-type":"default-browser",
+         "enabled":"true"
          "title":"juno_onboarding_default_browser_title_nimbus",
          "ordering":15,
          "body":"juno_onboarding_default_browser_description_nimbus",
@@ -92,6 +94,7 @@ Only **values that differ** from the default card(s) needs providing by the Expe
 | Attribute              | Type                        | Description                                  | Notes                                                                                                         |       
 |------------------------|-----------------------------|----------------------------------------------|---------------------------------------------------------------------------------------------------------------|
 | card-type              | Card Type                   | The type of the card                         | [See defined cards types](#card-types)                                                                        |
+| enabled                | Boolean                     | If true, this card is shown to the user.     | True by default.                                                                                              |
 | title                  | Free text  or   Resource ID | The title text displayed to the user         |                                                                                                               | 
 | body                   | Free text  or  Resource ID  | The message text displayed to the user       | May contain linkable text                                                                                     | 
 | link-text (optional)   | Free text or  Resource ID   | The text to link from the ‘body’ text        | Must match the linkable text from the ‘body’ exactly e.g. body: This is a policy link, link-text: policy link |
@@ -102,6 +105,7 @@ Only **values that differ** from the default card(s) needs providing by the Expe
 
 ## Card types
 - default-browser
+- add-search-widget
 - sync-sign-in
 - notification-permission
 
@@ -122,10 +126,13 @@ Free text may also be used instead of a string resource.
 | Card type               | Resource ID                |
 |-------------------------|----------------------------|
 | default-browser         | ic_onboarding_welcome      |
+| add-search-widget       | ic_onboarding_search_widget|
 | sync-sign-in            | ic_onboarding_sync         |
 | notification-permission | ic_notification_permission |
 
 # Appendix
+
+The add search widget is part of an ongoing experiment found here: [Android Onboarding - search widget](https://experimenter.services.mozilla.com/nimbus/android-onboarding-search-widget/summary)
 
 ## Default cards overview
 
@@ -133,6 +140,7 @@ Free text may also be used instead of a string resource.
 | Attribute              | Value                                                 |
 |------------------------|-------------------------------------------------------|
 | card-type              | default-browser                                       |
+| enabled                | true                                                  |
 | title                  | juno_onboarding_default_browser_title_nimbus          |
 | body                   | juno_onboarding_default_browser_description_nimbus    |
 | link-text (optional)   | juno_onboarding_default_browser_description_link_text |
@@ -141,10 +149,24 @@ Free text may also be used instead of a string resource.
 | primary-button-label   | juno_onboarding_default_browser_positive_button       |
 | secondary-button-label | juno_onboarding_default_browser_negative_button       |
 
+### Add search widget
+| Attribute              | Value                                             |
+|------------------------|---------------------------------------------------|
+| card-type              | add-search-widget                                 |
+| enabled                | false                                             |
+| title                  | juno_onboarding_add_search_widget_title           |
+| body                   | juno_onboarding_add_search_widget_description     |
+| link-text (optional)   | null                                              |
+| image-res              | ic_onboarding_search_widget                       |
+| ordering               | 15                                                |
+| primary-button-label   | juno_onboarding_add_search_widget_positive_button |
+| secondary-button-label | juno_onboarding_add_search_widget_negative_button |
+
 ### Sync card
 | Attribute              | Value                                   |
 |------------------------|-----------------------------------------|
 | card-type              | sync-sign-in                            |
+| enabled                | true                                    |
 | title                  | juno_onboarding_sign_in_title           |
 | body                   | juno_onboarding_sign_in_description     |
 | link-text (optional)   | null                                    |
@@ -157,6 +179,7 @@ Free text may also be used instead of a string resource.
 | Attribute              | Value                                                   |
 |------------------------|---------------------------------------------------------|
 | card-type              | notification-permission                                 |
+| enabled                | true                                                    |
 | title                  | juno_onboarding_enable_notifications_title_nimbus       |
 | body                   | juno_onboarding_enable_notifications_description_nimbus |
 | link-text (optional)   | juno_onboarding_default_browser_description_link_text   |
