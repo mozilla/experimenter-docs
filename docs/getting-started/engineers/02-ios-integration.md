@@ -223,6 +223,7 @@ public static var nimbus: NimbusInterface = {
         .with(initialExperiments: Bundle.main.url(forResource: "initial_experiments", withExtension: "json"))
         .isFirstRun(isFirstRun)
         .with(bundles: bundles)
+        .with(userDefaults: UserDefaults.standard)
         .with(featureManifest: AppConfig.shared)
         .build(appInfo: appSettings)
 }()

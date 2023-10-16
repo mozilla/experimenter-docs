@@ -224,11 +224,16 @@ Adding the `usePreviewCollection` flag allows the builder to configure a `Nimbus
         initialExperiments = R.raw.initial_experiments
         usePreviewCollection = context.settings().nimbusUsePreview
         isFirstRun = isAppFirstRun
+        sharedPreferences = context.settings().preferences
+        // Optional callbacks.
         onCreateCallback = { nimbus ->
-            FxNimbus.initialize { nimbus }
+            // called when nimbus is set up
+        }
+        onFetchCallback = {
+            // called each time the app fetches experiments
         }
         onApplyCallback = {
-            FxNimbus.invalidateCachedValues()
+            // called each time the applies the fetched experiments.
         }
     }.build(appInfo)
 ```
