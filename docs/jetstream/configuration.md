@@ -279,7 +279,8 @@ Then, your new metric can refer to it like `data_source = "my_cool_data_source"`
 
 ### Defining segments
 
-You can define new segments, just like you can define new metrics.
+You can define new segments, just like you can define new metrics.  
+Segments allow you to look at the experiment results by the defined segments (or groups of users).  An example would be new users versus existing users - or segmenting results by country.   
 
 This looks like:
 
