@@ -219,7 +219,7 @@ features:
       max-age-in-days:
         description: The number of days a single piece of content is indexed for.
         type: Int
-        default: 28.0
+        default: 28
 ```
 
 Each variable has a `description`, a `type` and `default` value.
@@ -302,8 +302,8 @@ struct SpotlightSearch {
         self.variables?.getBool("enabled") ?? false
     }()
 
-    lazy var keepNumDays: Int = {
-        self.variables?.getInt("enabled") ?? 28.0
+    lazy var maxAgeInDays: Int = {
+        self.variables?.getInt("max-age-in-days") ?? 28
     }()
 }
 ```
@@ -317,8 +317,8 @@ data class SpotlightSearch(private val variables: Variables? = null) {
         self.variables?.getBool("enabled") ?? false
     }
 
-    var keepNumDays: Int by lazy {
-        self.variables?.getInt("enabled") ?? 28.0
+    var maxAgeInDays: Int by lazy {
+        self.variables?.getInt("max-age-in-days") ?? 28
     }
 }
 ```
@@ -420,8 +420,8 @@ features:
         default: false
       max-age-in-days:
         description: The number of days a single piece of content is indexed for.
-        type: Double
-        default: 28.0
+        type: Int
+        default: 28
       item-thumbnail:
         description: "The icon that appears in the Spotlight search results.
           Note that changing this does not change already indexed content."
