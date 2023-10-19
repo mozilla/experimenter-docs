@@ -1,0 +1,93 @@
+---
+id: feature-metadata
+title: Providing feature metadata
+slug: /fml/feature-metadata
+sidebar_position: 7
+---
+
+The feature manifest defines "features" which are used to:
+
+- generate type safe code to access configuration specified remotely by Nimbus
+- provide default values for the configuration when not specified remotely by Nimbus
+- provide experiment owners and others insight into the feature via experimenter, the Nimbus web site.
+
+This last item is enabled by providing metadata about each feature in the feature manifest.
+
+## A complete example
+
+```yaml
+    description: |
+      The in-app messaging system.
+
+    documentation:
+      - name: User documentation
+        url: https://experimenter.info/messaging/mobile-messaging
+      - name: QA documentation
+        url: https://docs.google.com/document/d/555-555/edit?usp=sharing
+
+    meta-bug: https://bugzilla.mozilla.org/show_bug.cgi?id=5555555
+
+    contacts:
+      - jhugman@mozilla.com
+      - amejiamarmol@mozilla.com
+      - twhite@mozilla.com
+      - brennie@mozilla.com
+
+    events:
+      - https://dictionary.telemetry.mozilla.org/apps/fenix/metrics/messaging_message_shown
+      - https://dictionary.telemetry.mozilla.org/apps/fenix/metrics/messaging_message_clicked
+      - https://dictionary.telemetry.mozilla.org/apps/fenix/metrics/messaging_message_dismissed
+      - https://dictionary.telemetry.mozilla.org/apps/fenix/metrics/messaging_message_expired
+      - https://dictionary.telemetry.mozilla.org/apps/fenix/metrics/messaging_malformed
+
+    configurator: https://mozilla.github.io/limelight/
+
+```
+
+## `description`
+
+This is a short description that appears alongside the name in experimenter.
+
+It also is used to generate in-line class documentation in generated code.
+
+## `documentation`
+
+This is a list of named links to documentation for the feature elsewhere.
+
+Documentation might be for experiment owners to read, engineers to read, or QA.
+
+Documentation for each variable and field is asked for in the feature manifest; for simpler features, this may be sufficient as experiment owner documentation, however, for more complex features a more cohesive document for a less technical audience may be more appropriate.
+
+QA documentation may already exist for the feature, or it might be created from [an existing template](https://docs.google.com/document/d/1vM8XUpNeVTFl8traztQd6rTGrEhP9I91zObbDdMUU7s/edit?usp=sharing).
+
+Minimally, QA documentation should include:
+
+- how to manipulate the app/feature/configuration so that the app shows the feature,
+- how to manipulate the app/feature/configuration so it emits the exposure event for an experiment,
+- how to manipulate the app/feature/configuration so each event listed in the `events` section is emitted.
+
+If this list is empty, then `nimbus-fml validate` will warn that the feature is missing documentation.
+
+## `contacts`
+
+This is a list of email addresses of engineers who have worked on the feature, and feature owners who have responsibility for the feature.
+
+These should have valid Jira accounts and will be attached to QA tickets filed for any experiments involving this feature.
+
+This is to ensure fast turn around of experiments and resolving question that arise in these QA tickets.
+
+If this list is empty, then `nimbus-fml validate` will warn that the feature is missing contacts.
+
+## `meta-bug`
+
+This is a URL where bugs should be filed against the feature. This may be a metabug for the feature, or an Epic, or a Jira `CreateIssue.jspx` link. The primary function of this URL is a place where QA can file bugs found with this feature, on an ongoing basis.
+
+If this is missing, then `nimbus-fml validate` will warn that the feature is missing a meta-bug.
+
+## `events`
+
+This is an optional list of events in the Glean dictionary that this feature emits.
+
+## `configurator`
+
+This is an optional link to a feature specific web app for generating valid configurations. This is likely only useful for very large or complex feature configurations (e.g. Glean, messagaing, onboarding).
