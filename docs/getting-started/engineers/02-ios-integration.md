@@ -34,7 +34,7 @@ This will download the shell script that will run on each build. On first run, i
 
 Edit the configuration file [`nimbus-fml-configuration.sh`][nimbus-fml-config] to match your setup. For example, any time you add a new `CONFIGURATION` (e.g. Debug, Release), you should add a new mapping to a build `CHANNEL` in this file.
 
-If you need to move the `nimbus.fml.yaml` file, then you should edit this in the call in the bootstrap and in the `nimbus-fml-configuration.sh` file.
+If you need to move the `nimbus.fml.yaml` file, then you should edit this in the call in the `bootstrap.sh` file and in the `nimbus-fml-configuration.sh` file.
 
 #### Adding Nimbus FML to the build
 
