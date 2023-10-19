@@ -10,15 +10,38 @@ Nimbus is an experimentation platform from Mozilla.
 
 This document shows you how to set up the Nimbus SDK with a new iOS app. It assumes that your app is already using the [Glean SDK](https://github.com/mozilla/glean/blob/main/docs/dev/ios/setup-ios-build-environment.md) and [Rust Swift Components](https://github.com/mozilla/rust-components-swift).
 
-[nimbus-cli]: https://github.com/mozilla/application-services/tree/main/components/support/nimbus-cli
-
 ## Building with Nimbus
 
 ### Generating Swift with the Nimbus FML
 
 The [Feature Manifest Language](/fml-spec) provides type-safe access to configuration coming out of the Nimbus SDK, and is used to configure your application features, by generating Swift from a Feature Manifest.
 
-A build phase needs to be added to the app, calling in to [`nimbus-fml.sh`](https://github.com/mozilla-mobile/focus-ios/blob/081a572c5ac63c81ef2bb67d07b977c8d1b98ba0/bin/nimbus-fml.sh). This is configured with a project specific [`nimbus-fml-configuration.sh`](https://github.com/mozilla-mobile/focus-ios/blob/081a572c5ac63c81ef2bb67d07b977c8d1b98ba0/bin/nimbus-fml-configuration.sh).
+Once you have this running, the FML files will the main way you interact with Nimbus.
+
+#### Setting up
+
+Run the following command in a terminal, from the top level directory of your project:
+
+```sh
+NIMBUS_FML_FILE=./nimbus.fml.yaml
+curl --proto '=https' --tlsv1.2 -sSf \
+    https://raw.githubusercontent.com/mozilla/application-services/main/components/nimbus/ios/scripts/bootstrap.sh | bash -s -- $NIMBUS_FML_FILE
+```
+
+You should also add it to your project's `bootstrap.sh` or installer script.
+
+This will download the shell script that will run on each build. On first run, it will download a sample `nimbus.fml.sh` to the given location, and configuration files to `./bin`.
+
+Edit the configuration file [`nimbus-fml-configuration.sh`][nimbus-fml-config] to match your setup. For example, any time you add a new `CONFIGURATION` (e.g. Debug, Release), you should add a new mapping to a build `CHANNEL` in this file.
+
+If you need to move the `nimbus.fml.yaml` file, then you should edit this in the call in the bootstrap and in the `nimbus-fml-configuration.sh` file.
+
+#### Adding Nimbus FML to the build
+
+A build phase needs to be added to the app, calling in to [`nimbus-fml.sh`][nimbus-fml-sh]. This is configured with a project specific [`nimbus-fml-configuration.sh`][nimbus-fml-config].
+
+[nimbus-fml-config]: https://raw.githubusercontent.com/mozilla/application-services/main/components/nimbus/ios/scripts/nimbus-fml-configuration.sh
+[nimbus-fml-sh]: https://raw.githubusercontent.com/mozilla/application-services/main/components/nimbus/ios/scripts/nimbus-fml.sh
 
 This will generate a Swift file in a `$MODULE/Generated/AppConfig.swift`, where `AppConfig` is the name of the manifest as specified in the FML files.
 
