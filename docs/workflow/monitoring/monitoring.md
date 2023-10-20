@@ -17,4 +17,5 @@ What the different charts mean:
 2. **Cumulative Population Estimate by Branch** is only used to troubleshoot if enrollment is unhealthy.  Example, if the branches are not enrolling evenly (the lines are far apart) it is a sign something could be wrong.  
 3. **Daily Active Population** is just a point of data to know how many of your enrolled users are active every day.
 4. **Daily Enrollments** and other Enrollment charts provide data around new enrollments.  This is used for troubleshooting or evaluating how much longer enrollment may be needed (if we are seeing low enrollment numbers).
-5. **Unenrollment Overall** and other Unenrollment charts provide data around unenrolled users.  This is used for flagging when there may be an issue.  We always expect some unenrollments.
+5. **Enrollments Overall** is similar to Enrollments Daily - except at an hourly level.  This would be for troubleshooting to narrow down a time window where something unexpected happened (ex: large spike of enrollments or very low enrollments for that time of day).
+6. **Unenrollment Overall** and other Unenrollment charts provide data around unenrolled users.  This is used for flagging when there may be an issue.  We always expect some unenrollments.
