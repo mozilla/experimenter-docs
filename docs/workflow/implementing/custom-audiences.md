@@ -16,7 +16,7 @@ They are:
 
 ### How to add a new custom audience
 
-Create a PR against [targeting/constants.py](https://github.com/mozilla/experimenter/blob/main/experimenter/experimenter/targeting/constants.py) that adds a new JEXL expression.
+Create a PR against [targeting/constants.py](https://github.com/mozilla/experimenter/blob/main/experimenter/experimenter/targeting/constants.py) that adds a new JEXL expression.  There is a [recorded session showing 2 examples of adding custom targeting](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=8527feae-303e-41b3-b9df-b0a800f3cd41) to demoonstrate where to start.
 
 Request review from a console core team member. It should be available in the Experimenter UI a few minutes after the PR has merged.
 
