@@ -1,0 +1,74 @@
+---
+id: 2023-Q3
+sidebar_position: 1
+title: What's New in Nimbus - Q3 2023
+slug: 2023-Q3
+sidebar_label: What's Newsletter Q3 2023
+---
+
+## Mobile 
+
+🤖🍏☁️ [Pre-built nimbus-cli](https://mozilla-hub.atlassian.net/browse/EXP-3786)
+
+   > We can now use pre-built `nimbus-cli` for FML transformations. This change installs the nimbus-cli as part of deployment and uses this to fetch and transform FML files from the Firefox Mobile, Focus, and Monitor apps. This means faster deploy times and we can remove the .experimenter.yaml files from the apps' repos and build scripts. (jhugman)
+
+
+## Desktop
+
+
+💻 [Rich JSON editing](https://mozilla-hub.atlassian.net/browse/EXP-3708)
+
+   > Rich JSON editing is now available for Desktop on the "Branches" page--both autocompletion and linting. (brennie)
+
+<img style={{border:"1px solid grey"}} title="json-editing-1" src="/img/whats-news/json-editing-1.png"/>
+<br/>
+<img style={{border:"1px solid grey"}} title="json-editing-2" src="/img/whats-news/json-editing-2.png"/>
+
+## Jetstream & Results Analysis
+
+📈 [Automated population sizing](https://mozilla-hub.atlassian.net/browse/EXP-3345)
+
+   > Population sizing tool results are now available (for some experiments) in Experimenter during sizing configuration. (mwilliams)
+
+## Cirrus
+
+☁️  [Glean integration for Cirrus](https://mozilla-hub.atlassian.net/browse/EXP-3549)
+
+   > In order to get enrollment telemetry for Cirrus, we hooked up the Glean Python SDK. (ykhurana)
+
+
+☁️  [Record enrollment metrics](https://mozilla-hub.atlassian.net/browse/EXP-3572)
+
+   > Add the ability to record enrollment metrics for Cirrus clients. (chumphreys)
+
+
+☁️  [Demo app](https://mozilla-hub.atlassian.net/browse/EXP-3664)
+
+   > A simple test app with the node backend and react frontend that integrates cirrus that we can use for local testing and integration. (ykhurana)
+
+
+☁️  [Configurations for integrating Monitor](https://mozilla-hub.atlassian.net/browse/EXP-3383)
+
+   > Adding new application options, configurations, and collections to allow Monitor to be hooked up with Cirrus. (ykhurana)
+
+## Experimenter
+
+🙌 [Inclusion and exclusion targeting](https://mozilla-hub.atlassian.net/browse/EXP-3601)
+
+   > Dropdowns have been added to the "Audience" page on Experimenter called ‘Include Experiments’ and ‘Exclude Experiments’. The drop downs are multiselect fields that lists all Nimbus Experiments in all statuses (Live, Draft, Preview, Complete).  A user can select any number of other experiments in each list, but no experiment should be selectable in both.  The selected included and excluded experiments should appear as part of the targeting JEXL string in the recipe as either being present or not present in the list of enrolled experiment slugs in the client. (brennie)
+
+
+🙌 [New fields in Takeaways section](https://mozilla-hub.atlassian.net/browse/EXP-4022)
+
+   > Three new fields have been added to the Takeaways section for completed experiments: a checkbox for "QBR notable learnings", a checkbox for "Promising metric gains" (a.k.a. "Statistically Significant DaU Gain"), and a free-form text area for "Gain amount" that allows the user to dig deeper into what metrics changed and the significance. In addition to that, the two checkbox fields have been added as a filter on the homepage to allow easy access to impactful experiments. (erichards)
+
+<img style={{border:"1px solid grey"}} title="new-fields-filter" src="/img/whats-news/takeaways_new_fields_filters.png" className="img-sm-left"/>
+<br/>
+<img style={{border:"1px solid grey"}} title="takeaways-new-fields" src="/img/whats-news/takeaways_new_fields.png"/>
+
+🙌   [Outreachy History Tracker Project](https://mozilla-hub.atlassian.net/browse/EXP-3222) 
+
+   > This work was completed by our Outreachy intern. This introduces a new page which show the changelogs of a particualr experiment within the existing project. The link to this page is now available underneath "Summary" on the left sidebar of an experiment's detail view. (ykhurana, avi-88)
+
+<img style={{border:"1px solid grey"}} title="history-sidebar-draft" src="/img/whats-news/history-draft.png" className="img-sm-left"/> <img style={{border:"1px solid grey"}} title="history-sidebar-live" src="/img/whats-news/history-live.png" className="img-sm-left"/>
+
