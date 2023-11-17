@@ -36,13 +36,13 @@ Adding [repo files](/fml/fml-paths) can be done with one or more `--repo-file` a
 
 For [remote manifests](/fml/fml-paths), the default branch to fetch from is `main`. This can be changed with the `--ref` option.
 
-```
-% nimbus-fml generate --language <LANGUAGE> --ref releases_v118 @mozilla-mobile/firefox-android/fenix/app/nimbus.fml.yaml <OUTPUT>
-```
-
 Using a `ref` is equivalent to taking the remote repo of the manifest path and creating a `repo-file` with that repo mapped to the given `ref`.
 
-This command uses feature manifest from the `releases_v118` branch of the https://github.com/mozilla-mobile/firefox-android repository.
+This command uses feature manifest from the `releases_v118` branch of the https://github.com/mozilla-mobile/firefox-android repository:
+
+```sh
+% nimbus-fml generate --language <LANGUAGE> --ref releases_v118 @mozilla-mobile/firefox-android/fenix/app/nimbus.fml.yaml <OUTPUT>
+```
 
 ### Caching remote files
 
@@ -144,10 +144,10 @@ The `hashes` object shows truncated SHA256 hashes for:
 - the schema (the types, variable names, the enum variants available)
 - the defaults (the default values of the feature variables)
 
-Changes in the **schema hash** might indicate a change in the **feature code**. Changes in the **defaults hash** would indicate a **different configuration being used** for the same code.
-
 :::tip
-Changes in the schema hash will almost always be accompanied by a change in the defaults hash, with the exception of changing variable types from
+- Changes in the **schema hash** might indicate a change in the **feature code**.
+- Changes in the **defaults hash** would indicate a **different configuration being used** for the same code.
+- Changes in the schema hash will almost always be accompanied by a change in the defaults hash, with the exception of changing variable types from
 a `String` type to a `string-alias` type (or vice-versa).
 :::
 
