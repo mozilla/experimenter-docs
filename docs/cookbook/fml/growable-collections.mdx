@@ -15,7 +15,7 @@ For example,
 
 ## Solution
 
-Use a type of `Map<String, T>`.
+Use a type of `Map<String, T>`, with a string-alias.
 
 ```yaml
 ---
@@ -28,7 +28,8 @@ features:
     variables:
       asset-urls:
         description: A collection of downloadable assets
-        type: Map<String, String>
+        type: Map<AssetName, String>
+        string-alias: AssetName
         default: {}
   defaults:
     - channel: debug
@@ -84,7 +85,8 @@ The feature manifest defines the shape i.e. the types, of the complete configura
 ```yaml
       asset-urls:
         description: A collection of downloadable assets
-        type: Map<String, String>
+        type: Map<AssetName, String>
+        string-alias: AssetName
         default: {}
 ```
 
@@ -173,7 +175,7 @@ record an exposure only when that asset is being shown. We can do this by adding
 ```yaml
       asset-under-experiment:
         description: The key into the asset urls map of the asset we wish to test.
-        type: Option<String>
+        type: Option<AssetName>
         default: null
 ```
 
