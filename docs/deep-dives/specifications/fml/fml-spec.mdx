@@ -671,6 +671,54 @@ Maps with enum keys must have a default value for every variant of the enum.
 
 Since maps are backed by JSON objects, the merge/patching allows entries to come from the manifest, experiments and rollouts simultaneously.
 
+### String aliasing
+
+As the size and complexity of the feature grows, different parts of the configuration are tied together with `String` keys.
+
+`string-alias` is a type annotation for FML feature variables. It's effect is to define a `String` type with a limited set of valid strings.
+
+This is like enums, in that it defines a set of valid values, but unlike enums in that the set is not known at build time.
+
+```yaml
+features:
+  onboarding:
+    description: A feature to vary the appearance of all toasts and modal dialogs
+    variables:
+      queries:
+        description: A map of named JEXL queries
+        type: Map<QueryName, String>
+        string-alias: QueryName
+        default:
+          ALWAYS: 'true'
+          CHRISTMAS_DAY: '-12-25' in date_string
+      cards:
+        type: Map<CardKey, CardData>
+        string-alias: CardKey
+        default: {}
+
+objects:
+  CardData:
+    description: An onboarding card, which can be optionally displayed or hidden.
+    fields:
+      trigger-if:
+        description: Show this message if the list of queries are all true.
+        type: List<QueryName>
+        default:
+          - ALWAYS
+      except-if:
+        description: Hide this message if any of this list of queries are true.
+        type: List<QueryName>
+        default: []
+      …
+```
+
+In the above example, `QueryName` is given as the set of strings that are keys for the feature's `queries` map.
+
+When used in the card`s `trigger-if` and `except-if` lists, the FML will validate that each item is found in the map. In this manner, experiment owners can
+add queries to the map and safely use them when defining new `cards`, without needing a rebuild or re-release of the code.
+
+For more, please see [the `string-alias` documentation](/fml/string-alias).
+
 ## Merging other FML files into this one
 
 This `include` property is a list of files which will be merged with this one. The files may be relative to this one, absolute or URLs.
