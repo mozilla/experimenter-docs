@@ -32,6 +32,18 @@ Adding [repo files](/fml/fml-paths) can be done with one or more `--repo-file` a
 % nimbus-fml generate --language <LANGUAGE> --repo-file ./app-structure.json <INPUT> <OUTPUT>
 ```
 
+### Getting different versions of the same manifest
+
+For [remote manifests]((/fml/fml-paths)), the default branch to fetch from is `main`. This can be changed with the `--ref` option.
+
+```
+% nimbus-fml generate --language <LANGUAGE> --ref releases_v118 @mozilla-mobile/firefox-android/fenix/app/nimbus.fml.yaml <OUTPUT>
+```
+
+Using a `ref` is equivalent to taking the remote repo of the manifest path and creating a `repo-file` with that repo mapped to the given `ref`.
+
+This command uses feature manifest from the `releases_v118` branch of the https://github.com/mozilla-mobile/firefox-android repository.
+
 ### Caching remote files
 
 ```
@@ -40,7 +52,7 @@ Adding [repo files](/fml/fml-paths) can be done with one or more `--repo-file` a
 
 [For `include` and `import` directives in the FML](/fml/fml-imports-and-includes), a remote file may be referenced. The cache directory is a local cache of these remote files.
 
-For each of the following, `--cache-dir` and `--repo-file` flags are supported.
+For each of the following, `--ref`, `--cache-dir` and `--repo-file` flags are supported.
 
 ## Generating a manifest file for experimenter
 
@@ -54,7 +66,7 @@ For legacy reasons, this is a different format of yaml file, which should be che
 
 This should only be called at the application level, with the one main fml file as an input.
 
-`--cache-dir` and `--repo-file` arguments are also supported.
+`--cache-dir`, `--ref` and `--repo-file` arguments are also supported.
 
 ## Validating a manifest file
 
