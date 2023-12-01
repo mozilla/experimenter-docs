@@ -34,7 +34,7 @@ Adding [repo files](/fml/fml-paths) can be done with one or more `--repo-file` a
 
 ### Getting different versions of the same manifest
 
-For [remote manifests]((/fml/fml-paths)), the default branch to fetch from is `main`. This can be changed with the `--ref` option.
+For [remote manifests](/fml/fml-paths), the default branch to fetch from is `main`. This can be changed with the `--ref` option.
 
 ```
 % nimbus-fml generate --language <LANGUAGE> --ref releases_v118 @mozilla-mobile/firefox-android/fenix/app/nimbus.fml.yaml <OUTPUT>
@@ -108,3 +108,76 @@ To help this, the `single-file` command is used to merge all imports and include
 ```
 % nimbus-fml single-file --channel release @mozilla-mobile/firefox-android/fenix/app/nimbus.fml.yaml single-file.fml.yaml
 ```
+
+## Generating a machine readable overview of a feature
+
+```sh
+nimbus-fml info [--channel CHANNEL] [--json] <MANIFEST> [--feature FEATURE]
+```
+
+This prints a simplified YAML or JSON representation for each feature. e.g.
+
+```json
+{
+  "file": "https://raw.githubusercontent.com/mozilla-mobile/firefox-android/main/fenix/app/nimbus.fml.yaml",
+  "features": {
+    "homescreen": {
+      "description": "The homescreen that the user goes to when they press home or new tab.",
+      "types": [
+        "Boolean",
+        "HomeScreenSection",
+        "Map<HomeScreenSection, Boolean>"
+      ],
+      "hashes": {
+        "schema": "7a15570b",
+        "defaults": "423ab0bd"
+      }
+    }
+  }
+}
+```
+
+The `hashes` object shows truncated SHA256 hashes for:
+
+- the schema (the types, variable names, the enum variants available)
+- the defaults (the default values of the feature variables)
+
+Changes in the schema hash might indicate a change in the feature code.
+Changes in the defaults hash would indicate a different configuration being used for the same code.
+
+:::info
+Changes in the schema hash will almost always be accompanied by a change in the defaults hash, with the exception of changing variable types from
+a `String` type to a `string-alias` type (or vice-versa).
+:::
+
+The `types` list is a sorted list of the types involved used to define the feature. This list may be used as a proxy for a measure of complexity of the feature configuration space.
+
+In addition, [the feature metadata](/fml/feature-metadata) is also displayed.
+
+If a `--feature` argument is supplied, then restrict the output to just this feature.
+
+If a `--channel` argument is supplied, then use this channel. This will affect the `defaults` hashes.
+
+:::info Using `info` with JQ
+You can use `--json` JQ to output some interesting data:
+
+Get the features for this app:
+
+```sh
+nimbus-fml info <INPUT> --json | jq '.features|keys'
+```
+
+Get the channels for this app:
+
+```sh
+nimbus-fml channels <INPUT> --json
+```
+
+Get the hashes for just the `homescreen` feature:
+
+```sh
+nimbus-fml info <INPUT> --json | jq '.features.homescreen.hashes'
+```
+:::
+
+`--cache-dir`, `--ref` and `--repo-file` arguments are also supported.
