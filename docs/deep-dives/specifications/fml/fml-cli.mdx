@@ -66,7 +66,7 @@ For legacy reasons, this is a different format of yaml file, which should be che
 
 This should only be called at the application level, with the one main fml file as an input.
 
-`--cache-dir`, `--ref` and `--repo-file` arguments are also supported.
+`--cache-dir`, `--ref`, and `--repo-file` arguments are also supported.
 
 ## Validating a manifest file
 
@@ -112,7 +112,7 @@ To help this, the `single-file` command is used to merge all imports and include
 ## Generating a machine readable overview of a feature
 
 ```sh
-nimbus-fml info [--channel CHANNEL] [--json] <MANIFEST> [--feature FEATURE]
+% nimbus-fml info [--channel CHANNEL] [--json] <MANIFEST> [--feature FEATURE]
 ```
 
 This prints a simplified YAML or JSON representation for each feature. e.g.
@@ -137,20 +137,25 @@ This prints a simplified YAML or JSON representation for each feature. e.g.
 }
 ```
 
+### Hashes
+
 The `hashes` object shows truncated SHA256 hashes for:
 
 - the schema (the types, variable names, the enum variants available)
 - the defaults (the default values of the feature variables)
 
-Changes in the schema hash might indicate a change in the feature code.
-Changes in the defaults hash would indicate a different configuration being used for the same code.
+Changes in the **schema hash** might indicate a change in the **feature code**. Changes in the **defaults hash** would indicate a **different configuration being used** for the same code.
 
-:::info
+:::tip
 Changes in the schema hash will almost always be accompanied by a change in the defaults hash, with the exception of changing variable types from
 a `String` type to a `string-alias` type (or vice-versa).
 :::
 
+### Types
+
 The `types` list is a sorted list of the types involved used to define the feature. This list may be used as a proxy for a measure of complexity of the feature configuration space.
+
+### Feature metadata
 
 In addition, [the feature metadata](/fml/feature-metadata) is also displayed.
 
@@ -164,19 +169,19 @@ You can use `--json` JQ to output some interesting data:
 Get the features for this app:
 
 ```sh
-nimbus-fml info <INPUT> --json | jq '.features|keys'
+% nimbus-fml info <INPUT> --json | jq '.features|keys'
 ```
 
 Get the channels for this app:
 
 ```sh
-nimbus-fml channels <INPUT> --json
+% nimbus-fml channels <INPUT> --json
 ```
 
 Get the hashes for just the `homescreen` feature:
 
 ```sh
-nimbus-fml info <INPUT> --json | jq '.features.homescreen.hashes'
+% nimbus-fml info <INPUT> --json | jq '.features.homescreen.hashes'
 ```
 :::
 
