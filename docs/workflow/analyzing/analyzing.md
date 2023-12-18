@@ -7,4 +7,4 @@ slug: /analyzing
 
 Coming soon!
 
-See [jetstream](/jetstream/jetstream) for more info.
+See [jetstream](/deep-dives/jetstream/overview) for more info.

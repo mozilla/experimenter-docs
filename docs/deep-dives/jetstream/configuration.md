@@ -1,4 +1,6 @@
----
+--- 
+sidebar_position: 5
+slug: configuration
 id: configuration
 title: Configuring Jetstream
 ---
@@ -17,7 +19,7 @@ which should match the experiment slug, like `my-experiment-slug.toml`.
 This works for both Normandy and Nimbus slugs. 
 
 [partybal]: https://protosaur.dev/partybal/
-[outcome]: jetstream/outcomes.md
+[outcome]: ./outcomes
 [metric-hub]: https://github.com/mozilla/metric-hub/tree/main/jetstream
 
 ## Landing configurations
@@ -215,7 +217,7 @@ depends_on = ["moos", "clicks"]
 You should also add some sections to describe how your new metrics should be summarized for reporting.
 You can do this by adding a statistics section to the metric for the statistic you want.
 
-See [Statistics](jetstream/statistics.md) for a list of supported statistics and details about implementing your own.
+See [Statistics](./statistics) for a list of supported statistics and details about implementing your own.
 
 This looks like:
 
@@ -459,7 +461,7 @@ Results for exposure based metrics are currently not visualized in Experimenter.
 
 ## Testing configurations
 
-For more information on how to test configurations see [Testing Jetstream Configs](jetstream/testing.md)
+For more information on how to test configurations see [Testing Jetstream Configs](./testing)
 
 
-[Nimbus exposure event]: ../mobile-feature-api#recording-exposure-events
+[Nimbus exposure event]: /mobile-feature-api#recording-exposure-events

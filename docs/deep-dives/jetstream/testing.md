@@ -1,6 +1,8 @@
 ---
 id: testing
 title: Testing Jetstream Configs
+slug: testing
+sidebar_position: 9
 ---
 
 # Testing Jetstream Configs

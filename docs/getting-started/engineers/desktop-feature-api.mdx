@@ -195,7 +195,7 @@ const { foo, bar } = NimbusFeatures.myFeature.getAllVariables({
 
 ### `recordExposureEvent()`
 
-Use this to send an [exposure event](/jetstream/jetstream/#enrollment-vs-exposure). By default this will send one exposure event per function call, but you can add an options object of `{once: true}` to only send it once per session.
+Use this to send an [exposure event](/deep-dives/jetstream/overview#enrollment-vs-exposure). By default this will send one exposure event per function call, but you can add an options object of `{once: true}` to only send it once per session.
 
 Note that you should add an `exposureDescription` to the manifest describing when/how this event is sent.
 

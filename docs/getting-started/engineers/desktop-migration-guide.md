@@ -26,7 +26,7 @@ pref("browser.aboutmyself.bgcolor", "#FE8DAE");
 First, you will need to register a new feature in [FeatureManifest.yaml](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.yaml). In this case, we're creating one called `aboutmyself`.
 After adding the feature a build step is required to update the appropriate header file.
 
-Read more to find out if you want to send an [exposure event](/jetstream/jetstream/#enrollment-vs-exposure). This is optional but a decision must be recorded in the manifest.
+Read more to find out if you want to send an [exposure event](/deep-dives/jetstream/overview#enrollment-vs-exposure). This is optional but a decision must be recorded in the manifest.
 
 Each preference is registered as a `variable`:
 

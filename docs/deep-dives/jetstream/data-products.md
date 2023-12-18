@@ -1,6 +1,9 @@
 ---
 id: data-products
 title: Jetstream Data Products
+sidebar_position: 6
+sidebar_label: Data products
+slug: data-products
 ---
 
 Jetstream writes analysis results and enrollments information to BigQuery. Statistics data and metadata gets exported to GCS to make it accessible to the Experimenter console.

@@ -1,7 +1,8 @@
 ---
-id: jetstream
-title: Jetstream overview
-slug: /jetstream/jetstream
+id: overview 
+title: Overview
+slug: overview
+sidebar_position: 1
 ---
 
 **[Jetstream]** is an analysis framework for experiments.
@@ -81,7 +82,7 @@ Any telemetry collection can be used as an exposure event, though events are oft
 Many Nimbus features will send a [Nimbus exposure event] automatically when the feature configuration is consulted;
 these are `normandy#expose` events on desktop and `nimbus_events.exposure` events in Glean.
 
-[Nimbus exposure event]: ../mobile-feature-api#recording-exposure-events
+[Nimbus exposure event]: /mobile-feature-api#recording-exposure-events
 
 ## Analysis steps
 
@@ -126,11 +127,11 @@ are available in BigQuery.
 [Technical documentation][jetstream-dtmo]
 is available in the Mozilla data docs.
 
-[experiment configurations]: configuration.md
+[experiment configurations]: ./configuration
 [jetstream]: https://github.com/mozilla/jetstream
 [metric-hub]: https://github.com/mozilla/metric-hub/tree/main/jetstream
 [jetstream-dtmo]: https://docs.telemetry.mozilla.org/datasets/jetstream.html
-[metrics]: metrics.md
-[outcome]: outcomes.md
+[metrics]: ./metrics
+[outcome]: ./outcomes
 [mozanalysis]: https://github.com/mozilla/mozanalysis
-[Jetstream Operations]: operations.md/#tooling-and-metric-versioning
+[Jetstream Operations]: ./operations#tooling-and-metric-versioning

@@ -1,6 +1,8 @@
 ---
 id: outcomes
 title: Outcomes
+slug: outcomes
+sidebar_position: 4
 ---
 
 An Outcome is a reusable configuration snippet
@@ -50,7 +52,7 @@ If it passes, a data scientist can merge the Outcome definition without addition
 
 Experimenter will need to be re-deployed to pick up a new Outcome. Please ask in #nimbus-project if you're in a hurry!
 
-[Configuring Jetstream]: jetstream/configuration.md
+[Configuring Jetstream]: ./configuration
 
 ## Parameterizing Outcomes
 
@@ -94,5 +96,5 @@ and then copy-paste the metrics into an Outcome for later use.
 ## What happens if an Outcome changes?
 
 Changing an Outcome does not re-run any experiments.
-A commit hash associated with the version of each Outcome is captured in the [experiment metadata](jetstream/data-products.md) published to GCS,
+A commit hash associated with the version of each Outcome is captured in the [experiment metadata](./data-products) published to GCS,
 so it's possible to understand which version of an Outcome was associated with an experiment analysis.

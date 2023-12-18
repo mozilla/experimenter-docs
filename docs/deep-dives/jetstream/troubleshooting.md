@@ -1,6 +1,9 @@
 ---
 id: troubleshooting
 title: Troubleshooting Jetstream
+slug: troubleshooting
+sidebar_label: Troubleshooting
+sidebar_position: 8
 ---
 
 ### How can I see what Jetstream is doing? 

@@ -1,14 +1,16 @@
 ---
-id: data-scientists-root
+id: overview
 title: Experimentation for data scientists
-slug: /data-scientists
+slug: /overview
+sidebar_position: 1
+sidebar_label: Overview
 ---
 
 This page describes the roles data scientists play in experimentation at Mozilla.
 
 Some other things you may be looking for are:
 
-* Documentation about using [Jetstream](jetstream/jetstream.md), Mozilla's experiment analysis tool
+* Documentation about using [Jetstream](/deep-dives/jetstream/overview), Mozilla's experiment analysis tool
 * Technical documentation about [datasets used in experimentation](https://docs.telemetry.mozilla.org/tools/experiments.html)
 * [Process documentation](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/overview) for the Mozilla data science organization
   (internal link)
@@ -35,14 +37,14 @@ The support that experiment owners need from data scientists during experiment s
 * validating that the experimental design will answer their questions
 * consulting on telemetry specifications
 * sample size recommendations
-* writing [custom metrics](jetstream/metrics.md) if needed
+* writing [custom metrics](/deep-dives/jetstream/metrics) if needed
 * guidance about interpretation
 
 ## Sampling framework
 
 Each experiment begins with an enrollment period with fixed start and end dates during which clients can enroll in the experiment. After the declared enrollment period ends, we modify the recipe to instruct clients to stop enrolling, and ignore clients that report enrollment anyway. Because enrollment depends on the client checking for software updates, samples will be skewed towards active users at the beginning of the enrollment period. We typically leave enrollment open for a week to account for weekly seasonality (e.g. weekday vs. weekend users) and to give clients who are active less often a chance to enroll. This makes our experiment population essentially a sample of the weekly active users (WAU).
 
-For each client, experiment metrics are analyzed over a defined period of time from enrollment. We report results for an analysis period (e.g. the first day after enrollment) after all clients have had a chance to experience the treatment for that duration. The [Jetstream overview](jetstream/jetstream.md#analysis-paradigm) describes the analysis paradigm in more depth and how it relates to the length of an experiment.
+For each client, experiment metrics are analyzed over a defined period of time from enrollment. We report results for an analysis period (e.g. the first day after enrollment) after all clients have had a chance to experience the treatment for that duration. The [Jetstream overview](/deep-dives/jetstream/overview#analysis-paradigm) describes the analysis paradigm in more depth and how it relates to the length of an experiment.
 
 For more nuances about sampling, enrollment and exposure (whether or not the client actually saw the treatment or control), see [the experiment lifecycle overview](deep-dives/specifications/client-sdk-states-and-lifecycle.mdx).
 
@@ -93,7 +95,7 @@ Most of our telemetry metrics are not normally distributed. A couple approaches 
 
 Two weeks after the beginning of the enrollment period, Jetstream will begin to produce auto-generated reports summarizing the results of the experiment. [Here is one such report](https://experimenter.services.mozilla.com/nimbus/custom-messaging-in-aboutwelcome-for-chrome-users-to-import/results) (internal link).
 
-To see which metrics are included by default to this auto-generated report as well as information on adding custom and default metrics, statistics and confidence, see the [Jetstream documentation](jetstream/jetstream.md).
+To see which metrics are included by default to this auto-generated report as well as information on adding custom and default metrics, statistics and confidence, see the [Jetstream documentation](/deep-dives/jetstream/overview).
 
 If you want to perform some analysis by hand, [Jetstream datasets](https://docs.telemetry.mozilla.org/datasets/jetstream.html) are also available in BigQuery. Many telemetry datasets also include an `experiments` field, which when filtered on the experiment slug, can identify rows in the dataset enrolled in the experiment.
 
