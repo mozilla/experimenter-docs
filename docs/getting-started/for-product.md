@@ -20,13 +20,19 @@ Responsibilities include:
 ## Where do I start?
 
 - Watch the 5 minute video on [experiment workflow](https://experimenter.info/workflow/overview) for an overview of the experiment lifecycle to understand the stages / ordering. Use the [Workflow Miro board](https://experimenter.info/workflow/overview) as your source for current links and guidance.
-- You must watch the training video before writing your first experiment. The training for new experiment owners is [here](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3bcc9a08-50a4-45bb-88fe-af2001116cb3) - the slide deck in the video is [here](https://docs.google.com/presentation/d/1ASlVAds63qOzCDnyLWlbKAcgvTkVfojDeGFqIYty4iI/edit?usp=share_link).
-- Ask any questions in ask-experimenter (you will have questions the first few times). Please ask for a shadow in #ask-experimenter you first time(s) through and someone will hop on zoom to write with you. We are happy to help people through the learning curve.
-- Start by opening the Experiment Brief link. If it is your first [Experiment Brief](https://docs.google.com/document/d/1_bWn_1y5x1zf6zl7Loj4O1qKnVdxzIMXOawIpf32CsM/edit?usp=share_link) - there is an optional 5 minute ["how to video"](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=178918e0-cc77-4acd-a0a6-ae5c00e3cb68).
-- Fill out your experiment brief. As the Product Manager you are responsible for clearly articulating the product goals and questions that need to be answered. Capture as much as you can. It will improve and evolve as you have conversations with different subject matter experts. The experiment brief is the authoritative source to capture the shared understanding.
-- Link the experiment brief to your experiment when you write it in the experiment tool at https://experimenter.services.mozilla.com/
+
+:::tip IMPORTANT
+**You must watch the training video before writing your first experiment.** 
+- The training for new experiment owners is [here](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=3bcc9a08-50a4-45bb-88fe-af2001116cb3) 
+- The slide deck in the video is [here](https://docs.google.com/presentation/d/1ASlVAds63qOzCDnyLWlbKAcgvTkVfojDeGFqIYty4iI/edit?usp=share_link).
+:::
+
+- **Ask any questions in ask-experimenter** (you will have questions the first few times). Please ask for a shadow in #ask-experimenter you first time(s) through and someone will hop on zoom to write with you. We are happy to help people through the learning curve.
+- **Start by opening the Experiment Brief link.** If it is your first [Experiment Brief](https://docs.google.com/document/d/1_bWn_1y5x1zf6zl7Loj4O1qKnVdxzIMXOawIpf32CsM/edit?usp=share_link) - there is an optional 5 minute ["how to video"](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=178918e0-cc77-4acd-a0a6-ae5c00e3cb68).
+- **Fill out your experiment brief.** As the Product Manager you are responsible for clearly articulating the product goals and questions that need to be answered. Capture as much as you can. It will improve and evolve as you have conversations with different subject matter experts. The experiment brief is the authoritative source to capture the shared understanding.
+- **Link the experiment brief to your experiment** when you write it in the experiment tool at https://experimenter.services.mozilla.com/
 - Referencing one source (the experiment brief) for the verbose experiment background enables the subject matter experts (engineering, QA, experiment tooling, data) to efficiently support the effort and respond to changing requirements. Product Managers will keep editing the experiment brief throughout the lifecycle of the experiment. Capture the decisions as they are made back in your experiment brief. Decisions left in in slack channels, verbal discussions, various notes, jira tickets, etc - increase the likelihood of errors and wasted effort.
-- There Checklist section at the end of your Experiment Brief to help you through the steps of your experiment.
+- There is a **Checklist section** at the end of your Experiment Brief to help you through the steps of your experiment.
 
 ## Key Resources for Product Managers
 

@@ -1,19 +1,19 @@
 ---
 id: what-do-it-do
 title: What does early startup do?
-slug: /early-startup/what-do-it-do
+slug: what-do-it-do
 ---
 
 :::tip
-There is info on how to use [here in the documentation](/desktop-feature-api/#registering-a-new-feature)
+There is info on how to use Early Startup [here in the documentation](/desktop-feature-api/#registering-a-new-feature)
 :::
 
 Include "isEarlyStartup" in the FeatureManifest.yaml if you need sychronous access / very early access at startup or if you are registering this to use for platform experiments.
 
-What does this do?
+**What does this do?**
 * It caches the feature values to disk using temporary prefs so that they’re available as soon as user prefs are initialized and loaded, so they’re available earlier in browser initialization and also helps make them available to gecko more easily.
 * IsEarlyStartup means we persist the experiment data in prefs so you can a) use them from c++ or b) use the JS experiment API before we've loaded experiments from disk.
 
-So why don't I always use Early Startup to be sure my feature is controllable by an experiment early enough?
+**So why don't I always use Early Startup to be sure my feature is controllable by an experiment early enough?**
 * You have to reconcile storing state in multiple places, it's only needed for a specific set of features in specific circumstances, so for the rest of them it's much safer to not touch the pref store at all and only worry about a single source of state.
 * It also makes tests more annoying because if you don't clean them up properly it's easy to break adjacent tests
