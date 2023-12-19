@@ -1,9 +1,12 @@
 ---
 id: operations
 title: Jetstream Architecture and Operations
+slug: operations
+sidebar_position: 7
+sidebar_label: Architecture and Operations
 ---
 
-**[Jetstream]** is part of the Cirrus ecosystem and depends on some external services.
+[Jetstream](./overview) is part of the Cirrus ecosystem and depends on some external services.
 
 ![Cirrus overview](/img/jetstream/cirrus.png)
 *High-level overview of Cirrus*
@@ -111,7 +114,7 @@ This date will again be based on the last updated timestamp of the enrollments t
 
 When making changes to experiment-specific configs, jetstream will automatically rerun the affected experiments which will result in the enrollments table getting updated and the most recent configs in metric-hub being used.
 
-More information on how to use the most recent tooling and metric versions can be found [here](jetstream.md/#how-to-use-the-latest-tooling-and-metric-definitions).
+More information on how to use the most recent tooling and metric versions can be found [here](./overview#how-to-use-the-latest-tooling-and-metric-definitions).
 
 [jetstream]: https://github.com/mozilla/jetstream
 [jetstream error dashboard]: https://mozilla.cloud.looker.com/dashboards/246

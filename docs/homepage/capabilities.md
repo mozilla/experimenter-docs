@@ -14,11 +14,11 @@ Nimbus is a full-featured experimentation platform that provides configuration, 
 - [Rollouts](/deep-dives/experimenter/rollouts.mdx)
 - Simple targeting
 - Advanced customizable targeting
-- [Adding Metrics to your Experiment](/jetstream/metrics)
+- [Adding Metrics to your Experiment](/deep-dives/jetstream/metrics)
 - Remote settings integration
 - [Experiment Review / Approval Workflow](/access)
 - Dashboards
-- [Monitoring and Analysis](/jetstream/jetstream)
+- [Monitoring and Analysis](/deep-dives/jetstream/overview)
 
 ## Multiple language Client integrations
 - Android (Kotlin)

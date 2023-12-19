@@ -2,6 +2,7 @@
 id: experiment-sizing
 title: Sizing Experiments Using Mozanalysis
 slug: /experiment-sizing
+sidebar_label: Sizing using Mozanalysis
 ---
 
 This page gives an overview of how Mozanalysis can be used to do experiment sizing. **[Mozanalysis]** is a library used to standardize experiment analysis at Mozilla. Mozanalysis contains the statistical tools used by [Jetstream] to produce results from experiments, as well as tools to pull historical data from BigQuery to calculate necessary sample sizes to carry out experiments. The results of the tool are the sample size and percent of the total target population required per branch of an experiment with a balanced design to achieve a given power.
@@ -38,7 +39,7 @@ The time series data returned will contain a row for each client for each time s
 
 Selecting clients for analysis is accomplished by using the [`Segment`](https://github.com/mozilla/mozanalysis/tree/main/src/mozanalysis/segments) objects in Mozanalysis; users can either reuse segments that currently exist in Mozanalysis or define one at runtime. Segments consist of a data source, either a table or view in BigQuery, and a SELECT expression to filter that data source; this SELECT expression must include a SQL aggregate function.
 
-Similarly, Mozanalysis experiment sizing reuses `Metric` objects from [Jetstream](jetstream/metrics.md), and users can reuse metrics that are currently implemented in [Mozanalysis](https://github.com/mozilla/mozanalysis/tree/main/src/mozanalysis/metrics) or in [Jetstream configs](https://github.com/mozilla/metric-hub/tree/main/jetstream), or users can define their own at runtime.
+Similarly, Mozanalysis experiment sizing reuses [`Metric` objects](/deep-dives/jetstream/metrics) from Jetstream, and users can reuse metrics that are currently implemented in [Mozanalysis](https://github.com/mozilla/mozanalysis/tree/main/src/mozanalysis/metrics) or in [Jetstream configs](https://github.com/mozilla/metric-hub/tree/main/jetstream), or users can define their own at runtime.
 
 Metrics and target segments are passed to Mozanalysis experiment sizing as lists of `Segment` or `Metric` objects; users may include multiple of each in the analysis. When multiple `Segment` objects are used, Mozanalysis identifies clients that satisfy the conditions of **all** targets in the list. If users would like to run analyses where `Segment`s should be joined with OR rather than AND, multiple experiment sizing tasks should be completed, for each condition in the OR statement, and aggregate the returned results from each separate study.
 
@@ -60,5 +61,5 @@ Mozanalysis contains functions that take the results from pulling historical dat
 4. Replicating sizing for Waldo, which uses continuous enrollment [(link)](https://colab.research.google.com/drive/1_R4zBUnucRPmHwIVLlPTYInDZwTbCn-F?usp=sharing)
 5. Pulling time series historical data and sizing with empirical sample size calculation [(link)](https://colab.research.google.com/drive/1-XT2DMfGSqiCS18yGPIGCs_YWg75qZzn?usp=sharing)
 
-[Jetstream]: jetstream/jetstream.md
+[Jetstream]: /deep-dives/jetstream/overview
 [mozanalysis]: https://github.com/mozilla/mozanalysis

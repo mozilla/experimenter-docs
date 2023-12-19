@@ -1,4 +1,9 @@
-# Adding a Platform
+---
+id: adding-a-platform
+sidebar_position: 10
+title: Adding a Platform
+slug: adding-a-platform 
+---
 
 Jetstream runs analyses for experiments launched on several different platforms, such as Fenix or Firefox Desktop. When adding a new platform in Experimenter, the new platform also needs to be configured in Jetstream to enable automated analyses for launched experiments.
 

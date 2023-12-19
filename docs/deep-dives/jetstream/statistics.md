@@ -1,6 +1,8 @@
 ---
 id: statistics
 title: Statistics
+slug: statistics
+sidebar_position: 3
 ---
 
 Statistics reduce observations of many clients

@@ -1,6 +1,8 @@
 ---
 id: metrics
 title: Metrics
+sidebar_position: 2
+slug: metrics
 ---
 
 A *metric* describes an aggregation of user activity,
@@ -12,9 +14,9 @@ So is "a user's average page load time."
 
 Metrics are applied over a window of time,
 called an analysis window.
-The [Jetstream overview](jetstream.md) has more details about analysis windows.
+The [Jetstream overview](./overview) has more details about analysis windows.
 
-:::note What's in a name?
+:::tip What's in a name?
 
 [Glean](https://mozilla.github.io/glean/book/index.html)
 also has a concept called
@@ -25,7 +27,7 @@ Jetstream metrics represent aggregations of the recorded values of Glean metrics
 
 :::
 
-[Statistics](statistics.md) summarize the distribution of metrics
+[Statistics](./statistics) summarize the distribution of metrics
 within and between branches of an experiment.
 
 ## How do I add a metric to my experiment?
@@ -34,11 +36,11 @@ A small set of critical guardrail metrics (called Core Firefox Metrics in Nimbus
 specific to each platform is run by default for each experiment.
 These are defined for each platform in the metric-hub repository in [jetstream/defaults/](https://github.com/mozilla/metric-hub/tree/main/jetstream/defaults/). Look at the file for your platform. At the top you will see the metrics collected and the timeframe they are available: daily, weekly, or overall (at the end of the experiment).  For help understanding any aspect of guardrail metrics on your platform - link to the file and ask in #ask-experimenter.
 
-[Outcomes](outcomes.md) are collections of metrics that relate to each other.  You can associate an Outcome with your experiment in the Experiment Console - Metrics section.
+[Outcomes](./outcomes) are collections of metrics that relate to each other.  You can associate an Outcome with your experiment in the Experiment Console - Metrics section.
 Data scientists can extend and define outcomes in the outcomes path of the
 [`metric-hub`](https://github.com/mozilla/metric-hub/tree/main/jetstream/outcomes) repository.  See what [Outcomes are available](https://mozilla.github.io/metric-hub/outcomes/fenix/default-browser/).
 
-If the metrics you need are not covered by Guardrail/Core metrics or existing Outcomes - you can add a metric to your experiment by working with a data scientist to write a [custom configuration](configuration.md) for your experiment.
+If the metrics you need are not covered by Guardrail/Core metrics or existing Outcomes - you can add a metric to your experiment by working with a data scientist to write a [custom configuration](./configuration) for your experiment.
 
 
 

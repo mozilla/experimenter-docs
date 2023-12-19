@@ -12,7 +12,7 @@ The sizing CLI relies on a local TOML file to configure the job. This TOML file 
 
 ### TOML file layout
 
-The TOML configuration file must contain a `metrics`, `data_sources`, `segments`, and `segments.data_sources` section, each containing the definitions for those of interest for the experiments. The definition of each of these follows the same patterns as [Jetstream], and details on how to define your own inside of the TOML file can be found [here](https://experimenter.info/jetstream/configuration#defining-metrics).
+The TOML configuration file must contain a `metrics`, `data_sources`, `segments`, and `segments.data_sources` section, each containing the definitions for those of interest for the experiments. The definition of each of these follows the same patterns as [Jetstream], and details on how to define your own inside of the TOML file can be found [here](/deep-dives/jetstream/configuration#defining-metrics).
 
 The TOML file can also contain references to metrics, segments, data sources, and segment data sources that are already contained in [metric-hub]. To reference these pre-defined objects, an `import_from_metric_hub` list can be included in the TOML file. For instance, to import the `active_hours` metric for Firefox Desktop, the following is included in the TOML config file:
 ```
@@ -52,7 +52,7 @@ The results JSON will include an entry for each combination of power and effect 
 ```
 
 
-[Jetstream]: jetstream/jetstream.md
+[Jetstream]: /deep-dives/jetstream/overview
 [metric-hub]: https://github.com/mozilla/metric-hub
 [mozanalysis]: https://github.com/mozilla/mozanalysis
 [auto-sizing]: https://github.com/mozilla/auto-sizing
