@@ -16,9 +16,11 @@ For non-desktop applications, the Feature Manifest Language (FML) is used to sur
 
 You can see that the save button validation has given us usable FML errors, including the line/col number that the error occurs at:
 
-<img src="/img/deep-dives/deeply-nested-fml-error.png"/>
+<img title="Deeply nested FML error" src="/img/deep-dives/deeply-nested-fml-error.png"/>
 
-The FML generates errors based on the **feature** you are using, the **application**, and the **channel**. Changing the channel on your experiment may result in different FML errors, since there may be differences between the feature manifests for each channel.
+<img title="FML Version error" src="/img/deep-dives/fml-version-error.png"/>
+
+The FML generates errors based on the **feature** you are using, the **application**, the **versions** of the application that you are targeting, and the **channel**. Changing the channel on your experiment may result in different FML errors, since there may be differences between the feature manifests for each version and channel.
 
 
 ## Desktop
