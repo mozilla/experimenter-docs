@@ -15,7 +15,7 @@ Once you have concluded that an experiment is the correct approach for you conti
 
 ## To design an experiment
 
-1. Create an [experiment brief](https://docs.google.com/document/d/1eFGL9FATIuZudjSItpIT2Ct1C5qb5E3Qk7hJuJQT67s/edit)
+1. Create an [experiment brief](https://docs.google.com/document/d/1_bWn_1y5x1zf6zl7Loj4O1qKnVdxzIMXOawIpf32CsM/edit?usp=sharing)
 
 1. File a [data org (DO) Jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/issues/) (click *Create* in the header of the page)
 
