@@ -10,7 +10,7 @@ Once your experiment has launched, from your experimenter page you will now have
 When to check here:
 1. 15 mins to 2 hours after launch, check that your experiment is enrolling users.  If you have no users or gaining users much slower or quicker than you'd expect based on your expected number of clients - share the link and your concern in #ask-experimenter.
 2. Anytime during your experiment you can check that you don't have unexpected enrollment changes.
-3. Before you Close Enrollment, check that you have enrolled the expected number of clients.
+3. Before you Close Enrollment, **check that you have enrolled the expected number of clients**.  You do this by comparing your "expected enrolled clients" to the Cummulative Population Estitate number before ending enrollment.  If it is significantly different - ask in ask-experimenter and tag the assigned data scientist if it is OK to end.
 
 What the different charts mean:
 1. **Cummulative Population Estimate** is the total number of people enrolled in your experiment.  This is the chart experiment owners most frequently check to see if enrollment is on track for the expected number of clients.  Experiments are sized for this cummulative enrollment number, not daily active numbers.  
