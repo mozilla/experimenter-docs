@@ -15,3 +15,5 @@ Experimenter is intended to be flexible and simple to use by allowing users to:
 * * Go back and forth between all pages through the sidebar, without having to have completed the page completely. 
 * Edit or modify all information while your experiment is in Draft state.
 * Put your experiment into Preview mode for QA and self-testing
+
+There are questions in the Experimenter form to help you identify possible risks. See the [risk mitigation section](/risk-mitigation) for how to mitigate these risks.
