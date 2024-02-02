@@ -4,4 +4,12 @@ slug: /qa-sign-off
 sidebar_position: 1
 ---
 
-Under construction 🚧
+Feature testing alone is not enough for experiments or rollouts.  There is testing specific to see that the turning on and off of your feature works through Nimbus.  There is also testing if you are changing configurations (does it work in different locals? platforms?), if there is new advanced targeting that needs testing, and if there is new telemetry.  
+
+Unless you are 100% certain you don’t need QA - [file a QA ticket here](https://mozilla-hub.atlassian.net/jira/software/c/projects/QA/boards/261?quickFilter=1447).  Issue type will be either Experiment or Rollout.   QA often finds critical edge cases that were missed.  
+
+The only possible exceptions where you may not need official QA are below; **if you choose to skip QA, you must self-test**, [learn more](https://experimenter.info/previewing-experiments).  Self-testing is recommended even before sending to QA, as it can avoid days of delay if QA discovers an easily corrected recipe error when they start testing.
+1.  You are launching on Nightly or early Beta and the feature itself was tested.  
+2.  You are repeating an experiment with minimal changes that don’t involve new code.  Ex: QA tested the original experiment - and now you are rolling out one of the winning configurations.  You launched the original but there was a small error in targeting (be sure to consider localization with every country/language change, if there is user facing copy in your experiment!)
+3.  You are doing a message experiment with no new code changes or new targeting, so only changing the copy / well tested fields.  Note: Skipping testing for this is when we see easy-to-make human errors lead to sending the wrong language places.  We also see more image resolution issues that you’d think (cropped, color issues, scaling issues).  Swapping images can cause unexpected display issues.
+
