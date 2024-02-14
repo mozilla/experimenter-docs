@@ -6,26 +6,14 @@ sidebar_position: 1
 sidebar_label: What's Newsletter Q4 2023
 ---
 
-## Mobile 
-
-Coming soon...
-
-## Desktop
-
-Coming soon...
-
-## Jetstream & Results Analysis
-
-Coming soon...
-
-## Cirrus
-
-Coming soon...
-
 ## Experimenter
 
 🙌 FML error detection
 
-   > Error detection using the Feature Manifest Language is now available in Experimenter! For all applications that utilize the FML (non-desktop apps), the "Branches" page now uses the FML to detect when a feature configuration is invalid for the application's feature manifest. This is especially useful for deeply nested feature configurations. (erichards) [EXP-3873](https://mozilla-hub.atlassian.net/browse/EXP-3873), [EXP-2365](https://mozilla-hub.atlassian.net/browse/EXP-2365)
+Error detection using the Feature Manifest Language is now available in Experimenter! For all applications that utilize the FML (non-desktop apps), the "Branches" page now uses the FML to detect when a feature configuration is invalid for the application's feature manifest. This is especially useful for deeply nested feature configurations. (erichards) [EXP-3873](https://mozilla-hub.atlassian.net/browse/EXP-3873), [EXP-2365](https://mozilla-hub.atlassian.net/browse/EXP-2365)
 
-   > The FML also detects errors based on the specified versions that have been ch sen. For example, if you are targeting Fenix version 120 and the feature configuration shows errors for that version, you will now get helpful error messages that tell you _which_ version(s) of the feature manifest are throwing these errors. (erichards) [EXP-3875](https://mozilla-hub.atlassian.net/browse/EXP-3875)
+The FML also detects errors based on the specified versions that have been chosen. For example, if you are targeting Fenix version 120 and the feature configuration shows errors for that version, you will now get helpful error messages that tell you _which_ version(s) of the feature manifest are throwing these errors. (erichards) [EXP-3875](https://mozilla-hub.atlassian.net/browse/EXP-3875)
+
+It has gotten easier to write branch JEXL!  If you start with {" - you will see a list of the possible variables in a drop down that exist  for your feature.  If you put a value that is not the right type (boolean, string, integer) you will get an error.
+
+[QA Statuses](https://mozilla-hub.atlassian.net/browse/EXP-4146) are now available in experimenter.  This means you can easily see the status when reviewing, can find comments from QA right in the experiment, and filter to see experiments depending on their QA status.  
