@@ -4,7 +4,7 @@ title: Missing Exposure-based Analysis?
 slug: /missing-exposure
 ---
 
-In a Nimbus experiment, not every enrolled client actually experiences the experimental intervention or treatment. We refer to "experiencing the experimental treatment" as `exposure`. For example, in a messaging experiment, some enrolled users do not meet the conditions to be shown the message. As another example, some experiemental treatments require the user to restart their browser to take effect, so users who do not restart do not experience the treatment. Calculating results based on all enrolled users, when many users are not exposed, results in a _diluted estimate of the treatment impact_. For the highest precision, experiments should be configured with an _Exposure Signal_, which allows the analysis system to determine which enrolled users were exposed.
+In a Nimbus experiment, not every enrolled client actually experiences the experimental intervention or treatment. We refer to "experiencing the experimental treatment" as `exposure`. For example, in a messaging experiment, some enrolled users do not meet the conditions to be shown the message. As another example, some experimental treatments require the user to restart their browser to take effect, so users who do not restart do not experience the treatment. Calculating results based on all enrolled users, when many users are not exposed, results in a _diluted estimate of the treatment impact_. For the highest precision, experiments should be configured with an _Exposure Signal_, which allows the analysis system to determine which enrolled users were exposed.
 
 If you see missing results like those shown in the image below, then
 
