@@ -122,13 +122,18 @@ Free text may also be used instead of a string resource.
 
 ## Image resources
 
-### Campaign - Default
+### Default
 | Card type               | Resource ID                |
 |-------------------------|----------------------------|
 | default-browser         | ic_onboarding_welcome      |
 | add-search-widget       | ic_onboarding_search_widget|
 | sync-sign-in            | ic_onboarding_sync         |
 | notification-permission | ic_notification_permission |
+
+### Experimental
+| Card type               | Resource ID                                                       |
+|-------------------------|-------------------------------------------------------------------|
+| default-browser         | ic_onboarding_key_features, ic_onboarding_key_features_icons_only |
 
 # Appendix
 
