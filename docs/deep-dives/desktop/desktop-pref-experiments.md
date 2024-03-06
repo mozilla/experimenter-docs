@@ -23,15 +23,21 @@ pref-feature:
     string:
       description: A variable setting a string pref.
       type: string
-      setPref: test.string
+      setPref:
+        branch: user
+        pref: test.string
     int:
       description: A variable setting an integer pref.
       type: int
-      setPref: test.int
+      setPref:
+        branch: default
+        pref: test.int
     boolean:
       description: A variable setting a boolean pref.
       type: boolean
-      setPref: test.boolean
+      setPref:
+        branch: user
+        pref: test.boolean
 ```
 
 ## Experiments vs Rollouts
@@ -54,13 +60,10 @@ first enrollment, with some caveats:
 
 ## Pref branches
 
-By default, values will be set on the default branch. The default branch is not
-persisted, so prefs set on the default branch will not be available until Nimbus
-completes its startup and loads all its active experiments from disk.
-
-If the feature setting the pref specifies `isEarlyStartup: true`, then the
-values will be written to the user branch so that they persisted and available
-during early startup on the user branch.
+Each variable using `setPref` must specify which branch will be written to.
+The default branch is not persisted, so prefs set on the default branch will not
+be available until Nimbus completes its startup and loads all its active
+experiments from disk.
 
 ## User Preference Changes
 
