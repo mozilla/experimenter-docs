@@ -10,6 +10,7 @@ Engineers are typically tasked with implementing an experiment on a new surface 
 
 * [Getting started with Nimbus, for Android Engineers](/getting-started/engineers/getting-started-for-android-engineers)
 * [Getting started with Nimbus for iOS Engineers](/getting-started/engineers/getting-started-for-ios-engineers)
+* [Getting Started for Nimbus Web Integration](/getting-started-for-nimbus-web-integration)
 * [Mobile UI needed for Nimbus](/getting-started/engineers/getting-started-mobile-required-ui)
 
 ## To get started with implementation
