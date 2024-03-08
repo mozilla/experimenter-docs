@@ -71,9 +71,9 @@ Supported pretreatments are listed below. Some pretreatments accept parameters, 
 **Statistics** that Jetstream knows about are listed below. Some statistics accept parameters, which are listed below the name of the statistic.
 
 * `binomial`: Binomial outcome with bootstrapped CIs for differences between branches
-* `bootstrap_mean`: Mean with bootstrapped confidence intervals. Removes the top 0.001% of values by default.
+* `bootstrap_mean`: Mean with bootstrapped confidence intervals. Removes the top 0.5% of values by default.
   * `num_samples`: Number of bootstrap samples to compute. Defaults to 10,000.
-  * `drop_highest`: Fraction of highest samples to drop. Defaults to 1e-4.
+  * `drop_highest`: Fraction of highest samples to drop. Defaults to 0.005.
 * `count`: A count of rows
 * `deciles`: Bootstrapped confidence intervals for differences between branches at deciles
   * `num_samples`: Number of bootstrap samples to compute. Defaults to 10,000.
