@@ -21,6 +21,10 @@ sidebar_label: What's Newsletter Q1
 
    > We now have warnings on Experimenter for three known cases of audience overlap. [These warnings](/faq/warnings) will prevent detectable cases of audience overlap, which generally result in under enrollment and can invalidate an experiment. (erichards) [EXP-4180](https://mozilla-hub.atlassian.net/browse/EXP-4180)
 
+🤖🍏💻  Helpful JSON Errors
+
+   > As you are writing your JSON (the code that configures your feature in the Branches page), you may see ```Feature Manifest errors occured during validation``` followed by details.   Experimenter is now comparing your feature manifest with the branch JSON you entered.  It compares for all versions your experiments is targeting, as defined in your experiments Audience page with minimum version and maximum versions.  This makes sure that the JSON you just typed will work for your feature on all the targeted firefox version.   If there is an error message, it will include the property that didn't match the feature manifest, possible valid values, the line where the error is, and the version where that error happened.  If you have an issue - to resolve first check the minumum versions your experiment targets (on the Audience page) and make sure it is as intended.  If that is correct, next look at the line to see what aspect of the JSON is having an issue and how to resolve.  
+
 ## Mobile 
 
 Coming soon...
@@ -31,7 +35,7 @@ Coming soon...
 
 ## Jetstream & Results Analysis
 
-Coming soon...
+
 
 ## Cirrus
 
