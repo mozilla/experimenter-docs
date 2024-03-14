@@ -4,7 +4,7 @@ title: Bucketing
 slug: /bucketing
 ---
 
-**Bucketing** is the process of randomly assigning users to experiment branches. When a user is “bucketed” into an experiment, it means that the configuration in one of its branches (such as a change to part of the UI) can be activated, and that any interactions we record from that moment on can be associated with the experiment and branch identifier.
+**Bucketing** is the process of randomly assigning users to experiment branches. When a user is “bucketed” into an experiment, it means that the configuration in one of its branches (such as a change to part of the UI) can be activated, and that any interactions we record from that moment on can be associated with the experiment and branch identifier.  The concept is explained in this [video](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=c5fe3f48-322f-48ca-92d8-adc8014a3cb4&start=10) / [presentation](https://docs.google.com/presentation/d/18Xid6FNyC207Hqfhm3OtVDBxNCbVx9Ku9Hvqc_PJVU4/edit#slide=id.g82761e80df_0_1948).  
 
 :::info which experiments?
 This documentation applies to experiments launched to Desktop, iOS, and Android Firefox through the "Nimbus" or "Normandy" systems. Differences between platforms are noted when relevant.
