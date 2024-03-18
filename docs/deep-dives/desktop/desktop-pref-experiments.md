@@ -19,6 +19,7 @@ experiments should set the value to a JSON string.
 pref-feature:
   description: A description of my feature
   owner: whoami@mozilla.com
+  hasExposure: false
   variables:
     string:
       description: A variable setting a string pref.
