@@ -26,6 +26,11 @@ To integrate Nimbus (Cirrus) with your web application, these are high-level ste
 
 5. **Deploy Cirrus Container**
 - Deploy Cirrus container as a sidecar container in your Kubernetes deployment and add the [environment variables](https://github.com/mozilla/experimenter/tree/main/cirrus#environment-setup).
+- Sidecar pattern in Kubernetes
+<img src="/img/nimbus-on-web/sidecar-pattern-kubernetes.png"  alt="Sidecar pattern in Kubernetes" className="img-lg" />
+
+- Example of Deployment architecture
+<img src="/img/nimbus-on-web/deployment-architecture-example.png" alt="Example of Deployment architecture" className="img-lg" />
 
 6. **Configure Feature Manifest Language (FML)**
 - Add feature in Feature Manifest Language (FML).
