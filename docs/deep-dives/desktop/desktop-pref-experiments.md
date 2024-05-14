@@ -8,10 +8,10 @@ As of Firefox 107, Nimbus supports experiments that set preferences on Desktop.
 Unlike Normandy, Nimbus cannot set arbitrary preferences; instead, the
 preferences that may be set are determined by the feature manifest.
 
-Each variable in a Nimbus feature can set a single pref. Integer, string, and
-boolean typed variables are supported but JSON variables are not supported. If
-you want to set a JSON value to a pref, a string variable should be used and
-experiments should set the value to a JSON string.
+Each variable in a Nimbus feature can set a single pref of any type.
+
+NB: Support for JSON variables was added in Firefox 126. The value of the pref
+will be `JSON.stringify(value)`.
 
 ## Example Feature
 
