@@ -16,28 +16,28 @@ will be `JSON.stringify(value)`.
 ## Example Feature
 
 ```yaml
-pref-feature:
+my-feature:
   description: A description of my feature
   owner: whoami@mozilla.com
   variables:
-    string:
-      description: A variable setting a string pref.
-      type: string
-      setPref:
-        branch: user
-        pref: test.string
-    int:
-      description: A variable setting an integer pref.
-      type: int
-      setPref:
-        branch: default
-        pref: test.int
-    boolean:
-      description: A variable setting a boolean pref.
+    enabled:
+      description: A variable setting a boolean pref to enable a feature.
       type: boolean
       setPref:
         branch: user
-        pref: test.boolean
+        pref: my_feature.enabled
+    name:
+      description: A variable setting a string pref to determine some name.
+      type: string
+      setPref:
+        branch: user
+        pref: my_feature.name
+    count:
+      description: A variable setting an integer pref to determine some count.
+      type: int
+      setPref:
+        branch: default
+        pref: my_feature.count
 ```
 
 ## Experiments vs Rollouts
