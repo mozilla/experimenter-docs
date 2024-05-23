@@ -52,6 +52,8 @@ For more nuances about sampling, enrollment and exposure (whether or not the cli
 
 Sample size recommendations are operationalized as the fraction of the Firefox population that should consider enrolling in your recipe.  This is determined by discussing your [experiment design document](https://docs.google.com/document/d/1_bWn_1y5x1zf6zl7Loj4O1qKnVdxzIMXOawIpf32CsM/edit) at either [desktop or mobile data science office hours](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours).
 
+The information in the [Experiment brief](https://docs.google.com/document/d/1_bWn_1y5x1zf6zl7Loj4O1qKnVdxzIMXOawIpf32CsM/edit) needs to provide the information needed for sizing.
+
 ### Filtering
 Nimbus can filter on several factors, including:
 
