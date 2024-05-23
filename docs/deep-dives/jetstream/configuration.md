@@ -18,6 +18,8 @@ Custom experiment configurations are associated with an experiment by their file
 which should match the experiment slug, like `my-experiment-slug.toml`.
 This works for both Normandy and Nimbus slugs. 
 
+For help adding custom metrics or creating a re-usable outcome for an experiment, include the experiment brief and the request in a [data org Jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/boards/269).
+
 [partybal]: https://protosaur.dev/partybal/
 [outcome]: ./outcomes
 [metric-hub]: https://github.com/mozilla/metric-hub/tree/main/jetstream
