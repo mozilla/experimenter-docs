@@ -39,7 +39,7 @@ To integrate Nimbus (Cirrus) with your web application, these are high-level ste
 - Identify key metrics and configure with your application.
 
 8. **Call Cirrus Container**
-- Pass the unique client id and context when calling the container to receive the features. Refer to [API docs](https://github.com/mozilla/experimenter/tree/main/cirrus) for more details.
+- Pass a unique client id and context when calling the container to receive the features. The client id can be a temporary or stable id depending on your use case. Refer to [API docs](https://github.com/mozilla/experimenter/tree/main/cirrus) for more details.
     ```json
     {
     "client_id": "4a1d71ab-29a2-4c5f-9e1d-9d9df2e6e449",
