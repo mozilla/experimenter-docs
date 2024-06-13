@@ -16,6 +16,7 @@ Rollouts are single-branch experiments that differ from a traditional experiment
 - A client can be enrolled in both a single experiment AND rollout for a given feature.
 - The experiment feature value takes precedence over the rollout feature value.
 - Rollouts use a separate bucketing namespace from experiments so you don't need to worry about the populations colliding.
+- Rollouts are not measurement tools.  There is no comparison branch so no way to tell "did rollout change  ____?"
 
 ## What is a rollout?
 
@@ -47,7 +48,7 @@ Before you do this, you should consider:
    - If you have multiple stages, how will you know whether to advance or roll back?
    - What signals will help you make your decision? Where will they come from?
    - If you are relying on the experiment to guide you, make sure that the timelines are compatible.
-   - _Consult data science_ before relying on signals derived from the behavior of the rollout group, since rollouts are not measurement tools and lack a control.
+   - Rollouts are not measurement tools.  There is NO CONTROL to compare to.  There is no results page generated.  Rollouts you are potentially manually watching for bugs or user sentiment issues or observing telemetry directly.  There is no data science support for rollouts.  There is an OpMon dashboard - which that provides raw data without comparison.
 
 You would need to:
 
