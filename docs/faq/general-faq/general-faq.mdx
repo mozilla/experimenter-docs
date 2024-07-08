@@ -5,31 +5,26 @@ slug: /faq/general-faq
 sidebar_position: 1
 ---
 
-### Question
-
-What's the difference between "Experimenter" and "Nimbus"?
-
-### Answer
+### What's the difference between "Experimenter" and "Nimbus"?
 
 Nimbus is the code name of the experimentation project, so Nimbus refers to **the whole experimentation system** (handles enrolling/unenrolling users, sending branch configurations, etc). Experimenter is the **customer interface to both Nimbus and Jetstream** that you access at http://experimenter.services.mozilla.com/. In Experimenter, users can configure experiments, manage them (launch, monitor, end), and can see the results. 
 
 ---
 
-### Question
-
-What is Jetstream?
-
-### Answer
+### What is Jetstream?
 
 [Jetstream](/deep-dives/jetstream/overview) is the whole **analysis system** (interfaces with data, runs analysis, formats results).
 
 ---
 
-### Question
-
-What is Normandy?
-
-### Answer
+### What is Normandy?
 
 Normandy (https://experimenter.services.mozilla.com/legacy/) is the legacy experimentation platform for Firefox. It is being deprecated in favor of Nimbus.
- 
+
+### How long does it take to see changes (for time sensitive QA or hotfixes especially)?  CDN
+
+- Nimbus uses remote setting to get changes to users.  Remote settings pushes updates to its CDN once an hour.  Then it has geoip specific dns resolution and caching and etc.  
+
+- Depending when you make your change and when RS propagates to CDNs - it could take minutes to just over an hour.
+
+- Desktop clients only recompute enrollments at startup and every six hours thereafter.  
