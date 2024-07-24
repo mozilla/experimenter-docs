@@ -21,10 +21,26 @@ Nimbus is the code name of the experimentation project, so Nimbus refers to **th
 
 Normandy (https://experimenter.services.mozilla.com/legacy/) is the legacy experimentation platform for Firefox. It is being deprecated in favor of Nimbus.
 
-### How long does it take to see changes (for time sensitive QA or hotfixes especially)?  CDN
+
+---
+
+### How long does it take to see Nimbus changes on the client (for time sensitive QA or hotfixes especially)?  CDN
 
 - Nimbus uses remote setting to get changes to users.  Remote settings pushes updates to its CDN once an hour.  Then it has geoip specific dns resolution and caching and etc.  
 
 - Depending when you make your change and when RS propagates to CDNs - it could take minutes to just over an hour.
 
 - Desktop clients only recompute enrollments at startup and every six hours thereafter.  
+
+
+---
+
+### How long does it take to run an experiment?
+
+Experiment length will vary depending on:
+- How soon users will encounter your change?  If the action is something people do rarely (ex: edit a pdf) you may need to observe longer for people to encounter the change
+- We typically enroll for 1 week - to get a balanced section of people across Monday, Tuesday,..., Saturday.  If you have very few people that qualify (ex: new users on iOS only from Portugal) - enrollment may take longer.
+- We OBSERVE based on what questions you are trying to answer.
+  -  If people see your change immediately (ex on every page load) and send in the data you need a few days or a week of observation may be enough.  
+  - If you want to know the impact on 2 week retention - there is a week of enroll + 2 weeks of observation
+  - If you want to know the impact on Days of Use - there is a week of enroll and 4 weeks of observation.  
