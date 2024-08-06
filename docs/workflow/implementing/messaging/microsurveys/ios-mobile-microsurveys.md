@@ -22,7 +22,7 @@ The prompt is shown until the user completes the survey, closes the survey or re
 
 1. This title of the prompt which can be customized, but also has a fallback string located [here](https://github.com/mozilla-mobile/firefox-ios/blob/f7cd5ff5cbd9e7100c2cb9ae7b7278f3958dfa3f/firefox-ios/Client/Frontend/Strings.swift#L1361).
 2. The close button dismisses the survey and it won't be shown again.
-3. The continue button starts the survey and shows the survey sheet. It can be customized, but also has a fallback string located [here](https://github.com/mozilla-mobile/firefox-ios/blob/f7cd5ff5cbd9e7100c2cb9ae7b7278f3958dfa3f/firefox-ios/Client/Frontend/Strings.swift#L1366).
+3. The continue button starts the survey and shows the survey sheet. The button label can be customized, but also has a fallback string located [here](https://github.com/mozilla-mobile/firefox-ios/blob/f7cd5ff5cbd9e7100c2cb9ae7b7278f3958dfa3f/firefox-ios/Client/Frontend/Strings.swift#L1366).
 
 ### Survey (Modal / Bottom Sheet)
 
