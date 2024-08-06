@@ -15,14 +15,14 @@ The microsurvey feature is composed of two main UI components. One is the prompt
 
 The prompt is an invitation to start the survey and it is shown when the triggers are met. The triggers are determined through the mobile messaging infrastructure and should be specified by the Nimbus recipe. For testing, we have created a trigger in which the user will be eligible to receive the survey after visiting the homepage twice.
 
-The prompt is shown until the user completes the survey, closes the survey or reached the maximum number of display specified in the mobile messaging configurations.
+The prompt is shown until the user completes the survey, closes the survey or reaches the maximum number of display specified in the mobile messaging configurations.
 
 <img src="/img/messaging/microsurveys/ios-prompt.png" alt="Prompt view" className="img-sm"/>
 <br/><br/>
 
-1. This title of the prompt which can be customized, but also has a fallback string.
+1. This title of the prompt which can be customized, but also has a fallback string located [here](https://github.com/mozilla-mobile/firefox-ios/blob/f7cd5ff5cbd9e7100c2cb9ae7b7278f3958dfa3f/firefox-ios/Client/Frontend/Strings.swift#L1361).
 2. The close button dismisses the survey and it won't be shown again.
-3. The continue button starts the survey and shows the survey sheet. It can be customized, but also has a fallback string.
+3. The continue button starts the survey and shows the survey sheet. It can be customized, but also has a fallback string located [here](https://github.com/mozilla-mobile/firefox-ios/blob/f7cd5ff5cbd9e7100c2cb9ae7b7278f3958dfa3f/firefox-ios/Client/Frontend/Strings.swift#L1366).
 
 ### Survey (Modal / Bottom Sheet)
 
@@ -33,7 +33,7 @@ The survey sheet is shown after the user clicks on the button in the prompt. It 
 
 1. The sheet grabber allows users to expand or dismiss the sheet. If the user dismisses the sheet by dragging down, this will close the sheet and show the prompt.
 2. The close button dismisses both the sheet and the prompt.
-3. The question and options both can be customized. There are fallback options for the options, but the question is required for the microsurvey message to appear.
+3. The question and options both can be customized. There are fallback options for the options, but the question is required for the microsurvey message to appear. Fallback strings are located [here](https://github.com/mozilla-mobile/firefox-ios/blob/f7cd5ff5cbd9e7100c2cb9ae7b7278f3958dfa3f/firefox-ios/Client/Frontend/Strings.swift#L1420).
 4. The submit button will send the survey result via telemetry and is enabled if at least one option is selected.
 5. The privacy notice navigates the user to open a new tab. The prompt will still be shown unless the user has completed the survey and views the confirmation page.
 
