@@ -19,6 +19,7 @@ will be `JSON.stringify(value)`.
 my-feature:
   description: A description of my feature
   owner: whoami@mozilla.com
+  hasExposure: false
   variables:
     enabled:
       description: A variable setting a boolean pref to enable a feature.
