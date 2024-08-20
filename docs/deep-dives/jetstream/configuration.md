@@ -204,11 +204,13 @@ friendly_name = "Cows clicked"
 description = "Number of cows clicked"
 
 # Whether to compute the metric on an exposures basis, an enrollments basis, or both.
-# An enrollments basis includes all users that enrolled. This is currently the default.
-# An exposures basis includes all users that would have experienced a difference in their
-# user experience as a result of the experiment; it is a subset of enrollments.
-# We may default to an exposures basis in the future.
-exposure_basis = ["exposures", "enrollments"]
+# An enrollments basis includes all users that enrolled in the experiment.
+# An exposures basis includes all users that have been exposed (or would have been, in
+# the case of the control group) to the user experience as a result of the experiment.
+# Exposed users are a subset of enrolled users.
+# By default, we attempt to compute both automatically, but results availability depends
+# on whether exposure events are instrumented for the particular feature/experiment.
+analysis_bases = ["exposures", "enrollments"]
 
 # Metrics can depend on other metrics that need to be referenced.
 # When a metric depends on upstream metrics, select_expression and
@@ -216,6 +218,14 @@ exposure_basis = ["exposures", "enrollments"]
 # At the moment `select_expression` takes precedence over `depends_on` in cases
 # where both are defined.
 depends_on = ["moos", "clicks"]
+
+# Metrics can support aggregations on client_id and/or profile_group_id.
+# This is called the analysis unit. The default is `client_id`, primarily because
+# `profile_group_id` was not implemented when most metrics were created (at time
+# of writing, Aug 2024).
+# **Importantly**, the metric's configured data_source must support a superset of the
+# metric's analysis_units.
+analysis_units = ["client_id", "profile_group_id"]
 ```
 
 You should also add some sections to describe how your new metrics should be summarized for reporting.
@@ -279,9 +289,19 @@ from_expression = "(SELECT client_id, experiments, submission_date FROM my_cool_
 
 # See https://mozilla.github.io/mozanalysis/api/metrics.html#mozanalysis.metrics.DataSource for details.
 experiments_column_type = "native"
+
+# Data sources can support aggregations on client_id and/or profile_group_id.
+# This is called the analysis unit. The default is `client_id`, primarily because
+# `profile_group_id` did not exist at the time most data sources were created (at time
+# of writing, Aug 2024).
+# **Importantly**, the metric's configured data_source must support a superset of the
+# metric's analysis_units.
+analysis_units = ["client_id", "profile_group_id"]
 ```
 
-Then, your new metric can refer to it like `data_source = "my_cool_data_source"`.
+Then, your new metric can refer to it like `data_source = "my_cool_data_source"`. 
+
+*(**Importantly**, the metric's configured data_source must support a superset of the metric's analysis_units.)*
 
 ### Defining segments
 
