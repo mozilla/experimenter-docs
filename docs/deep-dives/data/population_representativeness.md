@@ -14,16 +14,16 @@ At a high level, the delivery funnel (steps to be shown an experimental variant)
 
 At each phase there is the possibility of introducing lack of representativeness, either purposefully or accidentally.
 
-Note: in general, if there is telemetry it is "positive telemetry" on the situations below: telemetry emitted when a condition is met. Telemetry is not emitted when a condition is not met. This can make diagnosing issues challenging.
+Note: in general, if there is telemetry it is "positive telemetry" on the situations below, i.e., telemetry is emitted when a condition is met. Telemetry is not emitted when a condition is not met. This can make diagnosing issues challenging.
 
 ## Synchronization
 
 When an experiment is launched, knowledge of that experiment must be transmitted to the client. In general, clients receive Nimbus recipes by connecting to Remote Settings, a globally distributed CDN. Some common causes of failure to synchronize are:
 
-1. **Low Activity:** a client needs to be sufficiently active in order to trigger a refresh of its internal recipe cache. As a result, low activity users may be less likely to synchronize and thus less likely to be sampled.
+1. **Low Activity:** a client needs to be sufficiently active in order to trigger a refresh of its internal recipe cache. As a result, low activity users may be less likely to synchronize and thus less likely to be sampled. See [this document](https://docs.google.com/document/d/1-TgZcuiA3UDZ30Vo2Ot7d_Lyqncx7AaBhAqq8GxlP8M/edit#heading=h.g5mbvod6ojw6) for more info. 
 2. **Network Issues:** clients need to make a successful connection to the Remote Settings CDN. Structural challenges may arise here: users on certain mobile networks or in certain locales may have difficulty connecting, and thus less likely to be sampled.
 3. **Out-of-date Versions:** Nimbus generally supports a rolling version window and aims to support the most recent 12-18 months of versions. Users running versions older than that may not be eligible.
-   1. **Certificate Experiation:** the Remote Settings certificate expires periodically and when this happens, users on old Firefox versions (with the old certificate) lose the ability to connect to Remote Settings, and thus lose the ability to synchronize.
+   1. **Certificate Expiration:** the Remote Settings certificate expires periodically and when this happens, users on old Firefox versions (with the old certificate) lose the ability to connect to Remote Settings, and thus lose the ability to synchronize.
    2. **Reliance on New Nimbus Functionality:** a delivery may require certain Nimbus functionality that was made available in a certain release. Users on older versions will lack that functionality, and thus not be eligible.
 
 ## Enrollment
