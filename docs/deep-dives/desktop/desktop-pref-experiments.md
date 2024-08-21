@@ -4,6 +4,8 @@ title: Running Pref-setting Experiments on Desktop
 slug: /desktop-pref-experiments
 ---
 
+[test][prefFlips]
+
 As of Firefox 107, Nimbus supports experiments that set preferences on Desktop.
 Unlike Normandy, Nimbus cannot set arbitrary preferences; instead, the
 preferences that may be set are determined by the feature manifest.
@@ -101,3 +103,38 @@ any feature specifies a pref as a fallback pref, no variable may set that
 variable as a set pref and vice versa.
 
 These restrictions are enforced at build time.
+
+## Conflicts with Incident Response Pref Flips
+
+If a user is enrolled in a setPref experiment/rollout and then enrolls in an
+[incident response pref flip][prefFlips], they will be unenrolled from the
+setPref experiment/rollout. This will result in an unenrollment event
+([glean][glean-telemetry], [legacy][legacy-telemetry]) being submitted with the
+following data:
+
+<table>
+  <thead>
+    <tr>
+      <th>Glean Field</th>
+      <th>Legacy Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>reason</code></td>
+      <td><code>reason</code></td>
+      <td>The string <code>"prefFlips-conflict"</code></td>
+    </tr>
+    <tr>
+      <td><code>conflicting_slug</code></td>
+      <td><code>conflictingSlug</code></td>
+      <td>The slug of the experiment that caused the unenrollment.</td>
+    </tr>
+  </tbody>
+</table>
+
+
+[prefFlips]: /desktop-incident-response
+[glean-telemetry]: https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/nimbus_events_unenrollment
+[legacy-telemetry]: https://probes.telemetry.mozilla.org/?search=unenroll&view=detail&probeId=event%2Fnormandy.unenroll%23unenroll
