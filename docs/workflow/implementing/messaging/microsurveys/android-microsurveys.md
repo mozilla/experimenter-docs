@@ -1,8 +1,7 @@
 ---
 id: android-microsurveys
 title: Android Microsurveys
-slug: /messaging/android-microsurveys
-sidebar_position: 8
+slug: /messaging/microsurveys/android
 ---
 ## Introduction
 The microsurvey feature is an extension of the [messaging framework](/messaging/mobile-messaging), and adds new functionality to target small surveys directly in the app. It allows us to capture user’s sentiment on any specific app’s features.
