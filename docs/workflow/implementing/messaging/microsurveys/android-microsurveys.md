@@ -129,7 +129,7 @@ Below you full example (below example is for “How satisfied are you with your 
         "SECOND_HOMEPAGE_VIEW"
       ],
       "microsurvey-config": {
-        "icon": "mozac_ic_home_24",
+        "icon": "ic_home",
         "utm-content": "homepage",
         "answers": [
           {
