@@ -14,7 +14,7 @@ Responsibilities include:
 - Align on the design of the experiment by attending a [desktop](https://www.google.com/url?q=https://docs.google.com/document/d/1dH-aG8IsYtq6881_Q_cyEtmxli0bK7nuVcUD-5D7q-s/edit%23&sa=D&source=calendar&ust=1646684514330583&usg=AOvVaw0O5Sbz3fHVx2rFDcl3DpNg) or [mobile](https://docs.google.com/document/d/1XJ3o5zjVETtZi7u1r3XvsJHmrmxxpmuFs42PDzWVhXw/edit#heading=h.sh37wxowgx5) office hour and filing a [data org Jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/boards/269).
 - Creating the [Data Org Jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/boards/269) (linked in experiment brief)
 - Implementing the experiment in [Nimbus console AKA Experimenter](https://experimenter.services.mozilla.com)
-- Creating the [QA Jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/QA/boards/261) (linked in experiment brief)
+- Creating the [QA "Nimbus/Remote delivery" Jira ticket](https://mozilla-hub.atlassian.net/secure/CreateIssueDetails!init.jspa?pid=10212&issuetype=11290) (linked in experiment brief)
 - Launching the experiment, ending enrollment, ending experiment (the [experimentation workflow](/workflow/overview))
 - Working with the experiment team (in slack at #ask-experimenter) to identify a set of reviewers trained and authorized to review experiments in your feature area. The experiment team will train them on how to review.
 
