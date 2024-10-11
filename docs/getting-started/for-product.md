@@ -1,12 +1,13 @@
 ---
 id: for-product
-title: Product Managers
+title: Experiment Owners
 slug: /for-product
 ---
 
-## What is the role of Product in experimentation?
+## What is the role of the Experiment Owner in experimentation?
 
-Product Managers typically have the role of experiment owner in the [experimentation workflow](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=4d337632-a0bd-4be7-bee8-ae5b017134ae&start=0).
+Product Managers often have the role of experiment owner, but it can be engineers, or program managers.  
+
 Responsibilities include:
 
 - Watching training for new experiment owners [here](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f3fbf06a-47ce-4e6d-b949-b0f20134a1c7) - the slide deck in the video is [here](https://docs.google.com/presentation/d/1ASlVAds63qOzCDnyLWlbKAcgvTkVfojDeGFqIYty4iI/edit#slide=id.p)
@@ -34,11 +35,11 @@ Responsibilities include:
 - **Start by opening the Experiment Brief link.** If it is your first [Experiment Brief](https://docs.google.com/document/d/1_bWn_1y5x1zf6zl7Loj4O1qKnVdxzIMXOawIpf32CsM/edit?usp=share_link) - there is an optional 5 minute ["how to video"](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=178918e0-cc77-4acd-a0a6-ae5c00e3cb68).
 - **Fill out your experiment brief.** As the Product Manager you are responsible for clearly articulating the product goals and questions that need to be answered. Capture as much as you can. It will improve and evolve as you have conversations with different subject matter experts. The experiment brief is the authoritative source to capture the shared understanding.
    - **Referencing one source (the experiment brief)** for the verbose experiment background enables the subject matter experts (engineering, QA, experiment tooling, data) to efficiently support the effort and respond to changing requirements. 
-   - Product Managers will **keep editing the experiment brief** throughout the lifecycle of the experiment. Capture the decisions as they are made back in your experiment brief. Decisions left in in slack channels, verbal discussions, various notes, jira tickets, etc - increase the likelihood of errors and wasted effort..
+   - The experiment owner will **keep editing the experiment brief** throughout the lifecycle of the experiment. Capture the decisions as they are made back in your experiment brief. Decisions left in in slack channels, verbal discussions, various notes, jira tickets, etc - increase the likelihood of errors and wasted effort..
    - There is a **Checklist section** at the end of your Experiment Brief to help you through the steps of your experiment.
 - **Link the experiment brief to your experiment** when you create your experiment in the [Nimbus experiment tool](https://experimenter.services.mozilla.com/).
 
-## Key Resources for Product Managers
+## Key Resources for Experiment Owners
 
 Rather than duplicate links that may later break as the process improves - links to the resources and training videos are in the [Workflow Miro Board](https://experimenter.info/workflow/overview).
 
