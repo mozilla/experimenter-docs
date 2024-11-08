@@ -10,7 +10,7 @@ This guide provides an overview of the Nimbus Developer Tools, designed for Nimb
 
 ### Installation
 
-To install the Nimbus Developer Tools, download the latest release from the [Nimbus DevTools GitHub repository](https://github.com/mozilla-extensions/nimbus-devtools/releases/tag/release%2Fv0.1.0).
+To install the Nimbus Developer Tools, download the latest release from the [Nimbus DevTools GitHub repository](https://github.com/mozilla-extensions/nimbus-devtools/releases).
 
 ## Core Features
 

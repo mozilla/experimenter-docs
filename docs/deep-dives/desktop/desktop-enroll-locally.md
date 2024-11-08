@@ -10,7 +10,7 @@ Trying to iterate on an experiment in Preview on experimenter.services.mozilla.c
 
 ## Option A: Enrollment via Nimbus Developer Tools
 
-Nimbus Developer Tools provides a simple interface to debug experiments. You can download and install the extension from the [Nimbus DevTools GitHub release page](https://github.com/mozilla-extensions/nimbus-devtools/releases/tag/release%2Fv0.1.0). Here are some of the ways you can use it to debug experiments locally:
+Nimbus Developer Tools provides a simple interface to debug experiments. You can download and install the extension from the [Nimbus DevTools GitHub release page](https://github.com/mozilla-extensions/nimbus-devtools/releases). Here are some of the ways you can use it to debug experiments locally:
 
 ### Recipe JSON Enrollment
 1. Load `about:studies` and unenroll this profile from anything that might interfere
