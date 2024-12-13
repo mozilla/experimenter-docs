@@ -13,7 +13,7 @@ Event telemetry is sent for any interaction with the messaging surfaces and addi
 
 Telemetry pings will include the message id, experiment and branch slug (if enrolled) and the event type.
 
-Telemetry from all messaging surfaces ([except doorhangers when not enrolled in an experiment](https://searchfox.org/mozilla-central/rev/65d4d3399afa79c8de5a0cc11752d2ba7c31edc1/browser/components/newtab/lib/TelemetryFeed.jsm#645)) includes client id in the event ping. **Special care should be taken not to associate any browsing history with messaging events: showing a message when the user visits a particular website is not allowed because it would accidentally leak information about that visit.**
+Telemetry from all messaging surfaces ([except doorhangers when not enrolled in an experiment](https://searchfox.org/mozilla-central/rev/d1e731d931b7b46237175de1701849a7cf5c8579/browser/components/newtab/lib/TelemetryFeed.sys.mjs#526)) includes client id in the event ping. **Special care should be taken not to associate any browsing history with messaging events: showing a message when the user visits a particular website is not allowed because it would accidentally leak information about that visit.**
 
 [Additional telemetry](/telemetry/) is available when the message is delivered as an <u>experiment</u>:
 - Exposure
@@ -29,6 +29,6 @@ Example: Experiment has 3 branches [control, treatment-1, treatment-2]. If the u
 
 **Debugging telemetry pings**
 
-Make sure `browser.ping-centre.log` pref is enabled. Open the Browser Toolbox and interact with the message, any telemetry pings will be logged to the console. 
+Make sure `browser.ping-centre.log` pref is enabled. Open the Browser Toolbox and interact with the message, any telemetry pings will be logged to the console.
 
 _Because of the implementation of moments pages, telemetry is only sent for when a message is matched (the page will be shown in the next browsing session). No other telemetry is available._

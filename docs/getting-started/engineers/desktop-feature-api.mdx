@@ -13,7 +13,7 @@ This guide will help you use the Nimbus Feature API in Desktop Firefox to run ex
 
 ### Can I use this?
 
-For the JS implementation you can import `ExperimentAPI.jsm` in the parent process or a privileged child process. We _do_ support First run experiments on Windows, holdbacks, and rollouts.
+For the JS implementation you can import `ExperimentAPI.sys.mjs` in the parent process or a privileged child process. We _do_ support First run experiments on Windows, holdbacks, and rollouts.
 
 For the C++ implementation you can import `#include "mozilla/browser/NimbusFeatures.h"` and we support early startup experiments and holdbacks.
 
@@ -105,8 +105,9 @@ Import the `NimbusFeatures` module:
 <TabItem value="js">
 
 ```js
-XPCOMUtils.defineLazyModuleGetters(this, {
-  NimbusFeatures: "resource://nimbus/ExperimentAPI.jsm",
+const lazy = {}
+ChromeUtils.defineESModuleGetters(lazy, {
+  NimbusFeatures: "resource://nimbus/ExperimentAPI.sys.mjs",
 });
 ```
 
@@ -344,11 +345,12 @@ NimbusFeatures::OffUpdate("aboutwelcome"_ns, "skipFocus"_ns,
 If you need to know whether an experiment is active or get access to the experiment or branch identifier (for example, to report in `utm_params`), you can use `ExperimentAPI.getExperimentMetaData`:
 
 ```js
-XPCOMUtils.defineLazyModuleGetters(this, {
-  ExperimentAPI: "resource://nimbus/ExperimentAPI.jsm",
+const lazy = {}
+ChromeUtils.defineESModuleGetters(lazy, {
+  NimbusFeatures: "resource://nimbus/ExperimentAPI.sys.mjs",
 });
 
-const data = ExperimentAPI.getExperimentMetaData({ featureId: "myFeature" });
+const data = lazy.ExperimentAPI.getExperimentMetaData({ featureId: "myFeature" });
 
 // If there is no experiment, data will be null.
 const slug = data?.slug;
