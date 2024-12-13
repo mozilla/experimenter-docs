@@ -24,7 +24,7 @@ Once the experiment has successfully concluded and analysis shows promising resu
 * [`browser/components/asrouter/modules/FeatureCalloutMessages.sys.mjs`][FeatureCalloutMessages]
 * [`browser/components/asrouter/modules/OnboardingMessageProvider.sys.mjs`][OnboardingMessageProvider]
 
-Visit [Firefox Source docs](https://firefox-source-docs.mozilla.org/browser/components/newtab/docs/index.html): newtab for details on how to develop within our components.
+Visit [Firefox Source docs](https://firefox-source-docs.mozilla.org/browser/components/asrouter/docs/index.html): newtab for details on how to develop within our components.
 
 [AboutWelcomeDefaults]: https://searchfox.org/mozilla-central/source/browser/components/aboutwelcome/modules/AboutWelcomeDefaults.sys.mjs
 [FeatureCalloutMessages]: https://searchfox.org/mozilla-central/source/browser/components/asrouter/modules/FeatureCalloutMessages.sys.mjs
