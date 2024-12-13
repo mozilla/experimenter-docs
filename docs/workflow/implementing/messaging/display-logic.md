@@ -30,7 +30,7 @@ Sometimes you want to limit messages to a particular group of users, to users wi
 
 > All users in the `US`, for `beta and nightly channels`, `version 98.01 or higher`, who `do not have Firefox set to their default browser`.
 
-You can see a complete [list of the available attributes](https://firefox-source-docs.mozilla.org/browser/components/asrouter/docs/targeting-attributes.html#available-attributes) in Firefox Source docs, but here are some common examples:
+You can see a complete [list of the available attributes](https://firefox-source-docs.mozilla.org/browser/components/asrouter/docs/targeting-attributes.html) in Firefox Source docs, but here are some common examples:
 
 * `locale` (language, e.g. `en-CA`)
 * `region` (based on IP, e.g. `US`, `FR`)

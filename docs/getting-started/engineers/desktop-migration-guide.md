@@ -9,8 +9,8 @@ This guide will help you migrate your Desktop front-end code to run experiments 
 
 Prerequisites:
 * Your experimental variables are already instrumented with Firefox preferences
-* You don't use the `user branch` of each pref for anything other than actual user-defined values or testing (see docs on [order of precedence](/desktop-feature-api#configuration-sources)
-* Your code can import a `jsm`
+* You don't use the `user branch` of each pref for anything other than actual user-defined values or testing (see docs on [order of precedence](/desktop-feature-api#configuration-sources))
+* Your code can import a ESM
 
 ### An illustrative example (about:myself)
 
@@ -48,15 +48,16 @@ aboutmyself:
 
 ## Step 2: Update your feature code
 
-First, you will need to import `ExperimentAPI.jsm`:
+First, you will need to import `ExperimentAPI.sys.mjs`:
 
 ```js
-XPCOMUtils.defineLazyModuleGetters(this, {
-  NimbusFeatures: "resource://nimbus/ExperimentAPI.jsm",
+const lazy = {}
+ChromeUtils.defineESModuleGetters(lazy, {
+  NimbusFeatures: "resource://nimbus/ExperimentAPI.sys.mjs",
 });
 ```
 
-Then anywhere in your code that uses `Services.prefs` to get experiment-defined values, use `NimbusFeatures` instead:
+Then anywhere in your code that uses `Services.prefs` to get experiment-defined values, use `lazy.NimbusFeatures` instead:
 
 ```js
 element.style.backgroundColor = Services.prefs.getBoolPref("browser.aboutmyself.bgColor");
