@@ -8,9 +8,10 @@ slug: /help
 ## Need help? Not sure where to start?
 
 ⭐️ Reach out in [`#ask-experimenter`](https://mozilla.slack.com/archives/CF94YGE03) on Slack <br/>
-⭐️ Join a [lightning advisory session](https://docs.google.com/document/d/1fj4BqG0N-cN_Fx5sq-AozdiOdKO7asaDWR4B7sH88F0) <br/>
+⭐️ Join [office hours with data science](https://docs.google.com/document/d/1dH-aG8IsYtq6881_Q_cyEtmxli0bK7nuVcUD-5D7q-s/edit?tab=t.0) <br/>
 
 ## In this documentation...
-⭐️ Take a look at the **Getting Started** section <br/>
-⭐️ Check out our **FAQs** to see if your question has already been asked <br/>
+⭐️ Take a look at the **Getting Started** section if you are brand new <br/>
+⭐️ Check out our **Experimentation Workflow** to get started <br/>
 ⭐️ Check the **Glossary** for terms you are unfamiliar with <br/>
+⭐️ Ask in slack at ask-experimenter for guidance on where to get started
