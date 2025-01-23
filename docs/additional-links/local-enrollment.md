@@ -22,13 +22,14 @@ Note: You can also use the [remote-settings-devtools](https://github.com/mozilla
     - `Percent of clients`: 100%
     - `Expected Number of Clients`: 1 (or any number above 0)
 3. Request Launch and Approve the experiment in Remote Settings
-4. Open the Browser Console to view the logs from “RSLoader” (`RemoteSettingsExperimentLoader.Jsm`)
+4. Open the Browser Console to view the logs from `RSLoader` (`RemoteSettingsExperimentLoader.sys.mjs`)
 
 There should be log outputs of the RSLoader reading from remote settings and showing the JEXL evaluations being attempted. Eventually the experiment you created should be loaded and evaluated. If you are enrolled into a study with the same feature, the new experiment will not be allowed to enroll.
  5. Check `about:telemetry` for an event that looks like this
 - Enrollment
     ```
     normandy  enroll    nimbus_experiment <name-of-experiment>
+    ```
 - Unenrollment
     ```
     normandy  unenroll  nimbus_experiment <name-of-experiment>
