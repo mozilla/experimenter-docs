@@ -24,6 +24,8 @@ Feature Callouts point to and describe features in content pages or the browser 
 Shown at the top of browser content area, these can be per tab (switching tabs hides it) or global (persistent across tabs).
 
 ## Moments Pages
+<img src="/img/messaging/moments-page.png" alt="Example of a Moments Page" />
+<br/>
 This type of message is a URL that the browser will open at the start of the browsing session and will focus on that tab.
 These pages appears on start-up as a full content page.
 
@@ -48,3 +50,25 @@ Short messages that appear on New Tab Page to highlight products, features and i
 <img src="/img/messaging/spotlight-split-dark-checkbox.png" alt="Example of spotlight component with split screen and checkbox in dark mode" className="img-sm" />
 <br/>
 This surface can be configured as a window or tab level modal, and all other interactions are prevented. The modal's configuration is highly flexible and may include primary and secondary actions, a logo image, background, dismiss button, localized app store icons, QR code with associated link, checkboxes, decorative noodles, and more. A given message may be configured with multiple screens. Progress through these screens may be displayed as a step indicator or a progress bar. Each screen can use a centered, single panel layout or a split screen layout with an image and/or hero text on one side and all other modal content on the other.
+
+
+## What's New Page
+<img src="/img/messaging/whats-new-page.png" alt="Example of a Whats New Page" />
+<br/>
+
+This feature allows us to use Nimbus to override the default evergreen What’s
+New Page shown to users enrolled in these experiments. A What's New Page is a
+URL to a full content page that the browser will open on the next startup of a
+browsing session following a
+Firefox version update and will focus on that tab.
+The following configuration options are available.
+
+### minVersion
+Used to set a minimum Firefox update Version for a user to be eligible to see
+the experimental What's New Page.
+### maxVersion
+Used to set a maximum Firefox update Version for a user to be eligible to see
+the experimental What's New Page.
+### disableWNP
+Blocks all What's New Pages for a user enrolled in the experiment. Used
+to compare no-What's New Page control branches to What's New Page treatments.

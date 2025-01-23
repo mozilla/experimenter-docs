@@ -29,7 +29,7 @@ Inside the textarea targeting expressions can be written and evaluated using the
 
 ## Builtin functions and examples
 
-The full list of available functions can be seen in [FilterExpressions.jsm](https://searchfox.org/mozilla-central/source/toolkit/components/utils/FilterExpressions.jsm).
+The full list of available functions can be seen in [FilterExpressions.sys.mjs](https://searchfox.org/mozilla-central/source/toolkit/components/utils/FilterExpressions.sys.mjs).
 
 A JEXL function is called using the `|` operator followed by the function name, example: `[1,2,3]|length == 3`.
 

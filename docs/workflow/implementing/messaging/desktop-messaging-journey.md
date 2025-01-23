@@ -9,7 +9,7 @@ From inception to launch, a message goes through the below three steps for Firef
 
 ## Message Design
 
-Once an idea has been developed, the next step is designing the experiment message. A good place to start for some inspiration, is to look through previous messaging system experiments (Examples in Source doc) as well as looking into the available capabilities through the  [Messaging Surfaces](/messaging/desktop-messaging-surfaces). The OMC team has vast experience with running these experiments and can provide feedback and answer any questions in the #omc Slack channel. 
+Once an idea has been developed, the next step is designing the experiment message. A good place to start for some inspiration, is to look through previous messaging system experiments (Examples in Source doc) as well as looking into the available capabilities through the  [Messaging Surfaces](/messaging/desktop-messaging-surfaces). The OMC team has vast experience with running these experiments and can provide feedback and answer any questions in the #omc Slack channel.
 
 ## Running an Experiment
 
@@ -20,12 +20,12 @@ For a more in-depth guide and step by step process, visit [OMC: Experimenter onb
 
 Once the experiment has successfully concluded and analysis shows promising results, we can land the new message in tree. Depending on the messaging surface, the following files is where the JSON for our different messages exists
 
-```
-browser/components/newtab/aboutwelcome/lib/AboutWelcomeDefaults.jsm
-browser/components/newtab/lib/FeatureCalloutMessages.jsm
-browser/components/newtab/lib/OnboardingMessageProvider.jsm
-```
-	
+* [`browser/components/aboutwelcome/modules/AboutWelcomeDefaults.sys.mjs`][AboutWelcomeDefaults]
+* [`browser/components/asrouter/modules/FeatureCalloutMessages.sys.mjs`][FeatureCalloutMessages]
+* [`browser/components/asrouter/modules/OnboardingMessageProvider.sys.mjs`][OnboardingMessageProvider]
+
 Visit [Firefox Source docs](https://firefox-source-docs.mozilla.org/browser/components/newtab/docs/index.html): newtab for details on how to develop within our components.
 
-
+[AboutWelcomeDefaults]: https://searchfox.org/mozilla-central/source/browser/components/aboutwelcome/modules/AboutWelcomeDefaults.sys.mjs
+[FeatureCalloutMessages]: https://searchfox.org/mozilla-central/source/browser/components/asrouter/modules/FeatureCalloutMessages.sys.mjs
+[OnboardingMessageProvider]: https://searchfox.org/mozilla-central/source/browser/components/asrouter/modules/OnboardingMessageProvider.sys.mjs

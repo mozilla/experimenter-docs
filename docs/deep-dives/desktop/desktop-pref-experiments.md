@@ -4,34 +4,42 @@ title: Running Pref-setting Experiments on Desktop
 slug: /desktop-pref-experiments
 ---
 
+[test][prefFlips]
+
 As of Firefox 107, Nimbus supports experiments that set preferences on Desktop.
 Unlike Normandy, Nimbus cannot set arbitrary preferences; instead, the
 preferences that may be set are determined by the feature manifest.
 
-Each variable in a Nimbus feature can set a single pref. Integer, string, and
-boolean typed variables are supported but JSON variables are not supported. If
-you want to set a JSON value to a pref, a string variable should be used and
-experiments should set the value to a JSON string.
+Each variable in a Nimbus feature can set a single pref of any type.
+
+NB: Support for JSON variables was added in Firefox 126. The value of the pref
+will be `JSON.stringify(value)`.
 
 ## Example Feature
 
 ```yaml
-pref-feature:
+my-feature:
   description: A description of my feature
   owner: whoami@mozilla.com
   variables:
-    string:
-      description: A variable setting a string pref.
-      type: string
-      setPref: test.string
-    int:
-      description: A variable setting an integer pref.
-      type: int
-      setPref: test.int
-    boolean:
-      description: A variable setting a boolean pref.
+    enabled:
+      description: A variable setting a boolean pref to enable a feature.
       type: boolean
-      setPref: test.boolean
+      setPref:
+        branch: user
+        pref: my_feature.enabled
+    name:
+      description: A variable setting a string pref to determine some name.
+      type: string
+      setPref:
+        branch: user
+        pref: my_feature.name
+    count:
+      description: A variable setting an integer pref to determine some count.
+      type: int
+      setPref:
+        branch: default
+        pref: my_feature.count
 ```
 
 ## Experiments vs Rollouts
@@ -54,13 +62,10 @@ first enrollment, with some caveats:
 
 ## Pref branches
 
-By default, values will be set on the default branch. The default branch is not
-persisted, so prefs set on the default branch will not be available until Nimbus
-completes its startup and loads all its active experiments from disk.
-
-If the feature setting the pref specifies `isEarlyStartup: true`, then the
-values will be written to the user branch so that they persisted and available
-during early startup on the user branch.
+Each variable using `setPref` must specify which branch will be written to.
+The default branch is not persisted, so prefs set on the default branch will not
+be available until Nimbus completes its startup and loads all its active
+experiments from disk.
 
 ## User Preference Changes
 
@@ -98,3 +103,38 @@ any feature specifies a pref as a fallback pref, no variable may set that
 variable as a set pref and vice versa.
 
 These restrictions are enforced at build time.
+
+## Conflicts with Incident Response Pref Flips
+
+If a user is enrolled in a setPref experiment/rollout and then enrolls in an
+[incident response pref flip][prefFlips], they will be unenrolled from the
+setPref experiment/rollout. This will result in an unenrollment event
+([glean][glean-telemetry], [legacy][legacy-telemetry]) being submitted with the
+following data:
+
+<table>
+  <thead>
+    <tr>
+      <th>Glean Field</th>
+      <th>Legacy Field</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>reason</code></td>
+      <td><code>reason</code></td>
+      <td>The string <code>"prefFlips-conflict"</code></td>
+    </tr>
+    <tr>
+      <td><code>conflicting_slug</code></td>
+      <td><code>conflictingSlug</code></td>
+      <td>The slug of the experiment that caused the unenrollment.</td>
+    </tr>
+  </tbody>
+</table>
+
+
+[prefFlips]: /desktop-incident-response
+[glean-telemetry]: https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/nimbus_events_unenrollment
+[legacy-telemetry]: https://probes.telemetry.mozilla.org/?search=unenroll&view=detail&probeId=event%2Fnormandy.unenroll%23unenroll

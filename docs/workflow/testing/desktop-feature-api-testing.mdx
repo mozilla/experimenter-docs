@@ -10,7 +10,7 @@ import TabItem from "@theme/TabItem";
 In order to make testing easier we created some helpers that can be accessed by including
 
 ```js
-const { ExperimentFakes } = ChromeUtils.import(
+const { ExperimentFakes } = ChromeUtils.importESModule(
   "resource://testing-common/NimbusTestUtils.sys.mjs",
 );
 ```
@@ -60,10 +60,10 @@ For experiments that are in "preview" mode:
 For writing tests you usually want to have the following modules imported:
 
 ```js
-const { ExperimentAPI, NimbusFeatures } = ChromeUtils.import(
+const { ExperimentAPI, NimbusFeatures } = ChromeUtils.importESModule(
   "resource://nimbus/ExperimentAPI.sys.mjs",
 );
-const { ExperimentFakes } = ChromeUtils.import(
+const { ExperimentFakes } = ChromeUtils.importESModule(
   "resource://testing-common/NimbusTestUtils.sys.mjs",
 );
 ```

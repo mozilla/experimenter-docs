@@ -44,7 +44,7 @@ module.exports = {
                     position: "right",
                 },
                 {
-                    href: "https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11470446/Nimbus",
+                    href: "https://mozilla-hub.atlassian.net/wiki/spaces/PXI/pages/426934273/Nimbus",
                     label: "Confluence",
                     position: "right",
                 },

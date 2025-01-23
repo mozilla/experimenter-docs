@@ -6,10 +6,13 @@ slug: /messaging/limitations
 
 ### History state of past experiments ###
 
-It is currently not possible to enroll users into experiments based on previous experiments that they might have been a part of. If multiple messaging campaigns go out as experiments targeting different surfaces it is not possible to ensure that users will not see both campaigns.
+If multiple messaging campaigns go out as experiments targeting different surfaces it is possible that users would see both campaigns.
+
 Mitigation is possible through the use of groups for frequency capping. If the experiments happen simultaneously, then using the same group can ensure we control the time it takes for a user to see both campaigns.
 
 Similarly (using targeting) it is possible to prevent a user from seeing a message if impressions from a different message are present. This is only possible if the two messages overlap in the system at the same time. 
+
+It is also possible to specifically include or exclude users into experiments based on previous experiments that they might have been a part of. 
 
 :::info
 Note that when using targeting or groups in this way the message **impressions** are removed once the message has been removed or the experiment has ended.

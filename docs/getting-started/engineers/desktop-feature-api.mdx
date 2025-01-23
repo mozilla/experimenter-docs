@@ -7,13 +7,15 @@ slug: /desktop-feature-api
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-This guide will help you use the Nimbus Feature API in Desktop Firefox to run experiments, set values remotely, and manage user preferences. If you are familiar with Normandy and are trying to migrate a feature, you may want to check out the [Migration Guide for Pref Experiments](/desktop-migration-guide).
+This guide will help you use the Nimbus Feature API in Desktop Firefox to run experiments, set values remotely, and manage user preferences. If you are new to using Nimbus, here's a **[video overview of how the code interacts to control your feature](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=45529d6a-27d4-42c4-891c-b22d016cfdd3)**.  The video until 5 minutes 44 seconds focuses on getting started.  Starting at 5:58 it switches to considerations when controlling preferences.
+
+If you are familiar with Normandy and are trying to migrate a feature, you may want to check out the [Migration Guide for Pref Experiments](/desktop-migration-guide).
 
 ## About the Feature API
 
 ### Can I use this?
 
-For the JS implementation you can import `ExperimentAPI.jsm` in the parent process or a privileged child process. We _do_ support First run experiments on Windows, holdbacks, and rollouts.
+For the JS implementation you can import `ExperimentAPI.sys.mjs` in the parent process or a privileged child process. We _do_ support First run experiments on Windows, holdbacks, and rollouts.
 
 For the C++ implementation you can import `#include "mozilla/browser/NimbusFeatures.h"` and we support early startup experiments and holdbacks.
 
@@ -105,8 +107,9 @@ Import the `NimbusFeatures` module:
 <TabItem value="js">
 
 ```js
-XPCOMUtils.defineLazyModuleGetters(this, {
-  NimbusFeatures: "resource://nimbus/ExperimentAPI.jsm",
+const lazy = {}
+ChromeUtils.defineESModuleGetters(lazy, {
+  NimbusFeatures: "resource://nimbus/ExperimentAPI.sys.mjs",
 });
 ```
 
@@ -344,11 +347,12 @@ NimbusFeatures::OffUpdate("aboutwelcome"_ns, "skipFocus"_ns,
 If you need to know whether an experiment is active or get access to the experiment or branch identifier (for example, to report in `utm_params`), you can use `ExperimentAPI.getExperimentMetaData`:
 
 ```js
-XPCOMUtils.defineLazyModuleGetters(this, {
-  ExperimentAPI: "resource://nimbus/ExperimentAPI.jsm",
+const lazy = {}
+ChromeUtils.defineESModuleGetters(lazy, {
+  NimbusFeatures: "resource://nimbus/ExperimentAPI.sys.mjs",
 });
 
-const data = ExperimentAPI.getExperimentMetaData({ featureId: "myFeature" });
+const data = lazy.ExperimentAPI.getExperimentMetaData({ featureId: "myFeature" });
 
 // If there is no experiment, data will be null.
 const slug = data?.slug;
