@@ -10,7 +10,7 @@ Product Managers often write the initial experiment to capture the logistical in
 
 Responsibilities include:
 
-- Watching training for new experiment owners [here](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=f3fbf06a-47ce-4e6d-b949-b0f20134a1c7) - the slide deck in the video is [here](https://docs.google.com/presentation/d/1ASlVAds63qOzCDnyLWlbKAcgvTkVfojDeGFqIYty4iI/edit#slide=id.p)
+- Watching training for new experiment owners [here](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=7efb5737-cce9-4c9a-b8a3-b26e010e5855) - the slide deck in the video is [here](https://docs.google.com/presentation/d/1ASlVAds63qOzCDnyLWlbKAcgvTkVfojDeGFqIYty4iI/edit#slide=id.p)
 - Starting and completing the [experiment brief](https://docs.google.com/document/d/1_bWn_1y5x1zf6zl7Loj4O1qKnVdxzIMXOawIpf32CsM/edit?usp=share_link) - which aligns everyone supporting the experiment to the learning goals.
 - Align on the design of the experiment by attending a [data science office hours](https://www.google.com/url?q=https://docs.google.com/document/d/1dH-aG8IsYtq6881_Q_cyEtmxli0bK7nuVcUD-5D7q-s/edit%23&sa=D&source=calendar&ust=1646684514330583&usg=AOvVaw0O5Sbz3fHVx2rFDcl3DpNg) on [Wednesday and Thurday](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours) and filing a [data org Jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/boards/269).
 - Creating the [Data Org Jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/boards/269) (linked in experiment brief)
