@@ -5,9 +5,9 @@ sidebar_label: Launching
 slug: /launching
 ---
 
-After you're experiment has passed QA and you've mitigated the risks, you are ready to launch!
+After your experiment has passed QA and you've mitigated the risks, you are ready to launch!
 
-You're experiment should be in [Preview mode](https://experimenter.info/previewing-experiments) - from the QA testing and/or your self-test.
+Your experiment should be in [Preview mode](https://experimenter.info/previewing-experiments) - from the QA testing and/or your self-test.
 
 At this point you check off the questions accepting responsibility and verifying that you've completed the training, then click "Request Launch"
 
