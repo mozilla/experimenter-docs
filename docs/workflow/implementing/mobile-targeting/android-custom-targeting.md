@@ -3,6 +3,11 @@ id: android-custom-targeting
 title: Adding new targeting attributes to Android
 slug: /android-custom-targeting
 ---
+
+:::warning DEPRECATED
+**This method of adding new targeting attributes is deprecated. Please use the method described in the [Recorded Targeting Context doc](/recording-targeting-context-values-to-glean#adding-new-fields).**
+:::
+
 # Adding new targeting attributes to Android
 This page demonstrates how to add new targeting attributes to Android, enabling experiment creators more specific targeting.
 For more general documentation on targeting custom audiences, check out [the custom audiences docs](/workflow/implementing/custom-audiences)
