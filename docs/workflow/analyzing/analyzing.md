@@ -5,7 +5,13 @@ sidebar_label: Analyzing
 slug: /analyzing
 ---
 
-Experiment results are availabe from the Results Link on your experiment page.  Experiments typically take 24 hours after ending to generate the overall results.  
+Experiment results are availabe from the Results Link on your experiment page.  
+
+Results will not be available until enrollment has ended.  There is no analysis done until that has stopped.  
+
+A week after enrollment ends, you can see some metrics that are available on a weekly basis, like retention.
+
+Overall results are available after the experiment has been fully ended (so the observation period is over).  Experiments typically take 24 hours after ending to generate the overall results.  If you do not see results 24 hours after you have ended your experiments, reach out in ask-experimenter to see if there was an issue running the analysis.
 
 At the top of your results page under "Analysis" is an information box that provides information on your results, if there were issues there will be an error here, if there were custom data modifications it will share what those are, etc.  Please read this and ask questions to your assigned data scientist or in #ask-experimenter if you need help.
 
