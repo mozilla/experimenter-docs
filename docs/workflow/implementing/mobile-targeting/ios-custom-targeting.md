@@ -4,6 +4,11 @@ title: Adding new targeting attributes to iOS
 slug: /ios-custom-targeting
 ---
 # Adding new targeting attributes to iOS
+
+:::warning DEPRECATED
+**This method of adding new targeting attributes is deprecated. Please use the method described in the [Recorded Targeting Context doc](/recording-targeting-context-values-to-glean#adding-new-fields).**
+:::
+
 This page demonstrates how to add new targeting attributes to iOS, enabling experiment creators more specific targeting.
 For more general documentation on targeting custom audiences, check out [the custom audiences docs](/workflow/implementing/custom-audiences)
 
