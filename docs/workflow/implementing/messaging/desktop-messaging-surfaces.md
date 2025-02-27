@@ -34,11 +34,6 @@ These pages appears on start-up as a full content page.
 <br/>
 Messages shown inside about:privatebrowsing content area when new private window is opened.
 
-## Snippets
-<img src="/img/messaging/snippets.png" alt="Example of snippets component"/>
-<br/>
-Short messages that appear on New Tab Page to highlight products, features and initiatives
-
 ## Multistage Spotlight
 <img src="/img/messaging/spotlight-center-simple.png" alt="Example of spotlight component with single centered screen" className="img-sm-left" />
 <img src="/img/messaging/spotlight-qr-app-store.png" alt="Example of spotlight component with centered screen, QR code, email link, and app store buttons" className="img-sm" />
