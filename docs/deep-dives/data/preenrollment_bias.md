@@ -6,6 +6,8 @@ slug: /preenrollment-bias
 
 # Automatically Countering Preenrollment Bias
 
+TL;DR: Nimbus has the capability to adjust metrics to account for preenrollment bias/randomization failures and to improve the precision of inferences, when possible. Currently this is configured by default for guardrails (averages only) but can also be used for custom analyses. This is expected to reduce the frequency of false positives, of which we believe many were caused by randomization failure.
+
 ## Preenrollment Bias
 
 In order to generate evidence for a causal hypothesis, we must guarantee that all sources of [confounding](https://en.wikipedia.org/wiki/Confounding) are accounted for. We can either do this by manually controlling for all confounders (which is quite difficult), or we can use randomized experiments in which the randomization process guarantees that, _on average_, units in each treatment branch are balanced on all confounders.
