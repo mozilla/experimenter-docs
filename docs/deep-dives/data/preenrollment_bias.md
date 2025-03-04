@@ -80,7 +80,7 @@ To configure the adjustment, first designate that inferences on the mean are des
 period = "preenrollment_week" # adjust using the same metric calculated during the week prior to enrollment
 ```
 
-One can reference how adjustment is configured for guardrails ([example](https://github.com/mozilla/metric-hub/blob/main/jetstream/defaults/firefox_desktop.toml#L33-L67)).
+One can reference how adjustment is configured for guardrails ([example](https://github.com/mozilla/metric-hub/blob/57cd56a2fee4ed441a172a7c6cfac10a45d3fb3e/jetstream/defaults/firefox_desktop.toml#L33-L67)).
 
 :::note
 Currently, the custom configs only support adjusting a during-treatment metric using the pre-experiment version of that metric. It's not supported to adjust a metric using a different metric or by using during-experiment data. To accomplish either of those tasks, you'll need to do so manually.
