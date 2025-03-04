@@ -28,7 +28,7 @@ For example:
 
 ```sql
 SELECT *
-FROM `moz-fx-data-experiments.mozanalysis.statistics_<slug>_preenrollment_week_1`
+FROM `moz-fx-data-experiments.mozanalysis.statistics_fake_experiment_slug_preenrollment_week_1`
 WHERE 1=1
   AND comparison = 'relative_uplift'
   AND comparison_to_branch = 'control'
