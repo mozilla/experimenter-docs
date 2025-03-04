@@ -12,7 +12,7 @@ TL;DR: Nimbus has the capability to adjust metrics to account for preenrollment 
 
 In order to generate evidence for a causal hypothesis, we must guarantee that all sources of [confounding](https://en.wikipedia.org/wiki/Confounding) are accounted for. We can either do this by manually controlling for all confounders (which is quite difficult), or we can use randomized experiments in which the randomization process guarantees that, _on average_, units in each treatment branch are balanced on all confounders.
 
-Randomization provides a guarantee of balance on average and across large numbers of experiments, but in practice, for any given experiment and confounding dimension there is the possibility of imbalance. This imbalance (or rather, confounding) presents a challenge to our goal of gathering causal evidence. An imbalance observed during the treatment period is indistinguishable from a treatment effect. So how can we detect this?
+Randomization provides a guarantee of balance on average and across large numbers of experiments, but in practice, for any given experiment and confounding dimension there is the possibility of imbalance. This imbalance (or rather, confounding) presents a challenge to our goal of gathering causal evidence. An imbalance observed during the treatment period is indistinguishable from a treatment effect. In the next section (Retrospective A/A Tests) we provide a method for detecting these situations.
 
 ## Retrospective A/A tests
 
