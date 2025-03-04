@@ -87,7 +87,7 @@ Currently, the custom configs only support adjusting a during-treatment metric u
 :::
 
 :::info
-As of February 2025, the execution order of analysis periods is not guaranteed. This means that, when rerunning an analysis for an experiment, it's possible for the computation for the during-treatment analysis to execute before the preenrollment has finished. This will result in the adjustment not being performed. That is, Jetstream will automatically fall back to unadjusted inferences. You can determine if Jetstream fell back by either examining the logs or by comparing to the unadjusted confidence intervals (which will be identical if adjustment was not performed).
+As of February 2025, the execution order of analysis periods is not guaranteed. This means that, when rerunning an analysis for an experiment, it's possible for the computation for the during-treatment analysis to execute before the preenrollment has finished. This will result in the adjustment not being performed. That is, Jetstream will automatically fall back to unadjusted inferences. You can determine if Jetstream fell back by either examining the logs (see [dashboard](https://mozilla.cloud.looker.com/dashboards/246?Experiment=&Timestamp+Date=14+day&Log+Level=ERROR%2CWARNING)) or by comparing to the unadjusted confidence intervals (which will be identical if adjustment was not performed).
 :::
 
 #### Custom adjustments
