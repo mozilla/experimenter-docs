@@ -41,7 +41,7 @@ ORDER BY metric, branch, statistic
 
 What if the Retrospective A/A test flags evidence of an imbalance? Should we have to discard that metric from our analysis completely? Luckily, there exist techniques to adjust for pre-experiment information. The most common/popular of these is [CUPED](https://www.statsig.com/blog/cuped). We have implemented a CUPED-like technique using linear models.
 
-Inferences for the [average treatment effect](https://en.wikipedia.org/wiki/Average_treatment_effect) (ATE) are most commonly calculated by computed the average (mean) in each treatment branch and then computing the difference. However, this can also be calculated using linear models.
+Inferences for the [average treatment effect](https://en.wikipedia.org/wiki/Average_treatment_effect) (ATE) are most commonly calculated by computing the average (mean) in each treatment branch and then computing the difference. However, this can also be calculated using linear models.
 
 As an example, we can fit a model of the form:
 
