@@ -113,4 +113,4 @@ HERE BE DRAGONS. It's possible to accidentally leak during-experiment informatio
 
 The effectiveness of the correction varies with the design of the experiement. For example, onboarding experiments do not have pre-experiment data and as such no adjustment can be made. Adjustments are most effective when user behavior has strong temporal correlations. See [here](https://docs.google.com/document/d/19iyqEidsEOYCPxHWi-3azqtlEqXL-46pttJ2GA7jSW8/edit?tab=t.0) for an internal summary of the effectiveness of this methodology, but as a quick primer: we can see from the below experiment that adjusted inferences (dotted line) are more precise and powerful and can remove spurious false positives (green metric)
 
-![example](../../../static/img/preenrollment%20example.png)
+![example](../../../static/img/preenrollment_example.png)
