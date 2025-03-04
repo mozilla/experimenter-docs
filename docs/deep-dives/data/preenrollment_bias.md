@@ -22,7 +22,7 @@ During the pre-experiment period, our experimental cohorts should have no statis
 
 We now automatically run Retrospective A/A tests for all Nimbus experiments to test for imbalance in guardrail metrics. These can be found alongside the other statistical results in the [Jetstream data products](https://docs.telemetry.mozilla.org/datasets/jetstream.html#statistics-tables).
 
-In short, you can find them in the `moz-fx-data-experiments.mozanalysis.statistics_<slug>_preenrollment_<period>_1` where `<slug>` is the (snake case) experiment slug or ID (can be found using the Experimenter UI). We run analyses over 2 periods: the week prior to enrollment (`<period>` = `week`) and the 28-day period prior (`<period>` = `days_28`).
+In short, you can find them in the `moz-fx-data-experiments.mozanalysis.statistics_<slug>_<period>_1` where `<slug>` is the (snake case) experiment slug or ID (can be found using the Experimenter UI). We run analyses over 2 periods: the week prior to enrollment (`<period>` = `preenrollment_week`) and the 28-day period prior (`<period>` = `preenrollment_days_28`).
 
 For example:
 
