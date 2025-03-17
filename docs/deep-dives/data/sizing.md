@@ -20,7 +20,7 @@ Statistical power is the probability that the experiment measures a stat sig imp
 
 We often talk about the "minimum effect size" (MES) as the smallest impact that we care about. A good guideline is to aim for a power of at least 80% for the MES (as that would give us an 80% chance of detecting the MES if it exists and a higher power of detecting larger effects).
 
-### Commentary on absolute size
+### Commentary on Absolute Size
 
 Statistical power generally (for the statistical tests that Jetstream performs) scales proportionally to the square root of the number of users. As a result, the power gains from increasing the size of an experiment depend on the actual size being considered. That is to say that going from 1% -> 2% has a much larger impact on the power than going from 9% -> 10%. One corollary of this is that, as a general rule, the power gains of going beyond 10% of users per branch are rather minimal. Generally, a 20% experiment (10%/branch) has only slightly higher power than a 100% experiment. There are of course exceptions depending on the absolute size of the targeted population, the smaller the targeted population, the less this rule applies.
 
