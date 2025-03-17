@@ -1,6 +1,6 @@
 ---
 id: sizing
-title: Sizing
+title: Population Sizing
 slug: /sizing
 ---
 
@@ -22,7 +22,7 @@ We often talk about the "minimum effect size" (MES) as the smallest impact that 
 
 ### Commentary on Absolute Size
 
-Statistical power generally (for the statistical tests that Jetstream performs) scales proportionally to the square root of the number of users. As a result, the power gains from increasing the size of an experiment depend on the actual size being considered. That is to say that going from 1% -> 2% has a much larger impact on the power than going from 9% -> 10%. One corollary of this is that, as a general rule, the power gains of going beyond 10% of users per branch are rather minimal. Generally, a 20% experiment (10%/branch) has only slightly higher power than a 100% experiment. There are of course exceptions depending on the absolute size of the targeted population, the smaller the targeted population, the less this rule applies.
+Statistical power generally (for the statistical tests that Jetstream performs) scales proportionally to the square root of the number of users. As a result, the power gains from increasing the size of an experiment depend on the actual size being considered. That is to say that going from 1% -> 2% has a much larger impact on the power than going from 9% -> 10%. One corollary of this is that, as a general rule, the power gains of going beyond 10% of users per branch are rather minimal. Generally, a 20% experiment (10%/branch) has only slightly lower power than a 100% experiment. There are of course exceptions depending on the absolute size of the targeted population, the smaller the targeted population, the less this rule applies.
 
 ### Commentary on Exposure Rates
 
