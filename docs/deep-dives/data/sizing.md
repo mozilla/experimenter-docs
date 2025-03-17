@@ -61,7 +61,7 @@ In this pattern, we can run a sequence of experiments (2 or more) of increasing 
    - Risk is mitigated by running a small experiment (which will bound potential negative impacts) before exposing a large portion of users.
    - Statistical power is maximalized by the very large experiment, giving the highest chance of measuring an impact.
 2. A very small experiment (<1%), followed by a small experiment (<5%), followed by a very large experiment.
-   - Similar to above, but further limits the risk of the 5% experiment through the use of a very small, preliminary experiment. See for example the rollout of ToU which used a 4-stage design.
+   - Similar to above, but further limits the risk of the 5% experiment through the use of a very small, preliminary experiment. See for example the [rollout of ToU](https://docs.google.com/presentation/d/1vTRx6kv3oAvIZSNcle6YhhMTQ8_5nLn77PNqCFuAQc8/edit#slide=id.g32cf211b9a1_3_92) which used a 4-stage design.
 
 ### Exploratory then Explanatory
 
