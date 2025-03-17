@@ -6,7 +6,9 @@ slug: /sizing
 
 # How large should my experiment be?
 
-When running experiments, choosing the right size is essential for meaningful results. If the experiment is too small, you risk missing important effects or obtaining inconclusive results. If the experiment is too large, the risk (negative impact of a branch) is excessively large. As a result, it is important to choose a size that balances the risk vs reward tradeoff.
+When running experiments, choosing the right size is essential to balance getting meaningful results with minimizing the risk of exposing a larger user population to a potentially negative treatment.
+
+If the experiment is too small, you risk missing important effects or obtaining inconclusive results (but expose fewer users to the treatment). If the experiment is too large, more information may be gained from the results, but the risk due to a negative impact of a branch is excessively large.
 
 ## Statistical Power
 
