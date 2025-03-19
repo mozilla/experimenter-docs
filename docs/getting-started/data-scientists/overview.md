@@ -12,33 +12,28 @@ Some other things you may be looking for are:
 
 * Documentation about using [Jetstream](/deep-dives/jetstream/overview), Mozilla's experiment analysis tool
 * Technical documentation about [datasets used in experimentation](https://docs.telemetry.mozilla.org/tools/experiments.html)
-* [Process documentation](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/overview) for the Mozilla data science organization
-  (internal link)
+* [Process documentation](https://experimenter.info/for-product) for the Mozilla data science organization
 
 ## What is the role of experimentation at Mozilla?
 
 Experimentation informs product decision-making at Mozilla.
 This suite of experimentation tools is designed for product managers and other investigation owners to A/B test hypotheses they have about new and existing products and features.
-[Experimenter](https://experimenter.services.mozilla.com/nimbus/) (internal link)
-and the [experiment review repository](https://mozilla-hub.atlassian.net/wiki/spaces/FIREFOX/pages/11043456/Experiments+Previously+Reviewed) (internal link)
-contain examples of completed and active experiments.
+[Experimenter](https://experimenter.services.mozilla.com/nimbus/) (internal link) contains examples of completed and active experiments.
 
 ## Collaborating with experiment owners
 
 Data scientists support experiment owners in setting up and interpreting their experiments.
-[The Firefox experiment design process](https://mozilla-hub.atlassian.net/wiki/spaces/FIREFOX/pages/11043391/Experiment+Design+Process) (internal link)
-describes the process for both data scientists and stakeholders.
+[The Firefox experiment design process](https://experimenter.info/for-product) describes the process for both data scientists and stakeholders.
 
-[The Nimbus onboarding guide](https://docs.google.com/document/d/155EUgzn22VTX8mFwesSROT3Z6JORSfb5VyoMoLra7ws/edit#)
-explains how to set up an experiment in the experiment console.
-
-The support that experiment owners need from data scientists during experiment set-up includes:
+Experiment owners come to [Office Hours](https://docs.google.com/document/d/1dH-aG8IsYtq6881_Q_cyEtmxli0bK7nuVcUD-5D7q-s/edit#) to talk to data scientists to:
 
 * validating that the experimental design will answer their questions
 * consulting on telemetry specifications
-* sample size recommendations
+* sample size recommendations based on the target audience + learning goals
+* guidance about interpretation of results
+
+If there is follow work needed outside of office hours, a Data Org Jira ticket is filed.  Example:
 * writing [custom metrics](/deep-dives/jetstream/metrics) if needed
-* guidance about interpretation
 
 ## Sampling framework
 
@@ -50,7 +45,7 @@ For more nuances about sampling, enrollment and exposure (whether or not the cli
 
 ## Sample size recommendations
 
-Sample size recommendations are operationalized as the fraction of the Firefox population that should consider enrolling in your recipe.  This is determined by discussing your [experiment design document](https://docs.google.com/document/d/1_bWn_1y5x1zf6zl7Loj4O1qKnVdxzIMXOawIpf32CsM/edit) at either [desktop or mobile data science office hours](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours).
+Sample size recommendations the fraction of the Firefox population that should be enrolled in your recipe.  This is determined by discussing your [experiment design document](https://docs.google.com/document/d/1_bWn_1y5x1zf6zl7Loj4O1qKnVdxzIMXOawIpf32CsM/edit?tab=t.0) at [Data science office hours](https://docs.google.com/document/d/1dH-aG8IsYtq6881_Q_cyEtmxli0bK7nuVcUD-5D7q-s/edit#).
 
 The information in the [Experiment brief](https://docs.google.com/document/d/1_bWn_1y5x1zf6zl7Loj4O1qKnVdxzIMXOawIpf32CsM/edit) needs to provide the information needed for sizing.
 
