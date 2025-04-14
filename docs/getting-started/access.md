@@ -38,4 +38,4 @@ Assuming you have been vouched for by a Nimbus administrator + a Product Owner (
 
 ### Reviews
 
-All changes to experiments and rollouts that impact production must be approved by a single L3 Nimbus reviewer, which you can request via the Nimbus console interface. You can find a list of [recommended reviewers here](https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11470672/Nimbus+Reviewers).
+All changes to experiments and rollouts that impact production must be approved by a single L3 Nimbus reviewer, which you can request via the Nimbus console interface. *The requester and reviewer must be different people.*  You can find a list of [recommended reviewers here](https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11470672/Nimbus+Reviewers).
