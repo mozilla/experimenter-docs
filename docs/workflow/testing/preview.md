@@ -23,6 +23,8 @@ Here is a 65 second video on [how to install Nimbus dev tools](https://mozilla.h
 
 Here is a 5 minute video on [using Nimbus Dev Tools to test a simple experiment](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=98d797c3-35e2-413a-b68d-b2a5018b814e).  Watching this will show you how to verify simple experiments.  Here is the link to the [demo experiment used in the video](https://experimenter.services.mozilla.com/nimbus/training-only-for-dev-tools/summary), if you don't have one of your own that you want to test.
 
+Here is the link to the [DevTool user guide](https://experimenter.info/nimbus-devtools-guide/) 
+
 ### How do I know if I have a simple experiment
 There is a Miro flow that can [help determine if you have a good test case here](https://miro.com/app/board/uXjVK_27t2o=/?share_link_id=702720260336).  If it asks for a password - "patterns".  Reach out in #ask-experimenter if you are unsure and someone can help you determine the complexity. 
 
