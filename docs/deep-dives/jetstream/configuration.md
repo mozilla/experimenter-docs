@@ -28,7 +28,8 @@ For help adding custom metrics or creating a re-usable outcome for an experiment
 
 To add or update a custom configuration, a data scientist will open a pull request against [metric-hub]. 
 
-if you need help doing this - file a [DO Jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/boards/269).
+If you need help doing this - follow the guidance to [attending office hours](https://docs.google.com/document/d/1dH-aG8IsYtq6881_Q_cyEtmxli0bK7nuVcUD-5D7q-s/edit?tab=t.0#heading=h.yguiolmttiw2), where you discuss with data science what you want to learn and the telemetry available so it can be created.  
+
 CI checks will validate the columns, data sources, and SQL syntax. Note that if the experiment has not yet launched, the CI checks will not pass.
 Once CI completes and the pull request gets automatically approved, you may merge the pull request, which will trigger Jetstream to re-run your analysis.
 No additional review is necessary to land configurations as long as no changes are made to [metric definitions that are considered  source of truth](https://github.com/mozilla/metric-hub/tree/main/definitions). These changes will require a review by a data scientist. Results should be available in several hours, depending upon the complexity of the configuration.
