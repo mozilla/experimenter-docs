@@ -56,7 +56,8 @@ Jetstream is executed on the `jetstream` Kubernetes cluster in the `moz-fx-data-
 
 Argo provides a Web UI to access running workflows. Users need to authenticate using a Bearer token:
 * set `export CLOUDSDK_CORE_PROJECT=moz-fx-data-experiments`
-* Get Bearer token and copy: `gcloud container clusters get-credentials jetstream --region=us-central1-a && kubectl -n argo exec $(kubectl get pod -n argo -l 'app=argo-server' -o jsonpath='{.items[0].metadata.name}') -- argo auth token` 
+* Get Bearer token and copy: 
+	>```gcloud container clusters get-credentials jetstream --region=us-central1-a && kubectl -n argo exec $(kubectl get pod -n argo -l 'app=argo-server' --field-selector=status.phase=Running -o jsonpath='{.items[0].metadata.name}') -- argo auth token```
 * Connect to the Workflow UI using port forwarding: `kubectl -n argo port-forward svc/argo-server 2746:2746`
 * Open [https://localhost:2746](https://localhost:2746)
 * Use the generated Bearer token (including the word `Bearer`) for authentication
@@ -74,18 +75,29 @@ kubectl get wf -o go-template -n argo --template '{{range .items}}{{.metadata.na
 ## Cluster Updates
 
 Argo updates should be tested on a separate cluster before applying them to production. Jetstream has some custom logic to connect to clusters and issue workflows that might be incompatible with future versions of Argo.
-* Setup a separate cluster, install most recent Argo version
-	* Optionally, push a custom docker image that should be tested
-		* `docker build -t jetstream-test .`
-		* `docker tag jetstream-test gcr.io/moz-fx-data-experiments/jetstream-test:latest`
-		* `gcloud auth configure-docker`
-		* `docker push gcr.io/moz-fx-data-experiments/jetstream-test:latest`
-		* Update [the workflow configuration file](https://github.com/mozilla/jetstream/blob/main/jetstream/workflows/run.yaml) to point to the docker image to be tested
-* To update Argo run:
-	* Connect to cluster: `gcloud container clusters get-credentials jetstream --region=us-central1-a`
-	* To install new release `kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v3.4.5/install.yaml`
+
+### Preparation 
+* Ensure `kubectl` is using the correct cluster context (e.g., to switch between dev and prod clusters)
+	* `kubectl config get-contexts`
+	* `kubectl config use-context <context>`
+* (optional) Check current Argo version
+	* `kubectl -n argo exec $(kubectl get pod -n argo -l 'app=argo-server' --field-selector=status.phase=Running -o jsonpath='{.items[0].metadata.name}') -- argo version`
+* Check for breaking changes in the Argo [Upgrade Guide](https://argo-workflows.readthedocs.io/en/latest/upgrading/)
+
+### Perform Upgrade
+* Find kubectl command to install/upgrade from the [Argo releases](https://github.com/argoproj/argo-workflows/releases) page
+	* Should look like: `kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v3.6.7/install.yaml`
 		* Change version number to most recent release
 * The GKE cluster itself is updated automatically by GCP
+
+### Post Upgrade
+* Verify version number with command above and by checking UI
+* Run a test workflow by sending a small analysis job to the cluster with `jetstream run-argo` for a single experiment and date
+	* **Important** Use configuration options to ensure production data is not overwritten
+		* `--bucket=None`
+		* `--dataset-id=<a test dataset>`
+	* Use `--zone` and `--cluster-id` if using dev cluster
+* Reset kubectl context if necessary
 
 ## Tooling and Metric Versioning
 
