@@ -27,7 +27,7 @@ For experiments that are already live, go to the summary page. For experiments t
 
 At this point, you can run your local build of Firefox iOS, once it's run:
 
-1. Access the settings menu and click **5** times on the `Firefox Daylight 0.0.1` under the about section:
+1. Access the settings menu and click **5** times on the Firefox version (in this example `Firefox Daylight 0.0.1`) under the about section:
    <img src="/img/firefox-ios/secret-menu-access.png" height="500"/>
 
 2. Scroll all the way to the bottom and click the `Experiments` menu.
