@@ -23,11 +23,11 @@ Only the release management team can approve incident reponse pref flips.
 
 # Behaviour
 
-When a client enrolls into an experiment/rollout using this feature, Nimbus will
-set (or unset) all the prefs to the values specified. Prefs on the `user` branch
-will persist through startup and be available immediately. Prefs set on the
-`default` branch will not persist through startup and will not have their
-correct values until Nimbus finishes initialization.
+When a client enrolls into a rollout using this feature, Nimbus will set (or
+unset) all the prefs to the values specified. Prefs on the `user` branch will
+persist through startup and be available immediately. Prefs set on the `default`
+branch will not persist through startup and will not have their correct values
+until Nimbus finishes initialization.
 
 When the client unenrolls, all prefs will be restored to their values before
 enrollment. If the pref did not exist before enrollment, it will be cleared if
@@ -35,9 +35,12 @@ it was set on the user branch. The default branch does not support clearing, so
 the pref and its value from the enrollment will persist until the browser
 closes.
 
-If the client is enrolled in both an experiment and a rollout then only the
-experiment will take effect. This behaviour is likely to change once multiple
-enrollment support is added to desktop.
+As of Firefox 140, this feature supports co-enrollment, which allows the client
+to enroll in multiple rollouts at once. The client will apply the configuration
+from all enrolled rollouts. If multiple rollouts attempt set the same pref they
+must all set it to the same branch and value. If not, the disagreeing rollout
+will be unenrolled.
+
 
 ## Multi-feature
 
@@ -116,9 +119,9 @@ Desktop.
 
 5. On the Summary Page, request launch.
 
-   Experiments and rollouts using the incident response feature cannot be
-   launched to preview. We highly reccomend you QA these recipes on the [staging
-   instance of experimenter][stage] first.
+   Rollouts using the incident response feature cannot be launched to preview.
+   We highly reccomend you QA these recipes on the [staging instance of
+   experimenter][stage] first.
 
    **Note:** Experimenter may report errors with your recipe configuration. You
    must fix them before requesting launch. Ask in `#ask-experimenter` on Slack.
