@@ -35,11 +35,72 @@ within and between branches of an experiment.
 A small set of default, critical guardrail metrics that are specific to each platform are run by default for each experiment.  Sometimes also called Core metrics.
 These are defined for each platform in the metric-hub repository in [jetstream/defaults/](https://github.com/mozilla/metric-hub/tree/main/jetstream/defaults/). Look at the file for your platform. At the top you will see the metrics collected and the timeframe they are available: daily, weekly, or overall (at the end of the experiment).  For help understanding any aspect of guardrail metrics on your platform - link to the file and ask in #ask-experimenter.
 
-[Pre-defined Metrics, AKA Outcomes](https://experimenter.info/deep-dives/jetstream/outcomes) are collections of metrics that relate to each other.  You can associate these pre-defined metrics (outcomes) with your experiment in the Experiment Console - Metrics section.
-Data scientists can extend and define outcomes in the outcomes path of the
+[Pre-defined Metrics, AKA Outcomes](https://experimenter.info/deep-dives/jetstream/outcomes) are collections of metrics that relate to each other.  You must associate these pre-defined metrics (outcomes) with your experiment BEFORE LAUNCH in the Experiment Console - Metrics section.
+Data scientists can extend and defined outcomes in the outcomes path of the
 [`metric-hub`](https://github.com/mozilla/metric-hub/tree/main/jetstream/outcomes) repository.  See what [Outcomes are available](https://mozilla.github.io/metric-hub/outcomes/fenix/default-browser/).
 
-If the metrics you need are not covered by Default (guardrail) or existing Pre-defined Outcomes - you can add a metric to your experiment by working with a data scientist to write a [custom configuration](https://experimenter.info/system-architecture#custom-configuration-aka-jetstream-configuration-files) for your experiment.
+If the metrics you need are not covered by Default (guardrail) or existing Pre-defined Outcomes - you can add a custom metric to your experiment by working with a data scientist to write a [custom configuration](https://experimenter.info/system-architecture#custom-configuration-aka-jetstream-configuration-files) for your experiment.
+
+## What are the default guardrail metrics?
+Open the [file for your platform](https://github.com/mozilla/metric-hub/tree/main/jetstream/defaults) to see the most recent list of what is included.  These don’t change often, but they can.  
+
+The guardrail metrics for [Desktop](https://github.com/mozilla/metric-hub/blob/main/jetstream/defaults/firefox_desktop.toml) as of June 2025.
+
+KPI
+- "retained",
+- "Days_of_use",
+Engagement and KPI
+- "active_hours", 
+-  "Qualified_cumulative_days_of_use",
+- "Client_level_daily_active_users_v2",
+- "uri_count"
+  
+Search Related
+-  "Ad_clicks",
+-  "Organic_search_count",
+-  "search_count",
+-  "searches_with_ads",
+-  "tagged_search_count",
+-  "tagged_follow_on_search_count",
+-  "Uri_count"
+
+Leading indicators.  KPI's are hard to move, but these are known positive leading indicators that can impacted KPI metrics.
+- "Is_default_browser",
+
+The guardrail metrics for [Android](https://github.com/mozilla/metric-hub/blob/main/jetstream/defaults/fenix.toml) as of June 2025.
+
+KPI metrics:
+- "retained",
+- "days_of_use",
+
+Engagement with browser metrics:
+- "Active_hours"
+- "Total_uri_count",
+- "Client_level_daily_active_users_v2",
+
+Search related metrics:
+- "Serp_ad_clicks", 
+- "Organic_searches",
+- "Search_count",
+- "Searches_with_ads",
+- "Tagged_follow_on_searches",
+
+
+The guardrail metrics for [iOS](https://github.com/mozilla/metric-hub/blob/main/jetstream/defaults/firefox_ios.toml) as of June 2025.
+
+KPI
+- "Days_of_use",
+-  "retained",
+
+Engagement
+- "Active_hours",
+- "client_level_daily_active_users_v2",
+
+Search Related
+- "search_count",
+- "serp_ad_clicks",
+
+
 
 
 
