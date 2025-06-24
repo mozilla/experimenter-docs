@@ -9,7 +9,7 @@ This guide will help you preview what each branch of an experiment will look lik
 Preview does NOT launch your experiment to external users.  Preview enables you to self test your experiment and for QA to test.
 
 :::warning
-These steps only apply to Firefox Desktop Version 90+. You can find [instructions for iOS here](ios-preview-testing.md), Fenix instructions are coming soon!
+These steps only apply to Firefox Desktop Version 90+. You can find [instructions for iOS here](ios-preview-testing.md) and [Fenix instructions here](https://experimenter.info/android-preview-testing).
 :::
 
 1. For experiments that are already live, go to the summary page. For experiments that have not yet launched, you will need the author to click "Launch to Preview" on the Review & Launch page.
