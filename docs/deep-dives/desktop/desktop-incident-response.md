@@ -258,6 +258,6 @@ submitted with the following data:
 [jsonschema]: https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/schemas/PrefFlipsFeature.schema.json
 [setPref]: /desktop-pref-experiments
 [advanced-targeting]: /targeting/advanced-targeting#answer
-[stage]: https://stage.experimenter.nonprod.dataops.mozgcp.net/nimbus/
+[stage]: https://stage.experimenter.nonprod.webservices.mozgcp.net/nimbus/
 [glean-telemetry]: https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/nimbus_events_unenrollment
 [legacy-telemetry]: https://probes.telemetry.mozilla.org/?search=unenroll&view=detail&probeId=event%2Fnormandy.unenroll%23unenroll

@@ -8,7 +8,7 @@ slug: /ios-preview-testing
 
 ## Launching an experiment to Preview the stage server
 
-The first step to testing the preview flow is to launch an experiment. Go to [experimenter](https://stage.experimenter.nonprod.dataops.mozgcp.net/nimbus/](https://experimenter.services.mozilla.com/nimbus/)) and create your experiment.
+The first step to testing the preview flow is to launch an experiment. Go to [experimenter](https://stage.experimenter.nonprod.webservices.mozgcp.net/nimbus/](https://experimenter.services.mozilla.com/nimbus/)) and create your experiment.
 
 For experiments that are already live, go to the summary page. For experiments that have not yet launched, you will need the author to click "Launch to Preview" on the Review & Launch page.
 
@@ -44,7 +44,7 @@ You can also check out this [visual documentation](https://docs.google.com/docum
 
 - **What kind of experiment should I create?**
 
-If you would like your test to be more in-depth, we recommend you create an iOS experiment that can be directly tested on the UI. For example, you can create an `onboarding-default-browser` experiment by setting the feature config to `onboarding-default-browser` and setting the appropriate values, [check out this experiment on experimenter for a complete example](https://stage.experimenter.nonprod.dataops.mozgcp.net/nimbus/teshaqtest-preview-flow-showhide-default-browser-title-image)
+If you would like your test to be more in-depth, we recommend you create an iOS experiment that can be directly tested on the UI. For example, you can create an `onboarding-default-browser` experiment by setting the feature config to `onboarding-default-browser` and setting the appropriate values, [check out this experiment on experimenter for a complete example](https://stage.experimenter.nonprod.webservices.mozgcp.net/nimbus/teshaqtest-preview-flow-showhide-default-browser-title-image)
 
 - **I don't see my experiments on Firefox!**
 

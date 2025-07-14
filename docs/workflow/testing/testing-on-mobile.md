@@ -31,7 +31,7 @@ Building Fenix locally is [documented in the Fenix repository][local-build].
 
 We wish to get the app to ingest the experiment definition of our choice. Here is a sample experiment definition, which you can generate with the [staging instance of Experimenter][stage-experimenter]. 
 
-[stage-experimenter]: https://stage.experimenter.nonprod.dataops.mozgcp.net/nimbus/
+[stage-experimenter]: https://stage.experimenter.nonprod.webservices.mozgcp.net/nimbus/
 
 ```json
 {
@@ -103,7 +103,7 @@ These fields affect which OS, app and build the experiment is for. These should 
  * `channel`: this must be `nightly` or `developer`. The experimenter UI should help you select the right one.
  * `feature_id`/`featureIds`: this is the identifier of the app feature under test. This should match what is hard coded into the App. Experimenter will put these in all the right places. If the feature id is not already listed, you can [add it here][experimenter-admin].
 
-[experiment-admin]: https://stage.experimenter.nonprod.dataops.mozgcp.net/admin/
+[experiment-admin]: https://stage.experimenter.nonprod.webservices.mozgcp.net/admin/
 
 These fields affect segment the population for eligibility for the experiment, and which branch they'll be given.
 
