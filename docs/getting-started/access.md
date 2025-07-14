@@ -26,7 +26,7 @@ Assuming you have been vouched for by a Nimbus administrator + a Product Owner (
 #### Testing Review Workflow on Staging
 
 - Connect to the VPN
-- Go to [Nimbus Staging](https://stage.experimenter.nonprod.dataops.mozgcp.net/nimbus/) (not Production!). Ask someone to create a dummy experiment and request review.
+- Go to [Nimbus Staging](https://stage.experimenter.nonprod.webservices.mozgcp.net/nimbus/) (not Production!). Ask someone to create a dummy experiment and request review.
 - Click "Approve" on the dummy experiment, and then "Open Remote Settings":
   ![image](https://user-images.githubusercontent.com/1455535/144130977-149c2e65-4995-4040-a840-ea2baa0e3dc4.png)
   ![image](https://user-images.githubusercontent.com/1455535/144131295-8469c508-11d6-49e1-91d7-0bcf5d81efa6.png)

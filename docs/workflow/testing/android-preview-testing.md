@@ -8,7 +8,7 @@ slug: /android-preview-testing
 
 ## Launching an experiment to Preview the stage server
 
-The first step to testing the preview flow is to launch an experiment. Go to [experimenter](https://stage.experimenter.nonprod.dataops.mozgcp.net/nimbus/](https://experimenter.services.mozilla.com/nimbus/)) and create your experiment.
+The first step to testing the preview flow is to launch an experiment. Go to [experimenter](https://stage.experimenter.nonprod.webservices.mozgcp.net/nimbus/](https://experimenter.services.mozilla.com/nimbus/)) and create your experiment.
 
 For experiments that are already live, go to the summary page. For experiments that have not yet launched, you will need the author to click "Launch to Preview" on the Review & Launch page.
 
