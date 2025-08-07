@@ -22,3 +22,9 @@ The very first link on that page is to the [Nimbus DevTools GitHub](https://gith
 ## Using Nimbus Dev Tools to Foxfood
 
 Here is a 90 second video on [how to force enroll into a foxfooding experiment](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=91da9998-b2e8-4314-aa83-b330014e2441).
+- open the nimbus dev tools add-on (through puzzle piece or hamburger menu)
+- go to "experiment browser", then change the top filter for "Status" to "Preview"
+- Find the Foxfooding rollout name you wish to try
+- For that Foxfooding rollout - click "select branch" and select the only option
+- click "actions" and select "force enroll"
+- check in about:studies (you may need to refresh page) and you will be enrolled to foxfood.
