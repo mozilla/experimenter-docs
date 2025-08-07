@@ -4,6 +4,13 @@ title: Foxfooding
 slug: /foxfooding
 ---
 
+# Feature team setting up a Foxfood
+
+Create a rollout with the change you want Mozillians to be able to try. 
+Set the Audience size to the lowest it will accept - or .0001 with 1 expected client.  We aren't going to actually launch this - but lowest is always safest.
+Click "Preview for Testing" - and it's ready!
+
+
 # Foxfooding with Nimbus Dev Tools
 
 Start by installing Nimbus Dev Tools.  If you aren't a developer, don't let the "Dev Tools" or add-on scare you away. This is easy!
