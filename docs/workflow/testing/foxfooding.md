@@ -15,9 +15,10 @@ Click "Preview for Testing" - and it's ready!
 
 Start by installing Nimbus Dev Tools.  If you aren't a developer, don't let the "Dev Tools" or add-on scare you away. This is easy!
 
-Here is a [65 second video on how to install Nimbus dev tools](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b7b2d02b-79ba-43a0-a708-b2a60107f0bf). Watching the video takes half the time to getting Nimbus Dev Tools installed. 
+Install the Nimbus Dev Tools.xpi from [Nimbus DevTools GitHub](https://github.com/mozilla-extensions/nimbus-devtools/releases) repository.  It is a one click install.    
+
+If you have any questions on how to do that, there is a [65 second video on how to install Nimbus dev tools](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b7b2d02b-79ba-43a0-a708-b2a60107f0bf). Please ask in ask-experimenter if you have any questions.
 Here is the [link to docs on how to install Nimbus Dev Tools](https://experimenter.info/nimbus-devtools-guide#installation). 
-The very first link on that page is to the [Nimbus DevTools GitHub](https://github.com/mozilla-extensions/nimbus-devtools/releases) repository, where you can find the one click XPI file install.
 
 ## Using Nimbus Dev Tools to Foxfood
 
