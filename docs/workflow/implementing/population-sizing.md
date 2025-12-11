@@ -16,7 +16,7 @@ Population sizing accuracy of the queries below was investigated in [EXP-6101](h
 
 * Desktop: 0.9-1.3, average 1.163
 * Android: 1.02-1.21, average 1.136
-* iOS: 1.41-1.55, average 1.506
+* iOS: 1.35-1.53, average 1.448
 
 This means that Desktop estimates were up to +30% larger than observed enrollments, Android estimates were up to 21% larger than observed enrollments, iOS estimates were up to 55% larger than observed enrollments, so estimates may need to be adjusted accordingly to ensure sufficient minimum populations.
 
