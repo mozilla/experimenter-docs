@@ -16,50 +16,60 @@ To integrate Nimbus (Cirrus) with your web application, these are high-level ste
 - Integrate [Glean](https://docs.telemetry.mozilla.org/concepts/glean/glean.html) on your web application.
 
 2. **FML**
-- Make [Feature Manifest Language (FML) configuration](https://experimenter.info/fml-spec#introducing-the-fml)   available in your repository.
+- Make [Feature Manifest Language (FML) configuration](https://experimenter.info/fml-spec#introducing-the-fml) available in your repository, for example:
+    ```
+    about:
+    description: Nimbus Feature Manifest for Experimenter Web testing
+    channels:
+      - developer
+      - staging
+      - production
+    features:
+      example-feature:
+        description: An example feature.
+        variables:
+          emoji:
+            description: An emoji to show for this treatment.
+            type: Option<String>
+            default: ❤️
+          enabled:
+            description: If the feature is enabled.
+            type: Boolean
+            default: false
+        defaults:
+          - channel: developer
+            value: { "enabled": false }
+          - channel: staging
+            value: { "enabled": false }
+          - channel: production
+            value: { "enabled": false }
+    ```
 
-3. **Probe Scraper**
-- Add application into [probe scraper](https://mozilla.github.io/glean/book/user/adding-glean-to-your-project/enable-data-ingestion.html#add-your-product-to-probe-scraper) for data collection.
+3. **Wait for Nimbus team to deploy your Cirrus Servers**
+- The Nimbus team will give you URLs to use for calling Cirrus in stage and prod.
 
-4. **Cirrus Container Image**
-- Verify Access to Cirrus container image: [Mozilla Cirrus Docker Hub](https://hub.docker.com/r/mozilla/cirrus/tags).
-
-5. **Deploy Cirrus Container**
-- Deploy Cirrus container as a sidecar container in your Kubernetes deployment and add the [environment variables](https://github.com/mozilla/experimenter/tree/main/cirrus#environment-setup).
-- Sidecar pattern in Kubernetes
-<img src="/img/nimbus-on-web/sidecar-pattern-kubernetes.png"  alt="Sidecar pattern in Kubernetes" className="img-lg" />
-
-- Example of Deployment architecture
-<img src="/img/nimbus-on-web/deployment-architecture-example.png" alt="Example of Deployment architecture" className="img-lg" />
-
-6. **Configure Feature Manifest Language (FML)**
-- Add feature in Feature Manifest Language (FML).
-
-7. **Integrate Glean SDK**
-- Identify key metrics and configure with your application.
-
-8. **Call Cirrus Container**
-- Pass a unique client id and context when calling the container to receive the features. The client id can be a temporary or stable id depending on your use case. Refer to [API docs](https://github.com/mozilla/experimenter/tree/main/cirrus) for more details.
+4. **Call Cirrus Server**
+- Pass a unique client id and context when calling the service to receive the features. The client id can be a temporary or stable id depending on your use case. Any stable id must be included in the application's glean data deletion requests. Refer to [API docs](https://github.com/mozilla/experimenter/tree/main/cirrus) for more details.
     ```json
     {
-    "client_id": "4a1d71ab-29a2-4c5f-9e1d-9d9df2e6e449",
-    "context": {
-        "key1": "value1",
-        "key2": {
-        "key2.1": "value2",
-        "key2.2": "value3"
+        "client_id": "4a1d71ab-29a2-4c5f-9e1d-9d9df2e6e449",
+        "context": {
+            "key1": "value1",
+            "key2": {
+                "key2.1": "value2",
+                "key2.2": "value3"
+            }
         }
-    }
     }
     ```
 
-9. **Validation and Testing**
+5. **Validation and Testing**
 - Validate setup and test the integration thoroughly.
 
-10. **Experiment Analysis**
-- Add application support on Jetstream/OpMon and Metric hub.
+6. **Experiment Analysis**
+- Run an A/A experiment and confirm that Cirrus telemetry can be correlated to application telemetry for analysis.
 
-11. **Additional Considerations**
+7. **Additional Considerations**
 - Provide training resources for experiment owners and reviewers.
 
 ## Additional Notes
