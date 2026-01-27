@@ -1,0 +1,125 @@
+---
+id: nimbus-cli-working-with-patch-files
+title: Patch Files
+slug: /technical-reference/nimbus-cli/working-with-patch-files
+---
+
+The `nimbus-cli` lets you source experiments from multiple places and then change them before inserting them into the app where they can be evaluated, and the app can naturally enroll into them.
+
+When experimenting on more complicated features, the configuration itself may need to be patched.
+
+## `--patch FILE`
+
+Any command that takes an experiment as an argument (`enroll`, `features`, `fetch`, `info`, `validate`) accepts a patch file.
+
+The file is of the format:
+
+```json
+{
+    "$feature-id": { … configuration patch … }
+}
+```
+
+for example:
+
+```json
+{
+    "messaging": {
+        "triggers": {
+            "AFTER_THREE_LAUNCHES_THIS_WEEK": "true",
+            "ALLOWED_TIPS_NOTIFICATIONS": "true",
+            "INACTIVE_NEW_USER": "true",
+            "I_AM_DEFAULT_BROWSER": "true",
+            "I_AM_NOT_DEFAULT_BROWSER": "true",
+            "MORE_THAN_24H_SINCE_INSTALLED_OR_UPDATED": "true",
+            "NOT_INSTALLED_TODAY": "true",
+            "NOT_LAUNCHED_YESTERDAY": "true",
+            "USER_RECENTLY_INSTALLED": "true",
+            "USER_RECENTLY_UPDATED": "true"
+        }
+    },
+
+    "onboarding": {
+        "conditions": {
+            "I_AM_DEFAULT_BROWSER": "false",
+        }
+    }
+}
+```
+
+You can generate a defaults file with the `defaults` command, or for individual features:
+
+```sh
+nimbus-cli --app firefox_ios --channel release defaults --output defaults.json
+```
+
+or using the --multi option with `features`:
+
+```sh
+nimbus-cli --app firefox_ios --channel release features mobile-default-browser-cta-copy-test-ios --branch treatment-a --multi --output feature.json
+```
+
+You can hand edit these files, or write `jq` scripts to change them:
+
+For example, switching the triggers for all messages to `["ALWAYS"]` in a messaging experiment:
+
+```sh
+jq '.messaging|{ messaging: { messages: .messages|map_values({ trigger: [\"ALWAYS\"]}) } }' feature.json > patch.json
+```
+
+However you get the patch file: the patch file is applied to each feature in each branch.
+
+```sh
+nimbus-cli --app firefox_ios --channel developer features mobile-default-browser-cta-copy-test-ios --branch treatment-a --patch patch.json --multi
+```
+
+Notice how the additional triggers are added to the `messaging` feature. The `onboarding` feature from the patch file is ignored because it is not involved in the `mobile-default-browser-cta-copy-test-ios` experiment.
+
+```json
+{
+  "messaging": {
+    "actions": {},
+    "messages": {
+      "default-browser": {
+        "action": "MAKE_DEFAULT_BROWSER_WITH_TUTORIAL",
+        "button-label": "Open My Links With Firefox",
+        "experiment": "{experiment}",
+        "style": "FALLBACK",
+        "surface": "new-tab-card",
+        "text": "Default Browser/DefaultBrowserCard.Description",
+        "title": "Default Browser/DefaultBrowserCard.Title",
+        "trigger": [
+          "I_AM_NOT_DEFAULT_BROWSER",
+          "SUPPORTS_DEFAULT_BROWSER"
+        ]
+      }
+    },
+    "on-control": "show-next-message",
+    "styles": {},
+    "triggers": {
+      "AFTER_THREE_LAUNCHES_THIS_WEEK": "true",
+      "ALLOWED_TIPS_NOTIFICATIONS": "true",
+      "INACTIVE_NEW_USER": "true",
+      "I_AM_DEFAULT_BROWSER": "true",
+      "I_AM_NOT_DEFAULT_BROWSER": "true",
+      "MORE_THAN_24H_SINCE_INSTALLED_OR_UPDATED": "true",
+      "NOT_INSTALLED_TODAY": "true",
+      "NOT_LAUNCHED_YESTERDAY": "true",
+      "USER_RECENTLY_INSTALLED": "true",
+      "USER_RECENTLY_UPDATED": "true"
+    }
+  }
+}
+```
+
+You can then enroll the patched experiment:
+
+```sh
+nimbus-cli --app firefox_ios --channel developer enroll mobile-default-browser-cta-copy-test-ios --branch treatment-a --patch patch.json
+```
+
+For `fetch` and `enroll`, which accept multiple experiment slugs, then the same patch file is applied before sending to disk or the device.
+
+```sh
+nimbus-cli fetch viewpoint-ios-july-2023 mobile-default-browser-cta-copy-test-ios --patch patch.json --output archived-with-patch.json
+```

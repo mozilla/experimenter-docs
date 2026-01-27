@@ -1,6 +1,6 @@
 ---
 id: for-leadership
-title: Leadership
+title: For Leadership
 slug: /for-leadership
 ---
 

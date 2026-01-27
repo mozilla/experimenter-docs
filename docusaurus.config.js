@@ -2,7 +2,7 @@ const math = require('remark-math');
 const katex = require('rehype-katex');
 
 module.exports = {
-    title: "Experimenter Docs",
+    title: "Mozilla Nimbus Documentation",
     tagline: "Documentation souce for Data scientists, Product Managers and Engineers",
     url: "https://experimenter.info",
     baseUrl: "/",
@@ -34,11 +34,10 @@ module.exports = {
             respectPrefersColorScheme: true,
         },
         navbar: {
-            title: "Mozilla Experimentation and Feature Delivery",
+            title: "Mozilla Nimbus Documentation",
             logo: {
-                alt: "Experimenter Logo",
-                src: "img/logo.svg",
-                srcDark: "img/logo-dark.svg",
+                alt: "Nimbus Logo",
+                src: "img/nimbus.png",
             },
             items: [
                 {

@@ -1,6 +1,6 @@
 ---
 id: for-engineers
-title: Getting started with implementation 
+title: For Engineers 
 slug: for-engineers
 ---
 
@@ -8,10 +8,10 @@ Engineers are typically tasked with implementing an experiment on a new surface 
 
 ## Integrating with a new app
 
-* [Getting started with Nimbus, for Android Engineers](/getting-started/engineers/getting-started-for-android-engineers)
-* [Getting started with Nimbus for iOS Engineers](/getting-started/engineers/getting-started-for-ios-engineers)
-* [Getting Started for Nimbus Web Integration](getting-started/engineers/getting-started-for-nimbus-web-integration)
-* [Mobile UI needed for Nimbus](/getting-started/engineers/getting-started-mobile-required-ui)
+* [Getting started with Nimbus, for Android Engineers](/platform-guides/android/integration)
+* [Getting started with Nimbus for iOS Engineers](/platform-guides/ios/integration)
+* [Getting Started for Nimbus Web Integration](platform-guides/web/integration)
+* [Mobile UI needed for Nimbus](/platform-guides/android/mobile-ui)
 
 ## To get started with implementation
 

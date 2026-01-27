@@ -1,6 +1,6 @@
 ---
 id: designing
-title: Designing Your Experiment
+title: Experiments
 slug: /designing-experiments
 ---
 

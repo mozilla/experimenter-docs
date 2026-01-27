@@ -1,7 +1,6 @@
 ---
 id: monitoring
-title: Monitoring Your Experiment
-sidebar_label: Monitoring
+title: Monitoring
 slug: /monitoring
 ---
 

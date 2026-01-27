@@ -1,0 +1,26 @@
+---
+id: nimbus-cli-changelog
+title: What's New
+slug: /technical-reference/nimbus-cli/whats-new
+---
+
+### `0.4.0`
+
+- `--app` and `--channel` parameters are now optional. If a command needs them and you haven't specified them, then it will error.
+- `list` and `fetch-list` now have filters. You can filter on [slug, feature, is-rollout, active-on date, and enroll date](/technical-reference/nimbus-cli/getting-started#list).
+- [`--patch FILE`](/technical-reference/nimbus-cli/working-with-patch-files) is now available for any command which accepts an experiment.
+- [`start-server`](/technical-reference/nimbus-cli/on-devices) – a new command to start a web server, which devices can connect to. Firefox for iOS and Android support this from v117.
+    - `pbcopy` adds to the clipboard a URL with experiments encoded in them.
+    - `pbpaste` sends the URL to the server. In this way, we can open enroll apps on device into experiments with the CLI.
+- [`fml`](/technical-reference/nimbus-cli/fml#working-with-the-nimbus-fml-command-line) – a new command to interact with the lower level `nimbus-fml` command line.
+
+### `0.3.0`
+
+- Now using the Experimenter API to get experiments, instead of Remote Settings. This saves time waiting for the sync between Experimenter and RS.
+- Split `fetch` into a [`fetch`](/technical-reference/nimbus-cli/working-with-files#fetch) for named recipes and [`fetch-list`](/technical-reference/nimbus-cli/working-with-files#fetch-list) for getting a list; this changes the parameters for `fetch`.
+- [Passthrough parameters](/technical-reference/nimbus-cli/opening-and-resetting#passthrough-parameters) for finer control of the app launch process. Thanks Ben, for the suggestion.
+- A new [`features` command](/technical-reference/nimbus-cli/working-with-features#features) to get the feature configuration out of the experiment. You can also [merge with the defaults](/technical-reference/nimbus-cli/fml#features) from the manifest.
+- A new [`defaults` command](/technical-reference/nimbus-cli/fml#defaults) to get the defaults from the manifest.
+- A new [`info` command](/technical-reference/nimbus-cli/getting-started#info) to get information about the experiment. This can be good for investigations.
+- Experiment slugs can be derived from Experimenter URLs.
+- Where you can read and write JSON, you can now read and write YAML.

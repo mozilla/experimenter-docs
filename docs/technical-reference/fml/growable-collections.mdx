@@ -1,0 +1,247 @@
+---
+id: growable-collections
+title: Growable Collections
+slug: /technical-reference/fml/growable-collections
+---
+
+## Problem
+
+You want to configure a collection of things of the same type, but the configuration isn't known at build time.
+
+For example,
+
+ * a collection of messages, or
+ * a collection of wallpapers.
+
+## Solution
+
+Use a type of `Map<String, T>`, with a string-alias.
+
+```yaml
+---
+channels:
+  - debug
+  - release
+features:
+  theming-feature:
+    description: Configuration for theming feature.
+    variables:
+      asset-urls:
+        description: A collection of downloadable assets
+        type: Map<AssetName, String>
+        string-alias: AssetName
+        default: {}
+  defaults:
+    - channel: debug
+      value:
+        assets-urls:
+          kittens: https://placekitten.com/600/900
+          bill-murray: https://www.fillmurray.com/600/900
+          flickr: https://loremflickr.com/600/900
+    - channel: release
+      value:
+        assets-urls:
+          default-theme: https://www.mozilla.com/assets/wp-default/600/900
+
+```
+
+The collection of URLs is available in code as:
+
+<Tabs
+  defaultValue="swift"
+  values={[
+    { label: "Swift", value: "swift" },
+    { label: "Kotlin", value: "kotlin" },
+  ]
+}>
+<TabItem value="swift">
+
+```swift
+let themingConfig = MyNimbus.features.themingFeature.value()
+let assetMap: [String: String] = themingConfig.assetUrls
+
+// A list of URLs
+let urls = assetMap.values().compactMap { URL(string: $0 )}
+```
+
+</TabItem>
+<TabItem value="kotlin">
+
+```kotlin
+val themingConfig = MyNimbus.features.themingFeature.value()
+val assetMap: Map<String, String> = themingConfig.assetUrls
+
+// A list of URLs
+val url = assetMap.values().mapNotNull { URL(it) }
+```
+
+</TabItem>
+</Tabs>
+
+## Discussion
+
+The feature manifest defines the shape i.e. the types, of the complete configuration for a feature. It also defines a default configuration which the app uses if there are no experiments running.
+
+```yaml
+      asset-urls:
+        description: A collection of downloadable assets
+        type: Map<AssetName, String>
+        string-alias: AssetName
+        default: {}
+```
+
+This might be represented as JSON:
+
+```json
+{
+    "asset-urls": {}
+}
+```
+
+The default configuration of a feature can be changed by experiments, rollouts and within the manifest itself.
+
+However, these changes are performed by _patching_ the default config, rather than by _replacement_.
+
+The algorithm for patching is given by the [JSON Merge Patch RFC7396][1], which is approximately: JSON objects get merged,
+and scalars and lists are replaced, and `null` causes a deletion.
+
+[1]: https://datatracker.ietf.org/doc/html/rfc7396
+
+We'll continue our example to illustrate this in more detail:
+
+In the release population, the default JSON for the the `theming-feature` patched on to the minimal configuration above:
+
+```json
+{
+    "asset-urls": {
+        "default-theme": "https://www.mozilla.com/assets/wp-default/600/900"
+    }
+}
+```
+
+This came from a channel specific default within the manifest itself.
+
+Some of the release population may be under experiment. An experiment branch sets up the feature thus:
+
+```json
+{
+    "asset-urls": {
+        "protocol-theme": "https://www.mozilla.com/assets/wp-protocol/600/900"
+    }
+}
+```
+
+At the same time, another experiment may have just terminated, and a branch declared the winner. The experiment owner has decided to promote this branch to the whole population as a rollout.
+
+```json
+{
+    "asset-urls": {
+        "ufi-theme": "https://www.mozilla.com/assets/wp-ufi/600/900"
+    }
+}
+```
+
+So the final configuration that the app receives for the feature is a merging of all three:
+
+```json
+{
+    "asset-urls": {
+        "default-theme": "https://www.mozilla.com/assets/wp-default/600/900",
+        "protocol-theme": "https://www.mozilla.com/assets/wp-protocol/600/900",
+        "ufi-theme": "https://www.mozilla.com/assets/wp-ufi/600/900"
+    }
+}
+```
+
+As long as the keys are unique, the collection will grow each time a rollout or experiment affects the feature.
+
+Finally, successful rollouts are likely going to be persisted: now we have learned a particular asset performs well, we should make it part of the next release.
+
+On the next release, rollouts of successful assets would likely be folded back into the manifest itself, and so the manifest becomes the repository of successful assets.
+
+As time goes by, we have a growing collection of asset-urls, without needing to change the code at all.
+
+This is a very powerful pattern which is used in multiple places, so we'll name this pattern "Growable Collections".
+
+### Exposure events
+
+Features with a growable collection of things may need to give some care about exposure events.
+
+Recall: exposure events should be sent when the user is exposed to the treatment.
+
+If we wish to experiment with a particular asset, the application feature should detect which asset being shown, and then only
+record an exposure only when that asset is being shown. We can do this by adding an extra variable into the feature.
+
+```yaml
+      asset-under-experiment:
+        description: The key into the asset urls map of the asset we wish to test.
+        type: Option<AssetName>
+        default: null
+```
+
+This allows us to be specific in the experiment payload that the `protocol-theme` is the asset we wish to experiment with.
+
+```json
+{
+    "asset-urls": {
+        "protocol-theme": "https://www.mozilla.com/assets/wp-protocol/600/900"
+    },
+    "asset-under-experiment": "protocol-theme"
+}
+```
+
+In the application code, we check to see if the asset being displayed is the one we're interested in, and only then record an exposure.
+
+<Tabs
+  defaultValue="swift"
+  values={[
+    { label: "Swift", value: "swift" },
+    { label: "Kotlin", value: "kotlin" },
+  ]
+}>
+<TabItem value="swift">
+
+```swift
+let config = MyNimbus.features.themingFeature.value()
+let key = selectKey(from: themingFeature.assetMap)
+
+if key == config.assetUnderExperiment {
+    MyNimbus.features.themingFeature.recordExposure()
+}
+
+displayAsset(url: config.assetMap[key])
+```
+
+</TabItem>
+<TabItem value="kotlin">
+
+```kotlin
+val config = MyNimbus.features.themingFeature.value()
+val key = selectKey(from: themingFeature.assetMap)
+
+if (key == config.assetUnderExperiment) {
+    MyNimbus.features.themingFeature.recordExposure()
+}
+
+displayAsset(config.assetMap[key])
+```
+
+</TabItem>
+</Tabs>
+
+### Local development
+
+Channel specific `defaults` allow us to specify a list of assets prepopulated with placeholders. The defaults for the
+`debug` channel for this feature are derived directly from manifest.
+
+```json
+{
+    "assets-urls": {
+        "kittens": "https://placekitten.com/600/900",
+        "bill-murray": "https://www.fillmurray.com/600/900",
+        "flickr": "https://loremflickr.com/600/900"
+    }
+}
+```
+
+Local development can then proceed with these placeholders, while other channels do not.

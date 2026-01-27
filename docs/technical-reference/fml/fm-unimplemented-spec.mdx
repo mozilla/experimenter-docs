@@ -1,0 +1,172 @@
+---
+id: fm-unimplemented-spec
+title: FML History
+slug: /technical-reference/fml/fm-unimplemented-spec
+sidebar_position: 7
+---
+## Future specifications
+
+This document houses a number of proposals not ready for comment. They are not linked to from the spec.
+
+### Feature defaults and runtime targeting
+
+> ⚠️ Unimplemented. This is intended to use the same JEXL targeting used elsewhere in Nimbus SDK.
+
+Occasionally, we would like to vary a configuration based upon the device. In this example, the `homepage` feature has sections for both Pocket and Topsites.
+
+```yaml
+features:
+  homepage:
+    variables:
+      pocket-enabled:
+        description: If true, show stories from Pocket. This is only available in certain territories.
+        type: Bool
+        default: false
+      topsites-enabled:
+        description: If true, show tiles from the users most recent and frequently visited pages.
+        type: Bool
+        default: false
+    defaults:
+      - channel: nightly
+        value: { topsites-enabled: true }
+      - channel: nightly
+        targeting: locale in ['en-US', 'de-DE', 'en-GB']
+        value: { pocket-enabled: true }
+```
+
+In this example, `pocket-enabled` defaults to `true` only on the `nightly` channel and when the device locale is in `US`, `DE` or `GB`.
+
+
+### Types coerced from `String`
+
+We have already seen enums being declared in the `types` section of the manifest.
+
+Other types that may be derived from `String`:
+
+ * `Color`
+ * `URL`
+
+## Variables and fields with no defaults
+
+### Required fields
+
+Some object fields do not have a sensible default value, but without them, the object itself doesn't make sense.
+
+For example a `MessageItem` doesn't make sense unless it has a `message` and a `deeplink`. Where any required fields are missing from the JSON, the `MessageItem` is incomplete, and cannot be used.
+
+Incomplete objects cannot be included in maps, lists or optional types.
+
+In this case, a message surface is added to the `new-tab`, but isn't always needed to be displayed.
+
+```yaml
+features:
+  new-tab:
+    variables:
+      message:
+        description: An optional message
+        type: MessageItem?
+        default: null
+types:
+  MessageItem:
+    description: …
+    fields:
+      label:
+        type: String
+        required: true
+      deeplink:
+        type: String
+        required: true
+```
+
+In these cases, the app code must deal with the cases with objects that are said to be failable, because there are no defaults.
+
+```swift
+let newTabConfig = FxNimbus.features.newTab.value()
+
+if let message = newTabConfig.message {
+    // We have to check that the message exists, because the message may not exist.
+    displayMessage(message.label, message.deeplink)
+}
+
+// continue configuring the new tab.
+```
+
+### Failable features
+
+Feature `variables` may also be marked as `required`. In the cases where these variables are missing, then the whole feature no longer makes sense.
+
+Features with `required` variables must be marked as `failable`.
+
+```yaml
+features:
+  emergency-startup-message:
+    failable: true
+    description: A message displayed to the user at start up.
+      variables:
+        message-content:
+          description: The long form message to be displayed to the user
+          type: String
+          required: true
+        color:
+          description: The background color of the screen
+          type: String
+          default: red
+```
+
+Failable features are implemented as Optional. If the feature is incomplete or failed, then it is returned as `nil` or `null`.
+
+```swift
+guard let message = FxNimbus.features.emergencyStartupMessage else {
+    // phew, there is no emergency message.
+    return
+}
+```
+
+Features with `required` variables which should be marked `failable` but aren't will produce an error.
+
+## Imports and Includes
+
+#### Unclear/scope–creep/YAGNI
+
+- The importing `.fml.yaml` file should not have access to types from the imported one.
+- The imported file may not have an `import` list.
+
+> Eventually it might be necessary to have imported files recursively importing other files.
+> Implementing this proposal will give an idea of how much extra complexity is required.
+
+#### Connecting to different languages or contexts
+
+The `import` block does two different roles:
+
+1. Giving `experimenter` knowledge of the imported features.
+2. Sending experimental configuration from the application singleton into the components.
+
+For features written in a different language, the feature configuration needs to travel across an FFI.
+
+```yaml
+import:
+    path:      @mozilla/gecko-dev/fenix.fml.yaml
+    channel:   production
+    connector: gecko-view
+    features:
+        autofill:
+            - value: {}
+```
+
+Imports for the same connector are gathered up so we can get a `Map<String, JSONObject>` containing configuration from the experiment (and the app-specific defaults) by calling:
+
+```kotlin
+FxNimbus.connectors.geckoView.value()
+```
+
+The app will need to send this to the right place, for example:
+
+```kotlin
+val nimbus = Nimbus.shared
+nimbus.register(object : Nimbus.Observer {
+    fun onExperimentsApplied() {
+        val features: Map<String, JSONObject> = FxNimbus.connectors.geckoView.value()
+        geckoView.setNimbusFeatures(features)
+    }
+})
+```
