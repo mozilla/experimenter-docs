@@ -47,7 +47,7 @@ We refer to the number of times a message can be shown in terms of "number of im
 
 ### Frequency
 
-The number of impressions a message is allowed to be shown is expressed in terms of "[frequency caps](/messaging/desktop/frequency-cap)". There are two types of frequency caps to think about:
+The number of impressions a message is allowed to be shown is expressed in terms of "[frequency caps](/messaging/desktop/message-configuration#frequency-caps)". There are two types of frequency caps to think about:
 * **Lifetime frequency**: the number of times message can *ever* be shown;
 * **Frequency-per-period**: the number of times an a message can be shown in a given period. This can be any period of time, but the most common ones are daily or weekly.
 

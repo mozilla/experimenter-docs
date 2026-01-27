@@ -1,0 +1,43 @@
+---
+id: early-startup-faq
+title: Early Startup FAQ
+slug: /early-startup-faq
+---
+
+Common questions about using the Early Startup feature in Nimbus experiments.
+
+:::tip
+There is info on how to use Early Startup [here in the documentation](/platform-guides/desktop/feature-api/#registering-a-new-feature)
+:::
+
+## What Does Early Startup Do?
+
+Include "isEarlyStartup" in the FeatureManifest.yaml if you need synchronous access / very early access at startup or if you are registering this to use for platform experiments.
+
+**What does this do?**
+* It caches the feature values to disk using temporary prefs so that they're available as soon as user prefs are initialized and loaded, so they're available earlier in browser initialization and also helps make them available to gecko more easily.
+* IsEarlyStartup means we persist the experiment data in prefs so you can a) use them from c++ or b) use the JS experiment API before we've loaded experiments from disk.
+
+**So why don't I always use Early Startup to be sure my feature is controllable by an experiment early enough?**
+* You have to reconcile storing state in multiple places, it's only needed for a specific set of features in specific circumstances, so for the rest of them it's much safer to not touch the pref store at all and only worry about a single source of state.
+* It also makes tests more annoying because if you don't clean them up properly it's easy to break adjacent tests
+
+---
+
+## How Early is Early?
+
+### Early on Desktop
+
+The 'isEarlyStartup' flag for features will write variables to prefs to ensure data is available once prefs are loaded.
+Nimbus uses its own internal prefs. If you're talking to Nimbus via JS you can just interact with it normally and it
+will read from prefs if it hasn't yet loaded its data store. Then you can use the [C++ API](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/lib/NimbusFeatures.h).
+
+You don't have to do anything special though, as long as isEarlyStartup is set it should Just Work.
+Assuming everything is main thread, you shouldn't have any issues.
+
+First startup initializes Nimbus, which will then try to grab experiments and rollouts for all features ([code](https://searchfox.org/mozilla-central/rev/fb9a504ca73529fa550efe488db2a012a4bf5169/toolkit/modules/FirstStartup.sys.mjs#50)).
+This happens before we paint the first window. First startup blocks painting.
+
+### Early on Mobile
+
+TBD
