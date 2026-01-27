@@ -1,0 +1,63 @@
+---
+id: coenrolling-features
+title: Co-enrolling Features
+slug: /technical-reference/fml/coenrolling-features
+sidebar_position: 6
+---
+
+A feature which allows co-enrollment allows a client to be enrolled in any number of experiments/rollouts for that feature. 
+
+**Features supporting co-enrollment**
+
+* [Messaging](/messaging/desktop/mobile-messaging) (Fenix, Firefox iOS, Focus for Android, Focus for iOS)
+
+## How to define a co-enrolling feature
+
+A feature can be marked as allowing co-enrollment with a boolean flag in its feature definition in a Feature Manifest. For example, in your `messaging.fml.yaml` file:
+
+```yaml
+features:
+  messaging:
+    description: |
+      The in-app messaging system.
+    allow-coenrollment: true
+    variables:
+      messages:
+        description: A growable collection of messages
+        type: Map<String, MessageData>
+        default: {}
+```
+
+Once your messaging feature is defined as a co-enrolling feature, a client can be enrolled in any number of messaging experiments/rollouts.
+
+## Recording exposure
+
+
+In order to [record exposure](/technical-reference/fml/growable-collections#exposure-events) for a co-enrolled feature, the string `{experiment}` needs to exist in the feature config somewhere. In the case of messaging, this would be in the message object:
+
+```yaml
+objects:
+  MessageData:
+    ...
+    fields:
+      experiment:
+        type: Option<String>
+        description: The slug of the experiment that this message came from.
+        default: null
+```
+
+This string is then replaced with the experiment slug at enrollment time.
+
+The feature code that the developer is writing needs to get the experiment slug from the feature config and record the exposure with `recordExperimentExposure(experimentSlug)`. In Kotlin, this would look like:
+
+```kotlin
+val slug = message.data.experiment ?: return message
+
+messagingFeature.recordExperimentExposure(slug)
+```
+
+## Other things to note about co-enrollment
+
+* Experiment feature values still take precedence over rollout feature values
+* Enrollment/unenrollment is calculated independently for each experiment/rollout regardless of whether they target the same feature or not
+* Enrollment/unenrollment telemetry is still sent for each experiment/rollout at the time each enrolls or unenrolls

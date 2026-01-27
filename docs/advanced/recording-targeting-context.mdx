@@ -1,0 +1,362 @@
+---
+id: recording-targeting-context-values-to-glean
+title: Context Values
+slug: /advanced/recording-targeting-context
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+In order to support automated population sizing efforts, the Nimbus SDK has been updated to include an interface by
+which values that are a part of the Nimbus targeting context can be recorded to Glean. This page documents how to
+implement the aforementioned interface, and provides guidance on updating the Nimbus targeting context moving forward.
+
+There are a number of implementation details that are worth noting. The first to be covered is how the code is
+structured in Rust, as it uses some of the more complex features of UniFFI, followed by how the code is structured in the Firefox
+Android and iOS repositories.
+
+## Rust Nimbus SDK code
+
+To start, a new Rust trait was defined, with methods to be implemented to perform four key functions.
+
+1. `to_json`: to return a JSON representation of the `RecordedContext`'s values
+2. `get_event_queries`: to return a map of an event query name to an event query
+3. `set_event_query_values`: to set the internal calculated values for the event queries
+4. `record`: to record the internal values of the object to Glean
+
+```rust
+pub trait RecordedContext: Send + Sync {
+    /// Returns a JSON representation of the context object
+    ///
+    /// This method will be implemented in foreign code, i.e: Kotlin, Swift, Python, etc...
+    fn to_json(&self) -> JsonObject;
+
+    /// Returns a HashMap representation of the event queries that will be used in the targeting
+    /// context
+    ///
+    /// This method will be implemented in foreign code, i.e: Kotlin, Swift, Python, etc...
+    fn get_event_queries(&self) -> HashMap<String, String>;
+
+    /// Sets the object's internal value for the event query values
+    ///
+    /// This method will be implemented in foreign code, i.e: Kotlin, Swift, Python, etc...
+    fn set_event_query_values(&self, event_query_values: HashMap<String, f64>);
+
+    /// Records the context object to Glean
+    ///
+    /// This method will be implemented in foreign code, i.e: Kotlin, Swift, Python, etc...
+    fn record(&self);
+}
+```
+
+We then use the UDL to define this trait such that it uses foreign implementations. As such, we will end up with kotlin/
+swift classes that implement the methods as described above.
+
+```
+[Trait, WithForeign]
+interface RecordedContext {
+    JsonObject to_json();
+
+    record<string, string> get_event_queries();
+
+    void set_event_query_values(record<string, f64> event_query_values);
+
+    void record();
+};
+```
+
+We also have some internal Rust methods extending off the trait for validating/executing the event queries, but they are
+not really of much consequence to implementing developers.
+
+## `to_json`
+
+The JSON object value returned from `to_json` will ultimately be flattened on top of the existing fields present in the
+targeting attributes. **Values present in the targeting attributes by default will be overridden by values in the
+recorded context.**
+
+```rust
+// components/nimbus/src/stateful/evaluator.rs
+#[derive(Serialize, Deserialize, Debug, Clone, Default)]
+pub struct TargetingAttributes {
+    #[serde(flatten)]
+    pub app_context: AppContext,
+    pub language: Option<String>,
+    pub region: Option<String>,
+    #[serde(flatten)]
+    pub recorded_context: Option<JsonObject>,
+```
+
+Below is an example implementation of `to_json` in both Kotlin and Swift.
+
+<Tabs
+  defaultValue="kotlin"
+  values={[
+    { label: "Kotlin", value: "kotlin" },
+    { label: "Swift", value: "swift" },
+  ]}>
+  <TabItem value="kotlin">
+
+  ```kotlin
+  // RecordedNimbusContext.kt
+  override fun toJson(): JsonObject {
+    val obj = JSONObject(
+      mapOf(
+        "is_first_run" to isFirstRun,
+        // more fields here
+      ),
+    )
+    return obj
+  }
+  ```
+
+  </TabItem>
+  <TabItem value="swift">
+
+  ```swift
+  // RecordedNimbusContext.swift
+  func toJson() -> JsonObject {
+    guard let data = try? JSONSerialization.data(withJSONObject: [
+      "is_first_run": isFirstRun,
+    ]),
+    let jsonString = NSString(data: data, encoding: String.Encoding.utf8.rawValue) as? String
+    else {
+      return "{}"
+    }
+    return jsonString
+  }
+  ```
+
+  </TabItem>
+</Tabs>
+
+## `get_event_queries`
+
+In both Kotlin and Swift, as long as the member variable for `eventQueries` conforms to the type `Map<String, String>`
+it can be simply returned from this function.
+
+<Tabs
+  defaultValue="kotlin"
+  values={[
+    { label: "Kotlin", value: "kotlin" },
+    { label: "Swift", value: "swift" },
+  ]}>
+  <TabItem value="kotlin">
+
+  ```kotlin
+  // RecordedNimbusContext.kt
+  override fun getEventQueries(): Map<String, String> {
+    return eventQueries
+  }
+  ```
+
+  </TabItem>
+  <TabItem value="swift">
+
+  ```swift
+  // RecordedNimbusContext.swift
+  func getEventQueries() -> [String: String] {
+    return eventQueries
+  }
+  ```
+
+  </TabItem>
+</Tabs>
+
+## `set_event_query_values`
+
+In both Kotlin and Swift, as long as the member variable for `eventQueryValues` conforms to the type
+`Map<String, Double>` it can be simply returned from this function.
+
+<Tabs
+  defaultValue="kotlin"
+  values={[
+    { label: "Kotlin", value: "kotlin" },
+    { label: "Swift", value: "swift" },
+  ]}>
+  <TabItem value="kotlin">
+
+  ```kotlin
+  // RecordedNimbusContext.kt
+  override fun setEventQueryValues(eventQueryValues: Map<String, Double>) {
+    this.eventQueryValues = eventQueryValues
+  }
+  ```
+
+  </TabItem>
+  <TabItem value="swift">
+
+  ```swift
+  // RecordedNimbusContext.swift
+  func setEventQueryValues(eventQueryValues: [String: Double]) {
+    self.eventQueryValues = eventQueryValues
+  }
+  ```
+
+  </TabItem>
+</Tabs>
+
+## `record`
+
+The `record` method should actually record the context's value to Glean. The Glean metric's definition can be found in
+the `metrics.yaml` file.
+- [Android `metrics.yaml`](https://searchfox.org/mozilla-central/source/mobile/android/fenix/app/metrics.yaml)
+- [iOS `metrics.yaml`](https://github.com/mozilla-mobile/firefox-ios/blob/main/firefox-ios/Client/metrics.yaml)
+
+```yaml
+# metrics.yaml
+nimbus_system:
+  recorded_nimbus_context:
+    type: object
+    structure:
+      type: object
+      properties:
+        is_first_run:
+          type: boolean
+        event_query_values:
+          type: object
+          properties:
+            days_opened_in_last_28:
+              type: number
+```
+
+The metric definition determines what properties exist for the Glean types, so we must make sure to use those types when
+setting the value for the metric.
+
+<Tabs
+  defaultValue="kotlin"
+  values={[
+    { label: "Kotlin", value: "kotlin" },
+    { label: "Swift", value: "swift" },
+  ]}>
+  <TabItem value="kotlin">
+
+  ```kotlin
+  // RecordedNimbusContext.kt
+  override fun record() {
+    val eventQueryValuesObject = NimbusSystem.RecordedNimbusContextObjectItemEventQueryValuesObject(
+      daysOpenedInLast28 = eventQueryValues[DAYS_OPENED_IN_LAST_28]?.toInt(),
+    )
+    NimbusSystem.recordedNimbusContext.set(
+      NimbusSystem.RecordedNimbusContextObject(
+        isFirstRun = isFirstRun,
+        eventQueryValues = eventQueryValuesObject,
+      ),
+    )
+  }
+  ```
+
+  </TabItem>
+  <TabItem value="swift">
+
+  ```swift
+  // RecordedNimbusContext.swift
+  func record() {
+    let eventQueryValuesObject = GleanMetrics.NimbusSystem.RecordedNimbusContextObjectItemEventQueryValuesObject(
+      daysOpenedInLast28: eventQueryValues[RecordedNimbusContext.DAYS_OPENED_IN_LAST_28].toInt64()
+    )
+
+    GleanMetrics.NimbusSystem.recordedNimbusContext.set(
+      GleanMetrics.NimbusSystem.RecordedNimbusContextObject(
+        isFirstRun: isFirstRun,
+        eventQueryValues: eventQueryValuesObject,
+      )
+    )
+  }
+  ```
+
+  </TabItem>
+</Tabs>
+
+### Additional methods
+
+Two additional methods have also been exposed to assist developers with a) validating their event queries and b)
+calculating targeting attributes that have historically been provided by the Rust code. `validateEventQueries` is used
+in testing, to ensure the event queries being run are in fact valid event queries.
+
+`getCalculatedAttributes` accepts the app installation date, the path to the Nimbus database, and the locale string,
+executes some commands in Rust to read from the database and calculate additional fields based on the installation date,
+and returns the resulting values to the caller. It should be used during the construction of any foreign implementation
+of the `RecordedContext` trait.
+
+## Adding new fields
+
+The new field should be added to the `RecordedNimbusContext` class in each of the following locations:
+
+- the constructor
+- as a member variable **(Swift only)**
+- the `record` method
+- the `toJson` method
+- the `create` method **(Kotlin only)**
+- the `createForTest` method **(Kotlin only)**
+
+The field also needs to be added to the appropriate `metrics.yaml` file for the application, under the
+`nimbus_system.recorded_nimbus_context` metric.
+
+- [Android `RecordedNimbusContext` class](https://searchfox.org/mozilla-central/source/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/experiments/RecordedNimbusContext.kt)
+- [Android `metrics.yaml`](https://searchfox.org/mozilla-central/source/mobile/android/fenix/app/metrics.yaml)
+- [iOS `RecordedNimbusContext` class](https://github.com/mozilla-mobile/firefox-ios/blob/main/firefox-ios/Client/Experiments/RecordedNimbusContext.swift)
+- [iOS `metrics.yaml`](https://github.com/mozilla-mobile/firefox-ios/blob/main/firefox-ios/Client/metrics.yaml)
+
+:::info
+
+In the future, the goal is for this file and its tests to be statically assessed to ensure all the fields are present where they should be.
+
+:::
+
+## Adding new event queries
+
+Event queries are marginally simpler to add than new fields. Adding a new one requires the following changes:
+
+- a new `const`/`static` value for the event query's name
+- a new record in the `EVENT_QUERIES` map
+- a new entry in the `event_query_values` property in the `nimbus_system.recorded_nimbus_context` metric
+
+<Tabs
+  defaultValue="kotlin"
+  values={[
+    { label: "Kotlin", value: "kotlin" },
+    { label: "Swift", value: "swift" },
+  ]}>
+  <TabItem value="kotlin">
+
+  [`metrics.yaml`](https://searchfox.org/mozilla-central/source/mobile/android/fenix/app/metrics.yaml)
+  [`RecordedNimbusContext` file](https://searchfox.org/mozilla-central/source/mobile/android/fenix/app/src/main/java/org/mozilla/fenix/experiments/RecordedNimbusContext.kt)
+
+  ```kotlin
+  /**
+  * The following constants are string constants of the keys that appear in the [EVENT_QUERIES] map.
+  */
+  const val DAYS_OPENED_IN_LAST_28 = "days_opened_in_last_28"
+
+  /**
+  * [EVENT_QUERIES] is a map of keys to Nimbus SDK EventStore queries.
+  */
+  private val EVENT_QUERIES = mapOf(
+  DAYS_OPENED_IN_LAST_28 to "'events.app_opened'|eventCountNonZero('Days', 28, 0)",
+  )
+  ```
+
+  </TabItem>
+  <TabItem value="swift">
+
+  [`metrics.yaml`](https://github.com/mozilla-mobile/firefox-ios/blob/main/firefox-ios/Client/metrics.yaml)
+  [`RecordedNimbusContext` class](https://github.com/mozilla-mobile/firefox-ios/blob/main/firefox-ios/Client/Experiments/RecordedNimbusContext.swift)
+
+  ```swift
+  class RecordedNimbusContext: RecordedContext {
+  /**
+   * The following constants are string constants of the keys that appear in the [EVENT_QUERIES] map.
+   */
+  static let DAYS_OPENED_IN_LAST_28: String = "days_opened_in_last_28"
+
+  /**
+   * [EVENT_QUERIES] is a map of keys to Nimbus SDK EventStore queries.
+   */
+  static let EVENT_QUERIES = [
+    DAYS_OPENED_IN_LAST_28: "'events.app_opened'|eventCountNonZero('Days', 28, 0)",
+  ]
+  ```
+
+  </TabItem>
+</Tabs>
+

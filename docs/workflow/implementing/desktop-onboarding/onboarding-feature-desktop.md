@@ -1,4 +1,10 @@
-# Introduction #
+---
+id: onboarding-feature-desktop
+title: Onboarding
+slug: /platform-guides/desktop/onboarding
+---
+
+# Desktop Onboarding Feature
 
 The onboarding feature enables experimentation with the 'new user onboarding flow'. The onboarding flow is presented to the user on each new install and is made up of a series of full screen 'views', referred to as 'cards'. The purpose of the onboarding flow is to enable the user to configure a small number of app enhancing settings. Each card provides context for each setting and the ability to enable/skip.
 
@@ -12,7 +18,7 @@ The onboarding feature enables staff — most likely experiment owners, product 
 
 At the time of writing, Desktop first run experiments are only supported on Windows.  This note describes what first run experiments are, sketches how first run experiments work on Windows, and suggests approaches for supporting first run experiments on macOS.
 
-First run experiments are those that make changes to onboarding, that need data from brand-new clients, or that otherwise relate to clients who are using Firefox on their device for the first time, [reference](https://experimenter.info/mobile-first-run-experiments/#how-do-i-know-if-an-experiment-should-be-first-run).
+First run experiments are those that make changes to onboarding, that need data from brand-new clients, or that otherwise relate to clients who are using Firefox on their device for the first time, [reference](https://experimenter.info/advanced/first-run-experiments/#how-do-i-know-if-an-experiment-should-be-first-run).
 
 ## How do first run experiments work on Windows? ##
 

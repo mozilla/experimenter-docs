@@ -1,0 +1,89 @@
+---
+id: nimbus-cli-working-with-features
+title: Features
+slug: /technical-reference/nimbus-cli/working-with-features
+---
+
+The `nimbus-cli` provides features to download experiments from Remote Settings. However, sometimes you wish to do some exploratory testing of a feature without going through the experimenter interface.
+
+## `test-feature`
+
+The `test-feature` command allows you to specify a `feature-id` and one or more JSON files that correspond to the feature configuration for that feature: i.e. to exercise a feature.
+
+e.g.
+
+```sh
+nimbus-cli --app firefox_ios --channel developer test-feature messaging my-treatment.json my-control.json
+```
+
+For the above `nimbus-cli` will generate an experiment which will enroll in to the given app and channel for the `messaging`, with two branches: `my-treatment` and `my-control`. It will enroll in the first of the branches, i.e. `my-treatment`.
+
+The other branches are available to enroll using the `Experiments` screen available through the app's UI.
+
+By default, the app's feature manifest will be downloaded and used to validate each feature configuration. This can be overridden with the `--no-validate` option.
+
+## `features`
+
+The `features` command accepts an experiment and branch, and outputs the feature configuration from that branch.
+
+```sh
+nimbus-cli --app fenix --channel developer features release-android-onboarding-redesign --branch treatment-a
+```
+
+will output the JSON as specified by the branch:
+
+```sh
+{
+  "enabled": true
+}
+```
+
+You can specify an optional  `--output FILE` to write it to disk.
+
+```sh
+nimbus-cli --app fenix --channel developer features release-android-onboarding-redesign --branch treatment-a --output new-onboarding.json
+```
+
+:::tip
+Wherever a JSON file is specified, you can use JSON or YAML, just by changing the file name.
+
+```sh
+nimbus-cli --app fenix --channel developer features release-android-onboarding-redesign --branch treatment-a --output new-onboarding.yaml
+```
+
+This can be useful to add the winning branch configuration to [the feature defaults in the feature manifest](https://experimenter.info/fml-spec/#feature-defaults) in the app's codebase, to make the change permanent.
+:::
+
+By default, the `features` command outputs the experimental feature configurations for all features involved in the experiment. At the moment, this is always one.
+
+When more than one feature per branch is available, the output will be of the format:
+
+```json
+{
+  "$feature1_id": {},
+  "$feature2_id": {},
+}
+```
+
+You can force a single feature experiment to use this format with the `--multi` flag:
+
+```sh
+nimbus-cli --app fenix --channel developer features release-android-onboarding-redesign --branch treatment-a --multi
+```
+
+gives this output:
+```json
+{
+  "juno-onboarding": {
+    "enabled": true
+  }
+}
+```
+
+Alternatively, if you only want one feature of many, you can specify the feature id with the `--feature` parameter.
+
+```sh
+nimbus-cli --app fenix --channel developer features release-android-onboarding-redesign --branch treatment-a --feature juno-onboarding
+```
+
+If you are writing automated tooling on top of the `features` command, it is strongly recommended you use one of these options to get consistent output.

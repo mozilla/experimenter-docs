@@ -1,7 +1,6 @@
 ---
-title: Experiment Owners
-sidebar_label: Experiment Owners
-slug: /experiment-owners
+title: Experimenter Console
+slug: /using-experimenter-console
 sidebar_position: 1
 ---
 
@@ -22,4 +21,4 @@ There are questions in the Experimenter form to help you identify possible risks
 
 ### Notifications
 
-Experimenter automatically sends email notifications to help owners keep track of important dates. See [notifications](/notifications) for more details.
+Experimenter automatically sends email notifications to help owners keep track of important dates. See [notifications](/advanced/notifications) for more details.
