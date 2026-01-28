@@ -12,7 +12,7 @@ will read from prefs if it hasn't yet loaded its data store. Then you can use th
 You don't have to do anything special through, as long as isEarlyStartup is set it should Just Work. 
 Assuming everything is main thread, you shouldnt have any issues.
 
-First startup initializes Normandy and then nimbus, which will then try to grab experiments and rollouts for all features ([code](https://searchfox.org/mozilla-central/rev/fb9a504ca73529fa550efe488db2a012a4bf5169/toolkit/modules/FirstStartup.sys.mjs#50)).
+First startup initializes Nimbus, which will then try to grab experiments and rollouts for all features ([code](https://searchfox.org/mozilla-central/rev/fb9a504ca73529fa550efe488db2a012a4bf5169/toolkit/modules/FirstStartup.sys.mjs#50)).
 This happens before we paint the first window.  First startup blocks painting.
 
 ## Early on Mobile

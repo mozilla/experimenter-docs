@@ -1,7 +1,6 @@
 ---
 id: ending
-title: Ending Your Experiment
-sidebar_label: Ending
+title: Ending
 slug: /ending
 ---
 
@@ -16,7 +15,7 @@ If yes → You're likely ready to end enrollment.
 Some notes:
 * Enrollments can be ended at any time after launch, not just after the proposed period.  Ex: If a bug is found
 * If enrollment is ended before sufficient client volume has been achieved, there may not be enough users in the experiment to determine statistical significance.
-* By default, clients will continue to enrolled until enrollment is manually ended. If the experiment needs a different enrollment window than when it was ended, a [custom Jestream config](/deep-dives/jetstream/configuration) will need to be created. For assistance creating this, please file a Data Org JIRA ticket or attend the relevant [office hours](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours) for your experiment. An example of the relevant TOML is below. This will set the enrollment period to be the first 14 days of the experiment. Note that this will impact the observation window (data collection window between enrollment and the end of the experiment, from which the experiment results are calculated).
+* By default, clients will continue to enrolled until enrollment is manually ended. If the experiment needs a different enrollment window than when it was ended, a [custom Jestream config](/data-analysis/jetstream/configuration) will need to be created. For assistance creating this, please file a Data Org JIRA ticket or attend the relevant [office hours](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours) for your experiment. An example of the relevant TOML is below. This will set the enrollment period to be the first 14 days of the experiment. Note that this will impact the observation window (data collection window between enrollment and the end of the experiment, from which the experiment results are calculated).
 
 ```toml
 [experiment]

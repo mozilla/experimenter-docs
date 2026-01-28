@@ -4,7 +4,7 @@ title: Sizing rollouts
 slug: /rollouts/sizing
 ---
 :::tip
-See the [Rollout FAQ](/deep-dives/experimenter/rollouts) for general rollout information
+See the [Rollout FAQ](/advanced/rollouts) for general rollout information
 :::
 
 ### Question
