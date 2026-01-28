@@ -91,7 +91,7 @@ Desktop.
         </p>
         <p>
           If a targeting criteria does not exist, one will have to be added. See
-          the <a href="/targeting/advanced-targeting#answer">advanced targeting
+          the <a href="/targeting-faq#custom-targeting-options">advanced targeting
           FAQ</a> or ask for help in <code>#ask-experimenter</code> on Slack.
         </p>
       </dd>
@@ -257,7 +257,7 @@ submitted with the following data:
 [feature-manifest]: https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.yaml
 [jsonschema]: https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/schemas/PrefFlipsFeature.schema.json
 [setPref]: /platform-guides/desktop/pref-experiments
-[advanced-targeting]: /targeting/advanced-targeting#answer
+[advanced-targeting]: /targeting-faq#custom-targeting-options
 [stage]: https://stage.experimenter.nonprod.webservices.mozgcp.net/nimbus/
 [glean-telemetry]: https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/nimbus_events_unenrollment
 [legacy-telemetry]: https://probes.telemetry.mozilla.org/?search=unenroll&view=detail&probeId=event%2Fnormandy.unenroll%23unenroll

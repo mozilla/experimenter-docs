@@ -11,4 +11,4 @@ There is no practical limitation of Messaging System for how many messages of th
 
 Messaging System will select a single message to show based on targeting condition and trigger. If multiple messages match, the first one is selected. Through frequency and lifetime settings eventually all messages will be given an opportunity to be shown.
 
-For messages deployed outside of experiments we can use **Priority** (see [How a Message Gets Shown](/messaging/desktop/how-a-message-gets-shown)) to rank the order in which they are evaluated.
+For messages deployed outside of experiments we can use **Priority** (see [Message Lifecycle](/messaging/desktop/message-lifecycle#how-messages-are-displayed)) to rank the order in which they are evaluated.
