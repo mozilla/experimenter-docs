@@ -1,0 +1,131 @@
+---
+title: Risk Mitigation & Sign-offs
+slug: /risk-mitigation
+sidebar_position: 1
+---
+
+Experiments and Rollouts are making remote changes to the experience of live users, often millions of people. Doing QA and answering the risk questions carefully helps reduce the chance of production incidents. These are all "soft sign-offs" - in that you can check them yourself saying you have followed the guidance and are satisfied the risk is mitigated.
+
+You are the expert in your area and the final responsibility/decision regarding if your change is sufficiently prepared to go live to hundreds of thousands or millions of people.
+
+## Types of Risk
+
+We've learned a few ways to de-risk experiments and rollouts before they launch. Below is not an exhaustive list for every situation - but a list of some common situations to help you avoid known pitfalls.
+
+### Brand Risk
+If the public, users, or press were to discover this experiment and description, could it negatively impact their perception of our brand? This includes when that perception is unfounded.
+
+**Example:** We offered recommendations in a client-side, privacy respecting way, but the method of recommending could have been misconstrued. Instead of an incident, when the question came up (reddit, hackernews, etc) it was good press because we quickly pointed people to the well-written SUMO description of how we were respecting user privacy when making recommendations.
+
+**Questions to ask:**
+- If the experiment fails, will folks notice? Would the press assail us?
+- Does this experiment make you uneasy with regard to the Mozilla manifesto?
+- Could it alienate our allies or community? Could it negatively impact perceptions of Mozilla or Firefox?
+
+If the answer is "yes" - talk to the [Comms team](#comms--messaging-sign-off) and consider [VP Sign-off](#vp-sign-off).
+
+### Revenue Risk
+Impact from changes related to Search, New Tab, Ads, Pocket, etc should follow the [VP Sign-off](#vp-sign-off) guidance. This could be anything directly changing the search bar, ads, pocket engagement, tiles, new tab page engagement OR anything that indirectly impacts these (ex: pushing any of these below the first viewable space).
+
+If the answer is "yes" - explain the risk and why you think that is worth taking. Try to estimate the expected impact (how many users impacted and how much of a change).
+
+### Partnership Risk
+If a partner is involved in any way, it raises risk and you should follow the [Legal Sign-off](#legal-sign-off) guidance. A partner could also be affected indirectly, for example if search functionality or presentation is altered.
+
+We could engage a partner as a hosting or processing service or present a partner add-on. In this case Legal needs to be engaged to make sure we aren't misaligned with privacy policies, data handling, any other negotiations around revenue, licensing, contractual obligations, trademark usage, etc.
+
+**Considerations can include:**
+- Revenue impact
+- Licensing agreements
+- Partner privacy policy
+- Contractual obligations
+- Trademark usage
+
+### Sensitive Data
+If you are using [Category 3 or 4 data](https://wiki.mozilla.org/Firefox/Data_Collection#Data_Collection_Categories) you need to work with legal and data. Follow the [Legal Sign-off](#legal-sign-off) guidance.
+
+### AI Data Use
+If your change relies on AI (e.g. ML, chatbot) in any way, it will need a legal product review. Follow the [Legal Sign-off](#legal-sign-off) guidance.
+
+### Encryption & VPN
+Encryption in your technology is subject to export control laws and you need [Legal Sign-off](#legal-sign-off). Releasing to other countries could put our users at risk of criminal punishment and result in the country sanctioning our browser use. Even code shipped preffed off, could manually be activated. It is critical to NOT deliver encryption into these countries.
+
+If your product involves encryption of any type - like a VPN - it is important to engage legal to make sure we comply with various countries regulations about code that includes encryption.
+
+---
+
+## Sign-off Requirements
+
+### QA Sign-off
+
+Feature testing alone is not enough for experiments or rollouts. A QA passthrough will also ensure that the feature is successfully turned on/off through Nimbus, that it works on all desired platforms and most important locales, that the targeting expression works as expected (only users that meet the criteria will be enrolled in the experiment/rollout), and that the telemetry that we're basing the analysis on is successfully gathered while enrolled.
+
+Unless you are 100% certain you don't need QA - [file a QA "Nimbus/Remote delivery" ticket here](https://mozilla-hub.atlassian.net/secure/CreateIssueDetails!init.jspa?pid=10212&issuetype=11290). You can use [this document](https://docs.google.com/document/d/1oz1YyaaBI-oHUDsktWA-dLtX7WzhYqs7C121yOPKo2w/edit#heading=h.s50iqavbblol) as a guide when filing the ticket to ensure that you pass all the relevant information that you can to QA. Going through QA is recommended, as they often find critical edge cases that were missed.
+
+#### When You May Skip QA
+
+The only possible exceptions where you may not need official QA are below; **if you choose to skip QA, you must self-test**, [learn more](https://experimenter.info/previewing-experiments). Self-testing is recommended even before sending to QA, as it can avoid days of delay if QA discovers an easily corrected recipe error when they start testing.
+
+1. You are launching on Nightly or early Beta and the feature itself was tested.
+2. You are repeating an experiment with minimal changes that don't involve new code. Ex: QA tested the original experiment - and now you are rolling out one of the winning configurations. You launched the original but there was a small error in targeting (be sure to consider localization with every country/language change, if there is user facing copy in your experiment!)
+3. You are doing a simple message experiment/rollout (Infobar or Heartbeat) with no new code changes or new targeting, so only changing the copy / well tested fields. Note: Skipping testing for this is when we see easy-to-make human errors lead to sending the wrong language places. We also see more image resolution issues that you'd think (cropped, color issues, scaling issues). Swapping images can cause unexpected display issues.
+
+### VP Sign-off
+
+Experiment owners are responsible for securing VP sign-off. Sign-off isn't a technically blocking step to launch - but your acceptance that you have communicated effectively to the VP(s) who would get any escalations if there is an incident. Good details avoid assumptions and delays by providing the information necessary for the VP(s) to have an informed opinion.
+
+VP Sign-off is needed whenever:
+1. A partner is involved
+2. There's potential revenue impact
+3. There is high-risk to brand
+
+These experiments/rollouts are considered "Higher Risk" of incidents and require a VP sponsor to sign-off. If the experiment causes an issue - the people who it will escalate to should already be informed and have agreed with your risk/reward decision to the plan. This is to make sure product teams aren't making certain decisions without leadership support.
+
+#### VP Sign-off Email Template
+
+A sample email template is below. Include the link to the Experiment brief and Experimenter ticket in the email.
+
+```
+To: VP(s)
+cc: People related to experiment such as: Data Science, PM, Eng, EPM
+Summary: VP Sign-off Requested for (replace with Experiment Name)
+
+Hi ______,
+I am requesting VP Sign-off for (your experiment name): (link to your experiment study) and (link to experiment brief) because:
+- List each specific risk and what has been done to reduce, mitigate, or accept each risk. Good details help reduce friction for VP to be able to OK, make suggestions, or block moving forward
+- Note: If there is a previous version of this study that had VP approved risk, please add "Risk approved in a previous version of this study here (link to that experimenter study). If there is a combo of previously approved risks and new risks (from study changes), please mark the new risks as "New".
+
+These are the reasons why we think the risk is minimal or mitigated and we should still move forward:
+- List reasons this experiment is important - the justification for moving forward despite the risks
+
+Please reply to all with any questions. If everything looks OK, please let us know.
+Thank you!
+```
+
+### Legal Sign-off
+
+If Legal Review shows as Required, the answer to one of the Risk questions determined legal review will help mitigate a risk. Please fill out a [Legal product bug here](https://mozilla-hub.atlassian.net/servicedesk/customer/portal/1027). Link to the experiment brief that explains what you want to do, to how many people (% of population and channel), and the potential outcomes. See the [Legal Product confluence page](https://mozilla-hub.atlassian.net/wiki/spaces/LPT/pages/201655396/Legal+Product) for more details.
+
+#### When Legal Review is Required
+
+Legal review is advised anytime an experiment:
+1. Involves AI in any way (e.g. ML or Chatbot).
+2. Involves adding advertising to any new areas/uses.
+3. Involves a partner in any way - including promoting their content (like an add-on), involving a 3rd party back-end service (even if not exposed to the user directly).
+4. Could impact a partner, an outside company, or substantively impact partner revenue. Note: some partnerships and new negotiations are not widely disclosed inside MoCo, so there may be partnerships that you are not aware of.
+5. Collects or uses Category 3 or 4 data. Determine which category of data you are collecting using [data collection categories](https://wiki.mozilla.org/Firefox/Data_Collection#Data_Collection_Categories).
+6. If your content delivers encryption or VPN. Encryption is subject to export control laws. VPN may also be subject to export control. Releasing to other countries could put our users at risk of criminal punishment and result in the country sanctioning our browser use. Even code shipped preffed off, if it could manually be activated - consult legal.
+
+### Comms & Messaging Sign-off
+
+#### Message Consult
+
+If your experiment includes ANY message, make sure you had an [in-product message consult](https://mozilla-hub.atlassian.net/wiki/spaces/FIREFOX/pages/208308555/Message+Consult+Creation) and filed an [FXE Jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/FXE/boards/543) that was triaged via the Desktop or Mobile messaging leads (Venetia and Courtney).
+
+This is to ensure we are using a consistent voice with users - and also to make sure we don't inadvertently send multiple messages that don't flow together to the user.
+
+#### Comms Team Engagement
+
+Ideally work with your comms or PR contact for your area to let them know the details of the experiment and why a risk has been identified. If you don't know where to start for Comms help for your area - #cccc is a channel where you can get help. That channel also has a runbook document linked that has some more information on ways to engage with the Comms team.
+
+It is very rare for any pro-active comms to come for an experiment - but we have had "reactive comms" ready around several user visible feature changes or messages. Having reactive comms prepared and flagging the experiment for the support team makes responding to any incident quicker and less likely to escalate badly.

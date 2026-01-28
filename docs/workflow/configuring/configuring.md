@@ -1,6 +1,6 @@
 ---
 id: configuring
-title: Experiment Configuration
+title: Configuration
 slug: /configuring
 ---
 
@@ -8,13 +8,13 @@ From our perspective as experiment owners, experiments are composed of two time 
 
 ## The Enrollment Period
 
-The enrollment period is the time during which the experiment recipe is live. Clients that sync during this time will see the recipe, and potentially enroll (see [this page on bucketing](/deep-dives/data/bucketing.md) for more details on the enrollment mechanism).
+The enrollment period is the time during which the experiment recipe is live. Clients that sync during this time will see the recipe, and potentially enroll (see [this page on bucketing](/data-analysis/data-topics/bucketing) for more details on the enrollment mechanism).
 
 :::warning
 
 Mobile first run experiments are a very important-to-know exception to the enrollment period design.
 
-Please consult the [mobile first run experiments deep dive](/mobile-first-run-experiments) for more information.
+Please consult the [mobile first run experiments deep dive](/advanced/first-run-experiments) for more information.
 
 :::
 
