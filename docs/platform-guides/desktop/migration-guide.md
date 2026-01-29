@@ -4,15 +4,14 @@ title: Migration Guide
 slug: /platform-guides/desktop/migration-guide
 ---
 
-## To migrate front-end normandy prefs to Nimbus controlled experiments or rollouts
-This guide will help you migrate your Desktop front-end code to run experiments with Nimbus, while still being able to use preferences for default and user-override values
+This guide explains how to migrate front-end code from Normandy preference-based experiments to Nimbus-controlled experiments or rollouts. You'll learn how to register features, update your code, and maintain compatibility with existing preferences.
 
-Prerequisites:
+## Prerequisites
 * Your experimental variables are already instrumented with Firefox preferences
 * You don't use the `user branch` of each pref for anything other than actual user-defined values or testing (see docs on [order of precedence](/platform-guides/desktop/feature-api#configuration-sources))
 * Your code can import a ESM
 
-### An illustrative example (about:myself)
+## Illustrative Example (about:myself)
 
 For the purposes of this guide, we will be migrating an imaginary about page (`about:myself`), which uses the following preferences defined in `firefox.js`:
 
@@ -77,7 +76,7 @@ If you've configured fallback preferences your tests should pass as written, but
 
 ## FAQ
 
-### What happens if I run a Normandy experiment and a Nimbus experiment simultaneously?
+## What Happens If I Run a Normandy Experiment and a Nimbus Experiment Simultaneously
 
 If possible, we do not recommend you run Normandy and Nimbus experiments on the same user population simultaneously. If a user were to enroll in an experiment from both sources, the value returned would follow the rules defined in [Configuration Sources docs](/platform-guides/desktop/feature-api#configuration-sources). (Nimbus values override default pref branch values; user pref branch values override Nimbus).
 

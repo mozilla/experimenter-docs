@@ -4,18 +4,21 @@ slug: /technical-reference/feature-definition
 sidebar_position: 2
 ---
 
+This article explains how to define and test features in the Nimbus experimentation ecosystem. Features are areas of code instrumented with telemetry and accessible for remote configuration through manifest files.
+
+## Overview
+
 In the experimentation ecosystem, experiment surfaces are described as features. A feature is an area of code instrumented with telemetry and accessible for remote configuration. It can be as small as a single function or as complex as a whole page. Some examples:
 
     aboutwelcome: The about:welcome page in Desktop
     homescreen: The homescreen page in Fenix
     tabTrayFeature: The tab tray in Firefox iOS
 
-
 Features are defined in a Feature Manifest file for the application, and the client code uses the Nimbus SDK to access variables associated with those features.
 
-After landing a new feature in `mozilla-central` and before doing an Experiment or Rollout using it, it is recommended to go through QA to provide an extra layer of stability and possibly be informed of certain limitations that could exist with the feature. See **To test your feature** for information on how to involve QA. 
+After landing a new feature in `mozilla-central` and before doing an Experiment or Rollout using it, it is recommended to go through QA to provide an extra layer of stability and possibly be informed of certain limitations that could exist with the feature. See **Testing Your Feature** for information on how to involve QA.
 
-## To define your feature in the feature manifest file
+## Defining Your Feature in the Feature Manifest File
 First, look at what is already defined in the manifest file:
 * [Desktop](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.yaml)
 * Mobile
@@ -24,7 +27,7 @@ First, look at what is already defined in the manifest file:
     * [Firefox iOS](https://github.com/mozilla-mobile/firefox-ios/blob/main/nimbus.fml.yaml)
     * [Focus iOS](https://github.com/mozilla-mobile/focus-ios/blob/main/nimbus.fml.yaml)
 
-## To test your feature
+## Testing Your Feature
 Starting with 2023, the Ecosystem QA team has begun to test all the available Desktop Nimbus Features and their configurations. This is done in an attempt to ease testing on future experiments using a feature config (old or new) and to provide a baseline health report for it. 
 
 For engineers looking to test a new config: 

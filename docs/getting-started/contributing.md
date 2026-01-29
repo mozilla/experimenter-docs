@@ -1,6 +1,6 @@
 ---
 id: contributing
-title: Contributing
+title: For Contributors
 slug: /contributing
 ---
 
@@ -14,14 +14,14 @@ Please file issues for this repository in [Experimenter](https://github.com/mozi
 
 This page will walk you through how to edit an existing document or create a new one, how to display docs in the sidebar where desired, and how to make these changes in GitHub. See the in-page header navigation bar on the right-hand side of this doc for handy quicklinks.
 
-Documents are written in Markdown (`.md`) files using [GitHub-flavored Markdown syntax](https://github.github.com/gfm/) and are compiled into static web pages. [MDX](https://mdxjs.com/) is also supported, meaning you may embed React components in content as needed. Additionally, Docusaurus offers [admonitions](https://v2.docusaurus.io/docs/markdown-features/admonitions) which can be useful when placing emphasis on pieces of documentation. Refer to Docusaurus [Markdown features](https://v2.docusaurus.io/docs/markdown-features) for more technical information about these Markdown pages.
+Documents are written in Markdown (`.md`) files using [GitHub-flavored Markdown syntax](https://github.com/github.com/gfm/) and are compiled into static web pages. [MDX](https://mdxjs.com/) is also supported, meaning you may embed React components in content as needed. Additionally, Docusaurus offers [admonitions](https://v2.docusaurus.io/docs/markdown-features/admonitions) which can be useful when placing emphasis on pieces of documentation. Refer to Docusaurus [Markdown features](https://v2.docusaurus.io/docs/markdown-features) for more technical information about these Markdown pages.
 
 If you need custom CSS styles, you can edit the `src/css/custom.css` file. Try to use classes when writing MDX with names that will be easy to reuse later.
 
 <div className="flex-lg">
 <div>
 
-### Configuring Your Notifications
+## Configuring Your Notifications
 
 If you would like to subscribe to notifications for this repository, including for when someone requests doc changes with a pull request that you can potentially review and approve, be sure to "Watch" the repository by clicking on the repository's "Notification settings" menu and selecting "All Activity."
 

@@ -4,7 +4,7 @@ title: Bucketing
 slug: /data-analysis/data-topics/bucketing
 ---
 
-**Bucketing** is the process of randomly assigning users to experiment branches. When a user is “bucketed” into an experiment, it means that the configuration in one of its branches (such as a change to part of the UI) can be activated, and that any interactions we record from that moment on can be associated with the experiment and branch identifier.  The concept is explained in this [video](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=c5fe3f48-322f-48ca-92d8-adc8014a3cb4&start=10) / [presentation](https://docs.google.com/presentation/d/18Xid6FNyC207Hqfhm3OtVDBxNCbVx9Ku9Hvqc_PJVU4/edit#slide=id.g82761e80df_0_1948).  
+**Bucketing** is the process of randomly assigning users to experiment branches. When a user is "bucketed" into an experiment, it means that the configuration in one of its branches (such as a change to part of the UI) can be activated, and that any interactions we record from that moment on can be associated with the experiment and branch identifier.  The concept is explained in this [video](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=c5fe3f48-322f-48ca-92d8-adc8014a3cb4&start=10) / [presentation](https://docs.google.com/presentation/d/18Xid6FNyC207Hqfhm3OtVDBxNCbVx9Ku9Hvqc_PJVU4/edit#slide=id.g82761e80df_0_1948).  
 
 :::info which experiments?
 This documentation applies to experiments launched to Desktop, iOS, and Android Firefox through the "Nimbus" or "Normandy" systems. Differences between platforms are noted when relevant.
@@ -139,13 +139,13 @@ We will assign 20% of the buckets to branch `a`, 50% to `b`, and 30% to `c`. We 
 
 ```
 
-### Controlling interactions
+## Controlling Interactions
 
 By default, all experiments are allowed to interact and clients can bucket into multiple experiments simultaneously. However, sometimes we _do_ want experiments to be exclusive, such as when they change the same set of variables.
 
 In practice, we have three methods of preventing interactions between experiments:
 
-#### Bucket range exclusion
+### Bucket Range Exclusion
 
 Experiments that configure the same namespace will bucket identically for the same user identifier. This means we can exclude experiments by giving the same namespace and have them specify non-interacting ranges (start / count).
 
@@ -178,13 +178,13 @@ Say we generate a value of `4562` from our hash on a given client. The client is
 
 Note that we _always_ re-randomize branch assignment, so we can't isolate based on branch.
 
-#### Client-side rules
+### Client-side Rules
 
 In Nimbus, clients are prevented from enrolling into two experiments that target the same feature with a simple check during enrollment. For example, a user cannot be enrolled in two experiments that change the `aboutwelcome` feature.
 
 In Normandy, clients are prevented from enrolling in two experiments that change the same preference.
 
-#### Targeting exclusion
+### Targeting Exclusion
 
 For specific experiments that should be excluded from others, a targeting expression can be included with a specific experiment identifier:
 

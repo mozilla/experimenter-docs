@@ -17,8 +17,7 @@ Once an idea has been developed, the next step is designing the experiment messa
 
 ### Running an Experiment
 
-First, determine if your experiment will require any on-train development work to support the launch as well as any translated strings that need to land prior. Once that's been determined, we can get started with creating the experiment.
-For a more in-depth guide and step by step process, visit [OMC: Experimenter onboarding document](https://mozilla-hub.atlassian.net/wiki/spaces/FIREFOX/pages/233406786/OMC+Experimenter+Onboarding)
+First, determine if your experiment will require any on-train development work to support the launch as well as any translated strings that need to land prior. Once that's been determined, we can get started with creating the experiment. For a more in-depth guide and step by step process, visit [OMC: Experimenter onboarding document](https://mozilla-hub.atlassian.net/wiki/spaces/FIREFOX/pages/233406786/OMC+Experimenter+Onboarding)
 
 ### Message in Firefox
 
@@ -30,9 +29,7 @@ Once the experiment has successfully concluded and analysis shows promising resu
 
 Visit [Firefox Source docs](https://firefox-source-docs.mozilla.org/browser/components/asrouter/docs/index.html): newtab for details on how to develop within our components.
 
----
-
-## How Messages are Displayed
+## How Messages Are Displayed
 
 All messages belong to a message provider (a source):
 - Local provider: shipped with Firefox
@@ -49,15 +46,11 @@ This cycle can result in a message being shown (which will send an Exposure even
 
 Several messages can be listening for the same trigger condition in which case we can set a higher priority for the message we prefer.
 
----
-
 ## Localization
 
 Remote localization is available for all message types but it does require that strings are landed early to give localizers enough time. This is done via the [ms-language-packs](https://github.com/mozilla-services/ms-language-packs/) repo.
 
 As a fallback, we can use hardcoded strings in the message definition.
-
----
 
 ## Telemetry
 
@@ -88,8 +81,6 @@ Example: Experiment has 3 branches [control, treatment-1, treatment-2]. If the u
 Make sure `browser.ping-centre.log` pref is enabled. Open the Browser Toolbox and interact with the message, any telemetry pings will be logged to the console.
 
 _Because of the implementation of moments pages, telemetry is only sent for when a message is matched (the page will be shown in the next browsing session). No other telemetry is available._
-
----
 
 ## Limitations
 

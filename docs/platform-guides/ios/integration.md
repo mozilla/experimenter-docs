@@ -116,7 +116,7 @@ The `errorReporter` callback is there to connect `Nimbus` to any error reporting
         .build(appInfo: appInfo)
 ```
 
-### Connecting the `NimbusInterface` to FML generated code
+## Connecting the NimbusInterface to FML Generated Code
 
 The FML generated code has a runtime dependency on the `NimbusInterface`.
 
@@ -130,7 +130,7 @@ To connect it to the Nimbus object, we need to tell the `NimbusBuilder`. In this
         .build(appInfo: appInfo)
 ```
 
-### Handling First Run experiments
+## Handling First Run Experiments
 
 Since `fetchExperiments` from the remote settings URL is slow, and we wish to be able have access to the Nimbus experimental configuration as early in start up as possible, Nimbus downloads and caches the experiment recipes on the `n`th run of the app and only applies them and makes them available to the app at the beginning of the _next_ i.e. the `(n + 1)`th run of the app.
 
@@ -148,12 +148,12 @@ Astute readers will notice that when `n = 0`, i.e. the very first time the app i
 
 The `initial_experiments.json` file can be downloaded, either as part of the build, or in an automated/timed job. e.g. this is the [Github Action workflow used by Firefox for iOS](https://github.com/mozilla-mobile/firefox-ios/blob/main/.github/workflows/update-nimbus-experiments.yml).
 
-#### To check if the firstrun experiment merged into beta to catch the next release
+## Checking if First Run Experiment Merged into Beta
 First run experiments need to be in the beta build 8-11 days before release, so that they are in the release candidate.  Final build happens 8 days before release on Monday - so best to get in and uplift approved by Friday at the latest.  
 
 After the change is made in Nimbus/Experimenter to launch, enrollment end, or end the experiment - a github action kicks off the PR automatically to update 'initial_experiments.json'.  Then a mobile engineer needs to r+ that PR and request uplift to Beta.  If you replace 'version number' in the following file name, you can check this file to see if the experiment config is in the right state before release candidate build https://raw.githubusercontent.com/mozilla-mobile/firefox-ios/release/v'version number'/Client/Experiments/initial_experiments.json.
 
-### Using the experiments preview collection
+## Using the Experiments Preview Collection
 
 The preview collection is a staging area for new experiments to be tested on the device. This should be toggleable via the UI, but should trigger a restart.
 
@@ -168,7 +168,7 @@ Adding the `usePreviewCollection` flag allows the builder to configure a `Nimbus
         .build(appInfo: appInfo)
 ```
 
-### Instrumenting the app for testing
+## Instrumenting the App for Testing
 
 The [`nimbus-cli`](/technical-reference/nimbus-cli/overview) allows QA and engineers to launch the app in different experimental configurations. It largely obviates the need for configuring Nimbus to use the preview collection, above.
 
@@ -182,7 +182,7 @@ To connect the `NimbusInterface` object to the command line, we need to feed the
         .build(appInfo: appInfo)
 ```
 
-## A complete `NimbusBuilder` example
+## A Complete NimbusBuilder Example
 
 ```swift
 import Foundation

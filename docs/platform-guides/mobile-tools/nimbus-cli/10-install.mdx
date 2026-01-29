@@ -21,7 +21,7 @@ Ensure that `adb` is on your PATH. You may have to restart your shell.
 - Install Xcode.
 - Run `xcode-select --install`
 
-## Installing `nimbus-cli` on macOS or Linux
+## Installing Nimbus CLI on macOS or Linux
 
 Copy the following command, and paste it into a command line.
 
@@ -42,7 +42,7 @@ This should give you output something like this:
 
 Depending on your setup, it may ask for a password just after the "Preparing" step.
 
-### Checking the installation
+### Checking the Installation
 
 Run the following command:
 
@@ -58,7 +58,7 @@ Mozilla Nimbus' command line tool for mobile apps
 Usage: nimbus-cli [OPTIONS] --app <APP> --channel <CHANNEL> <COMMAND>
 ```
 
-### macOS and the malicious software warning
+### macOS and the Malicious Software Warning
 
 The installation script tries to mitigate this, but on first run, macOS may give you a warning:
 
@@ -72,7 +72,7 @@ The installation script tries to mitigate this, but on first run, macOS may give
 
 - Confirm that you Trust this Developer.
 
-## Installing for Windows
+## Installing Nimbus CLI on Windows
 
 1. Download the `nimbus-cli` zip file for [Windows][windows].
 2. Uncompress the file.
@@ -84,7 +84,7 @@ The installation script tries to mitigate this, but on first run, macOS may give
 8. Exit all windows and save the changes you made by selecting OK.
 9. Restart the terminal, and [test](#checking-the-installation).
 
-## Manual install for macOS or Linux
+## Manual Install for macOS or Linux
 
 1. Download the `nimbus-cli` zip file for [Apple Silicon macOS][macos-apple-silicon], [Intel macOS][macos-intel] or [x86_64 Linux][linux].
 2. Uncompress the file.
@@ -101,7 +101,7 @@ echo 'export PATH=$PATH:$HOME/bin' >> "~/.${SHELL}rc"
 [macos-intel]: https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/project.application-services.v2.nimbus-cli.latest/artifacts/public/build/nimbus-cli-x86_64-apple-darwin.zip
 [linux]: https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/project.application-services.v2.nimbus-cli.latest/artifacts/public/build/nimbus-cli-x86_64-unknown-linux-gnu.zip
 
-## Building from source
+## Building From Source
 
 0. Install the rust toolchain, using [`rustup`](https://rustup.rs).
 1. Clone the [`application-services` repo](https://github.com/mozilla/application-services).

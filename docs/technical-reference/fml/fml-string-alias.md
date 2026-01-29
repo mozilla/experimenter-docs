@@ -5,6 +5,8 @@ slug: /technical-reference/fml/fml-string-alias
 sidebar_position: 6
 ---
 
+String aliases define named sets of valid strings that can be validated at build time and in Experimenter, enabling type-safe string constants without using enums.
+
 `string-alias` is a type alias annotations for feature variables in the feature manifest language. It defines a named set of strings which can be used and validated elsewhere in the feature manifest.
 
 It is named as a special case of typealiasing found in many languages.
@@ -16,7 +18,7 @@ val queries = mapOf<QueryName, String>()
 
 In this kotlin example above, we are able to use `QueryName` wherever we're able to use `String`, and vice versa: there is nothing else linking `QueryName` with `queries`.
 
-## `string-alias` defines a named set of valid strings
+## String-Alias Defines a Named Set of Valid Strings
 
 In FML, the `string-alias` belongs to the variable definition.
 
@@ -61,7 +63,7 @@ This means that `available-if` can be either a valid `QueryName` or `null`.
 
 This means that `available-if` can be a list of valid `QueryName` strings.
 
-### The named set is used to validate strings by experimenter
+## The Named Set Is Used to Validate Strings by Experimenter
 
 Over time, the number of queries can grow in the FML:
 
@@ -94,7 +96,7 @@ In the above example, experimenter shows the user an error:
 Invalid value "USER_ES_SPEAKER" for type QueryName; did you mean one of "ALWAYS", "USER_DE_SPEAKER", "USER_EN_SPEAKER" or "USER_RECENTLY_INSTALLED"?
 ```
 
-### The named set can be added to by FML authors or experiment owners
+## The Named Set Can Be Added to by FML Authors or Experiment Owners
 
 This can be fixed by adding a query to the `queries` map in the FML file _or_ the user can add it directly in the feature configuration:
 
@@ -110,7 +112,7 @@ This can be fixed by adding a query to the `queries` map in the FML file _or_ th
 }
 ```
 
-## Defining the named set of valid strings
+## Defining the Named Set of Valid Strings
 
 We've seen how a string-alias can be used, and how `QueryName` was defined as a key in a map.
 
@@ -152,7 +154,7 @@ Only one string-alias can be defined per feature variable. The following– usin
 ```
 :::
 
-### String aliases can be used in nested objects
+## String Aliases Can Be Used in Nested Objects
 
 ```yaml
 features:

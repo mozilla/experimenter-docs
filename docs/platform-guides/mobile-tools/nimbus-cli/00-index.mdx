@@ -4,15 +4,13 @@ title: Nimbus CLI
 slug: /technical-reference/nimbus-cli/overview
 ---
 
-The `nimbus-cli` is a command line tool for interacting with the Nimbus SDK embedded in Mozilla's mobile applications.
-
-It aims to provide a uniform way of interacting with an app, no matter what the app or the platform.
+The `nimbus-cli` is a command line tool for interacting with the Nimbus SDK embedded in Mozilla's mobile applications. It provides a uniform way of interacting with an app, no matter what the app or the platform.
 
 :::tip
 If you're looking for installation instructions, start [here](/technical-reference/nimbus-cli/install).
 :::
 
-### Goals
+## Goals
 
 The principle goals for the `nimbus-cli` is to make testing and developing experiments easier:
 
@@ -28,7 +26,7 @@ Additionally, it is useful to be developers to investigate problems with the app
  - to [display and capture the logs](/technical-reference/nimbus-cli/working-with-logs) of the device
  - to [display the state of the Nimbus SDK in the logs](/technical-reference/nimbus-cli/working-with-logs#log-state).
 
-### Non-goals
+## Non-Goals
 
 The tool works by using the existing tooling provided by platform vendors (for Android, `adb`; for iOS, `simctl`) to communicate with an installed app on a device, emulator or simulator.
 

@@ -1,12 +1,10 @@
 ---
-id: targeting-faq
-title: Targeting FAQ
-slug: /targeting-faq
+id: targeting-audiences
+title: Targeting & Audiences
+slug: /faq/targeting-audiences
 ---
 
 Common questions about targeting and audience configuration for experiments and rollouts.
-
-## All Channels or No Channels
 
 ### Question
 What does "No Channel" or "All Channels" mean in the Audience Page?
@@ -18,8 +16,6 @@ Ex: for desktop this includes ESR and Unbranded - which should only be receiving
 
 ---
 
-## Version Targeting
-
 ### Question
 Can Nimbus experiments/rollouts target specific beta releases, i.e. can I express "roll this out to everyone on 104b6 and later"?
 
@@ -28,15 +24,13 @@ Can Nimbus experiments/rollouts target specific beta releases, i.e. can I expres
 
 [Here](https://searchfox.org/mozilla-central/source/mobile/android/docs/shared/versioning.md) is where you can learn about our dot release version naming pattern by platform (so is the first dot release x.1.0 or x.0.1)
 
-If you are a mobile engineer, see the [Mobile FAQ](/faq/mobile-faq) for how to add a version. To find how the version numbers work for your platform check the [versioning documentation](https://searchfox.org/mozilla-central/source/mobile/android/docs/shared/versioning.md).
+If you are a mobile engineer, see the [Mobile FAQ](/faq/mobile) for how to add a version. To find how the version numbers work for your platform check the [versioning documentation](https://searchfox.org/mozilla-central/source/mobile/android/docs/shared/versioning.md).
 
 Otherwise, file an issue [here](https://github.com/mozilla/experimenter/issues/new) to add a specific version (of beta, nightly, or release) and then ping in [`#ask-experimenter`](https://mozilla.slack.com/archives/CF94YGE03) on Slack.
 
 The version requested will get added as an option to the Minimum Version and Maximum Version drop down menus. It is a minor and quick change. By default Experimenter (Nimbus) only exposes the whole valued versions, until requested.
 
 ---
-
-## Custom Targeting Options
 
 ### Question
 How can I add a new advanced targeting option for experiment audiences?

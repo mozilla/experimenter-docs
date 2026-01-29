@@ -3,13 +3,16 @@ id: localization-process
 title: Localization
 slug: /localization-process
 ---
+
+This guide explains how to localize content for Nimbus experiments outside the standard product release cycle using Pontoon and either multi-locale or single-locale recipe workflows.
+
 :::info
 
 Localization support for Nimbus experiments is constantly improving. Make sure to check this page again before setting up new experiments.
 
 :::
 
-Using the process described in this page it’s possible to localize content for experiments outside of the standard product release cycle. There are two different workflows, depending on the experiment’s target:
+Using the process described in this page it's possible to localize content for experiments outside of the standard product release cycle. There are two different workflows, depending on the experiment's target:
 * Firefox Desktop 113 and later versions include support for [multi-locale recipes](#multi-locale-recipe-firefox-113-and-later).
 * For older versions of Firefox Desktop, and potentially other platforms, there is a manual process using [single-locale recipes](#single-locale-recipe).
 

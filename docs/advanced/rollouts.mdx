@@ -4,14 +4,12 @@ title: Rollouts
 slug: /advanced/rollouts
 ---
 
-# Rollouts
-
 :::tip
 Want more info on rollouts?
-Reach out to us in [`#ask-experimenter`](https://mozilla.slack.com/archives/CF94YGE03) on Slack. 
+Reach out to us in [`#ask-experimenter`](https://mozilla.slack.com/archives/CF94YGE03) on Slack.
 :::
 
-Rollouts are single-branch experiments that differ from a traditional experiment in a number of ways: 
+Rollouts are single-branch experiments that differ from a traditional experiment in a number of ways:
 - A rollout only has a single branch.
 - A client can be enrolled in both a single experiment AND rollout for a given feature.
 - The experiment feature value takes precedence over the rollout feature value.
@@ -20,14 +18,12 @@ Rollouts are single-branch experiments that differ from a traditional experiment
 
 ## What is a rollout?
 
-#### When should I use a rollout instead of an experiment?
-
 - Launching a winning branch of an experiment faster than the trains.
 - Launching a configuration to non-experiment users during an experiment after a short period of verification.
 - Configuring different settings for a feature for different audiences remotely.
 - A "kill switch" if you want to launch a feature but then turn it off if something goes wrong.
 
-#### When should I not use a rollout?
+### When should I not use a rollout?
 
 If the feature has not yet been extensively tested, isn't production quality, or needs a period of validation on the trains.
 
@@ -58,9 +54,11 @@ You would need to:
 
 Keep in mind that if you do plan to release the experience to 100% of users, you should make sure it meets production quality standards.
 
-#### Are there typical rollout patterns I should follow?
+### Are there typical rollout patterns I should follow?
 
 This document covers [common patterns for people using a rollout to mitigate risk around technical issues, brand perception, and load capacity/service scaling](https://docs.google.com/document/d/1aAlZa5RoZt_yf3-XUtffJwKVBczhJMcHCAPxRxHrNb8/edit).
+
+## Creating a Rollout
 
 ### How do I create a rollout in Experimenter?
 
@@ -75,9 +73,9 @@ There are two ways to make a rollout from the Experimenter UI. When I have a “
 <p/>
    <img title="Rollout checkbox" src="/img/deep-dives/rollout-checkbox.png" align="center"/>
 
-### Incrementing your rollout's population percentage
+## Incrementing Your Rollout's Population Percentage
 
-#### Live editability
+### Live editability
 
 The population percent of a rollout ("Percentage of clients" on the Audience page) can be edited once a rollout is launched. To make changes to this field, open your rollout, and from the left sidebar click on the Audience page. From there, you will be able to make edits and save. 
 
@@ -98,12 +96,16 @@ Multiple edits can be made to your rollout without needing to request an update,
    <img title="Unpublished changes status pill" src="/img/deep-dives/unpublished-changes-pill.png" height="200"/>
 
 
+## Finding Rollouts
+
 ### Where can I find rollouts?
 
 This can be done using the filters on the Experimenter home page. You can either sort by feature to see all experiment/rollouts for said feature, or you can search by experiment type to filter by "experiment" or "rollout": 
 
    <img title="Home page filters" src="/img/deep-dives/home-filters.png" height="500"/>
 
+
+## Supported Platforms and Minimum Version Targeting
 
 ### Supported platforms and minimum version targeting
 
@@ -117,7 +119,7 @@ Experimenter currently supports the following platforms:
 
 The minimum version supported for rollouts on all platforms (listed above) is currently 105. See [Experimenter](https://github.com/mozilla/experimenter/blob/main/experimenter/experimenter/experiments/constants.py#L375) for more details.
 
-### Automated analysis
+## Automated Analysis
 
 - The dashboards for rollouts that OpMon generates follow this URL pattern:
   ```

@@ -22,7 +22,7 @@ To ensure analysis results are available in a timely manner, Jetstream implement
 * Parallelization of experiment analyses using [Argo](https://argoproj.github.io/)
 * Parallelization of lower-level calculations (statistics, segments, ...) using [Dask](https://dask.org/)
 
-### Parallelizing experiment analyses
+## Parallelizing Experiment Analyses
 
 [Argo](https://argoproj.github.io/) is a light-weight workflow engine for orchestrating parallel jobs on Kubernetes and is capable of creating tasks dynamically that will be executed in parallel. Using Argo, the analyses for different experiments and analysis dates are split into separate jobs that run in parallel on the `jetstream` Kubernetes cluster in the `moz-fx-data-experiment-analysis` GCP project.
 
@@ -31,7 +31,7 @@ The full workflow definition is defined in [the `workflows/run.yaml` file](https
 
 Depending on how Jetstream is invoked (`rerun`, `run-argo`, or `rerun_config_changed`), Jetstream will determine the dates and experiments that are to be analyzed and injects them as parameters into `run.yaml` before launching the workflow. Argo will create separate jobs for each experiment and each analysis date. Once the analysis is complete, data gets exported as JSON to GCS.
 
-### Parallelizing lower-level calculations
+## Parallelizing Lower-Level Calculations
 
 In addition to running experiment analyses in parallel, [Dask](https://dask.org/) is used to parallelize lower-level calculations. The following steps could be executed in parallel:
 * Analyses for each analysis period (daily, 28day, weekly, overall)
@@ -61,7 +61,7 @@ Argo provides a Web UI to access running workflows. Users need to authenticate u
 * Open [https://localhost:2746](https://localhost:2746)
 * Use the generated Bearer token (including the word `Bearer`) for authentication
 
-### Deleting Old Workflows
+## Deleting Old Workflows
 
 * The Workflow UI might get less responsive the more workflows have been run in the past
 * To delete workflows that are older than 4 days run:
@@ -75,7 +75,7 @@ kubectl get wf -o go-template -n argo --template '{{range .items}}{{.metadata.na
 
 Argo updates should be tested on a separate cluster before applying them to production. Jetstream has some custom logic to connect to clusters and issue workflows that might be incompatible with future versions of Argo.
 
-### Preparation 
+## Preparation 
 * Ensure `kubectl` is using the correct cluster context (e.g., to switch between dev and prod clusters)
 	* `kubectl config get-contexts`
 	* `kubectl config use-context <context>`
@@ -83,13 +83,13 @@ Argo updates should be tested on a separate cluster before applying them to prod
 	* `kubectl -n argo exec $(kubectl get pod -n argo -l 'app=argo-server' --field-selector=status.phase=Running -o jsonpath='{.items[0].metadata.name}') -- argo version`
 * Check for breaking changes in the Argo [Upgrade Guide](https://argo-workflows.readthedocs.io/en/latest/upgrading/)
 
-### Perform Upgrade
+## Perform Upgrade
 * Find kubectl command to install/upgrade from the [Argo releases](https://github.com/argoproj/argo-workflows/releases) page
 	* Should look like: `kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v3.6.7/install.yaml`
 		* Change version number to most recent release
 * The GKE cluster itself is updated automatically by GCP
 
-### Post Upgrade
+## Post Upgrade
 * Verify version number with command above and by checking UI
 * Run a test workflow by sending a small analysis job to the cluster with `jetstream run-argo` for a single experiment and date
 	* **Important** Use configuration options to ensure production data is not overwritten
@@ -102,7 +102,7 @@ Argo updates should be tested on a separate cluster before applying them to prod
 
 Jetstream uses the same tooling and metric versions for an experiment across its entire analysis duration. This prevents inconsistent results, for example, when changes are made to how [mozanalysis] computes results or new default metrics are added in metric-hub mid-experiment.
 
-### Keeping track of tooling versions
+## Keeping Track of Tooling Versions
 
 When a new version of jetstream is released, for example after some library updates, a new Docker container gets pushed to the [Artifact Registry](https://console.cloud.google.com/artifacts?project=moz-fx-data-experiments). The container installs a specific version of each library and can be uniquely identified by a SHA256 hash. A timestamp indicating when the container was uploaded is also available.
 
@@ -116,7 +116,7 @@ Container hashes are passed to the Argo workflow config, which references docker
 
 Jetstream can be run using a specific image version using the `--image_version` parameter. The image can also be changed using the `--image` parameter.
 
-### Keeping track of metric-hub versions
+## Keeping Track of Metric-Hub Versions
 
 Outcome and default configs can potentially change mid-experiment, leaving some experiments in an inconsistent state. Since these configs get pulled in dynamically and aren't installed as part of the Docker image the prior approach doesn't work here.
 

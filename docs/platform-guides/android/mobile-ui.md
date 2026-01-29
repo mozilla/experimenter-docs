@@ -1,14 +1,12 @@
 ---
-id: getting-started-mobile-required-ui 
+id: getting-started-mobile-required-ui
 title: Required UI
 slug: /platform-guides/android/mobile-ui
 ---
 
-# User Interface requirements
+This guide covers the user interface requirements for integrating Nimbus with Android apps, including global opt-out settings and QA tooling.
 
-Currently Nimbus provides no user-interface components of its own, though provides API to connect to existing settings screens.
-
-## Global opt-out/opt-in for experiments
+## Global Opt-out/Opt-in for Experiments
 
 The settings page should include a `Studies` toggle, which allows users to opt-in or opt-out of experiments. The example from Firefox for iOS is shown:
 
@@ -20,7 +18,7 @@ Toggling the `Studies` flag should set the `Nimbus` value for `globalUserPartici
 nimbus.globalUserParticipation = flag
 ```
 
-## Resetting telemetry identifiers
+## Resetting Telemetry Identifiers
 
 During experiment enrollment, telemetry is generated which can connect the user to the experiment enrollment.
 
@@ -32,13 +30,13 @@ nimbus.resetTelemetryIdentifiers()
 
 This disqualifies existing enrollments. and breaks any connection with experiment enrollment and the enrollment telemetry.
 
-## QA tooling
+## QA Tooling
 
 > The following are nice-to-haves, obviated by the use of the [`nimbus-cli`][nimbus-cli].
 
 [nimbus-cli]: https://github.com/mozilla/application-services/tree/main/components/support/nimbus-cli
 
-### Preview Collection
+## Preview Collection
 
 To allow testing of experiments before they are published, the client should allow configuring the Nimbus startup to use the `preview-collection`.
 
@@ -48,7 +46,7 @@ The above shows a non-user visible settings screen in Fenix. The toggle sets a `
 
 The preview collection is loaded on the next restart, and available to the app on the restart after that.
 
-### Manual opt-in of experiments
+## Manual Opt-in of Experiments
 
 To allow the manual opt-in of a particular branch, the app must provide a screen to list all available experiments:
 

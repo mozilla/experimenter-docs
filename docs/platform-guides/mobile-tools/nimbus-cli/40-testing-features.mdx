@@ -4,9 +4,9 @@ title: Features
 slug: /technical-reference/nimbus-cli/working-with-features
 ---
 
-The `nimbus-cli` provides features to download experiments from Remote Settings. However, sometimes you wish to do some exploratory testing of a feature without going through the experimenter interface.
+This guide shows how to test features without using Experimenter and how to extract feature configurations from experiments. You can perform exploratory testing by specifying feature configurations directly via JSON files.
 
-## `test-feature`
+## Testing Features
 
 The `test-feature` command allows you to specify a `feature-id` and one or more JSON files that correspond to the feature configuration for that feature: i.e. to exercise a feature.
 
@@ -22,7 +22,7 @@ The other branches are available to enroll using the `Experiments` screen availa
 
 By default, the app's feature manifest will be downloaded and used to validate each feature configuration. This can be overridden with the `--no-validate` option.
 
-## `features`
+## Extracting Feature Configurations
 
 The `features` command accepts an experiment and branch, and outputs the feature configuration from that branch.
 

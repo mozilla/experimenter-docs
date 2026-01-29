@@ -4,9 +4,9 @@ title: Ending
 slug: /ending
 ---
 
-# Ending enrollment or ending your experiment
+This guide explains how to end enrollment and end your experiment, including timing considerations and approval processes.
 
-## To end enrollment
+## Ending Enrollment
 1. Has the experiment run for at least 7–14 days (to cover weekly behavioral cycles)?
 2. Has it collected enough active users per branch (as estimated in the brief or by DS)?  Check the Live Monitoring link to see how many people enrolled versus what was expected from your initial planning.
 
@@ -31,7 +31,7 @@ Once the experiment has reached the end of the enrollment period, the experiment
 
 
 
-## To end the experiment
+## Ending the Experiment
 
 Once the experiment has run for sufficient time, it can be ended. This is the process by which clients are unenrolled from the experiment and revert to seeing the default experience. Ending the experiment will also trigger the final analysis to be run. This is a nightly batch process, so expect results to be available the day after the experiment was ended.
 

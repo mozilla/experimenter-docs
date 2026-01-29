@@ -4,6 +4,8 @@ title: Growable Collections
 slug: /technical-reference/fml/growable-collections
 ---
 
+Growable collections allow you to configure collections of items that can expand through experiments and rollouts without requiring code changes or app releases.
+
 ## Problem
 
 You want to configure a collection of things of the same type, but the configuration isn't known at build time.
@@ -163,7 +165,7 @@ As time goes by, we have a growing collection of asset-urls, without needing to 
 
 This is a very powerful pattern which is used in multiple places, so we'll name this pattern "Growable Collections".
 
-### Exposure events
+## Exposure Events
 
 Features with a growable collection of things may need to give some care about exposure events.
 
@@ -229,7 +231,7 @@ displayAsset(config.assetMap[key])
 </TabItem>
 </Tabs>
 
-### Local development
+## Local Development
 
 Channel specific `defaults` allow us to specify a list of assets prepopulated with placeholders. The defaults for the
 `debug` channel for this feature are derived directly from manifest.

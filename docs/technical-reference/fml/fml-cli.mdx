@@ -5,9 +5,11 @@ slug: /technical-reference/fml/fml-cli
 sidebar_position: 4
 ---
 
-# Commands
+The nimbus-fml command-line interface provides tools for generating code, validating manifests, and managing feature configurations across mobile applications.
 
-## Generating code for an mobile application
+## Commands
+
+## Generating Code for a Mobile Application
 
 The simplest invocation is in this form:
 
@@ -24,7 +26,7 @@ If `INPUT` is a directory, it is recursively searches for any files with names e
 
 This command should be called at build time of components and the build time of the application.
 
-### Adding `repo-file`s
+## Adding Repo Files
 
 Adding [repo files](/technical-reference/fml/fml-paths) can be done with one or more `--repo-file` argument.
 
@@ -32,7 +34,7 @@ Adding [repo files](/technical-reference/fml/fml-paths) can be done with one or 
 % nimbus-fml generate --language <LANGUAGE> --repo-file ./app-structure.json <INPUT> <OUTPUT>
 ```
 
-### Getting different versions of the same manifest
+## Getting Different Versions of the Same Manifest
 
 For [remote manifests](/technical-reference/fml/fml-paths), the default branch to fetch from is `main`. This can be changed with the `--ref` option.
 
@@ -44,7 +46,7 @@ This command uses feature manifest from the `releases_v118` branch of the https:
 % nimbus-fml generate --language <LANGUAGE> --ref releases_v118 @mozilla-mobile/firefox-android/fenix/app/nimbus.fml.yaml <OUTPUT>
 ```
 
-### Caching remote files
+## Caching Remote Files
 
 ```
 % nimbus-fml generate --language <LANGUAGE> --channel CHANNEL --cache-dir ./build/cache-dir <INPUT> <OUTPUT>
@@ -54,7 +56,7 @@ This command uses feature manifest from the `releases_v118` branch of the https:
 
 For each of the following, `--ref`, `--cache-dir` and `--repo-file` flags are supported.
 
-## Generating a manifest file for experimenter
+## Generating a Manifest File for Experimenter
 
 The reason to use a custom manifest format a language specific JSON serialization library is to do with keeping the code in sync with the experimenter web server.
 
@@ -68,7 +70,7 @@ This should only be called at the application level, with the one main fml file 
 
 `--cache-dir`, `--ref`, and `--repo-file` arguments are also supported.
 
-## Validating a manifest file
+## Validating a Manifest File
 
 ```
 % nimbus-fml validate <INPUT>
@@ -97,7 +99,7 @@ Validating manifest for different channels:
 ✅ developer...........valid
 ```
 
-## Re-write a complicated distributed manifest into a single file
+## Rewriting a Distributed Manifest Into a Single File
 
 The FML spec allows you to [import and include dependencies' manifests](/technical-reference/fml/fml-imports). This is convenient for engineers to place the feature manifest close to where the feature code lives.
 
@@ -109,7 +111,7 @@ To help this, the `single-file` command is used to merge all imports and include
 % nimbus-fml single-file --channel release @mozilla-mobile/firefox-android/fenix/app/nimbus.fml.yaml single-file.fml.yaml
 ```
 
-## Generating a machine readable overview of a feature
+## Generating a Machine Readable Overview of a Feature
 
 ```sh
 % nimbus-fml info [--channel CHANNEL] [--json] <MANIFEST> [--feature FEATURE]
@@ -137,7 +139,7 @@ This prints a simplified YAML or JSON representation for each feature. e.g.
 }
 ```
 
-### Hashes
+## Hashes
 
 The `hashes` object shows truncated SHA256 hashes for:
 
@@ -151,11 +153,11 @@ The `hashes` object shows truncated SHA256 hashes for:
 a `String` type to a `string-alias` type (or vice-versa).
 :::
 
-### Types
+## Types
 
 The `types` list is a sorted list of the types involved used to define the feature. This list may be used as a proxy for a measure of complexity of the feature configuration space.
 
-### Feature metadata
+## Feature Metadata
 
 In addition, [the feature metadata](/technical-reference/fml/feature-metadata) is also displayed.
 

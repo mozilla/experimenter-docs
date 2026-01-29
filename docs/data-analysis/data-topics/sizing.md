@@ -63,7 +63,7 @@ In this pattern, we can run a sequence of experiments (2 or more) of increasing 
 2. A very small experiment (<1%), followed by a small experiment (<5%), followed by a very large experiment.
    - Similar to above, but further limits the risk of the 5% experiment through the use of a very small, preliminary experiment. See for example the [rollout of ToU](https://docs.google.com/presentation/d/1vTRx6kv3oAvIZSNcle6YhhMTQ8_5nLn77PNqCFuAQc8/edit#slide=id.g32cf211b9a1_3_92) which used a 4-stage design.
 
-### Exploratory then Explanatory
+### Exploratory Then Explanatory
 
 In this pattern, we run an initial small experiment with many branches to identify the winning variant (using a more sensitive, experiment or feature specific metric) and follow-up with a larger experiment to maximize the power of measuring guardrail impacts. For example:
 
@@ -76,7 +76,7 @@ In this pattern, we run an initial small experiment with many branches to identi
 
 In this pattern, a very small experiment (~1% or so) is run prior to the main experiment. This can estimate opportunity size/exposure rates and derisk a larger experiment. This is a special form of the Sequentially Larger pattern.
 
-## Same design, more insights
+## Same Design, More Insights
 
 In this section, we explore methods to increase the learnings from a given design.
 
@@ -88,30 +88,30 @@ Retention (down funnel) is difficult to move, but metrics up funnel are easier t
 
 ## Frequently Asked Questions
 
-### Q: I'm concerned that the proposed size might not be large enough to measure statistical significance. Or equivalently: I ran an experiment and the results were not stat sig, what can I do?
+### Q: I'm Concerned That the Proposed Size Might Not Be Large Enough to Measure Statistical Significance. Or Equivalently: I Ran an Experiment and the Results Were Not Stat Sig, What Can I Do?
 
 A: you can follow-on with a larger experiment, now that the variant has been de-risked.
 
-### Q: very few users are expected to be exposed to/interact with my experiment.
+### Q: Very Few Users Are Expected to Be Exposed to/Interact With My Experiment.
 
 A: in that case, the risk is also low. You may need to run a large experiment (up to even enrolling all users who meet a criteria) in order to measure any impacts. Also consider the opportunity size though: if very few users could benefit from the experiment that limits the potential value.
 
-### Q: my experiment is very risky, what should I do?
+### Q: My Experiment Is Very Risky, What Should I Do?
 
 A: run a staged design, with the number of stages and the sizes influenced by the level of risk.
 
-### Q: I have a lot of variants, I'm not sure which will be the best, and I want to maximize the ability to measure impact.
+### Q: I Have a Lot of Variants, I'm Not Sure Which Will Be the Best, and I Want to Maximize the Ability to Measure Impact.
 
 A: consider the Exploratory then Explanatory design mentioned above.
 
-### Q: I don't know how many users will interact or be exposed.
+### Q: I Don't Know How Many Users Will Interact or Be Exposed.
 
 A: follow the Smoke Test pattern.
 
-### Q: My experiment is low risk and I need to maximize potential achieved value and realize value quickly.
+### Q: My Experiment Is Low Risk and I Need to Maximize Potential Achieved Value and Realize Value Quickly.
 
 A: Consider the Holdback Pattern where you hold 1%-10% of users back as control and deliver the feature the remaining 90%-99%.
 
-### Q: I've read all of this, my experiment is quite low risk, I mostly care about measuring potential value (positive impacts) to guardrails, there aren't any special considerations, I just need to get a number and you're blocking me.
+### Q: I've Read All of This, My Experiment Is Quite Low Risk, I Mostly Care About Measuring Potential Value (Positive Impacts) to Guardrails, There Aren't Any Special Considerations, I Just Need to Get a Number and You're Blocking Me.
 
 A: pick a size in the range of 1%-10% per branch, depending on your personal risk tolerance. Consider following up with a secondary experiment if results from the first are inconclusive.

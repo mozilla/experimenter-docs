@@ -85,7 +85,7 @@ statistics = { binomial = {} }
 Instruction on how to specify parameter values can be found [Jetstream Configuration](configuration.md#overwriting-outcomes-parameters)
 
 
-## When should I use Outcomes?
+## When Should I Use Outcomes?
 
 As a data scientist, it's useful to define Outcomes whenever an endpoint is going to be used more than once.
 It reduces the amount of work you will need to do for each follow-up experiment and ensures that metrics are defined consistently.
@@ -93,7 +93,7 @@ It reduces the amount of work you will need to do for each follow-up experiment 
 If you're not certain about how you want to define a metric, it's okay to use a custom configuration first,
 and then copy-paste the metrics into an Outcome for later use.
 
-## What happens if an Outcome changes?
+## What Happens if an Outcome Changes?
 
 Changing an Outcome does not re-run any experiments.
 A commit hash associated with the version of each Outcome is captured in the [experiment metadata](./data-products) published to GCS,

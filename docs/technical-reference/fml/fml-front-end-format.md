@@ -5,17 +5,19 @@ slug: /technical-reference/fml/fml-front-end-format
 sidebar_position: 10
 ---
 
+This document defines the decision to use YAML as the front-end format for Nimbus feature manifests and provides context for that decision.
+
 - Status: accepted
 - Deciders: @travis79, @jhugman, @teshaq, @k88hudson
 - Date: 2021-10-26
 
-## Context and problem statement
+## Context and Problem Statement
 
 In order to allow product teams to define experimentable application features, there needs to be a manifest file which defines these in a way that is understandable to the Nimbus ecosystem.  The feature manifest should define data types used in the application code to configure features. It should also be able to define a complete default configuration for each application feature.
 
 The purpose of this document is to define the decision on the format of the feature manifest but not be a full specification of the schema or language of it.
 
-## Decision drivers
+## Decision Drivers
 
 - It should not be onerous to write and maintain for a junior engineer or intern
 - A single feature should be readable/guessable by a product owner or designer
@@ -27,7 +29,7 @@ The purpose of this document is to define the decision on the format of the feat
 - Defaults should be specifiable at the feature level
 - Alignment with Desktop Nimbus which is already using a feature manifest, in the hopes that the schema can be shared between mobile and desktop eventually
 
-## Decision outcome
+## Decision Outcome
 
 The front-end format for the Nimbus manifests will follow the [YAML](https://yaml.org/) format.
 
@@ -50,7 +52,7 @@ Cons:
 
 To illustrate the YAML format, here is an example of the "homescreen" feature, first in JSON, then the same representation in YAML.
 
-### JSON Example
+## JSON Example
 
 This example is only intended to illustrate the structure of the data, and not serve as an example of the suggested format. See the YAML example below for the suggested format.
 
@@ -108,7 +110,7 @@ This example is only intended to illustrate the structure of the data, and not s
 
 ```
 
-### YAML Example
+## YAML Example
 
 This example is meant to illustrate the concise format and readability of YAML.
 
@@ -142,17 +144,17 @@ features:
     default: ~
 ```
 
-## Other considered options
+## Other Considered Options
 
-### Option 1 - JSON
+## Option 1: JSON
 
 JSON is still technically supported since YAML is a superset of JSON.
 
-### Option 2 - JavaScript/TypeScript
+## Option 2: JavaScript/TypeScript
 
 JavaScript and TypeScript parser crates are harder to find and appear less supported in Rust, and using a full-blown javascript engine seems like overkill.
 
-## Additional considerations
+## Additional Considerations
 
 - It should be easy to copy a winning branch of an experiment or rollout back into the feature manifest
 - Reference to bundled text and icons should allow for multiple choice in the manifest

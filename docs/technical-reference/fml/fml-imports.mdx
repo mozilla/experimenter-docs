@@ -5,6 +5,7 @@ slug: /technical-reference/fml/fml-imports
 sidebar_position: 3
 ---
 
+This document explains how to compose feature manifests using imports and includes, enabling features to be defined close to their code while maintaining a complete picture for Experimenter.
 
 In the first iteration of the `nimbus-fml`, the tooling was only able to work on one file at a time.
 
@@ -42,7 +43,7 @@ import TabItem from "@theme/TabItem";
     - for some feature development, working in multiple repos _at the same time_ is necessary.
     - for this proposal, easily varying the paths or URLs of components is not explored, although this will likely involve a config file.
 
-## Non-goals
+## Non-Goals
 - namespacing
     - currently names of feature, object, and enum classes are unique; collisions are disallowed
     - for this proposal, no attempt is made to allow classes of the same name to be used.
@@ -54,7 +55,7 @@ import TabItem from "@theme/TabItem";
 
 This proposal changes the way the `nimbus-fml` file is invoked, and adds three new structures to the Feature Manifest Language spec.
 
-### Invoking the `nimbus-fml` command
+## Invoking the Nimbus-FML Command
 
 The following `nimbus-fml` commands can be run in fml files in either applications or components.
 
@@ -99,7 +100,7 @@ The following command is assembled and run at application build time only.
 
 The `.experimenter.yaml` file is checked into source control, and ingested by Experimenter.
 
-### The `about` block
+## The About Block
 
 The `about` block is an optional block in any given `.fml.yaml` file.
 
@@ -163,7 +164,7 @@ channels:
     - testing
 ```
 
-### The `include` list
+## The Include List
 
 This is a list of files which will be merged with this one. The files may be relative to this one, absolute or URLs.
 
@@ -188,7 +189,7 @@ Including the same file twice should be a no-op.
 
 Included files may import files. These files may be remote or on a local filesystem.
 
-### The `import` list
+## The Import List
 
 ```yaml
 import:
@@ -224,15 +225,15 @@ import:
 
 The `value` used by the imported code will come from the importing code.
 
-## Implementation notes
+## Implementation Notes
 
-### Illustrative sketch
+## Illustrative Sketch
 
 Consider two projects that are already linked: the app, and the components. One of the components is a messaging feature which we'd like to be able to use in the app.
 
 The app needs to initialize the messaging component with specific configuration, not available to the component when it was compiled.
 
-#### Two FML files
+## Two FML Files
 
 In `../components/messaging.fml.yaml`
 
@@ -283,7 +284,7 @@ import:
 
 ```
 
-#### The corresponding Kotlin files
+## The Corresponding Kotlin Files
 
 Running `nimbus-fml` on `messaging.fml.yaml` in the components directory, with the `channel` as `production` generates:
 

@@ -4,14 +4,11 @@ title: Devices
 slug: /technical-reference/nimbus-cli/on-devices
 ---
 
-`nimbus-cli` works best with iOS when working directly with the simulator, via `xcrun simctl`.
+This guide covers working with iOS physical devices and enrolling experiments via deeplink URLs. The CLI works best with iOS simulators, but supports physical devices through an embedded web server.
 
-However, there are times when limitations in the simulator mean that it is not possible to use. These are:
+## Using the Embedded Server
 
-- working on iOS devices
-- opening deeplinks *and* enrolling in experiments.
-
-For these important use-cases, the `nimbus-cli` and associated tooling supports experiment enrollment via URL.
+For iOS physical devices and scenarios requiring deeplinks with enrollment, the `nimbus-cli` supports experiment enrollment via URL.
 
 You can see the URL used with the `--pbcopy` option for any command that sends experiments to the app; for example:
 

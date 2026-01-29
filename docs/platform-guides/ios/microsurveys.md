@@ -3,15 +3,17 @@ id: ios-microsurveys
 title: Microsurveys
 slug: /platform-guides/ios/microsurveys
 ---
-## Introduction
-This page provides context on the microsurvey feature and a guide to configure the recipes for future microsurveys, specifically on the iOS platform. The microsurvey feature is an extension of the [messaging framework](/messaging/desktop/mobile-messaging), and allows us to capture user’s sentiment on any specific app’s features such as the homepage.
 
-Note that this page was created during the MVP phase of the microsurvey project.
+This guide provides context on the microsurvey feature and instructions to configure recipes for future microsurveys on the iOS platform using the messaging framework.
+
+## Introduction
+
+The microsurvey feature is an extension of the [messaging framework](/messaging/desktop/mobile-messaging), and allows us to capture user's sentiment on any specific app's features such as the homepage. Note that this page was created during the MVP phase of the microsurvey project.
 
 ## UI
 The microsurvey feature is composed of two main UI components. One is the prompt and one is the actual survey.
 
-### Prompt
+## Prompt
 
 The prompt is an invitation to start the survey and it is shown when the triggers are met. The triggers are determined through the mobile messaging infrastructure and should be specified by the Nimbus recipe. For testing, we have created a trigger in which the user will be eligible to receive the survey after visiting the homepage twice.
 
@@ -24,7 +26,7 @@ The prompt is shown until the user completes the survey, closes the survey or re
 2. The close button dismisses the survey and it won't be shown again.
 3. The continue button starts the survey and shows the survey sheet. The button label can be customized, but also has a fallback string located [here](https://github.com/mozilla-mobile/firefox-ios/blob/f7cd5ff5cbd9e7100c2cb9ae7b7278f3958dfa3f/firefox-ios/Client/Frontend/Strings.swift#L1366).
 
-### Survey (Modal / Bottom Sheet)
+## Survey (Modal / Bottom Sheet)
 
 The survey sheet is shown after the user clicks on the button in the prompt. It is a modal that starts at medium detent (50%) on iPhone and large detent (100%) on iPad. The user will be able to view and fill out the survey.
 
@@ -37,15 +39,15 @@ The survey sheet is shown after the user clicks on the button in the prompt. It 
 4. The submit button will send the survey result via telemetry and is enabled if at least one option is selected.
 5. The privacy notice navigates the user to open a new tab. The prompt will still be shown unless the user has completed the survey and views the confirmation page.
 
-### Additional Views
+## Additional Views
 | User Selected Option    | Confirmation Page |
 | ----------------------- | ----------------- | 
 | <img src="/img/messaging/microsurveys/ios-user-selected-option.png" alt="Sheet view" className="img-sm"/> | <img src="/img/messaging/microsurveys/ios-confirmation.png" alt="Sheet view" className="img-sm"/> |
 
-## Survey JSON recipe
+## Survey JSON Recipe
 If you are not familiar with the existing [messaging framework](/messaging/desktop/mobile-messaging), please take a look here first. The microsurveys are built on top of the already existing framework, with a couple extra fields to configure the survey.
 
-### Customize the prompt
+## Customize the Prompt
 
 On the prompt, you can customize the prompt title by using the same `title` field as a normal message. This can be configured with the Nimbus recipe or set with a pre-landed string id that is in our app bundle, which is already localizable. The button title can also be configured using the same `button-label` field.
 
@@ -65,7 +67,7 @@ On the prompt, you can customize the prompt title by using the same `title` fiel
 
 If a customizable string is used, then make sure that translations are provided if needed. See more details on [localization of messages.](/messaging/desktop/mobile-messaging#localization-of-messages)
 
-### Customize the survey (modal / bottom sheet)
+## Customize the Survey (Modal / Bottom Sheet)
 
 For the survey, you can control the question, survey options and UTM parameter for the privacy policy link. For the survey question, use the `text` field at the same level as the `title` one, similar to the latter where you can provide either a string or pre landed string id.
 
@@ -83,7 +85,7 @@ For the survey, you can control the question, survey options and UTM parameter f
 }
 ```
 
-#### microsurveyConfig
+## MicrosurveyConfig
 
 To customize the survey options, icon and UTM parameter, we have to add the `microsurveyConfig` field object. For the survey options, there exists a new field called `options`, it’s an array in which each item will represent a possible survey option for the user to select. Currently, the array is composed of type `Text`, which you can read more about our bundle types [here](https://experimenter.info/fml-spec/#bundle-types).
 
