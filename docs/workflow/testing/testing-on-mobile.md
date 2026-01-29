@@ -1,6 +1,6 @@
 ---
 id: testing-on-mobile
-title: Testing on mobile
+title: Mobile Testing
 slug: /testing-on-mobile
 ---
 
@@ -17,7 +17,7 @@ At this point, there are few if any tools for QA to use to test either of 1, or 
 :::info
 Much of this document can now be considered deprecated: the manual steps below are now done for you using the `nimbus-cli` tooling.
 
-Please refer to the documentation for [`nimbus-cli`](/nimbus-cli).
+Please refer to the documentation for [`nimbus-cli`](/technical-reference/nimbus-cli/overview).
 :::
 
 However, using a local build, and by changing the `NIMBUS_URL` to the Remote Settings staging server at https://firefox.settings.services.allizom.org we can effectively vary the experiments definition document to test the app, and to replicate the experiment definition document used in production. This is [documented here][nimbus-url].

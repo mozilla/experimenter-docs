@@ -1,5 +1,5 @@
 ---
-title: Experiment Reviewers
+title: Access & Reviewers
 slug: /access
 ---
 

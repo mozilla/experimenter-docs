@@ -1,7 +1,6 @@
 ---
 id: launching
-title: Launching Your Experiment
-sidebar_label: Launching
+title: Launching
 slug: /launching
 ---
 

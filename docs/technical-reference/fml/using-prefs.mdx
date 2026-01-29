@@ -1,0 +1,174 @@
+---
+id: using-prefs
+title: Prefs
+slug: /technical-reference/fml/using-prefs
+sidebar_position: 6
+---
+
+This page details adding `pref-key` to a feature definition. This cause the FML generated code to check the user preferences (`UserDefaults` or `SharedPrefences`) __before__ checking the Nimbus configuration store or the default.
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## Setting up
+
+The app's preferences object needs to be added to the `NimbusBuilder` call:
+
+<Tabs
+  defaultValue="swift"
+  values={[
+    { label: "Swift", value: "swift" },
+    { label: "Kotlin", value: "kotlin" },
+  ]
+}>
+<TabItem value="swift">
+
+```swift
+NimbusBuilder()
+    .with(userDefaults: UserDefaults.standard) // or alternative
+    .build(…)
+```
+
+Without this line, the default value used is `UserDefaults.standard`.
+</TabItem>
+<TabItem value="kotlin">
+
+```kotlin
+NimbusBuilder(context).apply {
+        sharedPreferences = … // the shared preferences being used for this app
+    }
+    .build(…)
+```
+
+Without this line, the default value used in `null`, and this feature will not function.
+</TabItem>
+</Tabs>
+
+These should be readable by Nimbus, but writeable by the rest of the app. For best effect, these should be the same preferences that drive the Settings screens.
+
+Once the preference object is available to nimbus, you can add `pref-key`s to feature variables.
+
+## Adding a `pref-key` to a feature variable definitions
+
+The `pref-key` can be specified by top level feature variables:
+
+```yaml
+features:
+    sample-feature:
+        variables:
+            is-enabled:
+                type: Boolean
+                default: false
+                pref-key: sample-feature.isEnabled
+```
+
+The generated API is used in the same way as without the `pref-key`:
+
+<Tabs
+  defaultValue="swift"
+  values={[
+    { label: "Swift", value: "swift" },
+    { label: "Kotlin", value: "kotlin" },
+  ]
+}>
+<TabItem value="swift">
+
+```swift
+let feature = FxNimbus.shared.features.sampleFeature.value()
+if feature.isEnabled {
+    // Do something because the feature has been enabled.
+}
+```
+</TabItem>
+<TabItem value="kotlin">
+
+```kotlin
+val feature = FxNimbus.features.sampleFeature.value()
+if (feature.isEnabled) {
+    // Do something because the feature has been enabled.
+}
+```
+</TabItem>
+</Tabs>
+
+However, now, the call to `feature.isEnabled` is overridden by the preference held at `sample-feature.isEnabled`.
+
+This is available for types that are supported by preferences: `Boolean`, `Int`, `String` and `Text`.
+
+### Generated code sketch
+
+The generated code looks approximately like:
+<Tabs
+  defaultValue="swift"
+  values={[
+    { label: "Swift", value: "swift" },
+    { label: "Kotlin", value: "kotlin" },
+  ]
+}>
+<TabItem value="swift">
+
+```swift
+let isEnabled: Boolean {
+    return prefs.getBoolean("sample-feature.isEnabled") ??
+        json.getBoolean("is-enabled") ??
+        defaults.isEnabled
+}
+```
+
+Without the `pref-key`:
+
+```swift
+let isEnabled: Boolean {
+    return json.getBoolean("is-enabled") ??
+        defaults.isEnabled
+}
+```
+</TabItem>
+<TabItem value="kotlin">
+
+```kotlin
+val isEnabled: Boolean =
+    prefs.getBoolean("sample-feature.isEnabled") ?:
+    json.getBoolean("is-enabled") ?:
+    defaults.isEnabled
+```
+
+Without the `pref-key`:
+
+```kotlin
+val isEnabled: Boolean =
+    json.getBoolean("is-enabled") ?:
+    defaults.isEnabled
+```
+
+</TabItem>
+</Tabs>
+
+### Limitations
+
+This is available for feature variables (not nested `Objects` fields), and only for scalar types.
+
+It is not available for structural types (i.e. `Option<T>`, `List<T>` or `Map<String, T>`).
+
+:::tip Feedback welcome
+
+If there is demand for it, then support for these types and places will be considered.
+
+Similarly, we're looking for feedback on how to make this API or generated code better.
+:::
+
+## Additional effects of experiment events
+
+If the user sets any of the named preferences for the feature, then the feature is said to be user-modified.
+
+This is exposed in the `isModified()` method of the feature.
+
+User-modified features will not emit exposure events.
+
+:::warning experimental
+**Question**: Should user-modification be allowed for the general population? i.e. can we add these toggles to a public facing settings screen?
+
+**Answer**: Currently, it is recommended that user-modification should be exposed only in Secret Settings screens.
+
+This is not suitable as building an opt out of all experiments involving the feature.
+:::

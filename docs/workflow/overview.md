@@ -1,7 +1,6 @@
 ---
 id: overview
-title: Workflow
-sidebar_label: Overview
+title: Overview
 slug: overview
 sidebar_position: 1
 ---
@@ -15,7 +14,7 @@ sidebar_position: 1
 
 ## Find an existing experiment
 
-If the experiment was run with Nimbus, check out the [directory of live and completed experiments](https://experimenter.services.mozilla.com/nimbus/). Normandy experiments can be found [here](https://experimenter.services.mozilla.com/).
+Check out the [directory of live and completed experiments](https://experimenter.services.mozilla.com/nimbus/).
 
 ## Links to experimentation tools
 Here is the [link to Nimbus Console](https://experimenter.services.mozilla.com/nimbus/) - where new experiments are created, reviewed/launched, monitored, and eventually have the results.

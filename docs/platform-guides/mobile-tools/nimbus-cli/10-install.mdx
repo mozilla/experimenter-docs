@@ -1,0 +1,131 @@
+---
+id: nimbus-cli-install
+title: Installation
+slug: /technical-reference/nimbus-cli/install
+---
+
+The `nimbus-cli` is a command line tool to help develop and test experiments and features on [an instrumented mobile app](/technical-reference/nimbus-cli/instrumentation).
+
+It runs on macOS, Linux and Windows. It works with [`adb`](https://developer.android.com/tools/adb) to drive Android apps on Android emulators and devices, and with `simctl` on macOS to drive iOS apps on the simulator.
+
+## Prerequisites
+
+### For working with Android:
+
+- Install [`adb`](https://developer.android.com/tools/adb), with Android Studio, or via [Platform Tools](https://developer.android.com/tools/releases/platform-tools).
+
+Ensure that `adb` is on your PATH. You may have to restart your shell.
+
+### For working with iOS:
+
+- Install Xcode.
+- Run `xcode-select --install`
+
+## Installing `nimbus-cli` on macOS or Linux
+
+Copy the following command, and paste it into a command line.
+
+```sh
+curl --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/mozilla/application-services/main/install-nimbus-cli.sh | bash
+```
+
+This should give you output something like this:
+
+```
+✅ Downloading https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/project.application-services.v2.nimbus-cli.latest/artifacts/public/build/nimbus-cli-aarch64-apple-darwin.zip
+✅ Preparing nimbus-cli for install
+ℹ️  Using for the first time may trigger a malicious software warning. Fix with: https://support.apple.com/en-us/guide/mac-help/mchleab3a043/mac
+✅ nimbus-cli installed into /Users/jhugman/.local/bin
+✅ Cleaning up installation directory
+✅ Success!
+```
+
+Depending on your setup, it may ask for a password just after the "Preparing" step.
+
+### Checking the installation
+
+Run the following command:
+
+```sh
+nimbus-cli --help
+```
+
+This should output something that starts with:
+
+```sh
+Mozilla Nimbus' command line tool for mobile apps
+
+Usage: nimbus-cli [OPTIONS] --app <APP> --channel <CHANNEL> <COMMAND>
+```
+
+### macOS and the malicious software warning
+
+The installation script tries to mitigate this, but on first run, macOS may give you a warning:
+
+<img title="Show in Finder" src="/img/technical-reference/nimbus-cli/show-in-finder-dialog.png"/>
+
+- Click on "Show in Finder"
+- Right click on the `nimbus-cli` icon
+- Select "Open"
+
+<img title="Open anyway dialog" src="/img/technical-reference/nimbus-cli/open-anyway-dialog.png"/> 
+
+- Confirm that you Trust this Developer.
+
+## Installing for Windows
+
+1. Download the `nimbus-cli` zip file for [Windows][windows].
+2. Uncompress the file.
+3. Move the file `x86_64-pc-windows-gnu/release/nimbus-cli.exe` to a convenient location (e.g. C:\Platform-Tools).
+4. Search for system environment in the Windows `Start` search and select Edit the system environment variables from the results.
+5. Click `Environment Variables` toward the bottom of the window that opened.
+6. In the lower section of the next window, under `System variables`, look for the `Path` row. Select it and click `Edit`.
+7. Select the `New` button in the `Edit` environment variable window and add the path with the platform tools. In our example, that's `C:\Platform-Tools`.
+8. Exit all windows and save the changes you made by selecting OK.
+9. Restart the terminal, and [test](#checking-the-installation).
+
+## Manual install for macOS or Linux
+
+1. Download the `nimbus-cli` zip file for [Apple Silicon macOS][macos-apple-silicon], [Intel macOS][macos-intel] or [x86_64 Linux][linux].
+2. Uncompress the file.
+3. Move the file `release/nimbus-cli` to a convenient location, say `$HOME/bin`
+4. Add this location to your `PATH`, by running in a terminal:
+
+```sh
+echo 'export PATH=$PATH:$HOME/bin' >> "~/.${SHELL}rc"
+```
+5. Restart the terminal, and [test](#checking-the-installation).
+
+[windows]: https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/project.application-services.v2.nimbus-cli.latest/artifacts/public/build/nimbus-cli-x86_64-pc-windows-gnu.zip
+[macos-apple-silicon]: https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/project.application-services.v2.nimbus-cli.latest/artifacts/public/build/nimbus-cli-aarch64-apple-darwin.zip
+[macos-intel]: https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/project.application-services.v2.nimbus-cli.latest/artifacts/public/build/nimbus-cli-x86_64-apple-darwin.zip
+[linux]: https://firefox-ci-tc.services.mozilla.com/api/index/v1/task/project.application-services.v2.nimbus-cli.latest/artifacts/public/build/nimbus-cli-x86_64-unknown-linux-gnu.zip
+
+## Building from source
+
+0. Install the rust toolchain, using [`rustup`](https://rustup.rs).
+1. Clone the [`application-services` repo](https://github.com/mozilla/application-services).
+
+```sh
+git clone https://github.com/mozilla/application-services.git
+```
+
+2. Change into the `application-services` directory.
+
+```sh
+cd application-services
+```
+
+3. Build the `nimbus-cli` using `cargo`:
+
+```sh
+cargo build --manifest-path components/support/technical-reference/nimbus-cli/Cargo.toml --
+```
+
+The binary will be at `target/release/nimbus-cli` relative to the `application-services` directory.
+
+4. Alternatively, set an alias to build and run from source:
+
+```sh
+alias nimbus-cli="cargo run --manifest-path $(pwd)/components/support/technical-reference/nimbus-cli/Cargo.toml --"
+```
