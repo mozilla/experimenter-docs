@@ -4,11 +4,7 @@ title: Logs
 slug: /technical-reference/nimbus-cli/working-with-logs
 ---
 
-Log files are especially helpful to developers, but not always very easy to access.
-
-`nimbus-cli` uses `adb logcat` on Android, and on iOS it uses the Unix commands `find` and `tail`.
-
-These logs are useful when examining the internal state of the app, or attaching to bug reports.
+This guide covers capturing logs, tailing logs in real-time, and logging the Nimbus SDK state. The CLI uses `adb logcat` on Android and Unix commands on iOS to access device logs.
 
 :::info
 For iOS the logs that are displayed and captured are the app's logs.
@@ -16,7 +12,7 @@ For Android, the logs are for the whole device.
 For Android devices also used for personal usage, you should probably not upload such logs anywhere.
 :::
 
-## `capture-logs`
+## Capturing Logs
 
 Capturing a device log
 
@@ -25,7 +21,7 @@ nimbus-cli --app firefox_ios --channel developer \
     capture-logs logs.txt
 ```
 
-## `tail-logs`
+## Tailing Logs
 
 You can set up a different terminal window to watch the logs as they are generated.
 
@@ -43,7 +39,7 @@ nimbus-cli --app firefox_ios --channel developer tail-logs | grep -i send-tab
 
 > On iOS, because the `reset-app` command deletes the app contaner, the `tail-logs` command is only available after the first run after a reset, and stops after a reset.
 
-## `log-state`
+## Logging Nimbus SDK State
 
 This command is an analog for the experiments menu in the secret settings of Fenix and Firefox for iOS.
 

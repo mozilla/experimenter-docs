@@ -4,14 +4,14 @@ title: Desktop
 slug: /platform-guides/desktop/targeting-debug
 ---
 
-# Debugging Targeting expressions
+This guide explains how to debug targeting expressions in Desktop Firefox using ASRouter devtools. You'll learn how to enable the tools, write and evaluate JEXL expressions, and use built-in functions for targeting.
 
-## How to enable ASRouter devtools
+## How to Enable ASRouter Devtools
 
 - In `about:config`, set `browser.newtabpage.activity-stream.asrouter.devtoolsEnabled` to `true`
 - Visit `about:newtab#devtools-targeting` to see the devtools (you need to copy-paste this manually to navigate).
 
-## Overview of ASRouter devtools
+## Overview of ASRouter Devtools
 
 ![Devtools image](/img/desktop/desktop-devtools.png)
 
@@ -27,7 +27,7 @@ Inside the textarea targeting expressions can be written and evaluated using the
 | Correctly formatted JEXL expression<br/> referencing unknown variables | ❌        | Empty result    | Using unknown variables is an error, result is neither true nor false |
 | JEXL expression with syntax error                                      | ❌        | <ERR_MSG>       | Full error message is shown                                           |
 
-## Builtin functions and examples
+## Built-in Functions and Examples
 
 The full list of available functions can be seen in [FilterExpressions.sys.mjs](https://searchfox.org/mozilla-central/source/toolkit/components/utils/FilterExpressions.sys.mjs).
 

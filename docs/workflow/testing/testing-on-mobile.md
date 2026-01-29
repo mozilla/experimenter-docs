@@ -4,6 +4,8 @@ title: Mobile Testing
 slug: /testing-on-mobile
 ---
 
+This guide explains how to test Nimbus experiments on mobile by using local builds with the Remote Settings staging server to replicate experiment definitions.
+
 We have three parts to test:
 
 1. The experiment definition document, as defined in Experimenter and delivered by Remote Settings. Problems with this definition should be resolved by the experiment owner.
@@ -92,7 +94,7 @@ We wish to get the app to ingest the experiment definition of our choice. Here i
 }
 ```
 
-## The annotated guide to the experiment definition
+## Annotated Guide to the Experiment Definition
 
 Many of the fields in the above JSON correspond to the experiment UI.
 
@@ -115,7 +117,7 @@ If the device is enrolled in the experiment (i.e. is targeted as eligible, and i
  * `branch` -> `slug`: This should match the branches that the app's feature responds to. In most cases, it will be `treatment` and `control`.
  * `branch` -> `ratio`: The `ratio` property of each branch, gives the proportion of the enrolled population will get a particular branch. Tip: make your ratios add up to 100. In the above example, the `control` branch gets 60 out of every (60 + 40) enrollments, i.e. 60%.
 
-## Changing between experiments
+## Changing Between Experiments
 
 To test the app's behaviour in the face of the branches, you'll need one experiment per branch. Each experiment needs the same feature id. They cannot be run in parallel.
 
@@ -123,7 +125,7 @@ To test the app's behaviour in the face of the branches, you'll need one experim
 
 The experiment can be ended remotely.
 
-### Client side
+### Client Side
 
 Once enrolled in an experiment, the user should not be able to enroll in a different branch.
 
@@ -135,7 +137,7 @@ It may not be desirable to use Experimenter: you should be able to set up a simp
 
 This local server should serve the file from the path: `/buckets/main/collections/nimbus-mobile-experiments/records`. Setting the `NIMBUS_URL` to this local server should be done in the same way as above.
 
-## Experiment set-ups for testing branches
+## Experiment Set-Ups for Testing Branches
 
 You should have one experiment per branch: 
 
@@ -144,7 +146,7 @@ You should have one experiment per branch:
  
 This will ensure that all clients that load the experiment will enroll in it and choose that exact branch.
 
-## Testing the experiment document itself
+## Testing the Experiment Document
 
 The only thing you can test on small scale is the targeting string. You should make an experiment with the same targeting as the experiment brief. You should ensure every client enrolls in a branch which has visible changes (e.g. `treatment`).
 

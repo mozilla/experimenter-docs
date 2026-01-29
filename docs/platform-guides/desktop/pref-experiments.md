@@ -4,6 +4,8 @@ title: Pref Experiments
 slug: /platform-guides/desktop/pref-experiments
 ---
 
+This guide explains how to run experiments that set preferences on Desktop using Nimbus. Unlike Normandy, preferences must be declared in the feature manifest, and careful consideration should be given to pref branch selection and user interactions.
+
 As of Firefox 107, Nimbus supports experiments that set preferences on Desktop.
 Unlike Normandy, Nimbus cannot set arbitrary preferences; instead, the
 preferences that may be set are determined by the feature manifest.
@@ -233,7 +235,7 @@ Pref Experiments can unenroll for additional reasons:
 * Nimbus enrolled in an [Incident Response Pref Flip][prefFlips] that set the
   same pref.
 
-### Unexpected Preference Changes
+## Unexpected Preference Changes
 
 If a user is enrolled in an experiment or rollout that sets a pref and that pref
 changes, the user will be unenrolled from the experiment (or rollout). This
@@ -243,7 +245,7 @@ are experimenting on, otherwise their populations may get spuriously unenrolled.
 
 The new value of the preference will be persisted.
 
-### Manifest Changes
+## Manifest Changes
 
 Some changes to the feature manifest may result in unenrollment from an active
 experiment:
@@ -260,7 +262,7 @@ pref-setting and non-pref setting variables, then changes to the manifest will
 not result in unenrollment if the active experiment does not have any values for
 pref-setting variables.
 
-### Conflicts with Incident Response Pref Flips
+## Conflicts with Incident Response Pref Flips
 
 If a user is enrolled in a setPref experiment/rollout and then enrolls in an
 [incident response pref flip][prefFlips], they will be unenrolled from the

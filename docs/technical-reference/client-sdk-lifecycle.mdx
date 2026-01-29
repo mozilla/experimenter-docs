@@ -5,13 +5,11 @@ slug: /technical-reference/client-sdk-lifecycle
 sidebar_position: 1
 ---
 
-Nimbus SDK Experiment States and Lifecycle
-
+This article provides a high-level overview of the Nimbus experiment lifecycle from the client SDK perspective. It covers server-side and client-side experiment states, state transitions, telemetry, and API behaviors.
 
 ###### Authors: Ryan Kelly
 ###### Reviewers: Kate Hudson, Tim Smith
 ###### Status: Draft as of November 2020; see the [changelog](#changelog) for updates
-
 
 ## Introduction
 
@@ -30,12 +28,12 @@ I happen to think that these states could map nicely to some Rust Enums, but you
 ## Key Concepts
 
 
-#### Treatment
+### Treatment
 
 We'll use "treatment" to refer to the change in client behaviour that's triggered by an experiment. This might be a small change in colour or wording, or may provide some much larger piece of new UX. The details and scope don't matter for our purposes here, what matters is having a word that means "the user is experiencing the effects of the experiment".
 
 
-#### Enrollment
+### Enrollment
 
 Enrollment is the process of the client SDK deciding whether this client should be part of the experiment and if so, what branch it should be assigned to. We'll emit an [enrollment](https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11469458/Nimbus+Engineering#NimbusEngineering-ExperimentTelemetry) telemetry event when this happens.
 
@@ -46,14 +44,14 @@ Enrolled clients will remain enrolled and assigned to the same branch until the 
 Note that it's possible for an experiment to be closed for new enrollments, while continuing to be active for and showing its treatment to previously-enrolled clients.
 
 
-#### Exposure
+### Exposure
 
 Exposure is the process of actually showing the treatment. In other words, it's when we change client behaviour based on the experiment branch in which the client was enrolled, or when we _would_ have changed behaviour if the user was not in the control group. We'll emit an [exposure](https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11469458/Nimbus+Engineering#NimbusEngineering-ExperimentTelemetry) telemetry event the first time this happens.
 
 Note that it's possible for a client to be enrolled in an experiment but never be exposed to its treatment, for example if the user never uses the part of the client app that is affected by the treatment.
 
 
-#### Disqualification
+### Disqualification
 
 After a client is enrolled in an experiment, we may need to disable that experiment's treatment for various reasons, such as:
 
@@ -74,12 +72,9 @@ The Nimbus experiment publishing workflow moves each experiment through several 
 
 Note that we are only interested in states that are observable by the client; the experiment publishing workflow has additional states for internal use that are not represented here.
 
-
-
 ![drawing](/img/client-sdk-states-and-lifecycle/client-visible-publishing-workflow-states.png)
 
-
-#### The "Preparing" State
+### The "Preparing" State
 
 Before an experiment becomes visible to clients in Remote Settings, it may go through a series of drafts and adjustments and approvals in the Experimenter console. This is represented in the server-side workflow by several different states, but since it is completely invisible to the Client SDK these will not be discussed further in this document.
 
@@ -90,7 +85,7 @@ Transitions:
 *   To **Enrolling** state, by being made visible to clients in Remote Settings.
 
 
-#### The "Enrolling" State
+### The "Enrolling" State
 
 This is the first phase of an experiment going "live" and starting to show up in the user experience. It's indicated by the experiment being visible to clients in Remote Settings with _isEnrollmentPaused_ set to _false_.
 
@@ -107,7 +102,7 @@ Transitions:
 *   To **Ended** state, if the experiment ceases to be visible in Remote Settings.
 
 
-#### The "Running" State
+### The "Running" State
 
 This is the second phase of an experiment being live and showing up in the user experience. It's indicated by the experiment being visible to clients in Remote Settings with _isEnrollmentPaused_ set to _true_.
 
@@ -122,7 +117,7 @@ Transitions:
 *   To **Ended** state, if the experiment ceases to be visible in Remote Settings.
 
 
-#### The "Ended" State
+### The "Ended" State
 
 An experiment ends when it ceases to be visible to clients in Remote Settings. As with the "Preparing" state, there may be multiple server-side states involved in ending an experiment, but since they are completely invisible to the Client SDK these will not be discussed further in this document.
 
@@ -148,7 +143,7 @@ Each Nimbus client will also have its own local state for each experiment, based
 ![client-side local states](/img/client-sdk-states-and-lifecycle/client-side-local-states.png)
 
 
-#### The "Unknown" State
+### The "Unknown" State
 
 Before an experiment is published to Remote Settings, obviously the client SDK can't know anything about it. But there may be client code that calls the SDK asking whether to activate treatments for this as-yet-unknown experiment, so it's worth representing this state explicitly.
 
@@ -160,7 +155,7 @@ Transitions:
 *   To **NotEnrolled** state, by observing the experiment in Remote Settings for the first time, but deciding not to enroll based on the observed experiment state or local config.
 
 
-#### The "NotEnrolled" State
+### The "NotEnrolled" State
 
 In this state, the client has observed the existence of an experiment in Remote Settings and has stored a local copy of the current experiment config, but based on that config has decided not to enroll in the experiment.
 
@@ -175,7 +170,7 @@ Transitions:
 *   To **Discarded** state, when the experiment transitions to **Cancelled** or **Completed**.
 
 
-#### The "Enrolled" State
+### The "Enrolled" State
 
 In this state, the client has previously observed the experiment in **Enrolling** state and has been bucketed into a branch of the experiment. It persists the selected branch so that it can consistently reference it even if the experiment config changes in future.
 
@@ -196,7 +191,7 @@ Transitions:
 *   To **Discarded** state, when the user entirely disables telemetry in their client.
 
 
-#### The "Disqualified" State
+### The "Disqualified" State
 
 In this state, the client had previously enrolled in the experiment, but some change has occurred that means we can no longer show them to experiment treatment. The client will continue to tag its telemetry pings with enrollment data, but will not activate the treatment.
 
@@ -212,7 +207,7 @@ Transitions:
 Note that once a client has been disqualified from an experiment, it is not possible for it to be resume showing the experiment treatment.
 
 
-#### The "WasEnrolled" State
+### The "WasEnrolled" State
 
 In this state, the client remembers that it was previously enrolled in an experiment and may report diagnostic telemetry about this fact, but the experiment has ended and its treatments are no longer activated.
 
@@ -231,7 +226,7 @@ Transitions:
 *   To **Discarded** state after 31 days have passed since it entered the **WasEnrolled** state, according to the client's local clock.
 
 
-#### The "Errored" State
+### The "Errored" State
 
 A special state into which the client transitions if it observed any unexpected behaviour, such as invalid experiment config or unexpected experiment-state transitions. In this state the client may log diagnostic telemetry but will not enroll in the experiment nor activate any experiment treatments.
 
@@ -244,7 +239,7 @@ Transitions:
 *   To **Discarded** state, when the experiment transitions to **Cancelled** or **Completed**.
 
 
-#### The "Discarded" State
+### The "Discarded" State
 
 This isn't really a state, it's just to mark on the diagram the point at which we discard historical data about the experiment from the client's local storage.
 
@@ -302,7 +297,7 @@ Nimbus will also emit Glean [events](https://mozilla.github.io/glean/book/user/m
 ## Client Behaviours
 
 
-#### When asked if an experiment is active
+### When Asked if an Experiment is Active
 
 
 
@@ -311,7 +306,7 @@ Nimbus will also emit Glean [events](https://mozilla.github.io/glean/book/user/m
 *   Otherwise, return _false_.
 
 
-#### When asked for the current branch of an experiment
+### When Asked for the Current Branch of an Experiment
 
 
 
@@ -320,7 +315,7 @@ Nimbus will also emit Glean [events](https://mozilla.github.io/glean/book/user/m
 *   Otherwise, return _None_.
 
 
-#### When asked for the current config of a feature
+### When Asked for the Current Config of a Feature
 
 
 
@@ -334,7 +329,7 @@ Nimbus will also emit Glean [events](https://mozilla.github.io/glean/book/user/m
 *   Otherwise, return _None_.
 
 
-#### When a server update transitions an experiment to "Enrolling"
+### When a Server Update Transitions an Experiment to "Enrolling"
 
 
 
@@ -348,7 +343,7 @@ Nimbus will also emit Glean [events](https://mozilla.github.io/glean/book/user/m
 *   Otherwise, set the current client state for the experiment to **Errored** and log some diagnostic telemetry.
 
 
-#### When a server update transitions an experiment to "Paused" or "Running"
+### When a Server Update Transitions an Experiment to "Paused" or "Running"
 
 
 
@@ -356,7 +351,7 @@ Nimbus will also emit Glean [events](https://mozilla.github.io/glean/book/user/m
     *   TODO: trigger a notification in the client app somehow, to redraw UI etc?
 
 
-#### When a server update transitions an experiment to "Cancelled" or "Completed"
+### When a Server Update Transitions an Experiment to "Cancelled" or "Completed"
 
 
 
@@ -366,7 +361,7 @@ Nimbus will also emit Glean [events](https://mozilla.github.io/glean/book/user/m
 *   Otherwise, discard the experiment state.
 
 
-#### During some periodic cleanup process
+### During Periodic Cleanup Process
 
 
 
@@ -384,24 +379,24 @@ Nimbus will also emit Glean [events](https://mozilla.github.io/glean/book/user/m
 
 ## Changelog
 
-#### 2021-04-13 (dmose):
+### 2021-04-13 (dmose):
  * Moved from [Google Doc](https://docs.google.com/document/d/18L3oNriwwLd5TZrM1SaHIfIJXmXqUkwNwQEPwVOTY6Q/edit#), converted to MDX format, and commited to DocsHub.
 
-#### 2020-11-18 (rfkelly):
+### 2020-11-18 (rfkelly):
 
 
 
 *   Renamed "activation" to "exposure" in line with terminology discussion from Nimbus Architecture Group meeting.
 
 
-#### 2020-11-13 (rfkelly):
+### 2020-11-13 (rfkelly):
 
 
 
 *   Renamed "disabled"  state to "disqualified"
 
 
-#### 2020-11-11 (rfkelly):
+### 2020-11-11 (rfkelly):
 
 
 
@@ -409,7 +404,7 @@ Nimbus will also emit Glean [events](https://mozilla.github.io/glean/book/user/m
 *   Added the "telemetry" section.
 
 
-#### 2020-10-30 (rfkelly):
+### 2020-10-30 (rfkelly):
 
 
 

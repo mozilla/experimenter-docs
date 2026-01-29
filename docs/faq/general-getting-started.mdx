@@ -1,0 +1,46 @@
+---
+id: general-getting-started
+title: General & Getting Started
+slug: /faq/general-getting-started
+---
+
+### Question
+What's the difference between "Experimenter" and "Nimbus"?
+
+### Answer
+Nimbus is the code name of the experimentation project, so Nimbus refers to **the whole experimentation system** (handles enrolling/unenrolling users, sending branch configurations, etc). Experimenter is the **customer interface to both Nimbus and Jetstream** that you access at http://experimenter.services.mozilla.com/. In Experimenter, users can configure experiments, manage them (launch, monitor, end), and can see the results.
+
+---
+
+### Question
+What is Jetstream?
+
+### Answer
+[Jetstream](/data-analysis/jetstream/overview) is the whole **analysis system** (interfaces with data, runs analysis, formats results).
+
+---
+
+### Question
+How long does it take to run an experiment?
+
+### Answer
+Experiment length will vary depending on:
+- How soon users will encounter your change?  If the action is something people do rarely (ex: edit a pdf) you may need to observe longer for people to encounter the change
+- We typically enroll for 1 week - to get a balanced section of people across Monday, Tuesday,..., Saturday.  If you have very few people that qualify (ex: new users on iOS only from Portugal) - enrollment may take longer.
+- We OBSERVE based on what questions you are trying to answer.
+  -  If people see your change immediately (ex on every page load) and send in the data you need a few days or a week of observation may be enough.
+  - If you want to know the impact on 2 week retention - there is a week of enroll + 2 weeks of observation
+  - If you want to know the impact on Days of Use - there is a week of enroll and 4 weeks of observation.
+
+---
+
+### Question
+How long does it take to see Nimbus changes on the client (for time sensitive QA or hotfixes especially)?
+
+### Answer
+
+- Nimbus uses remote setting to get changes to users.  Remote settings pushes updates to its CDN once an hour.  Then it has geoip specific dns resolution and caching and etc.
+
+- Depending when you make your change and when RS propagates to CDNs - it could take minutes to just over an hour.
+
+- Desktop clients only recompute enrollments at startup and every six hours thereafter.  So if you are looking to "naturally" get enrolled in an experiment (versus using [Preview](https://experimenter.info/previewing-experiments) to force enroll) on desktop there could be an even longer delay.

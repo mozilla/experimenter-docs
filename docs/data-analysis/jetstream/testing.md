@@ -5,7 +5,7 @@ slug: /data-analysis/jetstream/testing
 sidebar_position: 9
 ---
 
-# Testing Jetstream Configs
+Jetstream configurations can be validated through CI checks, local validation, or by generating previews to verify metrics before deploying to production experiments.
 
 ## Validation via Continuous Integration (CI)
 
@@ -13,7 +13,7 @@ Configurations for Jetstream experiments get added by opening a pull-request in 
 
 Pull-requests that pass the CI validation can be automatically merged without requiring an external review.
 
-## Local validation
+## Local Validation
 
 To locally iterate and validate Jetstream configurations, the Jetstream tooling needs to be installed: 
 
@@ -33,7 +33,7 @@ In case changes have been made to outcomes, defaults or metric definitions it is
 jetstream validate_config /local/path/to/config/file.toml --config_repos=/path/to/metric-hub
 ```
 
-## Jetstream previews
+## Jetstream Previews
 
 When iterating on configurations, it is sometimes useful to get a preview of what computed data on the final dashboard would look like. Previews are computed on a data sample in order to reduce cost and speed up the analysis. Preview data should not be used to draw any conclusions on the outcome of an experiment. It should only be used to validate configurations.
 

@@ -198,12 +198,12 @@ Astute readers will notice that when `n = 0`, i.e. the very first time the app i
 
 The `initial_experiments.json` file can be downloaded, either as part of the build, or in an automated/timed job. e.g. this is the [Github Action workflow used by Fenix](https://github.com/mozilla-mobile/fenix/blob/main/.github/workflows/fenix-update-nimbus-experiments.yml).
 
-#### To check if the firstrun experiment merged into beta to catch the next release
+## Checking First Run Experiment Merge Status
 First run experiments need to be in the beta build 8-11 days before release, so that they are in the release candidate.  Final build happens 8 days before release on Monday - so best to get in and uplift approved by Friday at the latest.  On Android the Release Candidate goes out to 5% of users a week before general release.
 
 After the change is made in Nimbus/Experimenter to launch, enrollment end, or end the experiment - a github action kicks off the PR automatically to update 'initial_experiments.json'.  Then a mobile engineer needs to r+ that PR and request uplift to Beta.  If you replace 'version number' in the following file name, you can check this file to see if the experiment config is in the right state before release candidate build https://raw.githubusercontent.com/mozilla-mobile/firefox-android/releases_v'version number'/fenix/app/src/main/res/raw/initial_experiments.json.
 
-### Using the experiments preview collection
+## Using the Experiments Preview Collection
 
 The preview collection is a staging area for new experiments to be tested on the device. This should be toggleable via the UI, but should trigger a restart.
 
@@ -218,7 +218,7 @@ Adding the `usePreviewCollection` flag allows the builder to configure a `Nimbus
         }.build(appInfo)
 ```
 
-## A complete `NimbusBuilder` example
+## Complete NimbusBuilder Example
 
 ```kotlin
     return NimbusBuilder(context).apply {
@@ -243,7 +243,7 @@ Adding the `usePreviewCollection` flag allows the builder to configure a `Nimbus
     }.build(appInfo)
 ```
 
-## Instrumenting the app for testing
+## Instrumenting the App for Testing
 
 The [`nimbus-cli`](/technical-reference/nimbus-cli/overview) allows QA and engineers to launch the app in different experimental configurations. It largely obviates the need for configuring Nimbus to use the preview collection, above.
 

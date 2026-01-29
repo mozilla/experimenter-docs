@@ -7,6 +7,8 @@ slug: /platform-guides/desktop/testing
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
+This guide explains how to test Nimbus feature integrations in Desktop Firefox. You'll learn how to use ExperimentFakes helpers for automated testing, test with live recipes, and work with rollouts and gTest.
+
 In order to make testing easier we created some helpers that can be accessed by including
 
 ```js
@@ -15,7 +17,7 @@ const { ExperimentFakes } = ChromeUtils.importESModule(
 );
 ```
 
-## Testing your feature integrating with Nimbus
+## Testing Your Feature Integrating with Nimbus
 
 You need to provide a feature configuration and await enrollment
 
@@ -37,7 +39,7 @@ let doExperimentCleanup = await ExperimentFakes.enrollWithFeatureConfig({
 await doExperimentCleanup();
 ```
 
-## Testing with a live Nimbus recipe
+## Testing with a Live Nimbus Recipe
 
 If you already published an experiment through Nimbus then you will want to test enrollment in the browser.
 
@@ -112,7 +114,7 @@ NimbusFeatures::OnUpdate("aboutwelcome"_ns, "skipFocus"_ns,
   [](const char*, void*){}, void*);
 ```
 
-#### Examples
+## Examples
 
 Examples of platform consumers:
 

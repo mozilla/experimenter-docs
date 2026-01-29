@@ -4,11 +4,9 @@ title: Manifests
 slug: /technical-reference/nimbus-cli/fml
 ---
 
-The Feature Manifest Language is a powerful way of specify the shape of the feature configurations that each branch is made up of.
+This guide covers validating experiments against feature manifests, extracting default configurations, and working with the Feature Manifest Language. The CLI can validate experiments before they launch using the app's feature manifest.
 
-The `nimbus-cli` knows about the feature manifests for each of the apps, and can validate experiments before they launch.
-
-## `validate`
+## Validating Experiments
 
 ```sh
 nimbus-cli --app firefox_ios --channel release validate ios-sync-manager-integration
@@ -46,7 +44,7 @@ Alternatively, we can specify a local manifest file.
 nimbus-cli --app firefox_ios --channel release validate preview/release-ios-re-engagement-notifications-ab-experiment-114 --manifest ./my-manifest.fml.yaml
 ```
 
-## `defaults`
+## Getting Default Configurations
 
 The `defaults` commands outputs the default configuration, for all features of the app configured by Nimbus.
 
@@ -78,7 +76,7 @@ currently outputs the following JSON:
 }
 ```
 
-## `features`
+## Merging Features With Defaults
 
 A manifest can be used to change the behavior of the `features` command.
 
@@ -123,13 +121,13 @@ Gives the above output merged with the defaults from the manifest:
 }
 ```
 
-## Other commands
+## Other Commands
 
 By default, the `enroll` and `test-feature` validates the experiments before sending them to the device.
 
 This can be overridden with the `--no-validate` option.
 
-### `enroll`
+### Enroll Command
 
 ```sh
 nimbus-cli --app firefox_ios --channel release enroll ios-sync-manager-integration --branch rust-sync-manager
@@ -143,7 +141,7 @@ nimbus-cli --app firefox_ios --channel developer enroll ios-set-to-default-in-on
 
 Each of the `--manifest`, `--version` and `--ref` options work with `enroll`, `test-feature`, `features` and `defaults`.
 
-## Working with the `nimbus-fml` command line
+## Working With the Nimbus FML Command Line
 
 The Feature Manifest Language has its own [command line interface](/technical-reference/fml/fml-cli). This can be used to validate manifest files, generate code, and rationalize manifests in to a single file.
 

@@ -4,16 +4,20 @@ title: Experiments
 slug: /designing-experiments
 ---
 
+This guide explains how to design effective experiments, from ideation through validation with data science office hours.
+
+## Overview
+
 WARNING: below is a sample image only of this part of the flow - see this [LIVE and CURRENT workflow](https://miro.com/app/board/uXjVOJ3IYRA=/) for the most accurate information, including maintained links and flow
 ![Designing flow](/img/workflow/designing.png)
 
-Good experiment design starts with a period of ideation.  Think about your product strategy and brainstorm some ideas that align with your goals.  Look for opportunities that are low cost and easy to implement, such as a feature that already exists in your product that you believe could be easily modified to be even more impactful.
+Good experiment design starts with a period of ideation. Think about your product strategy and brainstorm some ideas that align with your goals. Look for opportunities that are low cost and easy to implement, such as a feature that already exists in your product that you believe could be easily modified to be even more impactful.
 
-As you work through you and refine your idea backlog, it is important to consider whether you need an experiment, or if there are other more suitable tools such as user testing, user research or market research.
+As you work through and refine your idea backlog, it is important to consider whether you need an experiment, or if there are other more suitable tools such as user testing, user research or market research.
 
 Once you have concluded that an experiment is the correct approach for you continue through the designing workflow.
 
-## To design an experiment
+## Design Steps
 
 1. Create an [experiment brief](https://docs.google.com/document/d/1_bWn_1y5x1zf6zl7Loj4O1qKnVdxzIMXOawIpf32CsM/edit?usp=sharing)
 

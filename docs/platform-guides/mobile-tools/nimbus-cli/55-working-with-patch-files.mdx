@@ -4,11 +4,9 @@ title: Patch Files
 slug: /technical-reference/nimbus-cli/working-with-patch-files
 ---
 
-The `nimbus-cli` lets you source experiments from multiple places and then change them before inserting them into the app where they can be evaluated, and the app can naturally enroll into them.
+This guide explains how to use patch files to modify feature configurations before enrolling in experiments. Patch files allow you to change experiment configurations without editing the original experiment definitions.
 
-When experimenting on more complicated features, the configuration itself may need to be patched.
-
-## `--patch FILE`
+## Using Patch Files
 
 Any command that takes an experiment as an argument (`enroll`, `features`, `fetch`, `info`, `validate`) accepts a patch file.
 

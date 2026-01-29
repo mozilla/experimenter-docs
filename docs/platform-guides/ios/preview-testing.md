@@ -4,9 +4,9 @@ title: iOS Testing
 slug: /platform-guides/ios/preview-testing
 ---
 
-# iOS Testing
+This guide explains how to test experiments on iOS using the preview collection on the stage server, including accessing the secret menu and troubleshooting.
 
-## Launching an experiment to Preview the stage server
+## Launching an Experiment to Preview the Stage Server
 
 The first step to testing the preview flow is to launch an experiment. Go to [experimenter](https://experimenter.services.mozilla.com/) and create your experiment.
 
@@ -14,16 +14,16 @@ For experiments that are already live, go to the summary page. For experiments t
 
 ![Launch to Preview Button](/img/preview/preview-button.png)
 
-## How to test
+## How to Test
 
    Here is a [7 minute video overview of testing on iOS](https://drive.google.com/file/d/1SkcWOEsMUjhpwScfE1Hbss53XAII4IkJ/view).  That is the best place to start to understand the landscape.  Testing is possible by anyone (technical or not) with relative ease.
 
    There is a [step by step recorded training](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=8f7b5507-f078-44b2-93bd-b2dc0118d399) with the [slide presentation containing all the commands references in the training](https://docs.google.com/presentation/d/1sZc0GQ8QDrCoNWOdr4fOM2ymPs9LXjFrQkNETZrCKs4/edit?slide=id.g3529812eaa4_0_2#slide=id.g3529812eaa4_0_2).
 
 
-### FAQs
+## FAQs
 
-- **Accessing the secret menu**
+## Accessing the Secret Menu
 
 At this point, you can run your local build of Firefox iOS, once it's run:
 
@@ -42,15 +42,15 @@ At this point, you can run your local build of Firefox iOS, once it's run:
 
 You can also check out this [visual documentation](https://docs.google.com/document/d/1XPF4TQQTxRwWDrp907JtWXi4rCJ0Pg1YOpFGCHz8sBc/edit#) for a clear demonstration of how to switch to the preview collection.
 
-- **What kind of experiment should I create?**
+## What Kind of Experiment Should I Create?
 
 If you would like your test to be more in-depth, we recommend you create an iOS experiment that can be directly tested on the UI. For example, you can create an `onboarding-default-browser` experiment by setting the feature config to `onboarding-default-browser` and setting the appropriate values, [check out this experiment on experimenter for a complete example](https://stage.experimenter.nonprod.webservices.mozgcp.net/nimbus/teshaqtest-preview-flow-showhide-default-browser-title-image)
 
-- **I don't see my experiments on Firefox!**
+## I Don't See My Experiments on Firefox
 
 It takes a little time, but if you still can't see the experiments, try restarting the app and double check that you launched your experiment to preview and set the `Application` to `Firefox iOS` and didn't miss any configuration on experimenter. If you keep facing trouble reach out to use on #ask-experimenter on slack!
 
-- **Pointing a local iOS build to the stage server**
+## Pointing a Local iOS Build to the Stage Server
 
 If you will be using the stage server, you want Firefox to look for experiments there. For iOS, you can do that on a local build, which you can get running by [following the instructions on the `firefox-ios` repository](https://github.com/mozilla-mobile/firefox-ios/blob/main/README.md#building-the-code)
 

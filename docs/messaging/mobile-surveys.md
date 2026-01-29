@@ -4,7 +4,9 @@ title: Surveys
 slug: /messaging/mobile-surveys
 ---
 
-# Mobile Survey Workflow
+This article provides a step-by-step guide for launching mobile surveys on Firefox for Android and iOS, from survey creation through to completion.
+
+## Mobile Survey Workflow
 
 The required general steps to launch a mobile survey are:
 
@@ -18,14 +20,14 @@ The required general steps to launch a mobile survey are:
 
 Below, we'll elaborate on each step.
 
-## Create the survey
+## Create the Survey
 
 - Make sure the survey is configured to listen for URL parameters.
 - Get the survey link, perhaps something like `https://qsurvey.mozilla.com/s3/<survey_name>?app=android&userid={uuid}`
   - Note that some URL parameters are added to the end, make sure your survey provider supports these (Alchemer does).
   - Note also the special formatting around the `userid={uuid}` parameter, this is used to generate a unique identifier for each message click which allows survey responses to be linked to telemetry. See [the docs](/messaging/desktop/mobile-messaging#actions) for more info.
 
-## Invitation message copy
+## Invitation Message Copy
 
 The following copy elements are generally available for surveys:
 
@@ -35,7 +37,7 @@ The following copy elements are generally available for surveys:
 
 The full docs are [available here](/messaging/desktop/mobile-messaging#message-content)
 
-## Determine the audience
+## Determine the Audience
 
 Audience composition for surveys has two parts: the targeting criteria (who are eligible to be enrolled) and the sizing (what fraction of eligible clients will be invited)
 
