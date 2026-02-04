@@ -13,9 +13,9 @@ If you see missing results like those shown in the image below, then
 
 ![An image of the Nimbus UI showing results when exposures are missing. The results show zero clients enrolled and that the system is unable to calculate results](../../../static/img/deep-dives/missing_exposures_analysis.png)
 
-## Configuring experiments for exposure-based analysis
+## Configuring Experiments for Exposure-Based Analysis
 
-### Configuring exposures post-hoc
+### Configuring Exposures Post-Hoc
 
 If the experiment is live or finished, then the only option is to define an `ExposureSignal` as a custom config (see point 2 above). In this approach, we tell the automated analysis system which telemetry probe represents exposure for this experiment. Note that this must be a telemetry probe that was collected while the experiment was live. For assistance with this step, contact your supporting data scientist through the experiment's DS Jira ticket or ask in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03).
 
@@ -23,11 +23,11 @@ If the experiment is live or finished, then the only option is to define an `Exp
 Exposure is the point in time _immediately prior_ to recieving the treatment. We cannot use any post-treatment telemetry as the definition of exposure as that risks creating a biased comparison and results in non-causal inference. For example, an experiment in which the treatment gets a message to suggest using a new feature. In that experiment, exposure is _being shown a message_ (treatment branch) or _would have been shown a message_ (control branch). Exposure **is not** _using the new feature_. If we compare users who used the feature we'll be comparing users who discovered the feature organically (control branch) against a treatment branch containing organic discoverers and users who tried the feature out as a result of seeing the message.
 :::
 
-#### What if no telemetry exists which can be proxied for exposure?
+#### What If No Telemetry Exists Which Can Be Proxied for Exposure?
 
 In that case, fall back on enrollments-based analysis (click the `enrollments` radio button in the Analysis Basis selector) and see the [section on interpretation discussion](#enrollments-vs-exposures-analysis) below. Additionally, aim to have future experiments configured for exposures-based analysis.
 
-### Preparing future experiments for exposure-based analysis
+### Preparing Future Experiments for Exposure-Based Analysis
 
 For experiments that have not yet launched, it is preferred to implement exposures client-side by calling the appropriate method from the Nimbus SDK (see point 1 above). Once implemented, these events will get picked up by the automated analysis system, so no custom analysis configuration is required.
 

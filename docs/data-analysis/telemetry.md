@@ -4,6 +4,8 @@ title: Telemetry
 slug: /data-analysis/telemetry
 ---
 
+Nimbus telemetry provides standard events and experiment annotations used to track enrollment, exposure, and unenrollment throughout an experiment's lifecycle.
+
 This section is an overview of Nimbus Telemetry intended for the analysis of experiments.
 
 ## Standard Events

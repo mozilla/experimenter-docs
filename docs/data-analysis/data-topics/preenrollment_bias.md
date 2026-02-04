@@ -4,8 +4,6 @@ title: Preenrollment Bias
 slug: /data-analysis/data-topics/preenrollment_bias
 ---
 
-# Automatically Countering Preenrollment Bias
-
 TL;DR: Nimbus has the capability to adjust metrics to account for preenrollment bias/natural randomization variability and to improve the precision of inferences, when possible. Currently this is configured by default for guardrails (averages only) but can also be used for custom analyses. This is expected to reduce the frequency of false positives, of which we believe many were caused by natural randomization variability.
 
 ## Preenrollment Bias
@@ -14,7 +12,7 @@ In order to generate evidence for a causal hypothesis, we must guarantee that al
 
 Randomization provides a guarantee of balance on average and across large numbers of experiments, but in practice, for any given experiment and confounding dimension there is the possibility of imbalance. This imbalance (or rather, confounding) presents a challenge to our goal of gathering causal evidence. An imbalance observed during the treatment period is indistinguishable from a treatment effect. In the next section (Retrospective A/A Tests) we provide a method for detecting these situations.
 
-## Retrospective A/A tests
+## Retrospective A/A Tests
 
 User behavior tends to be consistent over time. We've found week-to-week correlations of up to 80% for our key guardrail metrics. Given this strong correlation, we can look for evidence of imbalance during the _pre-experiment period_. We've been using the term preenrollment bias, though [others](https://www.statsig.com/blog/pre-experiment-bias-detection-statsig) use pre-experiment bias.
 
@@ -37,7 +35,7 @@ WHERE 1=1
 ORDER BY metric, branch, statistic
 ```
 
-## Covariate Adjustment & CUPED
+## Covariate Adjustment and CUPED
 
 What if the Retrospective A/A test flags evidence of an imbalance? Should we have to discard that metric from our analysis completely? Luckily, there exist techniques to adjust for pre-experiment information. The most common/popular of these is [CUPED](https://www.statsig.com/blog/cuped). We have implemented a CUPED-like technique using linear models.
 
@@ -58,9 +56,9 @@ Where $z_i$ is the metric of interest ($y$) for the $i$-th unit as measured duri
 1. Adjusted to account for pre-experiment information
 2. Benefit from an increase in precision.
 
-### Configuring covariate adjustment
+### Configuring Covariate Adjustment
 
-#### Adjusting a new metric for preenrollment bias
+#### Adjusting a New Metric for Preenrollment Bias
 
 To perform adjustment for a new metric, you can write/edit the [custom config](../jetstream/configuration.md#custom-experiment-configurations) to do 2 things: 1) configure your metric to be calculated over the preenrollment period (that is, perform the retrospective A/A test) and 2) configure the adjustment.
 
@@ -90,7 +88,7 @@ Currently, the custom configs only support adjusting a during-treatment metric u
 As of February 2025, the execution order of analysis periods is not guaranteed. This means that, when rerunning an analysis for an experiment, it's possible for the computation for the during-treatment analysis to execute before the preenrollment has finished. This will result in the adjustment not being performed. That is, Jetstream will automatically fall back to unadjusted inferences. You can determine if Jetstream fell back by either examining the logs (see [dashboard](https://mozilla.cloud.looker.com/dashboards/246?Experiment=&Timestamp+Date=14+day&Log+Level=ERROR%2CWARNING)) or by comparing to the unadjusted confidence intervals (which will be identical if adjustment was not performed).
 :::
 
-#### Custom adjustments
+#### Custom Adjustments
 
 We have built tooling to perform these calculations and these methods can be used manually by data scientists to perform custom adjusted inferences. For example, suppose one wanted to control for machine type (cores) in an experiment trying to drive performance.
 

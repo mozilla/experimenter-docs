@@ -1,4 +1,4 @@
---- 
+---
 sidebar_position: 5
 slug: /data-analysis/jetstream/configuration
 id: configuration
@@ -139,7 +139,7 @@ You should not define a `start_date` and `end_date` in your Jetstream configurat
 unless it is important for your analysis that the deployment period is not the same as the analysis period.
 
 
-### Metrics section
+## Metrics Section
 
 The metrics section allows you to specify and define the metrics that you're collecting,
 the statistical summaries that you'd like applied to them, and any filters that you need.
@@ -169,7 +169,7 @@ overall = ["uri_count", "search_count"]
 
 [jetstream-dtmo]: https://docs.telemetry.mozilla.org/datasets/jetstream.html
 
-### Defining metrics
+## Defining Metrics
 
 You can define a new metric by adding a new section with a name like
 
@@ -274,7 +274,7 @@ data_source = "main"
 [metrics.ever_clicked_cows.statistics.binomial]
 ```
 
-### Defining data sources
+## Defining Data Sources
 
 Most of the regular data sources are already defined in mozanalysis. 
 See what [pre-defined data sources are available](https://mozilla.github.io/metric-hub/data_sources/firefox_desktop/) for your platform.
@@ -304,7 +304,7 @@ Then, your new metric can refer to it like `data_source = "my_cool_data_source"`
 
 *(**Importantly**, the metric's configured data_source must support a superset of the metric's analysis_units.)*
 
-### Defining segments
+## Defining Segments
 
 You can define new segments, just like you can define new metrics.  
 Segments allow you to look at the experiment results by the defined segments (or groups of users).  An example would be new users versus existing users - or segmenting results by country.   
@@ -336,7 +336,7 @@ on the date of enrollment.
 [moza-segment-ds]: https://mozilla.github.io/mozanalysis/api/segments.html#mozanalysis.segments.SegmentDataSource
 
 
-### Outcome snippets
+## Outcome Snippets
 
 Outcome snippets, which define a collection of summaries with a common theme (e.g. "performace", "Picture in Picture use"),
 are stored in the `outcomes/` directory and file names serve as unique identifiers. Outcome snippets are organized in different
@@ -386,7 +386,7 @@ data_source = "search_clients_engines_sources_daily"
 [metrics.urlbar_amazon_search_count.statistics.deciles]
 ```
 
-### Overwriting Outcomes parameters
+## Overwriting Outcomes Parameters
 
 __distinct_by_branch set to false__ example:
 
@@ -425,7 +425,7 @@ value.experiment_branch_name_2 = "amazon"
 COUNTIF(CASE e.branch_name WHEN "experiment_branch_name_1" THEN "google" WHEN "experiment_branch_name_2" THEN "amazon" END)
 ```
 
-### Defining Exposure Signals
+## Defining Exposure Signals
 
 Many Nimbus features will send a [Nimbus exposure event] automatically when the feature configuration is consulted;
 these are `normandy#expose` events on desktop and `nimbus_events.exposure` events in Glean.
@@ -484,7 +484,7 @@ window_end = "analysis_window_end"
 
 Results for exposure based metrics are currently not visualized in Experimenter. To access results, the BigQuery tables need to be queried directly.
 
-## Testing configurations
+## Testing Configurations
 
 For more information on how to test configurations see [Testing Jetstream Configs](./testing)
 
