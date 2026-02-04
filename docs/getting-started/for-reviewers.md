@@ -1,21 +1,22 @@
 ---
-title: Access & Reviewers
-slug: /access
+id: for-reviewers
+title: For Reviewers
+slug: /getting-started/for-reviewers
 ---
 
 With Nimbus experiments, instead of a centralized committee responsible for launching and running experiments **we want you, the experiment owner, to drive the process from ideation to completion**.
 
 If you are interested in learning more about your responsibilities, you can find our complete [Access Control Policy here](https://docs.google.com/document/d/1r8oI_Hxe5JQcOejqZcSziX1Aso20AFGBToTFu3BE5j8/edit).
 
-### Onboarding for New Authors/Owners (L2)
+## Onboarding for New Authors/Owners (L2)
 
-In order to use the Nimbus platform to create and launch experiments, you will need to go through the [Experiment Owner onboarding process](https://experimenter.info/for-product). Please ask in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03) if you have any questions and for a shadow on the first experiments(s) you create.
+In order to use the Nimbus platform to create and launch experiments, you will need to go through the [Experiment Owner onboarding process](https://experimenter.info/getting-started/for-experiment-owners). Please ask in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03) if you have any questions and for a shadow on the first experiments(s) you create.
 
-### Onboarding for New Reviewers (L3)
+## Onboarding for New Reviewers (L3)
 
 Assuming you have been vouched for by a Nimbus administrator + a Product Owner (product manager or engineering manager if the team doesn’t have a dedicated PM), you should go through the following steps to get review access on Nimbus:
 
-#### Basic access
+### Basic Access
 
 - Read through [rules and responsibilities for L3 users](https://docs.google.com/document/d/1r8oI_Hxe5JQcOejqZcSziX1Aso20AFGBToTFu3BE5j8/edit#heading=h.6v62tolv8dnv). Please note that you will have access to making changes in production for all experiments, and you should decline if you don't feel sufficiently qualified to review an experiment
 - Watch the half hour [reviewer training video](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b2608de6-defe-44e4-9517-af5d0035268c).  The [training slides are here](https://docs.google.com/presentation/d/11jGYVCRhzqG5R4aemcNtfQ3umzsQAcZrGiFp5a9T7us/edit#slide=id.g144dc03564c_0_7) for reference and links.
@@ -23,7 +24,7 @@ Assuming you have been vouched for by a Nimbus administrator + a Product Owner (
 - [File a bug using this template](https://bugzilla.mozilla.org/enter_bug.cgi?product=Cloud%20Services&component=Server%3A%20Remote%20Settings) to be added to either or all of the following collections: `nimbus-desktop-experiments` and/or `nimbus-mobile-experiments` and/or `nimbus-web-experiments` for your LDAP to be added on staging and production.
 - Note: on your first review(s) - please ask in #ask-experimenter for a shadow. It's very easy to partner with you sharing a screen to make sure you don't have any questions or uncertainties.
 
-#### Testing Review Workflow on Staging
+### Testing Review Workflow on Staging
 
 - Connect to the VPN
 - Go to [Nimbus Staging](https://stage.experimenter.nonprod.webservices.mozgcp.net/nimbus/) (not Production!). Ask someone to create a dummy experiment and request review.
@@ -36,6 +37,6 @@ Assuming you have been vouched for by a Nimbus administrator + a Product Owner (
 - Press approve if everything looks good. If anything looks wrong, Reject and alert nimbus core team in #ask-experiments
 - Congrats, you have tested the workflow. You are now ready to review real experiments on production!
 
-### Reviews
+## Reviews
 
 All changes to experiments and rollouts that impact production must be approved by a single L3 Nimbus reviewer, which you can request via the Nimbus console interface. *The requester and reviewer must be different people.*  You can find a list of [recommended reviewers here](https://mozilla-hub.atlassian.net/wiki/spaces/FJT/pages/11470672/Nimbus+Reviewers).

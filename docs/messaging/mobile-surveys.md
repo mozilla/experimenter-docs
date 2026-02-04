@@ -58,7 +58,7 @@ Note that this calculation was done for a single survey branch. If you're runnin
 
 ## Configure in Nimbus
 
-Prerequisite: at least one person on the team will have to have gone through [experiment owner training](/access#onboarding-for-new-authorsowners-l2).
+Prerequisite: at least one person on the team will have to have gone through [experiment owner training](/getting-started/for-reviewers#onboarding-for-new-authorsowners-l2).
 
 If you want to run surveys both on Android and iOS, you'll need to configure a separate delivery for each one as deliveries are client-specific.
 
@@ -112,7 +112,7 @@ See below for an example (from the Viewpoint survey):
 
 ## Launch
 
-Once QA is complete, the survey can be launched. The survey owner should request to launch and then post a message in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03) asking for an approver. As of the time of writing these docs, Rosanne Scholl & Daniel Berry are qualified reviewers for mobile surveys. If your team plans to run many surveys, it's recommended to have some members go through [reviewer training](/access#onboarding-for-new-reviewers-l3) so that the team can self-review their configurations without having to wait on external reviewers. Again, reach out in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03) for help with this.
+Once QA is complete, the survey can be launched. The survey owner should request to launch and then post a message in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03) asking for an approver. As of the time of writing these docs, Rosanne Scholl & Daniel Berry are qualified reviewers for mobile surveys. If your team plans to run many surveys, it's recommended to have some members go through [reviewer training](/getting-started/for-reviewers#onboarding-for-new-reviewers-l3) so that the team can self-review their configurations without having to wait on external reviewers. Again, reach out in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03) for help with this.
 
 ## End
 

@@ -1,10 +1,12 @@
 ---
 id: for-leadership
 title: For Leadership
-slug: /for-leadership
+slug: /getting-started/for-leadership
 ---
 
-## How can leadership interact with experiments?
+This guide provides leadership with an overview of how to monitor experiments, access results, and track the experimentation program's progress across teams.
+
+## How Can Leadership Interact with Experiments?
 *  [Nimbus Console](https://experimenter.services.mozilla.com/nimbus/) is the best place for exploring what is running, completed, and in draft.  Currently there is basic filtering - which will be expanded this year to enable easier experiment discovery.
 *  Each experiment should have an Experiment Brief following this [template](https://docs.google.com/document/d/1eFGL9FATIuZudjSItpIT2Ct1C5qb5E3Qk7hJuJQT67s/edit#), as a link from Nimbus Console - which goes into the background, learning goals, and experiment design.
 *  After an experiment is completed, there is a Results link in the right hand vertical gray bar.  ![image](https://user-images.githubusercontent.com/8192232/171439876-33124105-514b-40ec-8edc-cfa4fd681ffb.png)
@@ -12,7 +14,7 @@ slug: /for-leadership
 *  For completed experiments, there should be information added to Nimbus Console in the "Takeaways" section for a high level tl;dr interpretations and actions taken for each experiment.  If that is blank - ask the Product Manager for the takeaways and learnings and to fill that section. ![image](https://user-images.githubusercontent.com/8192232/171439992-3bb9c53d-0595-40d9-99ee-7b20d5e3f5b7.png)
 
 
-## Where do I find Experimentation Program metrics?
+## Where Do I Find Experimentation Program Metrics?
 The [Experiment Tracking spreadsheet](https://docs.google.com/spreadsheets/d/1oEvS0CI52kod7i-prk8rnVPr_6Nk19QSBVHAvxmVRgI/edit?gid=408542968#gid=408542968) is the current source of truth on experimentation program metrics.
 *  This is updated monthly before Product Days
 *  The summary view has the SPI metrics that are being reported out regularly.

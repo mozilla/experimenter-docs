@@ -32,7 +32,7 @@ Nimbus is a full-featured experimentation platform that provides configuration, 
 - [Advanced customizable targeting](/advanced/custom-audiences)
 - [Adding Metrics to your Experiment](/data-analysis/jetstream/metrics)
 - [Remote settings integration](/advanced/rollouts)
-- [Experiment Review / Approval Workflow](/access)
+- [Experiment Review / Approval Workflow](/getting-started/for-reviewers)
 - [Dashboards](/monitoring)
 - [Monitoring and Analysis](/data-analysis/jetstream/overview)
 
@@ -81,4 +81,4 @@ If you aren't sure we have what you need, pop into #ask-experimenter with your q
 
 ## About these docs
 
-This website is built using [Docusaurus](https://v2.docusaurus.io/). If you'd like to edit or add to them, check out the [Contributing](/contributing) page.
+This website is built using [Docusaurus](https://v2.docusaurus.io/). If you'd like to edit or add to them, check out the [Contributing](/getting-started/for-contributors) page.
