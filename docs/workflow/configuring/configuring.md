@@ -4,6 +4,10 @@ title: Configuration
 slug: /configuring
 ---
 
+This guide explains experiment configuration, including enrollment periods and observation windows, with recommendations for timing and sizing.
+
+## Overview
+
 From our perspective as experiment owners, experiments are composed of two time periods: the enrollment period and the observation window.
 
 ## The Enrollment Period
