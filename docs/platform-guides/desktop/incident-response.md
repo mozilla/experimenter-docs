@@ -6,7 +6,9 @@ slug: /platform-guides/desktop/incident-response
 
 This guide explains how to use the incident response feature to flip preferences via Nimbus for emergency situations. This feature should only be used with release management approval and is not intended for regular experimentation.
 
-As of Firefox 129 (and 128.2 ESR), Firefox supports flipping any pref via Nimbus. This is done with the `prefFlips` feature. The JSON Schema definition for the feature value can be found [here][jsonschema].
+As of Firefox 129 (and 128.2 ESR), Firefox supports flipping any pref via
+Nimbus. This is done with the `prefFlips` feature. The JSON Schema definition
+for the feature value can be found [here][jsonschema].
 
 ## Warning
 
@@ -89,9 +91,10 @@ Desktop.
           users". Otherwise, select an appropriate targeting criteria.
         </p>
         <p>
-          If a targeting criteria does not exist, one will have to be added. Ask for help in <code>#ask-experimenter</code> on Slack.
+          If a targeting criteria does not exist, one will have to be added. See
+          the <a href="/targeting-faq#custom-targeting-options">advanced targeting
+          FAQ</a> or ask for help in <code>#ask-experimenter</code> on Slack.
         </p>
-        {/* TODO: Uncomment after PR #762 (FAQ) lands: See the <a href="/faq/targeting-audiences#custom-targeting-options">advanced targeting FAQ</a> */}
       </dd>
 
       <dt>Sticky Enrollment</dt>

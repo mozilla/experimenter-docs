@@ -8,7 +8,7 @@ This guide explains how to enroll in experiments locally without waiting for CDN
 
 ## Debugging an Experiment From Experimenter Locally
 
-Trying to iterate on an experiment in Preview on experimenter.services.mozilla.com can be painful, because even after you change something and post to preview, you have to wait a while for the updated recipe to be propagated to the CDN.
+Trying to iterate on an experiment in Preview on experimenter.services.mozilla.com can be painful, because even after you change something and post to preview, you have a wait a while for the updated recipe to be propagated to the CDN.
 
 ## Enrollment via Nimbus Developer Tools
 

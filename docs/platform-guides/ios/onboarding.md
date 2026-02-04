@@ -8,13 +8,27 @@ This guide explains how to configure the new user onboarding flow through the ex
 
 ## Introduction
 
-The onboarding feature enables experimenting with the new user onboarding flow. The onboarding flow is presented to the user on each new install, and is made up of a series of full screen 'views', referred to as 'cards'. The purpose of the onboarding flow is to enable the user to configure a small number of app enhancing settings. Each card provides context for each setting and the ability to take an appropriate action, or skip to the next card.
+The onboarding feature enables experimentating with the 'new user onboarding flow'. The onboarding flow is presented to the user on each new install, and is made up of a series of full screen 'views', referred to as '**cards**'. The purpose of the onboarding flow is to enable the user to configure a small number of app enhancing settings. Each card provides context for each setting and the ability to take an appropratie action, or skip to the next card.
 
-The onboarding feature enables customization of each card's title copy, body copy, imagery, button copy, button actions, number of buttons (one or two), and sequencing.
+The onboarding feature enables customize each card's:
+
+- title copy
+- body copy
+- imagery
+- button copy
+- button actions
+- number of buttons (one or two)
+- sequencing
 
 ## About This Document
 
-This document is a guide for staff who wish to configure the new user onboarding flow through the experimenter interface. It is also a living document as the onboarding feature may be under active development, and card types and attributes may be added.
+This document is a guide for staff who wish to configure the new user onboarding flow through the experimenter interface.
+
+It is also a living document:
+
+- the onboarding feature may be under active development
+- card types may be added
+- card attributes may be added
 
 ## Scene Setting
 

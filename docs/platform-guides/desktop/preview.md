@@ -5,17 +5,14 @@ slug: /platform-guides/desktop/preview
 sidebar_position: 1
 ---
 
-This guide explains how to preview experiment branches in Firefox Desktop without launching to external users. You can test experiments using either the Nimbus Dev Tools add-on or manual enrollment via about:studies URLs.
-
-Preview does NOT launch your experiment to external users. Preview enables you to self test your experiment and for QA to test.
+This guide will help you preview what each branch of an experiment will look like for users in the target application.
+Preview does NOT launch your experiment to external users.  Preview enables you to self test your experiment and for QA to test.
 
 :::warning
 These steps only apply to Firefox Desktop Version 90+. You can find [instructions for iOS here](/platform-guides/ios/preview-testing) and [Fenix instructions here](/platform-guides/android/preview-testing).
 :::
 
-## Getting Started
-
-For experiments that are already live, go to the summary page. For experiments that have not yet launched, you will need the author to click "Launch to Preview" on the Review & Launch page.
+1. For experiments that are already live, go to the summary page. For experiments that have not yet launched, you will need the author to click "Launch to Preview" on the Review & Launch page.
 
 ![Launch to Preview Button](/img/preview/preview-button.png)
 
@@ -33,11 +30,11 @@ There is a Miro flow that can [help determine if you have a good test case here]
 
 ## Self-Testing Without Nimbus Dev Tools
 
-Scroll down to the **Preview Url** section of the page. Select the branch you want and copy the `about:studies` URL.
+2. Scroll down to the **Preview Url** section of the page. Select the branch you want and copy the `about:studies` URL.
 
-Open `about:config` in **Firefox Desktop v90+** and set `nimbus.debug` to `true`. Paste the URL you copied above in your browser.
+3. Open `about:config` in **Firefox Desktop v90+** and set `nimbus.debug` to `true`. Paste the URL you copied above in your browser.
 
-You should be enrolled! To exit the experiment, go to `about:studies` and click "Remove"
+4. You should be enrolled! To exit the experiment, go to `about:studies` and click "Remove"
 
 ## Earlier Desktop Firefox Versions (<90)
 
