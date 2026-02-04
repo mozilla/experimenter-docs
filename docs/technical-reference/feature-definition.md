@@ -16,7 +16,7 @@ In the experimentation ecosystem, experiment surfaces are described as features.
 
 Features are defined in a Feature Manifest file for the application, and the client code uses the Nimbus SDK to access variables associated with those features.
 
-After landing a new feature in `mozilla-central` and before doing an Experiment or Rollout using it, it is recommended to go through QA to provide an extra layer of stability and possibly be informed of certain limitations that could exist with the feature. See **Testing Your Feature** for information on how to involve QA.
+After landing a new feature in `mozilla-central` and before doing an Experiment or Rollout using it, it is recommended to go through QA to provide an extra layer of stability and possibly be informed of certain limitations that could exist with the feature. See **To test your feature** for information on how to involve QA.
 
 ## Defining Your Feature in the Feature Manifest File
 First, look at what is already defined in the manifest file:

@@ -4,7 +4,7 @@ title: Integration Tests
 slug: /technical-reference/integration-tests
 ---
 
-This article provides instructions for running the Nimbus integration test suite. The test suite uses Selenium and Firefox to verify Nimbus functions properly for users.
+The integration test suite is an end-to-end test suite that uses Selenium and Firefox to verify Nimbus functions properly for users.
 
 ## Nimbus Tests
 
