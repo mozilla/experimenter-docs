@@ -4,7 +4,7 @@ title: Getting Started
 slug: /technical-reference/nimbus-cli/getting-started
 ---
 
-Most `nimbus-cli` commands need an `--app` and `--channel` parameter. These should correspond to the app as it is installed on the simulator or emulator.
+This guide introduces the basic commands for listing experiments, enrolling in branches, resetting the app, and getting experiment information. Most commands require `--app` and `--channel` parameters that correspond to the installed app.
 
 | App Name  | `--app` value | Available values for `--channel` |
 | -| - | - |
@@ -20,7 +20,7 @@ The `app` and `channel` are how they are known to Nimbus. The `channel` correspo
 
 You can also specify a `--device-id` for working with multiple simulator/emulator/device at the same time.
 
-## `list`
+## Listing Experiments
 
 You can find experiments you want to use by using the `list` command.
 
@@ -91,7 +91,7 @@ We can use `today` as a shortcut for the current date.
 nimbus-cli --app firefox_ios list --enrolling-on today
 ```
 
-## `enroll`
+## Enrolling in Experiments
 
 You can start the app enrolled in a branch of a given experiment.
 
@@ -129,11 +129,11 @@ Enrolled experiments should persist across restarts of the app, and fetching of 
 Occassionally, you may want to get the experiment from Remote Settings rather than Experimenter. You can do this by adding the `--use-rs` flag.
 :::
 
-### Validating experiments
+### Validating Experiments
 
 By default, the experiment branches will be validated against the feature manifest. This [can be configured with `--version VERSION`, `--ref REF` and `--manifest FILE` parameters](/technical-reference/nimbus-cli/fml), or disabled with the `--no-validate` parameter.
 
-### Testing interactions between experiments and rollouts
+### Testing Interactions Between Experiments and Rollouts
 
 In addition to an experiment slug and branch, zero or more experiment slugs can be specified.
 
@@ -145,11 +145,11 @@ nimbus-cli --app fenix --channel developer enroll mobile-default-browser-cta-cop
 
 `--preserve-targeting` and `--preserve-bucketing` acts on these rollouts too.
 
-### Console output
+### Console Output
 
 The corresponding `adb` commands and `xcrun` commands are shown in yellow. These can be useful for attaching to bug reports as part of the Steps To Reproduce (STR). The `nimbus-cli` command used will also be useful for STR.
 
-## `reset-app`
+## Resetting the App
 
 The app can be put back into the just installed state. On Android, there is an `adb` command to do this, but not in iOS. For iOS:
 
@@ -166,7 +166,7 @@ nimbus-cli --app fenix --channel developer reset-app
 nimbus-cli --app firefox_ios --channel developer reset-app
 ```
 
-## `unenroll`
+## Unenrolling From Experiments
 
 From time to time you may need to test how the app responds to unenrolling from an experiment. You can force the unenrollment from all previously enrolled experiments with this command.
 
@@ -175,7 +175,7 @@ nimbus-cli --app fenix --channel developer \
     unenroll
 ```
 
-## `info`
+## Getting Experiment Information
 
 When you're starting from just the experiment slug, you can use the `info` command to get more information:
 

@@ -4,7 +4,9 @@ title: Files
 slug: /technical-reference/nimbus-cli/working-with-files
 ---
 
-## `fetch`
+This guide covers fetching experiments to files, listing experiments from files, and applying experiment files directly to the SDK. Working with files is useful for attaching experiments to bug reports or testing offline.
+
+## Fetching Experiments
 
 You can fetch a set of one or experiment/rollout recipes:
 
@@ -38,7 +40,7 @@ nimbus-cli --app fenix --channel developer info https://experimenter.services.mo
 ```
 :::
 
-## `fetch-list`
+## Fetching Experiment Lists
 
 Alternatively, you fetch the entire contents of a server's experiments:
 
@@ -54,7 +56,7 @@ This is quick— it shows only live experiments, but changes in the experiments 
 
 You can get all experiments from the API— both live and completed— using the `--use-api` flag.
 
-## `list`
+## Listing From Files
 
 The `list` command takes a `--file` parameter to make working with these files a little easier:
 
@@ -86,7 +88,7 @@ nimbus-cli --app fenix --channel developer \
 ```
 :::
 
-## `enroll`
+## Enrolling From Files
 
 The `enroll` command takes `--file` parameter, so you can enroll from recipes stored locally:
 
@@ -97,7 +99,7 @@ nimbus-cli --app fenix --channel developer \
     android-research-surface-validation --branch treatment
 ```
 
-## `apply-file`
+## Applying Files Directly
 
 You can also upload the whole file straight to the SDK:
 

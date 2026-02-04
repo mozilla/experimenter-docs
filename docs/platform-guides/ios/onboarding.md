@@ -4,35 +4,25 @@ title: Onboarding
 slug: /platform-guides/ios/onboarding
 ---
 
-# Introduction
-The onboarding feature enables experimentating with the 'new user onboarding flow'. The onboarding flow is presented to the user on each new install, and is made up of a series of full screen 'views', referred to as '**cards**'. The purpose of the onboarding flow is to enable the user to configure a small number of app enhancing settings. Each card provides context for each setting and the ability to take an appropratie action, or skip to the next card.
+This guide explains how to configure the new user onboarding flow through the experimenter interface, including customizing cards, sequencing, and buttons.
 
-The onboarding feature enables customize each card's:
+## Introduction
 
-- title copy
-- body copy
-- imagery
-- button copy
-- button actions
-- number of buttons (one or two)
-- sequencing
+The onboarding feature enables experimenting with the new user onboarding flow. The onboarding flow is presented to the user on each new install, and is made up of a series of full screen 'views', referred to as 'cards'. The purpose of the onboarding flow is to enable the user to configure a small number of app enhancing settings. Each card provides context for each setting and the ability to take an appropriate action, or skip to the next card.
 
-# About this document
-This document is a guide for staff who wish to configure the new user onboarding flow through the experimenter interface.
+The onboarding feature enables customization of each card's title copy, body copy, imagery, button copy, button actions, number of buttons (one or two), and sequencing.
 
-It is also a living document:
+## About This Document
 
-- the onboarding feature may be under active development
-- card types may be added
-- card attributes may be added
+This document is a guide for staff who wish to configure the new user onboarding flow through the experimenter interface. It is also a living document as the onboarding feature may be under active development, and card types and attributes may be added.
 
-# Scene setting
+## Scene Setting
 
 The onboarding feature is built on top of Nimbus, Mozilla's experimentation platform. Nimbus allows you to send bits of configuration to application features from Experimenter, the web-application staff use to launch and manage experiments and rollouts.
 
 Using Experimenter in the general case is documented elsewhere, so this document is specifically concerned with configuring the onboarding feature.
 
-# References
+## References
 For the most up-to-date configurations, the main code base will always be the best place to check.
 - [Nimbus manifest](https://github.com/mozilla-mobile/firefox-ios/blob/main/nimbus.fml.yaml)
 - [Onboarding feature manifest](https://github.com/mozilla-mobile/firefox-ios/blob/main/nimbus-features/onboardingFrameworkFeature.yaml)
@@ -41,10 +31,10 @@ For the most up-to-date configurations, the main code base will always be the be
 The onboarding feature is a [first run experiment](/advanced/first-run-experiments)
 :::
 
-# Creating an experiment
+## Creating an Experiment
 Only **values that differ** from the card's default values need to be provided to Experimenter. E.g:
 
-#### Existing default card
+### Existing Default Card
 ```json
 {
    "cards":{
@@ -70,7 +60,7 @@ Only **values that differ** from the card's default values need to be provided t
 }
 
 ```
-#### Experimenter card config
+### Experimenter Card Config
 ```json
 {
    "cards":{
@@ -81,7 +71,7 @@ Only **values that differ** from the card's default values need to be provided t
 }
 
 ```
-#### Output (the merged result of the existing card and experiment card)
+### Output (The Merged Result of the Existing Card and Experiment Card)
 ```json
    "cards":{
       "welcome": {
@@ -105,7 +95,7 @@ Only **values that differ** from the card's default values need to be provided t
    }
 ```
 
-# Feature Definition
+## Feature Definition
 The onboarding feature is split into several values:
 - conditions
 - cards
@@ -121,7 +111,7 @@ The conditions table is a set of triggers, like messaging, that can be used on c
 }
 ```
 
-## Card definition
+## Card Definition
 
 | Attribute     | Type                    | Description                                                                                                                           | Default Value                                                  |
 |:--------------|:------------------------|:--------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------|
@@ -135,28 +125,28 @@ The conditions table is a set of triggers, like messaging, that can be used on c
 | disqualifiers | List of JEXL keys       | The list of JEXL keys guiding a card should not show up for certain users. If any disqualifiers are met, then the card will not show. | []                                                             |
 | type          | TypeID                  | The type of onboarding the user is seeing.                                                                                            | fresh-install                                                  |
 
-### Default cards
+## Default Cards
 By default, the app is bundled with a collection of pre-defined cards which will be used if no other configuration is provided for the cards. See the [appendix](#default-welcome-card) for an overview of the default cards or the [code](https://github.com/mozilla-mobile/firefox-ios/blob/main/nimbus-features/onboardingFrameworkFeature.yaml) the most up-to-date configuration.
 
-### NimbusOnboardingLink
+## NimbusOnboardingLink
 | Field | Type                  | Description                                    | Default                                    |
 |:------|:----------------------|:-----------------------------------------------|:-------------------------------------------|
 | title | Free text or StringID | The title of the link                          | "Learn more about our privacy policy"      |
 | url   | String                | The url to which the link would take the user. | "https://www.mozilla.org/privacy/firefox/" |
 
-### NimbusOnboardingButtons
+## NimbusOnboardingButtons
 | Field     | Type                   | Description                                                                          | Default        |
 |:----------|:-----------------------|:-------------------------------------------------------------------------------------|:---------------|
 | primary   | NimbusOnboardingButton | The primary button on the card, coloured blue.                                       | A Skip button. |
 | secondary | NimbusOnboardingButton | An optional second button. If defined, it will be in grey, below the primary button. | null           |
 
-#### NimbusOnboardingButton
+## NimbusOnboardingButton
 | Field  | Type                  | Description                      | Default   |
 |:-------|:----------------------|:---------------------------------|:----------|
 | title  | Free text or StringID | The title of the button          | "Skip"    |
 | action | OnboardingActions     | The action the button will take. | next-card |
 
-##### OnboardingActions
+## OnboardingActions
 | Action                     | Description                                                                         |
 |:---------------------------|:------------------------------------------------------------------------------------|
 | next-card                  | Will take the user to the next card                                                 |
@@ -175,24 +165,24 @@ This is a property for the whole onboarding, and controls whether there is an `x
 }
 ```
 
-# Available resources
+## Available Resources
 
-## TextID
+## Text ID
 All existing app strings are available to Experimenter. [See the full list here](https://github.com/mozilla-mobile/firefox-ios/blob/main/Client/Frontend/Strings.swift). Note, that only strings with a `tableName` and a `key` can be used.
 Free text may also be used instead of a string resource.
 
 ⚠️ Localization of **Free Text** is not currently supported.
 
-## Image resources
+## Image Resources
 
-### Base Resources
+## Base Resources
 | Resource ID   | Description                                   |
 |:--------------|:----------------------------------------------|
 | welcome-globe | An image of a person hugging the firefox logo |
 | sync-devices  | An image of a variety of devices              |
 | notifications | An image of notifications                     |
 
-### Campaign - Challenge the Default
+## Campaign - Challenge the Default
 
 | Resource ID      | Description                                                                                                                                                                  |
 |------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -200,11 +190,11 @@ Free text may also be used instead of a string resource.
 | sync-devices-ctd | The sync image for CTD campaign. |
 | notification-ctd | The notifications image for CTD campaign. |
 
-# Appendix
+## Appendix
 
-## Default cards overview
+## Default Cards Overview
 
-### Default Welcome Card
+## Default Welcome Card
 | Attribute     | Value                                          |
 |---------------|------------------------------------------------|
 | type          | fresh-install                                  |
@@ -221,7 +211,7 @@ Free text may also be used instead of a string resource.
 | -- action     | next-card                                      |
 | prerequisites | ALWAYS                                         |
 
-### Default Sync card
+## Default Sync Card
 | Attribute     | Value                                         |
 |---------------|-----------------------------------------------|
 | type          | fresh-install                                 |
@@ -238,7 +228,7 @@ Free text may also be used instead of a string resource.
 | -- action     | next-card                                     |
 | prerequisites | ALWAYS                                        |
 
-### Default Notification card
+## Default Notification Card
 | Attribute     | Value                                                              |
 |---------------|--------------------------------------------------------------------|
 | type          | fresh-install                                                      |

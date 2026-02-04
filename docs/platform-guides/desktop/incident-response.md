@@ -4,11 +4,11 @@ title: Incident Response
 slug: /platform-guides/desktop/incident-response
 ---
 
-As of Firefox 129 (and 128.2 ESR), Firefox supports flipping any pref via
-Nimbus. This is done with the `prefFlips` feature. The JSON Schema definition
-for the feature value can be found [here][jsonschema].
+This guide explains how to use the incident response feature to flip preferences via Nimbus for emergency situations. This feature should only be used with release management approval and is not intended for regular experimentation.
 
-# Warning
+As of Firefox 129 (and 128.2 ESR), Firefox supports flipping any pref via Nimbus. This is done with the `prefFlips` feature. The JSON Schema definition for the feature value can be found [here][jsonschema].
+
+## Warning
 
 This feature is *not intended for use in experimentation*. If you want to do an
 experiment on some number of prefs in Firefox, you **must** register these prefs
@@ -21,7 +21,7 @@ with caution. Remember: with great power comes great responsibility.
 
 Only the release management team can approve incident reponse pref flips.
 
-# Behaviour
+## Behaviour
 
 When a client enrolls into a rollout using this feature, Nimbus will set (or
 unset) all the prefs to the values specified. Prefs on the `user` branch will
@@ -42,12 +42,11 @@ must all set it to the same branch and value. If not, the disagreeing rollout
 will be unenrolled.
 
 
-## Multi-feature
+## Multi-Feature
 
 The incident response feature *cannot* be used with other features.
 
-
-# Launching a Pref Flip
+## Launching a Pref Flip
 
 1. Create a new experiment in
 [Experimenter](https://experimenter.services.mozilla.com/) with an
@@ -91,7 +90,7 @@ Desktop.
         </p>
         <p>
           If a targeting criteria does not exist, one will have to be added. See
-          the <a href="/targeting-faq#custom-targeting-options">advanced targeting
+          the <a href="/faq/targeting-audiences#custom-targeting-options">advanced targeting
           FAQ</a> or ask for help in <code>#ask-experimenter</code> on Slack.
         </p>
       </dd>
@@ -136,7 +135,7 @@ Desktop.
 
 <a id="example-configuration"></a>
 
-# Example Configuration
+## Example Configuration
 
 ```json
 {
@@ -157,7 +156,7 @@ Desktop.
 }
 ```
 
-# Causes of Unenrollment
+## Causes of Unenrollment
 
 ## Mismatched Types
 
@@ -257,7 +256,6 @@ submitted with the following data:
 [feature-manifest]: https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.yaml
 [jsonschema]: https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/schemas/PrefFlipsFeature.schema.json
 [setPref]: /platform-guides/desktop/pref-experiments
-[advanced-targeting]: /targeting-faq#custom-targeting-options
 [stage]: https://stage.experimenter.nonprod.webservices.mozgcp.net/nimbus/
 [glean-telemetry]: https://dictionary.telemetry.mozilla.org/apps/firefox_desktop/metrics/nimbus_events_unenrollment
 [legacy-telemetry]: https://probes.telemetry.mozilla.org/?search=unenroll&view=detail&probeId=event%2Fnormandy.unenroll%23unenroll

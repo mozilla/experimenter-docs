@@ -4,7 +4,7 @@ title: Opening & Resetting
 slug: /technical-reference/nimbus-cli/opening-and-resetting
 ---
 
-The commands that open the app do so by simulating the app's launch as if the user tapped on the app icon on the phone; these are:
+This guide covers opening apps with deeplinks, terminating and resetting apps, and using passthrough parameters for advanced control. Several commands simulate the app launch as if the user tapped on the app icon.
 
 - `enroll`
 - `unenroll`
@@ -19,7 +19,7 @@ In addition, the `enroll`, `open` and `test-feature` commands, can launch the ap
 
 `nimbus-cli` knows the apps' deeplinking schemes, and if no `://` is detected in the deeplink, then the deeplink scheme is appended.
 
-### `open`
+### Opening the App
 
 For example:
 
@@ -65,7 +65,7 @@ Opening with a deeplink while enrolling in an experiment is supported but requir
 
 :::
 
-### `enroll`
+### Enrolling With Deeplinks
 
 For Android, opening a deeplink uses the same mechanism as launching the app: using Intents. Thus, we can enroll in an experiment and then open the app with a deeplink.
 
@@ -73,21 +73,21 @@ For Android, opening a deeplink uses the same mechanism as launching the app: us
 nimbus-cli --app fenix --channel developer enroll release-android-onboarding-redesign --branch treatment-a --deeplink onboarding/privacy-first
 ```
 
-### `test-feature`
+### Testing Features With Deeplinks
 
 Similarly, you can use a `--deeplink` to enroll a [`test-feature`](/technical-reference/nimbus-cli/working-with-features) experiment.
 
-## Terminating and Resetting the app
+## Terminating and Resetting the App
 
 `open`, `enroll` and `test-feature` all support a `--reset-app` option, which serves to reset the app back to its just-installed state before opening.
 
-## Passthrough parameters
+## Passthrough Parameters
 
 Opening apps with `nimbus-cli` provides an abstraction over `adb shell start am` and `xcrun simctl launch`.
 
 Passthrough parameters offer a small escape hatch from this abstraction.
 
-### Trailing parameters for apps
+### Trailing Parameters for Apps
 
 You may want to send additional command line parameters to these commands. You can do this by appending them with `--` after the `open`, `enroll`, or `test-feature` commands:
 
@@ -133,7 +133,7 @@ $ adb shell "am start -n org.mozilla.fenix.debug/.App \
         SKIP_INTRO"
 ```
 
-### Leading parameters
+### Leading Parameters
 
 For finer control of `xcrun` and `adb`, you can use `{}` as a positional indicator:
 
@@ -161,7 +161,7 @@ nimbus-cli --app firefox_ios --channel developer \
         --console-pty {} FIREFOX_SKIP_INTRO
 ```
 
-#### Platform specific passthrough parameters
+#### Platform Specific Passthrough Parameters
 
 Leading parameters are platform specific:
 

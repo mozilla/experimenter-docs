@@ -4,7 +4,9 @@ title: What's New
 slug: /technical-reference/nimbus-cli/whats-new
 ---
 
-### `0.4.0`
+This page tracks new features and improvements added to the Nimbus CLI across versions. Review the changelog to see what's been added or changed.
+
+## Version 0.4.0
 
 - `--app` and `--channel` parameters are now optional. If a command needs them and you haven't specified them, then it will error.
 - `list` and `fetch-list` now have filters. You can filter on [slug, feature, is-rollout, active-on date, and enroll date](/technical-reference/nimbus-cli/getting-started#list).
@@ -14,7 +16,7 @@ slug: /technical-reference/nimbus-cli/whats-new
     - `pbpaste` sends the URL to the server. In this way, we can open enroll apps on device into experiments with the CLI.
 - [`fml`](/technical-reference/nimbus-cli/fml#working-with-the-nimbus-fml-command-line) – a new command to interact with the lower level `nimbus-fml` command line.
 
-### `0.3.0`
+## Version 0.3.0
 
 - Now using the Experimenter API to get experiments, instead of Remote Settings. This saves time waiting for the sync between Experimenter and RS.
 - Split `fetch` into a [`fetch`](/technical-reference/nimbus-cli/working-with-files#fetch) for named recipes and [`fetch-list`](/technical-reference/nimbus-cli/working-with-files#fetch-list) for getting a list; this changes the parameters for `fetch`.

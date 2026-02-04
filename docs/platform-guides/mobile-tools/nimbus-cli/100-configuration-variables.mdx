@@ -4,9 +4,11 @@ title: Environment Variables
 slug: /technical-reference/nimbus-cli/environment-variables
 ---
 
-## `adb` and `xcrun`
+This guide covers environment variables for configuring the CLI, including paths to platform tools, API URLs, caching, and server settings. These variables allow you to customize the CLI's behavior.
 
-`nimbus-cli` assumes that [`adb` and `xcrun` are on the `PATH`](/technical-reference/nimbus-cli/install#rerequisites). If they are not (or aren't spelled `adb` or `adb.exe`), then you can configure them via the `ADB_PATH` and `XCRUN_PATH` environment variables.
+## ADB and XCRun Paths
+
+The CLI assumes that [`adb` and `xcrun` are on the `PATH`](/technical-reference/nimbus-cli/install#rerequisites). If they are not (or aren't spelled `adb` or `adb.exe`), then you can configure them via the `ADB_PATH` and `XCRUN_PATH` environment variables.
 
 ```sh
 export ADB_PATH="/Applications/Android Studio.app/platform-tools/bin/adb"
@@ -42,7 +44,7 @@ This has been helpful in the past when trying to debug a problem with CDN, or Re
 
 Note: while the Remote Settings represents what the live apps see, there is approximately 1 hour latency between changing an experiment on Experimenter and it being synced to Remote Settings.
 
-## Manifest Cache Directory
+## Manifest Cache
 
 The manifest downloading happens on each invocation of the `enroll`, `validate` and `test-feature` commands.
 
@@ -62,7 +64,7 @@ export NIMBUS_MANIFEST_CACHE=$HOME/.local/state/technical-reference/fml/$(date -
 
 so as to only use the cache for one day.
 
-## Suppressing update checking
+## Suppressing Update Checking
 
 The `nimbus-cli` periodically checks for a new version. This can be disabled by setting the following environment variable.
 
@@ -70,7 +72,7 @@ The `nimbus-cli` periodically checks for a new version. This can be disabled by 
 export NIMBUS_CLI_SUPPRESS_UPDATE_CHECK="true"
 ```
 
-## The server host and port
+## Server Host and Port
 
 By default, the server that is started with `nimbus-cli start-server` uses the machine's network interface to derive the external IP address.
 
