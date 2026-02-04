@@ -40,8 +40,8 @@ Using Experimenter in the general case is documented elsewhere, so this document
 
 For the most up-to-date configurations, the main code base will always be the best place to check.
 
-* Nimbus manifest
-* onboarding feature manifest
+    Nimbus manifest
+    onboarding feature manifest
 
 ## Creating an Experiment
 

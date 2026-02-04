@@ -4,17 +4,13 @@ title: Analysis
 slug: /analyzing
 ---
 
-This guide explains how to access and interpret experiment results, including timing expectations and where to get help.
+Experiment results are availabe from the Results Link on your experiment page.
 
-## When Results Are Available
-
-Experiment results are available from the Results Link on your experiment page.
-
-Results will not be available until enrollment has ended. There is no analysis done until that has stopped.
+Results will not be available until enrollment has ended.  There is no analysis done until that has stopped.
 
 A week after enrollment ends, you can see some metrics that are available on a weekly basis, like retention.
 
-Overall results are available after the experiment has been fully ended (so the observation period is over). Experiments typically take 24 hours after ending to generate the overall results. If you do not see results 24 hours after you have ended your experiments, reach out in ask-experimenter to see if there was an issue running the analysis.
+Overall results are available after the experiment has been fully ended (so the observation period is over).  Experiments typically take 24 hours after ending to generate the overall results.  If you do not see results 24 hours after you have ended your experiments, reach out in ask-experimenter to see if there was an issue running the analysis.
 
 ## Reading Results
 
