@@ -8,7 +8,7 @@ This guide explains the role and responsibilities of Experiment Owners (typicall
 
 ## Role Overview
 
-Product Managers often write the initial experiment to capture the logistical information, but it can also be engineers or program managers. Often engineers fill in the technical change information - so ownership can be a collaboration to get the logistical and technical information for the remote change entered correctly.
+Product Managers often write the initial experiment to capture the logistical information, but it can also be engineers or program managers.  Often engineers fill in the technical change information - so ownership can be a collaboration to get the logistical and technical information for the remote change entered correctly.
 
 ## Responsibilities
 

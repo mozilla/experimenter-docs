@@ -5,9 +5,9 @@ slug: /overview
 sidebar_position: 1
 ---
 
-This guide describes the roles data scientists play in experimentation at Mozilla, including collaboration processes, sampling frameworks, and metric analysis.
+This page describes the roles data scientists play in experimentation at Mozilla.
 
-## Related Resources
+Some other things you may be looking for are:
 
 * Documentation about using [Jetstream](/data-analysis/jetstream/overview), Mozilla's experiment analysis tool
 * Technical documentation about [datasets used in experimentation](https://docs.telemetry.mozilla.org/tools/experiments.html)
