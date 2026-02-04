@@ -1,14 +1,16 @@
 ---
 id: for-product
-title: Experiment Owners
+title: For Product Managers
 slug: /for-product
 ---
 
-## What is the role of the Experiment Owner in experimentation?
+This guide explains the role and responsibilities of Experiment Owners (typically Product Managers) in the experimentation process, from initial design through launch and analysis.
 
-Product Managers often write the initial experiment to capture the logistical information, but it can also be engineers or program managers.  Often engineers fill in the technical change information - so ownership can be a collaboration to get the logistical and technical information for the remote change entered correctly.
+## Role Overview
 
-Responsibilities include:
+Product Managers often write the initial experiment to capture the logistical information, but it can also be engineers or program managers. Often engineers fill in the technical change information - so ownership can be a collaboration to get the logistical and technical information for the remote change entered correctly.
+
+## Responsibilities
 
 - Watching training for new experiment owners [here](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=7efb5737-cce9-4c9a-b8a3-b26e010e5855) - the slide deck in the video is [here](https://docs.google.com/presentation/d/1ASlVAds63qOzCDnyLWlbKAcgvTkVfojDeGFqIYty4iI/edit#slide=id.p)
 - Starting and completing the [experiment brief](https://docs.google.com/document/d/1_bWn_1y5x1zf6zl7Loj4O1qKnVdxzIMXOawIpf32CsM/edit?usp=share_link) - which aligns everyone supporting the experiment to the learning goals.
