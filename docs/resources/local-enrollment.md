@@ -4,6 +4,8 @@ title: Local Enrollment
 slug: /resources/local-enrollment
 ---
 
+This guide explains how to set up local enrollment for testing Nimbus experiments on desktop and mobile Firefox using local Remote Settings.
+
 ## Desktop
 Preferences to set in Firefox
 - `nimbus.debug`: `True`
