@@ -1,0 +1,95 @@
+---
+id: experiment-lifecycle-faq
+title: Experiment Lifecycle
+slug: /faq/experiment-lifecycle
+sidebar_position: 2
+---
+
+Common questions about experiment enrollment, timing, startup behavior, and ending experiments.
+
+---
+
+## When a user receives a recipe, are they enrolled immediately or at the next session?
+
+For [first run experiments](/advanced/first-run-experiments), the recipe is bundled with the app.
+
+For existing users, the flow is:
+> 1) Firefox starts
+>
+> 2) Existing enrollments are applied fast
+>
+> 3) Browser continues to start
+>
+> 4) Nimbus syncs and computes new enrollments
+>
+> 5) New enrollment prefs are set
+
+So if your feature only reads prefs right at startup, then the pref wouldn't be applied until the following session.
+
+:::tip
+You can use `isEarlyStartup` to persist the prefs to disk so that they are available as soon as possible at startup.
+:::
+
+---
+
+## If a client is unenrolled from an experiment (say they opt out of that experiment specifically) will they be able to enroll again if they meet the criteria?
+**No**. Once a user is disqualified by opting out (or through targeting, etc.) the client keeps a record of that and won't enroll back into the same experiment.
+
+---
+
+## What Does Early Startup Do?
+
+Include "isEarlyStartup" in the FeatureManifest.yaml if you need synchronous access / very early access at startup or if you are registering this to use for platform experiments.
+
+**What does this do?**
+* It caches the feature values to disk using temporary prefs so that they're available as soon as user prefs are initialized and loaded, so they're available earlier in browser initialization and also helps make them available to gecko more easily.
+* IsEarlyStartup means we persist the experiment data in prefs so you can a) use them from c++ or b) use the JS experiment API before we've loaded experiments from disk.
+
+**So why don't I always use Early Startup to be sure my feature is controllable by an experiment early enough?**
+* You have to reconcile storing state in multiple places, it's only needed for a specific set of features in specific circumstances, so for the rest of them it's much safer to not touch the pref store at all and only worry about a single source of state.
+* It also makes tests more annoying because if you don't clean them up properly it's easy to break adjacent tests
+
+:::tip
+There is info on how to use Early Startup [here in the documentation](/platform-guides/desktop/feature-api/#registering-a-new-feature)
+:::
+
+---
+
+## How Early is Early?
+
+### Early on Desktop
+
+The 'isEarlyStartup' flag for features will write variables to prefs to ensure data is available once prefs are loaded.
+Nimbus uses its own internal prefs. If you're talking to Nimbus via JS you can just interact with it normally and it
+will read from prefs if it hasn't yet loaded its data store. Then you can use the [C++ API](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/lib/NimbusFeatures.h).
+
+You don't have to do anything special though, as long as isEarlyStartup is set it should Just Work.
+Assuming everything is main thread, you shouldn't have any issues.
+
+First startup initializes Nimbus, which will then try to grab experiments and rollouts for all features ([code](https://searchfox.org/mozilla-central/rev/fb9a504ca73529fa550efe488db2a012a4bf5169/toolkit/modules/FirstStartup.sys.mjs#50)).
+This happens before we paint the first window. First startup blocks painting.
+
+### Early on Mobile
+
+TBD
+
+---
+
+## Is feature restart supported?
+
+Yes! Feature restart is supported by Nimbus. This is how it works when a feature requires a restart:
+* **Session 1:** Client enrolls, applies feature configuration, but the feature itself won't implement the changes until the next restart
+* **Session 2:** Client is enrolled, feature configuration is applied, feature now shows changes
+
+:::tip Important
+Please share that this experiment needs a restart in your data science Jira ticket and that there is custom work needed at analysis to exlude the pre-restart data.
+:::
+
+---
+
+## What happens at experiment end?
+
+See the [Experimentation Workflow](/ending) for general information about ending experiments.
+
+### If there is a problem and I need to abort the experiment and rollout, will cancelling the experiment and rollout revert the feature flags to their pre-experiment and pre-rollout states (i.e. feature is disabled) for all users enrolled so far?
+Ending means Nimbus stops applying the change, so users will go back to whatever state they would have without the experiment or rollout applied.  If you have a complex feature - you can verify by asking QA to test that scenario before release as well.

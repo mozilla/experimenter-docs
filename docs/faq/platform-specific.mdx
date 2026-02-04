@@ -1,0 +1,74 @@
+---
+id: platform-specific-faq
+title: Platform-Specific Questions
+slug: /faq/platform-specific
+sidebar_position: 6
+---
+
+Platform-specific questions for Desktop and Mobile experimentation.
+
+---
+
+## We were looking to run an experiment in v115 that required setting a pref. We have registered the pref and landed it on beta, but uplifting to release so late may be problematic. Is there any way to make this experiment work in 115 without that update to FeatureManifest.yaml landing?
+
+:::tip
+See the [deep dive on desktop prefs](/platform-guides/desktop/pref-experiments) for more information
+:::
+No, the only way to set prefs currently requires them to be registered in the feature manifest.
+
+---
+
+## As a mobile engineer, how do I add a dot release version?
+* Add a new `Version` to the [constants.py file](https://github.com/mozilla/experimenter/blob/main/experimenter/experimenter/experiments/constants.py) in Experimenter
+* Run `make generate_types` to generate the new version in `schema.graphql` and `globalTypes.ts`
+* [Example PR](https://github.com/mozilla/experimenter/pull/8870/files)
+
+---
+
+## For Mobile first-run experiments, can I run multiple experiments in the same version as long as they are on different surfaces?
+**Yes**, we can run multiple mobile first-run experiments on the same version so long as they are using different surfaces (different Nimbus features, e.g. onboarding-feature or search or messaging). We could even technically run multiple on the same surface, but we don't usually have enough users to get significance if we split like that.
+
+If multiple first run experiments are configuring the same feature, the same user will only get a maximum of one of those experiments. If they configure the different features, then the same user could get the both experiments.
+
+---
+
+## What is First Run Release Date?
+
+<img title="First run release date field" src="/img/faq/first-run-release-date.png"/>
+The first run release date field is applicable for mobile first run experiments. If you are running a first run experiment, selecting the "First Run Experiment" checkbox will allow you to select a release date. When entering the date, you should select the expected release date for the Firefox version that you are targeting (this version number is what you are selecting in the "Min Version" field at the top of the Audience page).
+
+If you do not know the release date, never fear! The help text on the "First Run Release Date" links to https://whattrainisitnow.com/, where you can look up the dates for whatever version of Firefox that you are targeting.
+
+> *Why should I care about this date?*
+
+First run experiments are bundled with the app itself, so it's important that we know when the specific app version will be released to the users. This will help us notify you when it is time to end enrollment/end the experiment.
+
+---
+
+## Branch Limits
+
+While you might want to try out lots of variations for your experiment - each variation reduces your chance of detecting changes.  We highly recommend running as few variations as possible. *Trying to cram too many changes into one experiment can lead to learning nothing about all branches.*
+
+This is discussed in [office hours for mobile or desktop](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours) when you review your experiment with data science.
+
+We aim to see statistically significant changes, also know as changes that aren't likely to have been caused by chance.
+In order to find a statistically significant change we need a large enough population size that we can say "we'd expect to see this same change if we repeated this experiment 95 out of 100 times".
+
+#### Stat significant changes are more detectable if:
+1. The change caused a big impact in what you are measuring.  It takes fewer users per branch to detect if a 5% change was by chance, then if a 1% chance was by chance.
+2. If everyone encounters the scenario your change impacts.  If you are looking to change something in PDF and only 5% of people use the PDF feature - you will need a large audience size for EACH branch.
+3. We run on enough users so we can detect smaller changes .5-2%.   Going to more users is decided based on a few factors: 1. Risk - if there is a possible negative risk to user experience, stability, or revenue, 2. What else is running? Would you be taking up all the experimentation for an area).
+
+### Before adding more branches:
+1. Consider if this might be good to break into **multiple experiments**. That way you can learn the most critical aspects first with 2-4 branches before moving on to experiments with more specific learnings.
+2. **Are there other ways to learn this?**  Experiments provide data.  If you are looking for qualitative feedback on what users like or if they understand the flow - consider user testing first, then run an experiment on the winners from user testing.
+
+---
+
+## FML Errors
+
+When creating your experiment, you may come across Feature Manifest errors on the Branches page:
+
+<img src="/img/faq/simple-fml-error.png"/>
+
+These errors are generated by the [Feature Manifest Language](/technical-reference/fml/fml-spec) (FML). Learn more about these errors [here](/advanced/branches).

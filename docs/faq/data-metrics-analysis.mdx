@@ -1,0 +1,84 @@
+---
+id: data-metrics-analysis-faq
+title: Data, Metrics & Analysis
+slug: /faq/data-metrics-analysis
+sidebar_position: 5
+---
+
+Common questions about metrics, exposure events, analysis, and accessing experiment results.
+
+---
+
+## What do I do if feature metrics aren't there?
+
+:::tip
+Watch [this video](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=7f677cde-3b61-4cd5-8119-af7b013c7579) to know how metrics work with experiments.  The video covers the steps below. These details are provided here for ease of reference and links.
+:::
+
+After completing your experiment brief and defining your learning goals - attend an office hours to discuss how you could measure the changes.  Based on that discussion - go through the steps below until the metrics needed for this experiment are covered.  You do not need to complete all the steps - just enough to answer your questions.
+
+**Step 1** - Check  [here](/data-analysis/jetstream/metrics#how-do-i-add-a-metric-to-my-experiment) to learn if the existing Guardrail/Core metrics or Outcomes will answer your questions.
+
+**Step 2** - Did an experiment run previously had these metrics you need?
+* Look at previous experiments in your feature area - do those metrics meet your needs?  Re-using metrics is a much quicker than writing custom metrics from scratch.
+* If yes, create a [DO Jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/boards/269) including:
+  * the link to your current experiment
+  * the link to the previous experiment(s) results.  Specify the metrics from the previous experiment you are interested in and how they answer your question.
+* BEST PRACTICE: If you want these metrics for future experiments on this feature - ask to have an Outcome added instead of a custom config file.  Adding an Outcome means these metrics will be available to select from the Outcome drop down in Metrics for future experiments.
+
+**Step 3** - Provide information to create a custom metric for this experiment.
+* Create a [DO Jira ticket](https://mozilla-hub.atlassian.net/jira/software/c/projects/DO/boards/269) including:
+  * the link to your current experiment
+  * the questions you need to answer about the feature (that aren't covered by metrics from step 1 or step 2)
+  * the specific telemetry probes in your feature that will be used to answer the question - including the possible values those probes collect and when they are sent.
+* A data scientist will work with feature product and engineering to create a custom jetstream config file to add these metrics.  Provided the telemetry probes exist and are testing - the custom configuration file can be written after experiment launch (before end) and applied.
+
+---
+
+## Is there a straightforward way to get the results from an experiment programmatically? Like a JSON object or something that I could convert into a dataframe?
+**Yes.** Results are available in bigquery and GCS, though what you see in Experimenter has been transformed a bit.
+
+Daily, weekly and overall results are in this bucket as JSON (you may need to request permission to access this data):
+* https://storage.cloud.google.com/mozanalysis/statistics/statistics_device_migration_new_user_onboarding_pt_2_daily.json
+* https://console.cloud.google.com/storage/browser/_details/mozanalysis/statistics/statistics_device_migration_new_user_onboarding_pt_2_daily.json;tab=live_object?project=moz-fx-data-experiments
+
+Example query:
+
+```
+from jetstream.bigquery_client import BigQueryClient
+PROJECT_ID = 'moz-fx-data-experiments'
+DATASET_ID = 'mozanalysis'
+client = BigQueryClient(PROJECT_ID, DATASET_ID)
+df = client.table_to_dataframe('statistics_<slug>_overall_1')
+```
+
+If you already have `mozanalysis` set up, here's another example query:
+```
+slug = "device-migration-new-user-onboarding-pt-2".replace("-", "_")
+results_query = f"""
+SELECT *
+  FROM `moz-fx-data-experiments.mozanalysis.statistics_{slug}_overall_1`
+"""
+results_df = bq_context.run_query(results_query).to_dataframe()
+```
+
+---
+
+## Is the "exposure event" the default way to use all the automation to exclude the first session? Or is manual exclusion of the first session in analysis the only way?
+Manual exclusion in analysis is the way. Exposures tell us which users saw the treatment, but we just use that as an indicator, we don't automatically filter the data after the exposure event, so it has to be manual.
+
+---
+
+## How do I decide whether I want `hasExposure` to be `true`/`false` on desktop? What's the value of these events or the cases where I might/might not want to use them?
+
+:::tip
+See the [deep dive on growable collections](/technical-reference/fml/growable-collections#exposure-events) and [Jetstream enrollment vs. exposure](/data-analysis/jetstream/overview#enrollment-vs-exposure) for more information
+:::
+Exposure events are most valuable when a good proportion of enrolled users won't see the treatment. For example, if seeing the treatment relies on a user action like opening a PDF or using picture in picture.
+
+Sometimes an experiment might have a large impact on the set of users who saw it, but relatively few users did the action to see the treatment. So the "overall" impact of the experiment might be small, but with exposure events we can see that there was indeed a large impact on users who saw the treatment.
+
+---
+
+## If I create a custom config for an experiment, will I still results still be generated for the primary and secondary outcomes, if I select them? Or will the config completely overwrite those outcomes?
+You will still get the outcomes even with a custom config.

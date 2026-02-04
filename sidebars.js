@@ -121,8 +121,7 @@ module.exports = {
             "advanced/custom-audiences",
             "advanced/population-sizing",
             "advanced/mobile-behavioral-targeting",
-            "advanced/recording-targeting-context-values-to-glean",
-            "faq/targeting/targeting-faq"
+            "advanced/recording-targeting-context-values-to-glean"
           ]
         },
         {
@@ -261,37 +260,18 @@ module.exports = {
     },
 
     // ============================================
-    // FAQ (Flattened)
+    // FAQ (Consolidated)
     // ============================================
     {
       type: "category",
       label: "FAQ",
       items: [
-        "faq/general-faq/general-faq",
-        "faq/enrollment/experiment-enrollment",
-        "faq/exposure/exposure-faq",
-        {
-          type: "category",
-          label: "Rollouts",
-          items: [
-            "faq/rollouts/rollouts-and-experiments",
-            "faq/rollouts/sizing-rollouts",
-            "faq/rollouts/saturation"
-          ]
-        },
-        "faq/branches/how-many-branches",
-        "faq/branches/fml-errors",
-        "faq/metrics/feature-metrics",
-        "faq/results/results-availability",
-        "faq/desktop/desktop-prefs",
-        "faq/desktop/exposure",
-        "faq/mobile/mobile-faq",
-        "faq/mobile/first-run",
-        "faq/early-startup/early-startup-faq",
-        "faq/feature-restart/feature-restart",
-        "faq/ending-experiments/ending-experiments",
-        "faq/custom-configs/custom-configs",
-        "faq/warnings/warnings"
+        "faq/getting-started-faq",
+        "faq/experiment-lifecycle-faq",
+        "faq/rollouts-faq",
+        "faq/targeting-audiences-faq",
+        "faq/data-metrics-analysis-faq",
+        "faq/platform-specific-faq"
       ]
     },
 
