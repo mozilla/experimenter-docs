@@ -9,17 +9,17 @@ Configuration options for controlling how and when messages are displayed to use
 
 ## Frequency Caps
 
-### Message Frequency
+## Message Frequency
 
 How often and how many times a user should see a message is configured through frequency.
 
 The following characteristics can be configured:
 
-#### Lifetime
+### Lifetime
 
 How many times a message gets shown to the user before it is permanently blocked.
 
-#### Frequency
+### Frequency
 
 How much time to allow between consecutive impressions. After a message is shown once it can be configured to be **temporarily** blocked for a period of time in order to not show it too often.
 
@@ -41,7 +41,7 @@ This capability is highly configurable allowing to specify multiple constraints 
 ]
 ```
 
-#### Example Configuration
+### Example Configuration
 
 ```json
 frequency: {
@@ -55,9 +55,7 @@ frequency: {
 }
 ```
 
----
-
-## Groups & Campaigns
+## Groups and Campaigns
 
 ### Message Groups
 

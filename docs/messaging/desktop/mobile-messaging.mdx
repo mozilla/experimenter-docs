@@ -5,7 +5,8 @@ slug: /messaging/desktop/mobile-messaging
 sidebar_position: 7
 ---
 
-# Introduction
+This article provides a comprehensive guide to the mobile messaging system in Firefox for iOS and Android, covering message configuration, localization, experimentation, and extending the system with custom triggers and actions.
+
 The mobile messaging system is a feature of Firefox on iOS and Android, designed to send in-app messages directly to users without going through a release cycle.
 
 It allows staff— most likely experiment owners, product owners, user research and marketing teams—
@@ -23,7 +24,7 @@ It allows staff— most likely experiment owners, product owners, user research
 [fenix-attributes-eng]:          https://github.com/mozilla-mobile/firefox-android/blob/main/fenix/app/src/main/java/org/mozilla/fenix/messaging/CustomAttributeProvider.kt
 [fenix-trigger-expressions-fml]: https://github.com/mozilla-mobile/firefox-android/blob/main/android-components/components/service/nimbus/messaging.fml.yaml
 
-# About this document
+## About This Document
 
 This document is a guide for staff who wish to send message users through the experimenter interface.
 
@@ -39,14 +40,14 @@ Access Passcode: 9Zx9Lg&M
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-#### Edit history
+### Edit History
 
 - Changed `is_default_browser` to `is_default_browser_string`.
 - Renamed Glean messages to match the implementation.
 - Added notification surface and associated trigger expressions.
 - v117 - added `experiment` property to message, removed `message-under-experiment`.
 
-## Scene setting
+## Scene Setting
 
 Nimbus Mobile Messaging is built on top of Nimbus, Mozilla's experimentation platform. Nimbus allows you to send bits of configuration to application features from Experimenter, the web-application staff use to launch and manage experiments and rollouts.
 
@@ -78,7 +79,7 @@ The messages that are sent are specified as JSON in the "Value" text area on thi
 
 We will start with this simple example to introduce the concepts, then add more as we go.
 
-## Anatomy of a message
+## Anatomy of a Message
 
 Messages have a number of components:
 
@@ -124,7 +125,7 @@ For example:
 
 In the above example, only users who have updated their apps in the last 7 days _and_ who are English speakers.
 
-### Message content
+### Message Content
 
 The message content is provided as strings, and is what the user sees.
 
@@ -200,7 +201,7 @@ To reduce errors and to allow re-use, action URLs can be named. By convention, t
 
 If the specified `action` property contains a `://` it is treated as a bare URL, so one-off URLs may be specified.
 
-#### String substiutions
+#### String Substitutions
 
 Before the final URL is opened, a variable subsitution is made, so identifiers within a pair of braces may be made part of the URL.
 
@@ -232,7 +233,7 @@ Additionally, the special `{uuid}` can be used to generate a new UUID. If detect
 
 This allows the client's anonymous survey results to match up to their Glean data while remaining anonymous to the third party.
 
-### Other message attributes
+### Other Message Attributes
 
 There are additional message attributes which don't quite fit anywhere, yet. It is best to leave this unused. We're looking for feedback during the MVP phase.
 
@@ -245,7 +246,7 @@ This currently code for:
  - the message `priority`. Messages will be shown in descending order of priority.
  - the `max-display-count`. Messages will be shown to the user for this number of sessions before the message expires.
 
-## Localization of messages
+## Localization of Messages
 
 Localization of strings and messages is not fully developed in Nimbus: the intention is to integrate with the existing tooling for localizing strings.
 
@@ -306,7 +307,7 @@ For each of the messages,
 
 In this manner the locale can be only one value at a time, and only one version of the message is eligible for display at any one time.
 
-## Experimenting with messages
+## Experimenting With Messages
 
 So far, we have talked about using Experimenter to push out messages as single branch experiments.
 
@@ -325,7 +326,7 @@ We should also tell the system that the message is under experiment. This is don
 }
 ```
 
-### Experimenting with localized messages
+### Experimenting With Localized Messages
 
 We saw when [localizing messages](#localization-of-messages) that the branch provided different messages based on adding additional trigger expressions.
 
@@ -383,7 +384,7 @@ It is important that:
 
 Since these triggers are mutually exclusive, the user will only ever be exposed to one message under experiment.
 
-### Control messages
+### Control Messages
 
 For most messages in experiments, we'll need to specify a control message.
 
@@ -451,7 +452,7 @@ For localized messages, we will need to provide a set of contol messages that ma
 
 Control messages (i.e. messages with `is-control` set to `true`) that do not have an `experiment` set to `{experiment}` will be reported by the client as malformed, since we can't ascertain which experiment they came from.
 
-### Displaying the control message
+### Displaying the Control Message
 
 The control message is the placebo, so doesn't make any sense to display to the user, so when a control message is selected for display, what should a message surface actually display?
 
@@ -476,7 +477,7 @@ The `on-control` property controls what happens in this case:
 
 By default, `on-control` is set to `show-next-message`.
 
-### Advanced uses of the `{experiment}` subsitution
+### Advanced Uses of the Experiment Substitution
 
 The literal string `{experiment}` can appear anywhere in the feature configuration, including the message key allows for some deduplication. For example, a regularly repeating message could be set up with message keys derived from the experiment slug.
 
@@ -511,7 +512,7 @@ The literal string `{experiment}` can appear anywhere in the feature configurati
 }
 ```
 
-## Events emitted
+## Events Emitted
 
 ### Nimbus Events
 
@@ -536,13 +537,13 @@ Each of the following events is emitted— via Glean— at certain points while 
 
 Each message has a `message-key` extra.
 
-## Extending the system
+## Extending the System
 
 Much of the system relies on Nimbus [merging together JSON objects](/technical-reference/fml/growable-collections). We have seen this in the `messages` object which can contain messages from the default configuration, rollouts, and experiments.
 
 We can also add to the `actions`, `triggers` and `styles` object in the same way. This is covered below, and do not need an engineer.
 
-### Adding attributes
+### Adding Attributes
 
 Attributes require an application engineer to add values to the JSON object that is passed to the messaging subsystem.
 
@@ -551,7 +552,7 @@ Attributes require an application engineer to add values to the JSON object that
 
 Once in this JSON, this becomes available to JEXL expressions and string subsitution.
 
-### Adding custom trigger expressions
+### Adding Custom Trigger Expressions
 
 Trigger expressions can be added on a per-message basis, by adding to the `triggers` object.
 
@@ -599,8 +600,7 @@ Suitable tools to prototype these expressions:
  - This [JEXL playground](https://czosel.github.io/jexl-playground/#/?context=%7B%0A%20%20%22app_name%22%3A%20%22fenix%22%2C%0A%20%20%22app_id%22%3A%20%22org.mozilla.fenix%22%2C%0A%20%20%22channel%22%3A%20%22release%22%2C%0A%20%20%22app_version%22%3A%20%22101.0.0%22%2C%0A%20%20%22device_manufacturer%22%3A%20%22Samsung%22%2C%0A%20%20%22device_model%22%3A%20%22Note%205%22%2C%0A%20%20%22locale%22%3A%20%22es-US%22%2C%0A%20%20%22os%22%3A%20%22Android%22%2C%0A%20%20%22os_version%22%3A%20%2213.1%22%2C%0A%0A%20%20%22is_default_browser%22%3A%20true%2C%0A%20%20%22date_string%22%3A%20%222022-06-19%22%0A%7D&input='US'%20in%20locale%20%26%26%20'-06-19'%20in%20date_string%0A&transforms=%7B%7D) is setup to prototype expressions against existing attributes.
  - [JEXL documentation](https://github.com/TomFrost/Jexl#all-the-details)
 
-
-### Adding custom actions
+### Adding Custom Actions
 
 All actions are implemented as URLs. Ad-hoc URLs can be used for one-off messages, but _must_ contain the scheme and separator: e.g. `https://`.
 
@@ -666,7 +666,7 @@ If the implementation stage has been done, but the FML part hasn't, you can add 
 
 Custom actions can be used in all messages only when they are added back to the application's [list of actions](#list-of-actions).
 
-## Lifecycle of a message
+## Lifecycle of a Message
 
 Like all Nimbus enabled features the messaging system configuration (messages, triggers, actions, styles) is likely to undergo a number of phases:
 
@@ -676,7 +676,7 @@ Like all Nimbus enabled features the messaging system configuration (messages, t
 
 ## Appendices
 
-### List of trigger expressions
+### List of Trigger Expressions
 
 These trigger expressions are based upon the default set of attrbutes available to Nimbus.
 
@@ -739,8 +739,7 @@ It is possible this table is out of date. The definitive source of truth for thi
 </TabItem>
 </Tabs>
 
-
-### List of actions
+### List of Actions
 
 These all correspond to the existing deeplinks in each app, so are entirely app specific.
 
@@ -799,7 +798,7 @@ Action                               | Description | Corresponding Deeplink |
 </TabItem>
 </Tabs>
 
-### List of attributes
+### List of Attributes
 
 By convention these are in `snake_case`.
 
