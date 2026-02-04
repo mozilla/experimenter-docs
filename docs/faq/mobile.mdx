@@ -1,0 +1,40 @@
+---
+id: mobile
+title: Mobile FAQ
+slug: /faq/mobile
+---
+
+### Question
+What is First Run Release Date?
+
+<img title="First run release date field" src="/img/faq/first-run-release-date.png"/>
+
+### Answer
+The first run release date field is applicable for mobile first run experiments. If you are running a first run experiment, selecting the "First Run Experiment" checkbox will allow you to select a release date. When entering the date, you should select the expected release date for the Firefox version that you are targeting (this version number is what you are selecting in the "Min Version" field at the top of the Audience page).
+
+If you do not know the release date, never fear! The help text on the "First Run Release Date" links to https://whattrainisitnow.com/, where you can look up the dates for whatever version of Firefox that you are targeting.
+
+> *Why should I care about this date?*
+
+First run experiments are bundled with the app itself, so it's important that we know when the specific app version will be released to the users. This will help us notify you when it is time to end enrollment/end the experiment.
+
+---
+
+### Question
+For Mobile first-run experiments, can I run multiple experiments in the same version as long as they are on different surfaces?
+
+### Answer
+**Yes**, we can run multiple mobile first-run experiments on the same version so long as they are using different surfaces (different Nimbus features, e.g. onboarding-feature or search or messaging). We could even technically run multiple on the same surface, but we don't usually have enough users to get significance if we split like that.
+
+If multiple first run experiments are configuring the same feature, the same user will only get a maximum of one of those experiments. If they configure the different features, then the same user could get the both experiments.
+
+---
+
+### Question
+As a mobile engineer, how do I add a dot release version?
+
+### Answer
+
+* Add a new `Version` to the [constants.py file](https://github.com/mozilla/experimenter/blob/main/experimenter/experimenter/experiments/constants.py) in Experimenter
+* Run `make generate_types` to generate the new version in `schema.graphql` and `globalTypes.ts`
+* [Example PR](https://github.com/mozilla/experimenter/pull/8870/files)
