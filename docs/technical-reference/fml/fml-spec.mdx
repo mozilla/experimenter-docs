@@ -201,7 +201,7 @@ Adding features to this object will automatically be picked up by Experimenter.
 
 They are converted to `mixedCamelCase` in both Kotlin and Swift.
 
-### Features have `variables`
+## Features Have Variables
 
 We start with an example which configures the integration between Firefox for iOS and iOS Spotlight feature.
 
@@ -328,7 +328,7 @@ data class SpotlightSearch(private val variables: Variables? = null) {
 
 Variables are evaluated lazily.
 
-### Enumerations
+## Enumerations
 
 Using the same `spotlight-search` feature from above. We notice that the we can include an icon in the search results.
 
@@ -400,7 +400,7 @@ Note: this Spotlight API doesn't exist on Android; this code is illustrating the
 
 Note that enumeration variants in Swift are in `mixedCamelCase`; in Kotlin they are in `SCREAMING_SNAKE_CASE`.
 
-## Feature defaults
+## Feature Defaults
 
 Already, in this simple example we have three variables. We may want to vary the configuration of the feature when the user is not involved in an experiment.
 
@@ -443,7 +443,7 @@ Adding new feature blocks to the `defaults` list patches the existing defaults f
 
 In this case, the default value for `item-thumbnail` is now `screenshot`, and `max-age-in-days` is `64.0`.
 
-### Feature defaults and channels
+## Feature Defaults and Channels
 
 Sometimes it is useful to have different default configurations for different _channels_ of an application. For example, you may want to have a feature available for testing on Nightly or Beta before turning it on in Release.
 
@@ -470,9 +470,9 @@ The `channel` property specifies which build flavour the default applies. In thi
 
 In this way, app developers can use the feature manifest as a replacement for other more adhoc feature flag solutions.
 
-## Additional types
+## Additional Types
 
-### Primitive types
+## Primitive Types
 
 Primitive types supported:
 
@@ -480,7 +480,7 @@ Primitive types supported:
  * `Boolean`.
  * `Int`.
 
-### Bundle types
+## Bundle Types
 
 Strings that can be coerced to resources within the bundle; however they are error prone to type in the Experimenter interface.
 
@@ -550,7 +550,7 @@ val image: Drawable = heroImage.resource
 
 For `Text` strings, if the text key does not resolve to a localized string, the key itself is used as a string.
 
-### Object types
+## Object Types
 
 Some features require more organization. In the case, JSON Objects can be coerced into generated data classes.
 
@@ -607,7 +607,7 @@ The JSON to recreate the defaults for the feature above would be:
 }
 ```
 
-### Structural types
+## Structural Types
 
 Generic types aren't supported, but in the following section, `T` can be any other type supported by the FML, including structural types.
 
@@ -671,7 +671,7 @@ Maps with enum keys must have a default value for every variant of the enum.
 
 Since maps are backed by JSON objects, the merge/patching allows entries to come from the manifest, experiments and rollouts simultaneously.
 
-### String aliasing
+## String Aliasing
 
 As the size and complexity of the feature grows, different parts of the configuration are tied together with `String` keys.
 
@@ -719,7 +719,7 @@ add queries to the map and safely use them when defining new `cards`, without ne
 
 For more, please see [the `string-alias` documentation](/technical-reference/fml/fml-string-alias).
 
-## Merging other FML files into this one
+## Merging Other FML Files Into This One
 
 This `include` property is a list of files which will be merged with this one. The files may be relative to this one, absolute or URLs.
 
@@ -735,7 +735,7 @@ In this example, two files are merged into this one: the `features`, `enums` and
 
 [More](/technical-reference/fml/fml-imports#the-include-list)
 
-## Linking files from other components
+## Linking Files From Other Components
 
 The `import` list is a list of objects referencing other FML files from other components. The code generated from those files are generated at build time of those components, with their own channels and configurations.
 
@@ -775,16 +775,16 @@ The `value` used by the imported code will come from the importing code.
 
 [More](/technical-reference/fml/fml-imports#the-import-list)
 
-## Additional feature specific configuration
+## Additional Feature Specific Configuration
 
-### Links to documentation and contacts
+## Links to Documentation and Contacts
 
 In order to drive a better experience for `experimenter` (the Nimbus web server), a number of extra optional fields are needed. See [Providing feature metadata](/technical-reference/fml/feature-metadata) for more.
 
-### Feature co-enrollment
+## Feature Co-Enrollment
 
 A feature which allows co-enrollment allows a client to be enrolled in any number of experiments/rollouts for that feature. See [Co-enrolling Features](/technical-reference/fml/coenrolling-features) for more information.
 
-### Feature variables configured by preferences
+## Feature Variables Configured by Preferences
 
 Some feature variables may be optionally driven by preferences (`UserDefaults` or `SharedPrefences`). There are some restrictions and nuances here, so see [the documentation for more information](/technical-reference/fml/using-prefs).

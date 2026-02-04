@@ -5,12 +5,14 @@ slug: /technical-reference/fml/using-prefs
 sidebar_position: 6
 ---
 
+This document explains how to use preference keys in feature definitions to allow user preferences to override Nimbus configuration values.
+
 This page details adding `pref-key` to a feature definition. This cause the FML generated code to check the user preferences (`UserDefaults` or `SharedPrefences`) __before__ checking the Nimbus configuration store or the default.
 
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-## Setting up
+## Setting Up
 
 The app's preferences object needs to be added to the `NimbusBuilder` call:
 
@@ -48,7 +50,7 @@ These should be readable by Nimbus, but writeable by the rest of the app. For be
 
 Once the preference object is available to nimbus, you can add `pref-key`s to feature variables.
 
-## Adding a `pref-key` to a feature variable definitions
+## Adding a Pref-Key to Feature Variable Definitions
 
 The `pref-key` can be specified by top level feature variables:
 
@@ -95,7 +97,7 @@ However, now, the call to `feature.isEnabled` is overridden by the preference he
 
 This is available for types that are supported by preferences: `Boolean`, `Int`, `String` and `Text`.
 
-### Generated code sketch
+## Generated Code Sketch
 
 The generated code looks approximately like:
 <Tabs
@@ -144,7 +146,7 @@ val isEnabled: Boolean =
 </TabItem>
 </Tabs>
 
-### Limitations
+## Limitations
 
 This is available for feature variables (not nested `Objects` fields), and only for scalar types.
 
@@ -157,7 +159,7 @@ If there is demand for it, then support for these types and places will be consi
 Similarly, we're looking for feedback on how to make this API or generated code better.
 :::
 
-## Additional effects of experiment events
+## Additional Effects of Experiment Events
 
 If the user sets any of the named preferences for the feature, then the feature is said to be user-modified.
 

@@ -4,13 +4,10 @@ title: Integration Tests
 slug: /technical-reference/integration-tests
 ---
 
-# Integration Tests
-
-## About
-
-The integration test suite is an end-to-end test suite that uses Selenium and Firefox to verify Nimbus functions properly for users.
+This article provides instructions for running the Nimbus integration test suite. The test suite uses Selenium and Firefox to verify Nimbus functions properly for users.
 
 ## Nimbus Tests
+
 ### Getting Started
 
 You must have Docker installed.
@@ -23,10 +20,10 @@ You must have Docker installed.
 
 To pass custom parameters to pytest use the environment variable `PYTEST_ARGS`.
 
-## Legacy tests
+## Legacy Tests
 
 To run the legacy tests follow steps 1-3 above. Then run this command: `make integration_test_legacy`. This will run the legacy experimenter test suite.
 
-## Running a single test
+## Running a Single Test
 
 If you would like to run just 1 test, pass this flag to PYTEST_ARGS with the test name you would like to run: `-k`. Example `make integration_test_nimbus PYTEST_ARGS=-ktest_archive_experiment`

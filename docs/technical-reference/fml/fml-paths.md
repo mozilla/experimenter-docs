@@ -5,7 +5,9 @@ slug: /technical-reference/fml/fml-paths
 sidebar_position: 2
 ---
 
-# Paths and URLs
+This document explains how to reference and link FML files using paths, URLs, and GitHub repository shortcuts.
+
+## Paths and URLs
 
 In several places paths to link one `.fml.yaml` file to another.
 
@@ -21,7 +23,7 @@ For convenience, we should use the conventions around URLs used in Carthage and 
 
 When invoked in conjunction with the `repo-file` argument, these `@` paths may be overriden:
 
-## Remapping `@` prefixes with `repo-file`s
+## Remapping @ Prefixes With Repo Files
 
 ```sh
 nimbus-fml generate --repo-file v102.0.json input.fml.yaml output-dir
@@ -56,7 +58,7 @@ Defining local paths is also useful for imposing structure on a complicated file
 }
 ```
 
-### Multiple repo files
+## Multiple Repo Files
 
 The `nimbus-fml` command line can accept multiple repo-files at a time, resolving `@` links as it goes.
 
@@ -64,7 +66,7 @@ The `nimbus-fml` command line can accept multiple repo-files at a time, resolvin
 nimbus-fml generate --repo-file ./app-structure.json --repo-file @mozilla-mobile/dependency-versions/v102.0.json --language swift ./input.fml.yaml output-dir
 ```
 
-## The `fetch` command
+## The Fetch Command
 
 The FML command line interface includes a `fetch` command to help build intuition around how these paths work.
 
