@@ -43,9 +43,9 @@ Nimbus is a full-featured experimentation platform that provides configuration, 
 - [Firefox Platform (C++)](/platform-guides/desktop/feature-api)
 
 ### Client-side Functionality
-- [Consumer opt-out](/enrollment/experiment-enrollment)
+- [Consumer opt-out](/faq/experiment-lifecycle)
 - [Integration with console preview testing](/platform-guides/desktop/preview)
-- [View experiments (about:studies)](/enrollment/experiment-enrollment)
+- [View experiments (about:studies)](/faq/experiment-lifecycle)
 
 ### Current Client Integrations
 - Firefox Desktop
