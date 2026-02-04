@@ -17,7 +17,8 @@ Once an idea has been developed, the next step is designing the experiment messa
 
 ### Running an Experiment
 
-First, determine if your experiment will require any on-train development work to support the launch as well as any translated strings that need to land prior. Once that's been determined, we can get started with creating the experiment. For a more in-depth guide and step by step process, visit [OMC: Experimenter onboarding document](https://mozilla-hub.atlassian.net/wiki/spaces/FIREFOX/pages/233406786/OMC+Experimenter+Onboarding)
+First, determine if your experiment will require any on-train development work to support the launch as well as any translated strings that need to land prior. Once that's been determined, we can get started with creating the experiment.
+For a more in-depth guide and step by step process, visit [OMC: Experimenter onboarding document](https://mozilla-hub.atlassian.net/wiki/spaces/FIREFOX/pages/233406786/OMC+Experimenter+Onboarding)
 
 ### Message in Firefox
 

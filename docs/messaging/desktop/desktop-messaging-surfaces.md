@@ -53,13 +53,19 @@ This surface can be configured as a window or tab level modal, and all other int
 <img src="/img/messaging/whats-new-page.png" alt="Example of a Whats New Page" />
 <br/>
 
-This feature allows us to use Nimbus to override the default evergreen What's New Page shown to users enrolled in these experiments. A What's New Page is a URL to a full content page that the browser will open on the next startup of a browsing session following a Firefox version update and will focus on that tab. The following configuration options are available.
+This feature allows us to use Nimbus to override the default evergreen What's
+New Page shown to users enrolled in these experiments. A What's New Page is a
+URL to a full content page that the browser will open on the next startup of a
+browsing session following a
+Firefox version update and will focus on that tab.
+The following configuration options are available.
 
-### Min Version
-Used to set a minimum Firefox update Version for a user to be eligible to see the experimental What's New Page.
-
-### Max Version
-Used to set a maximum Firefox update Version for a user to be eligible to see the experimental What's New Page.
-
-### Disable WNP
-Blocks all What's New Pages for a user enrolled in the experiment. Used to compare no-What's New Page control branches to What's New Page treatments.
+### minVersion
+Used to set a minimum Firefox update Version for a user to be eligible to see
+the experimental What's New Page.
+### maxVersion
+Used to set a maximum Firefox update Version for a user to be eligible to see
+the experimental What's New Page.
+### disableWNP
+Blocks all What's New Pages for a user enrolled in the experiment. Used
+to compare no-What's New Page control branches to What's New Page treatments.
