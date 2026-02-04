@@ -122,7 +122,7 @@ module.exports = {
             "advanced/population-sizing",
             "advanced/mobile-behavioral-targeting",
             "advanced/recording-targeting-context-values-to-glean",
-            "faq/targeting/targeting-faq"
+            "faq/targeting-audiences"
           ]
         },
         {
@@ -267,31 +267,15 @@ module.exports = {
       type: "category",
       label: "FAQ",
       items: [
-        "faq/general-faq/general-faq",
-        "faq/enrollment/experiment-enrollment",
-        "faq/exposure/exposure-faq",
-        {
-          type: "category",
-          label: "Rollouts",
-          items: [
-            "faq/rollouts/rollouts-and-experiments",
-            "faq/rollouts/sizing-rollouts",
-            "faq/rollouts/saturation"
-          ]
-        },
-        "faq/branches/how-many-branches",
-        "faq/branches/fml-errors",
-        "faq/metrics/feature-metrics",
-        "faq/results/results-availability",
-        "faq/desktop/desktop-prefs",
-        "faq/desktop/exposure",
-        "faq/mobile/mobile-faq",
-        "faq/mobile/first-run",
-        "faq/early-startup/early-startup-faq",
-        "faq/feature-restart/feature-restart",
-        "faq/ending-experiments/ending-experiments",
-        "faq/custom-configs/custom-configs",
-        "faq/warnings/warnings"
+        "faq/general-getting-started",
+        "faq/enrollment",
+        "faq/exposure-events",
+        "faq/rollouts",
+        "faq/targeting-audiences",
+        "faq/analysis-results",
+        "faq/desktop",
+        "faq/mobile",
+        "faq/feature-configuration"
       ]
     },
 
