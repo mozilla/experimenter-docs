@@ -140,7 +140,6 @@ module.exports = {
             "technical-reference/fml/using-prefs",
             "technical-reference/fml/growable-collections",
             "technical-reference/fml/fm-unimplemented-spec",
-            "technical-reference/fml/fml-errors",
             "advanced/feature-variables",
             "advanced/branches-page-deep-dive"
           ]
@@ -242,11 +241,8 @@ module.exports = {
         "advanced/mobile-first-run-experiments",
         "advanced/mobile-enrollment-state-machine",
         "advanced/notificationse",
-        "advanced/experimenter-warnings",
-        "advanced/experimenter-state",
-        "advanced/branch-limits",
-        "advanced/feature-metrics",
-        "advanced/early-startup"
+        "advanced/warnings",
+        "advanced/experimenter-state"
       ]
     },
 
@@ -270,51 +266,31 @@ module.exports = {
       type: "category",
       label: "FAQ",
       items: [
+        "faq/general-faq/general-faq",
+        "faq/enrollment/experiment-enrollment",
+        "faq/exposure/exposure-faq",
         {
-          type: "doc",
-          label: "General FAQ",
-          id: "faq/general-getting-started"
+          type: "category",
+          label: "Rollouts",
+          items: [
+            "faq/rollouts/rollouts-and-experiments",
+            "faq/rollouts/sizing-rollouts",
+            "faq/rollouts/saturation"
+          ]
         },
-        {
-          type: "doc",
-          label: "Enrollment FAQ",
-          id: "faq/enrollment"
-        },
-        {
-          type: "doc",
-          label: "Exposure FAQ",
-          id: "faq/exposure-events"
-        },
-        {
-          type: "doc",
-          label: "Rollouts FAQ",
-          id: "faq/rollouts"
-        },
-        {
-          type: "doc",
-          label: "Targeting FAQ",
-          id: "faq/targeting-audiences"
-        },
-        {
-          type: "doc",
-          label: "Desktop FAQ",
-          id: "faq/desktop"
-        },
-        {
-          type: "doc",
-          label: "Mobile FAQ",
-          id: "faq/mobile"
-        },
-        {
-          type: "doc",
-          label: "Analysis FAQ",
-          id: "faq/analysis-results"
-        },
-        {
-          type: "doc",
-          label: "Feature Configuration FAQ",
-          id: "faq/feature-configuration"
-        }
+        "faq/branches/how-many-branches",
+        "faq/branches/fml-errors",
+        "faq/metrics/feature-metrics",
+        "faq/results/results-availability",
+        "faq/desktop/desktop-prefs",
+        "faq/desktop/exposure",
+        "faq/mobile/mobile-faq",
+        "faq/mobile/first-run",
+        "faq/early-startup/early-startup-faq",
+        "faq/feature-restart/feature-restart",
+        "faq/ending-experiments/ending-experiments",
+        "faq/custom-configs/custom-configs",
+        "faq/warnings/warnings"
       ]
     },
 
