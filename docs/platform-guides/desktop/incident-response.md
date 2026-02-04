@@ -89,10 +89,9 @@ Desktop.
           users". Otherwise, select an appropriate targeting criteria.
         </p>
         <p>
-          If a targeting criteria does not exist, one will have to be added. See
-          the <a href="/faq/targeting-audiences#custom-targeting-options">advanced targeting
-          FAQ</a> or ask for help in <code>#ask-experimenter</code> on Slack.
+          If a targeting criteria does not exist, one will have to be added. Ask for help in <code>#ask-experimenter</code> on Slack.
         </p>
+        {/* TODO: Uncomment after PR #762 (FAQ) lands: See the <a href="/faq/targeting-audiences#custom-targeting-options">advanced targeting FAQ</a> */}
       </dd>
 
       <dt>Sticky Enrollment</dt>
