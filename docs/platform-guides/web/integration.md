@@ -1,8 +1,10 @@
 ---
-id: getting-started-for-nimbus-web-integration
-title: Getting Started
+id: web-integration
+title: Integration
 slug: /platform-guides/web/integration
 ---
+
+How to integrate Nimbus (Cirrus) into your web application.
 
 ## Introduction
 

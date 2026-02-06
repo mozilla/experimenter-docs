@@ -4,7 +4,7 @@ title: Onboarding
 slug: /platform-guides/android/onboarding
 ---
 
-# Introduction
+## Introduction
 The onboarding feature enables experimentation with the 'new user onboarding flow'. The onboarding flow is presented to the user on each new install and is made up of a series of full screen 'views', referred to as '**cards**'. The purpose of the onboarding flow is to enable the user to configure a small number of app enhancing settings. Each card provides context for each setting and the ability to enable/skip.
 
 The onboarding feature enables staff — most likely experiment owners, product owners, user research and marketing teams to customize each card's:
@@ -15,7 +15,7 @@ The onboarding feature enables staff — most likely experiment owners, product 
 - button copy
 - sequencing
 
-# About this document
+## About This Document
 This document is a guide for staff who wish to configure the new user onboarding flow through the experimenter interface.
 
 It is also a living document:
@@ -24,13 +24,13 @@ It is also a living document:
 - card types may be added
 - card attributes may be added 
 
-# Scene setting
+## Scene Setting
 
 The onboarding feature is built on top of Nimbus, Mozilla's experimentation platform. Nimbus allows you to send bits of configuration to application features from Experimenter, the web-application staff use to launch and manage experiments and rollouts.
 
 Using Experimenter in the general case is documented elsewhere, so this document is specifically concerned with configuring the onboarding feature.
 
-# References
+## References
 For the most up-to-date configurations, the main code base will always be the best place to check.
 - [Nimbus manifest](https://github.com/mozilla-mobile/firefox-android/blob/main/fenix/app/nimbus.fml.yaml)
 - [onboarding feature manifest](https://github.com/mozilla-mobile/firefox-android/blob/main/fenix/app/onboarding.fml.yaml)
@@ -39,7 +39,7 @@ For the most up-to-date configurations, the main code base will always be the be
 The onboarding feature is a [first run experiment](/advanced/first-run-experiments)
 :::
 
-# Creating an experiment
+## Creating an Experiment
 Only **values that differ** from the default card(s) needs providing by the Experimenter. E.g:
 
 #### Existing default card
@@ -90,7 +90,7 @@ Only **values that differ** from the default card(s) needs providing by the Expe
    }
 ```
 
-# Card definition
+## Card Definition
 | Attribute              | Type                        | Description                                  | Notes                                                                                                         |       
 |------------------------|-----------------------------|----------------------------------------------|---------------------------------------------------------------------------------------------------------------|
 | card-type              | Card Type                   | The type of the card                         | [See defined cards types](#card-types)                                                                        |
@@ -103,24 +103,24 @@ Only **values that differ** from the default card(s) needs providing by the Expe
 | primary-button-label   | Free text  or  Resource ID  | The text to display on the primary button    |                                                                                                               | 
 | secondary-button-label | Free text or  Resource ID   | The text to display on the secondary button  |                                                                                                               | 
 
-## Card types
+## Card Types
 - default-browser
 - add-search-widget
 - sync-sign-in
 - notification-permission
 
-# Default cards
+## Default Cards
 By default, the app is bundled with a collection of pre-defined cards which will be used if no other configuration is provided for the cards. See the [appendix](#default-cards-overview) for an overview of the default cards or the [code](https://github.com/mozilla-mobile/firefox-android/blob/bfb1acebe37ea6fcff80d12f4084a54bb8a6cd1a/fenix/app/onboarding.fml.yaml#L4) the most up-to-date configuration. 
 
-# Available resources
+## Available Resources
 
-## String resources
+## String Resources
 All existing app strings are available to Experimenter. [See the full list here](https://github.com/mozilla-mobile/firefox-android/blob/main/fenix/app/src/main/res/values/strings.xml).
 Free text may also be used instead of a string resource.
 
 ⚠️ Localization of **Free Text** is not currently supported.
 
-## Image resources
+## Image Resources
 
 ### Default
 | Card type               | Resource ID                |
@@ -135,13 +135,13 @@ Free text may also be used instead of a string resource.
 |-------------------------|-------------------------------------------------------------------|
 | default-browser         | ic_onboarding_key_features, ic_onboarding_key_features_icons_only |
 
-# Appendix
+## Appendix
 
 The add search widget is part of an ongoing experiment found here: [Android Onboarding - search widget](https://experimenter.services.mozilla.com/nimbus/android-onboarding-search-widget/summary)
 
-## Default cards overview
+## Default Cards Overview
 
-### Default browser card
+### Default Browser Card
 | Attribute              | Value                                                 |
 |------------------------|-------------------------------------------------------|
 | card-type              | default-browser                                       |
@@ -154,7 +154,7 @@ The add search widget is part of an ongoing experiment found here: [Android Onbo
 | primary-button-label   | juno_onboarding_default_browser_positive_button       |
 | secondary-button-label | juno_onboarding_default_browser_negative_button       |
 
-### Add search widget
+### Add Search Widget
 | Attribute              | Value                                             |
 |------------------------|---------------------------------------------------|
 | card-type              | add-search-widget                                 |
@@ -167,7 +167,7 @@ The add search widget is part of an ongoing experiment found here: [Android Onbo
 | primary-button-label   | juno_onboarding_add_search_widget_positive_button |
 | secondary-button-label | juno_onboarding_add_search_widget_negative_button |
 
-### Sync card
+### Sync Card
 | Attribute              | Value                                   |
 |------------------------|-----------------------------------------|
 | card-type              | sync-sign-in                            |
@@ -180,7 +180,7 @@ The add search widget is part of an ongoing experiment found here: [Android Onbo
 | primary-button-label   | juno_onboarding_sign_in_positive_button |
 | secondary-button-label | juno_onboarding_sign_in_negative_button |
 
-### Notification card
+### Notification Card
 | Attribute              | Value                                                   |
 |------------------------|---------------------------------------------------------|
 | card-type              | notification-permission                                 |
