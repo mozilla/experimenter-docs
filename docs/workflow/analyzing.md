@@ -6,7 +6,7 @@ slug: /workflow/analyzing
 
 How to access and interpret your experiment results after enrollment ends.
 
-Experiment results are availabe from the Results Link on your experiment page.
+Experiment results are available from the Results Link on your experiment page.
 
 Results will not be available until enrollment has ended.  There is no analysis done until that has stopped.
 
