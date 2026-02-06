@@ -1,8 +1,11 @@
 ---
-id: localization-process
+id: localization
 title: Localization
-slug: /localization-process
+slug: /workflow/localization
 ---
+
+How to localize experiment content using Pontoon, including multi-locale and single-locale workflows.
+
 :::info
 
 Localization support for Nimbus experiments is constantly improving. Make sure to check this page again before setting up new experiments.
@@ -29,9 +32,9 @@ The localization EPM assigned to the issue will be able to advise on the best ch
 
 [^1]: Currently still in a testing phase.
 
-## Multi-locale recipe (Firefox 113 and later)
+## Multi-Locale Recipe (Firefox 113 and Later)
 
-### Set up the experiment
+### Set Up the Experiment
 
 Each localizable string is set up in the experiment using a `$l10n` object. The object properties are:
 * `ìd`: a unique identifier for the string. It can only contain letters, numbers, and `-`.
@@ -60,15 +63,15 @@ In order to move forward with the translation request:
 
 [Automation](https://github.com/mozilla-l10n/nimbus-l10n/#automation-to-extract-strings-from-experiment-recipe) in the l10n repository will use Experimenter’s API to find the draft, extract the list of requested locales and the strings to translate (by searching for `$l10n` objects).
 
-### Request Translation
+### Request Translation (Multi-Locale)
 
 Once the experiment is set up as a draft and the content has been finalized, to initiate a translation request [create a new issue here](https://github.com/mozilla-l10n/nimbus-l10n/issues/new?assignees=flodolo&template=new_translation_multilocale_recipe.yaml). Use the **Submit new issue** button at the bottom of the page after filling all mandatory fields in the form; this will generate a standard GitHub issue, so it will still be possible to add comments later.
 
-#### Issue title
+#### Issue Title
 
 Include a descriptive name for the experiment, e.g. `PiP alternative dismiss message`.
 
-#### Information about the experiment
+#### Information About the Experiment
 
 Provide as much information as possible about the experiment, including links to the experiment brief and mock-ups of the UI where applicable. This information will be used by the Localization EPM assigned to the issue to prepare the file for translation, and provide context to localizers.
 
@@ -76,7 +79,7 @@ Provide as much information as possible about the experiment, including links to
 
 Provide the desired deadline (optional). Unless there is pre-established availability from staff to localize the content, expect about 7 days to complete the process from request to delivery. The time required might change depending on the amount of text to translate.
 
-### Retrieve Translated Content
+### Retrieve Translated Content (Multi-Locale)
 
 Once translation has been completed, automation will add a comment in the original issue with the translation in JSON format. This data can be copied directly in the `Localization` field in Experimenter (`Branches` section). Note that GitHub provides a convenient copy button, when hovering over a code block.
 
@@ -97,7 +100,7 @@ The JSON will look like this:
 }
 ```
 
-## Single-locale recipe
+## Single-Locale Recipe
 
 This solution has a few limitations:
 * To target multiple locales (e.g. `de` and `fr`), it’s necessary to create separate experiments, each targeting a single locale.
@@ -105,13 +108,13 @@ This solution has a few limitations:
 
 One of the benefits is that the request can be started before actually setting up the experiment in Experimenter.
 
-### Request Translation
+### Request Translation (Single-Locale)
 
 Once the content needed for the experiment is finalized, to initiate a translation request [create a new issue here](https://github.com/mozilla-l10n/nimbus-l10n/issues/new?assignees=flodolo&template=new_translation.yaml).
 
 For a description of fields shared with the multi-locale recipe request (*Issue title*, *Information about the experiment*, *Deadline*), see the [previous section](#request-translation).
 
-#### List of locales
+#### List of Locales
 
 Provide the list of locales that need to be translated. Keep in mind that:
 * [Locales are not regions](https://mozilla-l10n.github.io/documentation/localization/globalization_best_practices.html#region--language). So, for example, French (fr) should be requested, not France.
@@ -119,7 +122,7 @@ Provide the list of locales that need to be translated. Keep in mind that:
 
 Given the short turn-around for localization, we are currently limiting the requests to tier 1 locales (`de`, `fr`) — where we potentially also have internal copywriters as a backup — and locales that have internal staff available for support (`it`, `ja`).
 
-#### Content to translate
+#### Content to Translate
 
 If the experiment is small, it’s possible to provide the content to translate directly in the issue. Alternatively, consider providing a link to a spreadsheet with one string per row, and 2 columns (one for the English text, one for comments or context) (an example is available [here](https://docs.google.com/spreadsheets/d/11pIMJUxkiMELx-w6Czywy2ZRqCy2McUebnOT__yTU_Y/edit)).
 
@@ -135,7 +138,7 @@ intro-message = Switch to Firefox Home with themed background
 intro-button-enable = Use background
 ```
 
-### Retrieve Translated Content
+### Retrieve Translated Content (Single-Locale)
 
 Once translation has been completed, the requester will be notified in the original issue, with a link to a JSON file that includes all translations. The experiment owner will need to copy each translation manually in the experiment recipes.
 

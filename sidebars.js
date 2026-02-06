@@ -29,48 +29,26 @@ module.exports = {
       label: "Experiment Workflow",
       items: [
         "workflow/overview",
-        "workflow/implementing/experiment-owners",
-        {
-          type: "category",
-          label: "Designing",
-          items: [
-            "workflow/designing/designing",
-            "advanced/rollouts-deep-dive"
-          ]
-        },
-        {
-          type: "category",
-          label: "Configuring",
-          items: [
-            "workflow/configuring/configuring",
-            "workflow/designing/localization-process"
-          ]
-        },
+        "workflow/experimenter-console",
+        "workflow/designing",
+        "advanced/rollouts-deep-dive",
+        "workflow/configuring",
+        "workflow/localization",
         {
           type: "category",
           label: "Testing & QA",
           items: [
-            "workflow/testing/testing-on-mobile",
+            "workflow/testing",
             "platform-guides/desktop/desktop-feature-api-testing",
             "platform-guides/android/android-preview-testing",
             "platform-guides/ios/ios-preview-testing"
           ]
         },
-        "workflow/implementing/risk-mitigation",
-        "workflow/launching/launching",
-        "workflow/monitoring/monitoring",
-        "workflow/analyzing/analyzing",
-        "workflow/ending/ending",
-        {
-          type: "link",
-          label: "Experimenter Console (Production)",
-          href: "https://experimenter.services.mozilla.com/nimbus/"
-        },
-        {
-          type: "link",
-          label: "Experimenter Console (Stage)",
-          href: "https://stage.experimenter.nonprod.webservices.mozgcp.net/nimbus/"
-        }
+        "workflow/risk-mitigation",
+        "workflow/launching",
+        "workflow/monitoring",
+        "workflow/analyzing",
+        "workflow/ending"
       ]
     },
 
@@ -88,7 +66,7 @@ module.exports = {
           items: [
             "platform-guides/desktop/desktop-feature-api",
             "platform-guides/desktop/desktop-pref-experiments",
-            "workflow/implementing/desktop-onboarding/onboarding-feature-desktop",
+            "platform-guides/desktop/onboarding-feature-desktop",
             "platform-guides/desktop/desktop-migration-guide",
             "platform-guides/desktop/preview",
             "platform-guides/desktop/desktop-incident-response",
