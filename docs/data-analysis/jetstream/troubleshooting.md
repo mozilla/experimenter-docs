@@ -5,7 +5,9 @@ slug: /data-analysis/jetstream/troubleshooting
 sidebar_position: 8
 ---
 
-### How can I see what Jetstream is doing? 
+Common Jetstream issues and how to debug them.
+
+## How Can I See What Jetstream Is Doing?
 
 For checking on daily Jetstream runs, the `jetstream` DAG can be viewed via the [Airflow Web UI](https://workflow.telemetry.mozilla.org/tree?dag_id=jetstream). This show whether the run is still in progress or has completed.
 
@@ -19,7 +21,7 @@ gcloud container clusters get-credentials jetstream --zone us-central1-a --proje
 
 The dashboard can than be accessed via [127.0.0.1:8080](http://127.0.0.1:8080) through the web browser and provides a detailed overview of past workflows, the statuses of each step in a workflow and container logs.
 
-### How do I know if something went wrong?
+## How Do I Know If Something Went Wrong?
 
 Jetstream logs errors to the console and, optionally, to the `monitoring.logs` BigQuery table. Logging to BigQuery is enabled by default when running Jetstream via Airflow, as it allows for better alerting and monitoring of errors. It is by default disabled for runs triggered via the metric-hub CI.
 
@@ -27,7 +29,7 @@ Errors can be viewed on the [Jetstream error dashboard] in Looker.
 
 Additionally, alerts can be set up in Looker to check for errors daily and sent an email if failures have been detected. To subscribe to these alerts, go to the [Jetstream error dashboard], click on the _Alerts_ (bell) icon on the _Critical Errors Last Run_ tiles and follow the "Error Count" alert.
 
-### Something went wrong, what do I do?
+## Something Went Wrong, What Do I Do?
 
 1. Check the [Jetstream error dashboard] for more details on the error that occurred.
 1. If the experiment uses a custom configuration, make sure the configuration is valid. Sometimes, SQL written for specifying metrics in the configuration file can contain logical errors that result in failures when computing statistics.
@@ -35,7 +37,7 @@ Additionally, alerts can be set up in Looker to check for errors daily and sent 
 
 If you are unsure of what might have gone wrong or what to, you can open [an issue in Jira](https://jira.mozilla.com/projects/CIRRUS/issues/CIRRUS-68?filter=allopenissues) or ask for help in the [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03) Slack channel.
 
-### Some results appear to be missing
+## Some Results Appear to Be Missing
 
 It can take up to 2 days for results of the overall time period to be available after an experiment ends. For example, if an experiment ends on 2021-04-05, then results for the overall time period will be computed in the next daily analysis run on 2021-04-06. As running the analysis can take a few hours to complete results will be available on 2021-04-07.
 
@@ -43,7 +45,7 @@ If results other than for the overall period are missing or more than 2 days hav
 
 If there have been no errors, or the errors cannot be resolved, open [an issue in Jira](https://jira.mozilla.com/projects/CIRRUS/issues/CIRRUS-68?filter=allopenissues) or ask for help in the [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03) Slack channel.
 
-### How do I debug operational or more complex errors?
+## How Do I Debug Operational or More Complex Errors?
 
 Debugging operational or more complex errors is usually done by Jetstream engineers.
 
@@ -53,26 +55,26 @@ Debugging operational or more complex errors is usually done by Jetstream engine
 
 The logs can indicate a couple of different problems:
 
-#### There has been a operational error related to Kubernetes
+### There Has Been an Operational Error Related to Kubernetes
 
 This could happen, for example, if available memory or CPUs have been exceeded. To get more information about the pods that failed, navigate to the [`jetstream` Kubernetes cluster in the GCP web console](https://console.cloud.google.com/kubernetes/workload?project=moz-fx-data-experiments&pageState=(%22savedViews%22:(%22i%22:%22bf4f1f5805924fe2ba1cd23bd3b0ef8b%22,%22c%22:%5B%22gke%2Fus-central1-a%2Fjetstream%22%5D,%22n%22:%5B%5D))). The web UI allows to view the memory and CPU usage of specific pods or the entire cluster as well as pod logs. This information can help to decide whether the cluster needs to be resized. Resizing the cluster or allocating more resources is worth considering if these errors happen frequently. For occasional failures, simply rerunning the affected experiment is sufficient.
 
-#### An external config or outcome definition is causing failures
+### An External Config or Outcome Definition Is Causing Failures
 
 1. Ensure that the config is valid and that SQL does not contain any logical errors.
 1. If the SQL has become too complex, try to simplify queries or use source tables instead of derived views.
 1. Fix the configuration. Once the new config gets merge, the experiment will be rerun automatically.
         
-#### There has been an error because of a timeout when using an external API.
+### There Has Been an Error Because of a Timeout When Using an External API
 
 Timeouts occasionally happen when running queries in BigQuery, fetching experiments from the Experimenter API or fetching config files from GitHub. Jetstream implements a retry mechanism for most of these cases but it is possible that all of these retries fail. Rerunning affected experiments should in most cases resolve these issues. However, if this failures keep happening then this could indicate API changes.
         
-#### There is a bug in the jetstream code base
+### There Is a Bug in the Jetstream Code Base
 1. Add a test case to [jetstream] to reproduce the error.
 1. Fix the bug and open a PR against the repository.
 1. Once the fix has been approved, merged and deployed, the affected experiment can be rerun.
 
-#### Airflow returned an error or is sending notification emails
+### Airflow Returned an Error or Is Sending Notification Emails
 
 1. Check the Airflow logs
 1. Errors in Airflow can happen if there has been a problem with the Airflow cluster itself, e.g. the jetstream tasks could not be started. In this case, clearing the affected task to trigger a rerun should fix the issue. If problems persist, then reach out to data ops by [opening a Bugzilla ticket](https://bugzilla.mozilla.org/enter_bug.cgi?product=Data%20Platform%20and%20Tools).

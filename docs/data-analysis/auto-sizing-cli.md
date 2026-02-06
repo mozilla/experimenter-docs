@@ -4,13 +4,15 @@ title: Sizing CLI
 slug: /data-analysis/auto-sizing-cli
 ---
 
+A command-line interface for rapid sample size calculations using the Mozanalysis library.
+
 The sample size calculation functionality contained in the [Mozanalysis] library is accessible via a command-line interface (CLI), **[auto-sizing]**. This CLI is intended to enable rapid analyses for simple experiments or experiments with targeting similar to past experiments.
 
-## Sizing job configuration
+## Sizing Job Configuration
 
 The sizing CLI relies on a local TOML file to configure the job. This TOML file contains the metrics, segments, and parameters used to carry out the analysis. Sample sizes based on these parameters are calculated using the [`mozanalysis.frequentist_stats.sample_size.z_or_t_ind_sample_size_calc`](https://mozilla.github.io/mozanalysis/api/frequentist_stats/sample_size.html#mozanalysis.frequentist_stats.sample_size.z_or_t_ind_sample_size_calc) method. Note that segments in Mozanalysis refer to the filters used to identify clients that will satisfy targeting for an experiment (whereas segments in Jetstream denote groups of clients to examine during post-hoc analysis).
 
-### TOML file layout
+### TOML File Layout
 
 The TOML configuration file must contain a `metrics`, `data_sources`, `segments`, and `segments.data_sources` section, each containing the definitions for those of interest for the experiments. The definition of each of these follows the same patterns as [Jetstream], and details on how to define your own inside of the TOML file can be found [here](/data-analysis/jetstream/configuration#defining-metrics).
 
@@ -23,7 +25,7 @@ A `parameters` section in the TOML file is used to define the data collection pe
 1. `parameters.sizing`: Contains two tags, `power` and `effect_size`. These tags should contain lists of values for each parameter, and a sample size will be calculated for all metrics provided in the TOML file for each combination of power and effect size in those lists.
 2. `parameters.dates`: Contains the `start_date` (in "%Y-%m-%d" format, e.g. "2023-01-01"), `num_dates_enrollment`, and `analysis_length` values. For details on how those values are used to query historical data, see the [Mozanalysis documentation](https://experimenter.info/experiment-sizing).
 
-## CLI commands
+## CLI Commands
 
 The sizing CLI is invoked using the command `auto_sizing run`. The following options are available at invocation:
 
@@ -35,7 +37,7 @@ The sizing CLI is invoked using the command `auto_sizing run`. The following opt
 | `--target_slug` | Name for the experiment. Used when naming metrics table and output file |
 | `--local_config` | Path to the configuration TOML file |
 
-## CLI output
+## CLI Output
 
 Results for experiment sizing are saved in JSON format. If a GCP bucket is provided in the `--bucket` option at invocation, this JSON file is saved in a `sample_sizes` folder in that bucket. If no bucket is provided, the JSON results are saved to the same folder as the TOML configuration file. 
 

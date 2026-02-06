@@ -54,7 +54,7 @@ where there's no sensible way to aggregate users that didn't return.
 
 :::
 
-## Available pretreatments
+## Available Pretreatments
 
 Supported pretreatments are listed below. Some pretreatments accept parameters, which are listed below the name of the pretreatment.
 
@@ -66,7 +66,7 @@ Supported pretreatments are listed below. Some pretreatments accept parameters, 
   * `base`: Base of the logarithm. Defaults to 10.0.
 * `zero_fill`: Replace null values in the metric column with zero.
 
-## Available statistics
+## Available Statistics
 
 **Statistics** that Jetstream knows about are listed below. Some statistics accept parameters, which are listed below the name of the statistic.
 
@@ -85,7 +85,7 @@ Supported pretreatments are listed below. Some pretreatments accept parameters, 
   * `gridsize`: Number of samples (default: 256)
   * `log_space`: Whether the KDE should be sampled at geometric (instead of linear) intervals (default: false)
 
-## How do I implement a statistic?
+## How Do I Implement a Statistic?
 
 Statistics are defined in code at https://github.com/mozilla/jetstream/blob/main/jetstream/statistics.py.
 

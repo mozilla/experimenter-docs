@@ -4,7 +4,9 @@ title: Sizing
 slug: /data-analysis/data-topics/sizing
 ---
 
-# How large should my experiment be?
+Guidelines for determining how large your experiment should be, including statistical power, design patterns, and FAQs.
+
+## How Large Should My Experiment Be?
 
 When running experiments, choosing the right size is essential to balance getting meaningful results with minimizing the risk of exposing a larger user population to a potentially negative treatment.
 
@@ -76,7 +78,7 @@ In this pattern, we run an initial small experiment with many branches to identi
 
 In this pattern, a very small experiment (~1% or so) is run prior to the main experiment. This can estimate opportunity size/exposure rates and derisk a larger experiment. This is a special form of the Sequentially Larger pattern.
 
-## Same design, more insights
+## Same Design, More Insights
 
 In this section, we explore methods to increase the learnings from a given design.
 

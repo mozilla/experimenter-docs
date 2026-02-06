@@ -30,7 +30,7 @@ a week after the enrollment period ends.
 Typically, that means results will begin to appear 
 two weeks after the day the experiment launches.
 
-## Analysis paradigm
+## Analysis Paradigm
 
 Experiments are analyzed using the concept of analysis windows. Analysis
 windows describe an interval marked from each client’s day of
@@ -55,7 +55,7 @@ The "overall" window, published after the experiment has ended, is a
 window beginning on each client’s day 0 that spans the longest period
 for which all clients have complete data.
 
-## Enrollment vs exposure
+## Enrollment vs Exposure
 
 Enrollment and exposure are two separate steps in the experiment lifecycle.
 All experiments have enrollment events; some experiments have exposure events.
@@ -84,7 +84,7 @@ these are `normandy#expose` events on desktop and `nimbus_events.exposure` event
 
 [Nimbus exposure event]: /technical-reference/fml/fml-spec#recording-exposure
 
-## Analysis steps
+## Analysis Steps
 
 When analyzing experiments, the following steps are executed for each experiment:
 
@@ -106,12 +106,12 @@ are applied to the metrics data which is then used to calculate
 [statistics](https://github.com/mozilla/jetstream/blob/main/jetstream/statistics.py).
 Statistics data is written to BigQuery and later exported to GCS as JSON. 
 
-## Tooling and metric versioning
+## Tooling and Metric Versioning
 
 Jetstream ensures that results get computed consistently across the entire analysis duration of an experiment.
 It prevents sudden changes of how results are computed after tooling (such as [mozanalysis] which Jetstream depends on) or default metrics get updated by using the same versions as when the analysis initially started until the experiment completes.
 
-### How to use the latest tooling and metric definitions?
+### How to Use the Latest Tooling and Metric Definitions?
 
 When tooling or metrics are updated, there are a few options with different consequences for how Jetstream treats existing experiments:
 1. **do nothing**: only experiments that are launched after the new tooling release will use the most recent version of the tooling 
