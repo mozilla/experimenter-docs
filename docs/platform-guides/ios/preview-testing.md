@@ -4,9 +4,11 @@ title: iOS Testing
 slug: /platform-guides/ios/preview-testing
 ---
 
-# iOS Testing
+How to test experiment preview on iOS using the staging server.
 
-## Launching an experiment to Preview the stage server
+## iOS Testing
+
+## Launching an Experiment to Preview the Stage Server
 
 The first step to testing the preview flow is to launch an experiment. Go to [experimenter](https://experimenter.services.mozilla.com/) and create your experiment.
 
@@ -14,7 +16,7 @@ For experiments that are already live, go to the summary page. For experiments t
 
 ![Launch to Preview Button](/img/preview/preview-button.png)
 
-## How to test
+## How to Test
 
    Here is a [7 minute video overview of testing on iOS](https://drive.google.com/file/d/1SkcWOEsMUjhpwScfE1Hbss53XAII4IkJ/view).  That is the best place to start to understand the landscape.  Testing is possible by anyone (technical or not) with relative ease.
 

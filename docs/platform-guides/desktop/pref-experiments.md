@@ -4,6 +4,8 @@ title: Pref Experiments
 slug: /platform-guides/desktop/pref-experiments
 ---
 
+How Nimbus supports preference-setting experiments on Desktop Firefox 107+.
+
 As of Firefox 107, Nimbus supports experiments that set preferences on Desktop.
 Unlike Normandy, Nimbus cannot set arbitrary preferences; instead, the
 preferences that may be set are determined by the feature manifest.
@@ -40,7 +42,7 @@ If you've read to the end of this and aren't scared off, please read [this
 section](#pref-branches) on which branch your feature should write to.
 ::::
 
-## Pref branches
+## Pref Branches
 
 Each variable using `setPref` must specify which branch will be written to. There are two branches,
 each with its trade-offs:

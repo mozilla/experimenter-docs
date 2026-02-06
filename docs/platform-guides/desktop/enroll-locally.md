@@ -4,7 +4,9 @@ title: Local Enrollment
 slug: /platform-guides/desktop/enroll-locally
 ---
 
-# Debugging an experiment from experimenter locally
+How to enroll in an experiment locally for debugging, using either Nimbus Developer Tools or the Browser Console.
+
+## Debugging an Experiment from Experimenter Locally
 
 Trying to iterate on an experiment in Preview on experimenter.services.mozilla.com can be painful, because even after you change something and post to preview, you have a wait a while for the updated recipe to be propagated to the CDN.
 
@@ -33,7 +35,7 @@ For a more comprehensive overview of the Nimbus Developer Tools, including addit
 
 ## Option B: Manual Enrollment via Browser Console
 
-### Enable Nimbus debugging
+### Enable Nimbus Debugging
 
 * In `about:config`, set:
   * `nimbus.debug` to `true`
@@ -44,7 +46,7 @@ For a more comprehensive overview of the Nimbus Developer Tools, including addit
   * `devtools.chrome.enabled` to `true`
   * `devtools.debugger.remote-enabled` to `true`
 
-### Prepare a few things:
+### Prepare a Few Things
 * Load `about:studies` and unenroll this profile from anything that might interfere
 * On the Experimenter page for your experiment, select the contents of the `Recipe JSON` field from the `Details` tab, and copy it into your Copy/Paste buffer
 

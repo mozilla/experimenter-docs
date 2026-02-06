@@ -99,7 +99,7 @@ module.exports = {
           type: "category",
           label: "Web (Cirrus)",
           items: [
-            "platform-guides/web/getting-started-for-nimbus-web-integration"
+            "platform-guides/web/web-integration"
           ]
         },
         {

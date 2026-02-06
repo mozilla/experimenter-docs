@@ -4,6 +4,8 @@ title: Migration Guide
 slug: /platform-guides/desktop/migration-guide
 ---
 
+How to migrate Desktop front-end Normandy pref experiments to Nimbus-controlled experiments or rollouts.
+
 ## To migrate front-end normandy prefs to Nimbus controlled experiments or rollouts
 This guide will help you migrate your Desktop front-end code to run experiments with Nimbus, while still being able to use preferences for default and user-override values
 
@@ -12,7 +14,7 @@ Prerequisites:
 * You don't use the `user branch` of each pref for anything other than actual user-defined values or testing (see docs on [order of precedence](/platform-guides/desktop/feature-api#configuration-sources))
 * Your code can import a ESM
 
-### An illustrative example (about:myself)
+### An Illustrative Example (about:myself)
 
 For the purposes of this guide, we will be migrating an imaginary about page (`about:myself`), which uses the following preferences defined in `firefox.js`:
 

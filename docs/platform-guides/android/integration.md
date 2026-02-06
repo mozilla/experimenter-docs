@@ -1,10 +1,12 @@
 ---
 id: getting-started-for-android-engineers
-title: Getting Started
+title: Integration
 slug: /platform-guides/android/integration
 ---
 
-# Introduction
+How to set up the Nimbus SDK with a new Android app.
+
+## Introduction
 
 Nimbus is an experimentation platform from Mozilla.
 
@@ -12,7 +14,7 @@ This document shows you how to set up the Nimbus SDK with a new Android app. It 
 
 [nimbus-cli]: https://github.com/mozilla/application-services/tree/main/components/support/nimbus-cli
 
-# Building with Nimbus
+## Building with Nimbus
 
 Nimbus is distributed through bundled Rust code as part of Mozilla's Application Services ["Megazord"](https://github.com/mozilla/application-services/blob/main/docs/design/megazords.md).
 
@@ -80,7 +82,7 @@ nimbus {
 
 In this case, it should generate a file named in the `nimbus.fml.yaml` file. In the case of Fenix, this is called `FxNimbus`.
 
-# The start-up sequence
+## The Start-Up Sequence
 
 Before using Nimbus in your Android app, you need to start it.
 
@@ -180,7 +182,7 @@ To connect it to the Nimbus object, we need to tell the `NimbusBuilder`. In this
     }.build(appInfo)
 ```
 
-### Handling First Run experiments
+### Handling First Run Experiments
 
 Since `fetchExperiments` from the remote settings URL is slow, and we wish to be able have access to the Nimbus experimental configuration as early in start up as possible, Nimbus downloads and caches the experiment recipes on the `n`th run of the app and only applies them and makes them available to the app at the beginning of the _next_ i.e. the `(n + 1)`th run of the app.
 
@@ -198,7 +200,7 @@ Astute readers will notice that when `n = 0`, i.e. the very first time the app i
 
 The `initial_experiments.json` file can be downloaded, either as part of the build, or in an automated/timed job. e.g. this is the [Github Action workflow used by Fenix](https://github.com/mozilla-mobile/fenix/blob/main/.github/workflows/fenix-update-nimbus-experiments.yml).
 
-#### To check if the firstrun experiment merged into beta to catch the next release
+#### To Check If the Firstrun Experiment Merged into Beta to Catch the Next Release
 First run experiments need to be in the beta build 8-11 days before release, so that they are in the release candidate.  Final build happens 8 days before release on Monday - so best to get in and uplift approved by Friday at the latest.  On Android the Release Candidate goes out to 5% of users a week before general release.
 
 After the change is made in Nimbus/Experimenter to launch, enrollment end, or end the experiment - a github action kicks off the PR automatically to update 'initial_experiments.json'.  Then a mobile engineer needs to r+ that PR and request uplift to Beta.  If you replace 'version number' in the following file name, you can check this file to see if the experiment config is in the right state before release candidate build https://raw.githubusercontent.com/mozilla-mobile/firefox-android/releases_v'version number'/fenix/app/src/main/res/raw/initial_experiments.json.
