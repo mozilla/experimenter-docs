@@ -24,16 +24,16 @@ Our platform code is all open-source however, we do not offer support or service
 Nimbus is a full-featured experimentation platform that provides configuration, analysis and client libraries for both experiments and rollouts.
 
 ### Experimenter Console
-- [Simple experiment configuration UI](/using-experimenter-console)
+- [Simple experiment configuration UI](/workflow/experimenter-console)
 - [Pre-launch testing support](/platform-guides/desktop/preview)
 - [Multifeature experiments](/advanced/branches)
 - [Rollouts](/advanced/rollouts)
-- [Simple targeting](/configuring)
+- [Simple targeting](/workflow/configuring)
 - [Advanced customizable targeting](/advanced/custom-audiences)
 - [Adding Metrics to your Experiment](/data-analysis/jetstream/metrics)
 - [Remote settings integration](/advanced/rollouts)
 - [Experiment Review / Approval Workflow](/getting-started/for-reviewers)
-- [Dashboards](/monitoring)
+- [Dashboards](/workflow/monitoring)
 - [Monitoring and Analysis](/data-analysis/jetstream/overview)
 
 ### Multiple Language Client Integrations

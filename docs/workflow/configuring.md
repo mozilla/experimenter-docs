@@ -1,8 +1,10 @@
 ---
 id: configuring
-title: Configuration
-slug: /configuring
+title: Configuring
+slug: /workflow/configuring
 ---
+
+How to configure enrollment periods and observation windows for your experiment.
 
 From our perspective as experiment owners, experiments are composed of two time periods: the enrollment period and the observation window.
 
@@ -18,7 +20,7 @@ Please consult the [mobile first run experiments deep dive](/advanced/first-run-
 
 :::
 
-### General considerations
+### General Considerations
 
 There are a few things that experiment owners should consider when choosing the length of the enrollment period.
 
@@ -42,7 +44,7 @@ Putting this together, we generally recommend the following possible lengths for
 - 22 days
 - etc.
 
-### Getting help
+### Getting Help
 
 _Please bring questions about enrollment period and sizing either to [Data Science Office Hours](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours) or to [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03)_
 
@@ -52,13 +54,13 @@ Once a client has enrolled in an experiment, their Observation Window has begun,
 
 The observation window is an abstraction that represents the longest period of time we can observe any individual client for and can be calculated by differencing the enrollment period from the overall runtime for the experiment (observation window = total runtime - enrollment period).
 
-### Relationship with unenrollment and the end of the experiment.
+### Relationship with Unenrollment and the End of the Experiment
 
 Clients can unenroll from experiments during the middle of the observation window for a variety of reasons (they've disabled Studies, they no longer meet the targeting, opt-ing out of that specific experiment, etc.). To avoid bias, results are calculated over all clients that ever enrolled (unenrolling from the experiment does not remove a client from the analysis). The only situation that _may_ exclude a client from analysis would be opt-ing out of telemetry.
 
 Ending the experiment in Experimenter finalizes the total runtime of the experiment and enables us to determine how long the observation window can be. As a result, for most clients, the observation window ends before they're actually unenrolled from the experiment.
 
-### Visual explanation
+### Visual Explanation
 
 ![Enrollment & Observation period workflow](/img/workflow/enrollment_and_observation.png)
 
@@ -69,7 +71,7 @@ The above visual explains how the system works for a hypothetical experiment tha
 - ...
 - For clients enrolling on day 8 (9/8), their observation windows runs from 9/9 through 9/24.
 
-#### Relationship with Analysis Windows
+### Relationship with Analysis Windows
 
 All experiment metrics are calculated over an Analysis Window which is a subset of the Observation Window. Analysis windows can be at a daily, weekly, or overall level. In this example, there are:
 
@@ -77,6 +79,6 @@ All experiment metrics are calculated over an Analysis Window which is a subset 
 - 2 weekly windows. The first week (indexed as 0 in Jetstream and Partybal) is shown in magenta and the second (1st) week is shown in orange. There wasn't enough days to form a 3rd complete week, so metrics can only be calculated over weeks 0 or 1.
 - 16 daily windows.
 
-### Getting help
+### Getting Help
 
 _Please bring questions about observation windows and analysis to [Data Science Office Hours](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours) or to [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03)_
