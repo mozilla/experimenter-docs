@@ -1,7 +1,7 @@
 ---
-id: contributing
-title: Contributing
-slug: /contributing
+id: for-contributors
+title: For Contributors
+slug: /getting-started/for-contributors
 ---
 
 The Experimenter documentation hub is managed in the [mozilla/experimenter-docs](https://github.com/mozilla/experimenter-docs) repository. You will need a GitHub account to contribute, and if you are not already in the [Project Nimbus GitHub team](https://github.com/orgs/mozilla/teams/project-nimbus/members), you may need to request write access in the #nimbus-project Slack channel.
@@ -21,7 +21,7 @@ If you need custom CSS styles, you can edit the `src/css/custom.css` file. Try t
 <div className="flex-lg">
 <div>
 
-### Configuring Your Notifications
+## Configuring Your Notifications
 
 If you would like to subscribe to notifications for this repository, including for when someone requests doc changes with a pull request that you can potentially review and approve, be sure to "Watch" the repository by clicking on the repository's "Notification settings" menu and selecting "All Activity."
 
@@ -55,7 +55,7 @@ When you're satisfied with your changes or new document, at the bottom of the pa
 
 Click `Commit changes` and you'll be brought to a pull request view comparing your new branch to `main`. If you don't need to make updates to the sidebar, see the [Pull Request Workflow](#pull-request-workflow) section and click `Create pull request`.
 
-#### Doc Edits + Sidebar Edits
+### Doc Edits + Sidebar Edits
 
 If you also need to make updates to the sidebar, you will follow the GH UI link under "Adding or Modifying Sidebar Links" but replace "main" in the URL with the name of your branch. For example, if the name of your branch is `my-flying-nimbus`, [this would be the link](https://github.com/mozilla/experimenter-docs/edit/my-flying-nimbus/sidebars.js) you'd use to edit that file. Similarly to the instructions above, after you've made the desire changes, enter a commit message and optional description. However, this time, you will select the option **commit directly to the `my-flying-nimbus` branch** instead of creating a new branch.
 
@@ -63,7 +63,7 @@ After committing your changes, you'll be brought back to a pull request view com
 
 ### Pull Request Workflow
 
-#### PR Template
+### PR Template
 
 After clicking `Create pull request`, you will be presented with a pull request template specific to this repository.
 
@@ -71,7 +71,7 @@ Edit the line `Closes: mozilla/experimenter#0000` where `experimenter` may need 
 
 Under "Permission Checklist," check the boxes applicable to your pull request that would make this process easier for you. If you have any specific requests regarding the checkboxes or anything else, please note them in the pull request.
 
-#### Reviewing and Merging
+### Reviewing and Merging
 
 To make sure your pull request is reviewed, either request a specific reviewer to look at your PR, request the `mozilla/project-nimbus-team`, or ask the team in the #nimbus-project Slack channel to take a look. Once you've created the pull request, automatic checks will run to ensure the project can build and deploy successfully with your changes, and at least one reviewer will need to approve your PR.
 

@@ -22,7 +22,7 @@ Some notes:
 enrollment_period = 14
 ```
 
-Once the experiment has reached the end of the enrollment period, the experiment owner can elect to end enrollment which will prevent new clients from enrolling. To do this, first press the `End Enrollment` button located on the experiment's management page in [the Experimenter console](https://experimenter.services.mozilla.com). This will record the request. A reviewer with [L3 access](/access) *will then need to approve the request*. If your product team does not have a dedicated reviewer, you can request the ending by posting in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03).
+Once the experiment has reached the end of the enrollment period, the experiment owner can elect to end enrollment which will prevent new clients from enrolling. To do this, first press the `End Enrollment` button located on the experiment's management page in [the Experimenter console](https://experimenter.services.mozilla.com). This will record the request. A reviewer with [L3 access](/getting-started/for-reviewers) *will then need to approve the request*. If your product team does not have a dedicated reviewer, you can request the ending by posting in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03).
 
 <p align="center">
     <img src="/img/workflow/end_enrollment.png"></img>

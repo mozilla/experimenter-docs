@@ -1,10 +1,12 @@
 ---
-id: for-product
-title: Experiment Owners
-slug: /for-product
+id: for-experiment-owners
+title: For Experiment Owners
+slug: /getting-started/for-experiment-owners
 ---
 
-## What is the role of the Experiment Owner in experimentation?
+This guide helps experiment owners (typically Product Managers) understand their role in the experimentation process, from creating experiment briefs to launching and analyzing experiments.
+
+## What Is the Role of the Experiment Owner in Experimentation?
 
 Product Managers often write the initial experiment to capture the logistical information, but it can also be engineers or program managers.  Often engineers fill in the technical change information - so ownership can be a collaboration to get the logistical and technical information for the remote change entered correctly.
 
@@ -19,7 +21,7 @@ Responsibilities include:
 - Launching the experiment, ending enrollment, ending experiment (the [experimentation workflow](/workflow/overview))
 - Working with the experiment team (in slack at #ask-experimenter) to identify a set of reviewers trained and authorized to review experiments in your feature area. The experiment team will train them on how to review.
 
-## Where do I start?
+## Where Do I Start?
 
 - Watch the 5 minute video on [experiment workflow](https://experimenter.info/workflow/overview) for an overview of the experiment lifecycle to understand the stages / ordering. Use the [Workflow Miro board](https://experimenter.info/workflow/overview) as your source for current links and guidance.
 
@@ -46,7 +48,7 @@ Rather than duplicate links that may later break as the process improves - links
 - There are several weekly touchpoints [Office Hours](https://mozilla-hub.atlassian.net/wiki/spaces/DATA/pages/6849684/Office+Hours) for in person assistance from subject matter experts in different areas.
 - If you are confused on any aspect - that's expected the first few experiments until you've gotten the rhythm. Ask in the #ask-experimenter Slack channel - it is an open community of support from several disciplines.
 
-## When shipping product changes: a guide on when to use what option
+## When Shipping Product Changes: A Guide on When to Use What Option
 
 |                                                           |                                                                     Experiment (Experimentation Program)                                                                      |                                                         Rollout                                                         |                                                                Holdback                                                                |
 | --------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------: |
@@ -59,7 +61,7 @@ Rather than duplicate links that may later break as the process improves - links
 | Advantages                                                |                                                          Can measure impact first, then if positive ship the change                                                           |                                           Can scale up or down as appropriate                                           |                                              Faster than blocking on impact measurements                                               |
 | Experiment brief needed                                   |                                                                                      Yes                                                                                      |                                                           No                                                            |                                                                  Yes                                                                   |
 
-## Example of how to construct a balanced launch plan
+## Example of How to Construct a Balanced Launch Plan
 
 [What Velocity team practices today]
 

@@ -12,13 +12,12 @@ module.exports = {
       type: "category",
       label: "Getting Started",
       items: [
-        "getting-started/for-product",
-        "workflow/implementing/experiment-owners",
-        "getting-started/data-scientists/overview",
-        "getting-started/engineers/for-engineers",
-        "getting-started/access",
+        "getting-started/for-experiment-owners",
+        "getting-started/for-data-scientists",
+        "getting-started/for-engineers",
+        "getting-started/for-reviewers",
         "getting-started/for-leadership",
-        "getting-started/contributing"
+        "getting-started/for-contributors"
       ]
     },
 
@@ -30,6 +29,7 @@ module.exports = {
       label: "Experiment Workflow",
       items: [
         "workflow/overview",
+        "workflow/implementing/experiment-owners",
         {
           type: "category",
           label: "Designing",
@@ -60,7 +60,17 @@ module.exports = {
         "workflow/launching/launching",
         "workflow/monitoring/monitoring",
         "workflow/analyzing/analyzing",
-        "workflow/ending/ending"
+        "workflow/ending/ending",
+        {
+          type: "link",
+          label: "Experimenter Console (Production)",
+          href: "https://experimenter.services.mozilla.com/nimbus/"
+        },
+        {
+          type: "link",
+          label: "Experimenter Console (Stage)",
+          href: "https://stage.experimenter.nonprod.webservices.mozgcp.net/nimbus/"
+        }
       ]
     },
 
@@ -321,16 +331,6 @@ module.exports = {
       type: "category",
       label: "External Links",
       items: [
-        {
-          type: "link",
-          label: "Experimenter Console (Production)",
-          href: "https://experimenter.services.mozilla.com/nimbus/"
-        },
-        {
-          type: "link",
-          label: "Experimenter Console (Stage)",
-          href: "https://stage.experimenter.nonprod.webservices.mozgcp.net/nimbus/"
-        },
         {
           type: "link",
           label: "Experimenter GitHub Repo",
