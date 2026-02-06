@@ -30,7 +30,7 @@ Jetstream metrics represent aggregations of the recorded values of Glean metrics
 [Statistics](./statistics) summarize the distribution of metrics
 within and between branches of an experiment.
 
-## How do I add a metric to my experiment?
+## How Do I Add a Metric to My Experiment?
 
 A small set of default, critical guardrail metrics that are specific to each platform are run by default for each experiment.  Sometimes also called Core metrics.
 These are defined for each platform in the metric-hub repository in [jetstream/defaults/](https://github.com/mozilla/metric-hub/tree/main/jetstream/defaults/). Look at the file for your platform. At the top you will see the metrics collected and the timeframe they are available: daily, weekly, or overall (at the end of the experiment).  For help understanding any aspect of guardrail metrics on your platform - link to the file and ask in #ask-experimenter.
@@ -41,7 +41,7 @@ Data scientists can extend and defined outcomes in the outcomes path of the
 
 If the metrics you need are not covered by Default (guardrail) or existing Pre-defined Outcomes - you can add a custom metric to your experiment by working with a data scientist to write a [custom configuration](https://experimenter.info/system-architecture#custom-configuration-aka-jetstream-configuration-files) for your experiment.  You work with DS by signing up for [data science experiment office hours](https://docs.google.com/document/d/1dH-aG8IsYtq6881_Q_cyEtmxli0bK7nuVcUD-5D7q-s/edit?tab=t.0#heading=h.yguiolmttiw2).  
 
-## What are the default guardrail metrics?
+## What Are the Default Guardrail Metrics?
 Open the [file for your platform](https://github.com/mozilla/metric-hub/tree/main/jetstream/defaults) to see the most recent list of what is included.  These don’t change often, but they can.  
 
 The guardrail metrics for [Desktop](https://github.com/mozilla/metric-hub/blob/main/jetstream/defaults/firefox_desktop.toml) as of June 2025.

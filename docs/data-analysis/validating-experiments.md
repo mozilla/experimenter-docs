@@ -4,11 +4,13 @@ title: Validation
 slug: /data-analysis/validating-experiments
 ---
 
+Common problems to look out for when validating experiments, and how to diagnose them.
+
 This section describes some common problems with experiments that you should look out for, how we recommend testing for them, and some potential causes to investigate if you do see that something is wrong.
 
 You should consider this a starting point, not a comprehensive list. **Generally speaking, interesting results warrant a higher degree of scrutiny**.
 
-### Branch imbalance (Sample Ratio Mismatch)
+## Branch Imbalance (Sample Ratio Mismatch)
 
 We expect to see some variation between the observed v.s. expected ratios for enrollment in branches for experiments. However, too much imbalance might be indication that there might be a problem with the validity of the experiment configuration, implementation, or execution.
 
@@ -26,7 +28,7 @@ You will see SRM checks for daily active clients, enrollments, and unenrollments
 - High unenrollments in treatment due to implementation details of the experience being tested
 - Irregularities in deployment of experiments/updating in flight
 
-### Low enrollments
+## Low Enrollments
 
 Once your experiment has been enrolling for a day or so, you should check your monitoring dashboards to see the difference between the actual and expected rate of enrollment. If numbers are lower than expected, this can be due to:
 
@@ -37,7 +39,7 @@ Once your experiment has been enrolling for a day or so, you should check your m
 - A bug, timeout, or implementation error in client-side targeting attributes;
 - You launched the experiment during the first week of a new release, during which actual users are still updating to the latest version of Firefox
 
-### High unenrollments
+## High Unenrollments
 
 Users can be removed from experiments for a number of reasons, which shows up on your dashboard as "unenrollments". When unenrollments look suspiciously high, these are some possible causes to investigate:
 
@@ -46,7 +48,7 @@ Users can be removed from experiments for a number of reasons, which shows up on
 - Infrastructure failures (e.g. signing, remote settings delivery is somehow compromised)
 - Users are opting out of the experiment at an unexpected rate
 
-#### Debugging unenrollments by reason
+### Debugging Unenrollments by Reason
 
 In order to see which "reasons" are responsible for unenrollment, you can take a look at this part of the dashboard:
 ![image](https://user-images.githubusercontent.com/1455535/137957335-e34e9ab5-05cd-42b2-b1fd-2e88d90bb60c.png)
