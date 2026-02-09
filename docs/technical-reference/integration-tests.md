@@ -4,7 +4,7 @@ title: Integration Tests
 slug: /technical-reference/integration-tests
 ---
 
-# Integration Tests
+How to run the end-to-end Selenium integration test suite for Nimbus.
 
 ## About
 
@@ -12,6 +12,7 @@ The integration test suite is an end-to-end test suite that uses Selenium and Fi
 
 ## Nimbus Tests
 ### Getting Started
+
 
 You must have Docker installed.
 

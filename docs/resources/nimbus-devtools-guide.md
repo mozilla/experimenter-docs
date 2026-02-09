@@ -4,11 +4,11 @@ title: Developer Tools
 slug: /resources/nimbus-devtools-guide
 ---
 
-# Nimbus Developer Tools Guide
+## Nimbus Developer Tools Guide
 
 This guide provides an overview of the Nimbus Developer Tools, designed for Nimbus experiment debugging. With these tools, you can more easily test experiments, debug targeting expressions, and browse through available experiments.
 
-### Installation
+## Installation
 
 To install the Nimbus Developer Tools, download the latest release from the [Nimbus DevTools GitHub repository](https://github.com/mozilla-extensions/nimbus-devtools/releases).
 
