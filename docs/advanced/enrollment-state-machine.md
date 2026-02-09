@@ -4,6 +4,8 @@ title: Enrollment State Machine
 slug: /advanced/enrollment-state-machine
 ---
 
+The possible enrollment states and transitions within the Nimbus SDK, including reasons for each state change.
+
 ## Possible States
 
 Within the Nimbus SDK there are multiple states, most of which have a "reason" associated with them.
