@@ -4,6 +4,8 @@ title: Local Enrollment
 slug: /resources/local-enrollment
 ---
 
+How to set up a local development environment for testing Nimbus experiments on Desktop and Mobile.
+
 ## Desktop
 Preferences to set in Firefox
 - `nimbus.debug`: `True`
