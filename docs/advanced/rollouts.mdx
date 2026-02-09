@@ -8,118 +8,164 @@ slug: /advanced/rollouts
 
 :::tip
 Want more info on rollouts?
-Reach out to us in [`#ask-experimenter`](https://mozilla.slack.com/archives/CF94YGE03) on Slack. 
+Reach out to us in [`#ask-experimenter`](https://mozilla.slack.com/archives/CF94YGE03) on Slack.
 :::
 
-Rollouts are single-branch experiments that differ from a traditional experiment in a number of ways: 
-- A rollout only has a single branch.
-- A client can be enrolled in both a single experiment AND rollout for a given feature.
-- The experiment feature value takes precedence over the rollout feature value.
-- Rollouts use a separate bucketing namespace from experiments so you don't need to worry about the populations colliding.
-- Rollouts are not measurement tools.  There is no comparison branch so no way to tell "did rollout change  ____?"
+A rollout is a single-branch Nimbus delivery used to ship a feature configuration to users without running a controlled experiment. Rollouts differ from experiments in several key ways:
 
-## What is a rollout?
+- A rollout has **only one branch** — there is no control group.
+- A client can be enrolled in both an experiment **and** a rollout for the same feature simultaneously.
+- When both are active, the **experiment takes precedence** over the rollout.
+- Rollouts use **separate bucketing** from experiments, so their populations don't collide.
+- Rollouts are **not measurement tools** — there is no comparison branch, no results page, and no data science analysis. You can monitor rollouts via OpMon dashboards, which provide raw data without statistical comparison.
 
-#### When should I use a rollout instead of an experiment?
+## When to use a rollout
 
-- Launching a winning branch of an experiment faster than the trains.
-- Launching a configuration to non-experiment users during an experiment after a short period of verification.
-- Configuring different settings for a feature for different audiences remotely.
-- A "kill switch" if you want to launch a feature but then turn it off if something goes wrong.
+- **Launching a winning branch** of an experiment faster than the trains.
+- **Launching a configuration** to non-experiment users during an experiment after a short period of verification.
+- **Configuring different settings** for a feature for different audiences remotely.
+- **A "kill switch"** if you want to launch a feature but then turn it off if something goes wrong.
 
-#### When should I not use a rollout?
+## When not to use a rollout
 
-If the feature has not yet been extensively tested, isn't production quality, or needs a period of validation on the trains.
+Rollouts are designed to deliver feature changes, not to learn from them. If your goal is learning, consider these alternatives:
 
-### Can I run a Nimbus experiment and a rollout simultaneously?
+- **Use an [experiment](/workflow/designing) instead** if you need to measure the causal impact of a change, compare multiple approaches, or gather statistically significant data to make a decision. Experiments give you a control group, results analysis, and data science support — rollouts do not.
+- **Use [Firefox Labs](/workflow/firefox-labs) instead** if the feature is early-stage, not yet production quality, or you want qualitative feedback from a small group of opt-in early adopters before committing to a broader launch. Labs is designed for incubation — it's okay if the feature is incomplete or buggy.
 
-It's possible, but bear in mind that rollouts are not measurement instruments. **Experiments are**.
+## How rollouts work
 
-If you have uncertainty about the effect of the feature,
-you may wish to be guided by experiment results instead of deploying the feature immediately.
+### Rollout lifecycle
 
-Before you do this, you should consider:
+Rollouts have a simpler lifecycle than experiments:
 
-- **Future experimentation needs**
-   - Once you deploy the feature to someone, you lose the ability to observe what happens when you introduce that feature to that user.
-   - Consider whether you have a need for holdbacks.
-- **Decision criteria**
-   - Identify the risks you're trying to mitigate with a rollout and decide whether you need multiple stages or not.
-   - If you have multiple stages, how will you know whether to advance or roll back?
-   - What signals will help you make your decision? Where will they come from?
-   - If you are relying on the experiment to guide you, make sure that the timelines are compatible.
-   - Rollouts are not measurement tools.  There is NO CONTROL to compare to.  There is no results page generated.  Rollouts you are potentially manually watching for bugs or user sentiment issues or observing telemetry directly.  There is no data science support for rollouts.  There is an OpMon dashboard - which that provides raw data without comparison.
+1. **Draft** — Configure the rollout
+2. **Review** — Submit for review and approval
+3. **Live (Enrolling)** — Clients matching targeting are enrolled
+4. **Complete** — Rollout is ended
 
-You would need to:
+Unlike experiments, rollouts **skip the observation phase**. When you end a rollout, it goes directly from Live to Complete. Rollouts also **cannot end enrollment** independently — the only way to stop a rollout is to end it entirely. (The exception is [Firefox Labs](/workflow/firefox-labs) rollouts, which support ending enrollment for feature graduation.)
 
-1. Launch an experiment that targets a fixed portion of the population (sized appropriately for whatever you are trying to measure)
-2. When you are ready, launch a rollout using the steps below at a low percentage of the population
-3. As the rollout proceeds, consult your decision criteria. Change the percentage of the rollout by editing the population percentage.
+### Interaction with experiments
 
-Keep in mind that if you do plan to release the experience to 100% of users, you should make sure it meets production quality standards.
+A client can be in both an experiment and a rollout for the same feature at the same time. The client tracks rollout and experiment enrollment separately, so they don't interfere with each other's bucketing.
 
-#### Are there typical rollout patterns I should follow?
+- The **experiment always takes precedence** — if a user is in both, they see the experiment's feature configuration while it's active.
+- When the experiment ends, the client unenrolls and on the next recipe evaluation will pick up the rollout configuration.
+
+:::warning
+If you run both an experiment and a rollout on the same feature, be aware that experiment users won't see the rollout configuration until the experiment ends. Plan your timelines accordingly.
+:::
+
+:::note
+**Mobile messaging exception:** On mobile, if both an experiment and rollout target the same messaging feature, the client will actually be enrolled in both and receive the **combined** configuration. If they target different fields in the JSON, the user gets "experiment + rollout" while both are active, then "rollout only" when the experiment ends.
+:::
+
+### Pref conflict handling
+
+For rollouts that set Firefox preferences, Experimenter automatically enables the **"Prevent enrollment if users have changed any prefs"** setting. This is forced for all rollouts and cannot be disabled. It prevents users who have manually changed a pref set by the rollout from being re-enrolled, which would override their manual preference changes.
+
+If you're creating an experiment that also has this setting enabled on the same feature as a live rollout, Experimenter will warn you about potential pref targeting collisions.
+
+## Creating a rollout
+
+There are two ways to create a rollout in Experimenter:
+
+### Promote from an existing experiment
+
+To create a rollout from a "winning branch" of an in-flight experiment, use the **Promote to Rollout** buttons on the experiment's Summary page. This clones the selected branch into a new rollout, resetting the population percentage to 0% and the duration/enrollment to defaults.
+
+<img title="Promote to rollout buttons" src="/img/deep-dives/promote-to-rollout-buttons.png" align="center"/>
+
+### Create manually
+
+Create a new item through the **Create new** button on the Experimenter home screen, then check the **"This is a rollout"** box on the Branches page:
+
+<img title="Rollout checkbox" src="/img/deep-dives/rollout-checkbox.png" align="center"/>
+
+## Managing a live rollout
+
+### Live editability
+
+Once a rollout is launched, the only field you can edit is the **population percentage** ("Percentage of clients" on the Audience page). All other fields are locked.
+
+To change the population percentage:
+
+1. Open your rollout and click **Audience** in the left sidebar.
+2. Edit the "Percentage of clients" field and save.
+
+<img title="Population percent field is editable" src="/img/deep-dives/population-percent-editable.png"/>
+
+### Requesting an update
+
+After editing the population percentage, your rollout enters an **unpublished changes** state (shown by a red "Unpublished changes" badge near the Timeline). You can make multiple edits before requesting review.
+
+<img title="Unpublished changes status pill" src="/img/deep-dives/unpublished-changes-pill.png" height="200"/>
+
+When you're ready, click the **Request Update** button on the Summary page (it's only enabled when there are unpublished changes):
+
+<img title="Request a live update button" src="/img/deep-dives/request-live-update.png"/>
+
+This triggers the same review flow as launching: approval on Experimenter, then approval on Remote Settings.
+
+<img title="Live update review flow" src="/img/deep-dives/live-update-review.png"/>
+
+### Staged rollout patterns
 
 This document covers [common patterns for people using a rollout to mitigate risk around technical issues, brand perception, and load capacity/service scaling](https://docs.google.com/document/d/1aAlZa5RoZt_yf3-XUtffJwKVBczhJMcHCAPxRxHrNb8/edit).
 
-### How do I create a rollout in Experimenter?
+See also the [Rollouts FAQ](/faq/rollouts) for guidance on sizing steps and speed.
 
-There are two ways to make a rollout from the Experimenter UI. When I have a “winning branch” from an in-flight experiment, I want to easily set some percentage of the non-experiment population to that feature configuration. 
+## Running an experiment and rollout simultaneously
 
-1. To create a rollout from an existing experiment, a branch can be cloned and a new rollout created (similar to the way "Clone" works for experiments). This is done using the "Promote to Rollout" buttons on the Summary page of an experiment:
-<p/>
-   <img title="Promote to rollout buttons" src="/img/deep-dives/promote-to-rollout-buttons.png" align="center"/>
+Yes, but remember that only the experiment will produce measurable results — the rollout is just delivering the feature. If you have uncertainty about the effect of the feature, you may wish to be guided by experiment results instead of deploying the feature immediately.
 
+### Things to consider first
 
-2. A rollout can also be manually created (without cloning) through the "Create new" button on the Experimenter home screen. To mark the new item as a rollout, check the "This is a rollout" box on the "Branches" page:
-<p/>
-   <img title="Rollout checkbox" src="/img/deep-dives/rollout-checkbox.png" align="center"/>
+:::tip[Future experimentation needs]
+Once you deploy the feature to someone, you lose the ability to observe what happens when you introduce that feature to that user. Consider whether you have a need for holdbacks.
+:::
 
-### Incrementing your rollout's population percentage
+:::tip[Decision criteria]
+- Identify the risks you're trying to mitigate and decide whether you need multiple stages.
+- If you have multiple stages, how will you know whether to advance or roll back?
+- What signals will help you make your decision? Where will they come from?
+- If you are relying on the experiment to guide you, make sure the timelines are compatible.
+:::
 
-#### Live editability
+### Steps
 
-The population percent of a rollout ("Percentage of clients" on the Audience page) can be edited once a rollout is launched. To make changes to this field, open your rollout, and from the left sidebar click on the Audience page. From there, you will be able to make edits and save. 
+1. **Launch the experiment** targeting a fixed portion of the population, sized appropriately for whatever you are trying to measure.
+2. **Launch the rollout** at a low percentage of the remaining population when you are ready.
+3. **Increment gradually** — as the rollout proceeds, consult your decision criteria and adjust the population percentage via [live editability](#live-editability).
 
-   <img title="Population percent field is editable" src="/img/deep-dives/population-percent-editable.png"/>
+Keep in mind that if you plan to release the experience to 100% of users, you should make sure it meets production quality standards.
 
-Once an edit has been made, you will see a "Request update" button on the summary page under the available Actions:
+## Finding rollouts
 
-   <img title="Request a live update button" src="/img/deep-dives/request-live-update.png"/> 
-<p/>  
+Use the filters on the Experimenter home page. You can sort by feature to see all experiments/rollouts for a given feature, or filter by type to show only "rollout":
 
-Once you request an update, you will follow the same review flow as launching an experiment (approval on Experimenter, and approval on Remote Settings).
-<p/>
-   <img title="Live update review flow" src="/img/deep-dives/live-update-review.png"/>
+<img title="Home page filters" src="/img/deep-dives/home-filters.png" height="500"/>
 
-<p/>
-Multiple edits can be made to your rollout without needing to request an update, and you will be able to see if there are unpublished changes by the red "Unpublished changes" status pill that is located by "Timeline":
-<p/>
-   <img title="Unpublished changes status pill" src="/img/deep-dives/unpublished-changes-pill.png" height="200"/>
+## Supported platforms and minimum versions
 
+Rollouts are supported on all Nimbus platforms with the following minimum Firefox versions:
 
-### Where can I find rollouts?
+| Platform | Minimum Version |
+| :--- | :--- |
+| Desktop | 115 |
+| Fenix (Firefox for Android) | 116 |
+| Firefox iOS | 116 |
 
-This can be done using the filters on the Experimenter home page. You can either sort by feature to see all experiment/rollouts for said feature, or you can search by experiment type to filter by "experiment" or "rollout": 
+## Monitoring
 
-   <img title="Home page filters" src="/img/deep-dives/home-filters.png" height="500"/>
+Rollouts do not generate a results page or statistical analysis. Instead, you can monitor rollouts using **OpMon (Operational Monitoring)** dashboards, which provide raw telemetry data without comparison to a control group.
 
+OpMon dashboards for rollouts follow this URL pattern:
+```
+https://mozilla.cloud.looker.com/dashboards/operational_monitoring::<slug_with_underscores>
+```
 
-### Supported platforms and minimum version targeting
+## FAQ
 
-Experimenter currently supports the following platforms:
-
-- Desktop
-- Fenix (Firefox for Android)
-- Focus Android
-- Firefox iOS
-- Focus iOS
-
-The minimum version supported for rollouts on all platforms (listed above) is currently 105. See [Experimenter](https://github.com/mozilla/experimenter/blob/main/experimenter/experimenter/experiments/constants.py#L375) for more details.
-
-### Automated analysis
-
-- The dashboards for rollouts that OpMon generates follow this URL pattern:
-  ```
-  https://mozilla.cloud.looker.com/dashboards/operational_monitoring::<slug with underscores>
-  ```
+See the [Rollouts FAQ](/faq/rollouts) for common questions about rollout management, sizing, timing, and interaction with experiments.
