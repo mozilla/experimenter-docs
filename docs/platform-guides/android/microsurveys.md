@@ -8,7 +8,7 @@ The microsurvey feature is an extension of the [messaging framework](/messaging/
 
 It’s composed the of two main user interfaces:
 
-## The prompt
+## The Prompt
 It is the first UI widget which users see, the prompt is an invitation to start the survey, it’s shown when all the triggers indicated are met, until the user decides to start the survey, choose to cancel or the maximum number of shows is met.
 
 <img src="/img/mobile/microsurveys/prompt.png" alt="Prompt view" className="img-sm-center"/>
@@ -18,7 +18,7 @@ It is the first UI widget which users see, the prompt is an invitation to start 
 2. The button starts the survey and shows the survey sheet.
 3. The cancel button, dismiss the survey, and it won't be shown anymore to users.
 
-## The sheet
+## The Sheet
 The survey sheet is shown after the user clicks “Continue” in the prompt, here the user will be able to fill the survey. It will be shown until the user clicks the “X” button (1) or drag down the sheet, which will make the prompt visible again.
 
 <img src="/img/mobile/microsurveys/sheet.png" alt="Sheet view" className="img-sm-center"/>
@@ -28,10 +28,10 @@ The survey sheet is shown after the user clicks “Continue” in the prompt, he
 2. The submit button which will send the survey result if at least one field is selected.
 3. The question and options both can be customized.
 
-## Survey JSON recipe
+## Survey JSON Recipe
 Microsurveys are built on top of the already existing [messaging framework](/messaging/desktop/mobile-messaging), with an extra field called `microsurvey-config`  to control the survey, if you are not familiar please take a look at it first.
 
-## Customize the prompt
+## Customize the Prompt
 On the prompt, you can customize the title by using the same `title` field as normal message, for example:
 
 ```json
@@ -47,7 +47,7 @@ On the prompt, you can customize the title by using the same `title` field as no
 
 You can either provide a `string` containing the text that you would like to show or reference a string bundled with the app. The latter is the preferred method so the survey can support multiple languages.
 
-## Customize the sheet
+## Customize the Sheet
 In the sheet we can control the question, answers and UTM parameters for the privacy policy link.
 
 For the question, just use the `text` field at the same level as the `title` one, similar to the latter where you can provide either a string or a bundled string id.

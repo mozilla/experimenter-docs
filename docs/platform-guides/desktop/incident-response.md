@@ -4,11 +4,13 @@ title: Incident Response
 slug: /platform-guides/desktop/incident-response
 ---
 
+How to use the prefFlips feature for incident response pref flips on Desktop Firefox 129+.
+
 As of Firefox 129 (and 128.2 ESR), Firefox supports flipping any pref via
 Nimbus. This is done with the `prefFlips` feature. The JSON Schema definition
 for the feature value can be found [here][jsonschema].
 
-# Warning
+## Warning
 
 This feature is *not intended for use in experimentation*. If you want to do an
 experiment on some number of prefs in Firefox, you **must** register these prefs
@@ -21,7 +23,7 @@ with caution. Remember: with great power comes great responsibility.
 
 Only the release management team can approve incident reponse pref flips.
 
-# Behaviour
+## Behaviour
 
 When a client enrolls into a rollout using this feature, Nimbus will set (or
 unset) all the prefs to the values specified. Prefs on the `user` branch will
@@ -47,7 +49,7 @@ will be unenrolled.
 The incident response feature *cannot* be used with other features.
 
 
-# Launching a Pref Flip
+## Launching a Pref Flip
 
 1. Create a new experiment in
 [Experimenter](https://experimenter.services.mozilla.com/) with an
@@ -136,7 +138,7 @@ Desktop.
 
 <a id="example-configuration"></a>
 
-# Example Configuration
+## Example Configuration
 
 ```json
 {
@@ -157,7 +159,7 @@ Desktop.
 }
 ```
 
-# Causes of Unenrollment
+## Causes of Unenrollment
 
 ## Mismatched Types
 

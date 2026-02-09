@@ -4,7 +4,7 @@ title: Onboarding
 slug: /platform-guides/ios/onboarding
 ---
 
-# Introduction
+## Introduction
 The onboarding feature enables experimentating with the 'new user onboarding flow'. The onboarding flow is presented to the user on each new install, and is made up of a series of full screen 'views', referred to as '**cards**'. The purpose of the onboarding flow is to enable the user to configure a small number of app enhancing settings. Each card provides context for each setting and the ability to take an appropratie action, or skip to the next card.
 
 The onboarding feature enables customize each card's:
@@ -17,7 +17,7 @@ The onboarding feature enables customize each card's:
 - number of buttons (one or two)
 - sequencing
 
-# About this document
+## About This Document
 This document is a guide for staff who wish to configure the new user onboarding flow through the experimenter interface.
 
 It is also a living document:
@@ -26,13 +26,13 @@ It is also a living document:
 - card types may be added
 - card attributes may be added
 
-# Scene setting
+## Scene Setting
 
 The onboarding feature is built on top of Nimbus, Mozilla's experimentation platform. Nimbus allows you to send bits of configuration to application features from Experimenter, the web-application staff use to launch and manage experiments and rollouts.
 
 Using Experimenter in the general case is documented elsewhere, so this document is specifically concerned with configuring the onboarding feature.
 
-# References
+## References
 For the most up-to-date configurations, the main code base will always be the best place to check.
 - [Nimbus manifest](https://github.com/mozilla-mobile/firefox-ios/blob/main/nimbus.fml.yaml)
 - [Onboarding feature manifest](https://github.com/mozilla-mobile/firefox-ios/blob/main/nimbus-features/onboardingFrameworkFeature.yaml)
@@ -41,7 +41,7 @@ For the most up-to-date configurations, the main code base will always be the be
 The onboarding feature is a [first run experiment](/advanced/first-run-experiments)
 :::
 
-# Creating an experiment
+## Creating an Experiment
 Only **values that differ** from the card's default values need to be provided to Experimenter. E.g:
 
 #### Existing default card
@@ -105,7 +105,7 @@ Only **values that differ** from the card's default values need to be provided t
    }
 ```
 
-# Feature Definition
+## Feature Definition
 The onboarding feature is split into several values:
 - conditions
 - cards
@@ -175,7 +175,7 @@ This is a property for the whole onboarding, and controls whether there is an `x
 }
 ```
 
-# Available resources
+## Available Resources
 
 ## TextID
 All existing app strings are available to Experimenter. [See the full list here](https://github.com/mozilla-mobile/firefox-ios/blob/main/Client/Frontend/Strings.swift). Note, that only strings with a `tableName` and a `key` can be used.
@@ -200,9 +200,9 @@ Free text may also be used instead of a string resource.
 | sync-devices-ctd | The sync image for CTD campaign. |
 | notification-ctd | The notifications image for CTD campaign. |
 
-# Appendix
+## Appendix
 
-## Default cards overview
+## Default Cards Overview
 
 ### Default Welcome Card
 | Attribute     | Value                                          |
