@@ -114,11 +114,16 @@ It prevents sudden changes of how results are computed after tooling (such as [m
 ### How to Use the Latest Tooling and Metric Definitions?
 
 When tooling or metrics are updated, there are a few options with different consequences for how Jetstream treats existing experiments:
-1. **do nothing**: only experiments that are launched after the new tooling release will use the most recent version of the tooling 
+1. **do nothing**: only experiments that are launched after the new tooling release will use the most recent version of the tooling
+  - NOTE: this does not apply to metric changes, which automatically get rerun or rerun-skip depending on how changes are landed.
 1. **use new tooling version without rerunning**: install the [jetstream command line tooling](https://pypi.org/project/mozilla-jetstream/) locally and run `jetstream rerun-skip --experiment_slug=<slug>`. This command pretends to rerun the experiment without actually re-running the queries, which will update the date used to determine which tooling and metric versions to use. Rerunning an experiment will always force new versions to be used for experiments. 
+  - NOTE: this option will apply for metric changes if the metric-hub PR is landed **with** `[ci rerun-skip]` in the title.
 1. **rerun experiment**: re-running an experiment will always use the most recent version of the tooling on the rerun and update the last updated timestamps of the result tables
+  - NOTE: this option will apply for metric changes if the metric-hub PR is landed **without** `[ci rerun-skip]` in the title.
 
 More detailled information around versioning is available in [Jetstream Operations].
+
+Also see the [metric-hub README] for more information on how and when to use `[ci rerun-skip]` when landing configuration changes.
 
 ## Datasets
 
@@ -135,3 +140,4 @@ is available in the Mozilla data docs.
 [outcome]: ./outcomes
 [mozanalysis]: https://github.com/mozilla/mozanalysis
 [Jetstream Operations]: ./operations#tooling-and-metric-versioning
+[metric-hub README]: https://github.com/mozilla/metric-hub?tab=readme-ov-file#experiment-analysis-considerations
