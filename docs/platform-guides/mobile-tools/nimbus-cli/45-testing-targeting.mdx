@@ -1,0 +1,75 @@
+---
+id: nimbus-cli-testing-targeting
+title: Targeting
+slug: /technical-reference/nimbus-cli/testing-targeting
+---
+
+The `eval-jexl` command evaluates [JEXL targeting expressions](/advanced/behavioral-targeting) against the app's runtime context.
+
+## `eval-jexl`
+
+```sh
+nimbus-cli --app <APP> --channel <CHANNEL> eval-jexl "<EXPRESSION>"
+```
+
+For example, to test a locale targeting expression:
+
+```sh
+nimbus-cli --app fenix --channel developer eval-jexl "locale == 'en-US'"
+```
+
+If the expression is true on the device:
+
+```json
+{
+  "success": true,
+  "result": true
+}
+```
+
+If the expression is false on the device:
+
+```json
+{
+  "success": true,
+  "result": false
+}
+```
+
+The `success` field indicates whether the expression was evaluated without errors. The `result` field contains the boolean result of the expression evaluation.
+
+### Examples
+
+Test app version comparisons using the `versionCompare` filter:
+
+```sh
+nimbus-cli --app fenix --channel release eval-jexl "app_version|versionCompare('120.0') >= 0"
+```
+
+```sh
+nimbus-cli --app firefox_ios --channel beta eval-jexl "app_version|versionCompare('120.0') >= 0"
+```
+
+Test whether the app is the default browser:
+
+```sh
+nimbus-cli --app fenix --channel developer eval-jexl "is_default_browser"
+```
+
+Test complex logical expressions:
+
+```sh
+nimbus-cli --app fenix --channel release eval-jexl "locale == 'en-US' && app_version|versionCompare('120.0') >= 0"
+```
+
+```sh
+nimbus-cli --app firefox_ios --channel developer eval-jexl "locale == 'en-CA'"
+```
+
+### Options
+
+The `--pbcopy` option copies the deeplink result to your clipboard:
+
+```sh
+nimbus-cli --app fenix --channel developer eval-jexl "is_default_browser" --pbcopy
+```
