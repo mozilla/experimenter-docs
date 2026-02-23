@@ -37,7 +37,7 @@ module.exports = {
             {
               type: "doc",
               label: "Experiments",
-              id: "workflow/designing"
+              id: "workflow/experiments"
             },
             {
               type: "doc",
