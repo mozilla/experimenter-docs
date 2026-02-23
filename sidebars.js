@@ -30,8 +30,27 @@ module.exports = {
       items: [
         "workflow/overview",
         "workflow/experimenter-console",
-        "workflow/designing",
-        "advanced/rollouts-deep-dive",
+        {
+          type: "category",
+          label: "Designing",
+          items: [
+            {
+              type: "doc",
+              label: "Experiments",
+              id: "workflow/designing"
+            },
+            {
+              type: "doc",
+              label: "Rollouts",
+              id: "advanced/rollouts-deep-dive"
+            },
+            {
+              type: "doc",
+              label: "Firefox Labs",
+              id: "workflow/firefox-labs"
+            }
+          ]
+        },
         "workflow/configuring",
         "workflow/localization",
         {
@@ -257,6 +276,7 @@ module.exports = {
         "faq/getting-started-faq",
         "faq/experiment-lifecycle-faq",
         "faq/rollouts-faq",
+        "faq/firefox-labs-faq",
         "faq/targeting-audiences-faq",
         "faq/data-metrics-analysis-faq",
         "faq/platform-specific-faq"

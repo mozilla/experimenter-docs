@@ -1,0 +1,69 @@
+---
+id: firefox-labs-faq
+title: Firefox Labs
+slug: /faq/firefox-labs
+sidebar_position: 3.5
+---
+
+Common questions about Firefox Labs experiences, telemetry, marketing, and interaction with experiments and rollouts.
+
+---
+
+## Can I make changes to my Labs feature off-train from the release channel?
+
+Once a Labs rollout has been signed off and launched, the only changes you can make to the live rollout are:
+
+- **Adjusting the population percentage** (the "Percentage of clients" on the Audience page).
+- **Ending enrollment** to stop new opt-ins (see [Graduating a Labs feature](/workflow/firefox-labs#graduating-a-labs-feature)).
+
+Any other changes require ending the existing rollout and launching a new one.
+
+Keep in mind: once you put something in Release, users get the code in-tree. If you expect an opportunity to iterate based on user feedback, what they get on Day 1 will sit until Day 1 of the next release version.
+
+---
+
+## What kind of telemetry is available in Labs?
+
+It's important to transition existing telemetry from legacy to Glean and track which checkboxes are clicked. The Glean team can help determine requirements.
+
+---
+
+## How do we market features available in Labs?
+
+Each Labs feature is encouraged to create a dedicated Mozilla Connect thread, giving it public exposure from the start. See [Marketing your Labs feature](/workflow/firefox-labs#marketing-your-labs-feature) for available channels.
+
+---
+
+## What happens if a user has telemetry turned off?
+
+As of Firefox 148, users can retain access to Firefox Labs if they disable telemetry. Rollouts and Labs experiences have been decoupled from telemetry so that browser enhancements and fixes can reach a larger user population. (See more on the [Remote Improvements](https://support.mozilla.org/en-US/kb/remote-improvements) choices.)
+
+However, Labs will **not** appear for users who have opted out of "Install and run studies" in `about:preferences`. If the user has opted out of studies, the Labs section in Settings will show up as a blank screen.
+
+---
+
+## What does success look like for a Labs experience?
+
+Since Labs promotes qualitative metrics, success is measured through Connect feedback, engagement metrics, and bug tickets — anything we can collect as learnings, especially ones we could share in public-facing product communications. Labs feature opt-ins are expected to be small since this appeals to early adopter users who skew more towards being technically-savvy.
+
+---
+
+## Can I run an experiment and/or rollout at the same time as a Labs experience?
+
+Labs are configured as rollouts, so you *can* be in an experiment and a Labs experience at the same time. However, the experiment will take precedence over the Labs experience and override anything that the Labs experience established. If you end up in experiment:control, you will have opted in and your feature will no longer work.
+
+You will need to choose between running a Labs experience and running a rollout at a given point in time, since people won't be able to enroll in the rollout if they're in the Labs experience, and vice versa.
+
+**Preferred approach:** If you are going to launch an experiment and a Labs experience at the same time, launch the experiment *first* and then exclude the experiment population from the Labs experience so that the Labs toggle doesn't show up in `about:preferences#experimental` for users who shouldn't see it.
+
+---
+
+## Can I retarget a client who has opted into a Labs experience for a different experiment/rollout?
+
+While Labs experiences may target 100%, users do not count as enrolled unless they opt in, so you can use normal "include" targeting to target a survey or experiment to users that were in a Labs experience.
+
+---
+
+## What happens if I'm already enrolled in an experiment?
+
+You won't see the Labs experience affiliated with the same feature, since enrollment in an experiment takes precedence over a Labs experience.

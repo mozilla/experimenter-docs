@@ -1,0 +1,179 @@
+---
+id: firefox-labs
+title: Firefox Labs
+slug: /workflow/firefox-labs
+---
+
+# Firefox Labs
+
+:::tip
+Have questions about Firefox Labs?
+Reach out in [`#firefox-labs`](https://mozilla.slack.com/archives/firefox-labs) or [`#ask-experimenter`](https://mozilla.slack.com/archives/CF94YGE03) on Slack.
+:::
+
+Firefox Labs is part of the [Nimbus platform](https://experimenter.info/) and is available on Nightly, Beta, and Release. It is a delivery mechanism that allows product development teams at Mozilla to expose feature opt-ins via a user-friendly interface in **Settings > Firefox Labs** (`about:preferences#experimental`).
+
+Firefox Labs gives product development teams in Firefox an opportunity to:
+
+- **Share work in progress** with the Firefox community to solicit feedback *before* the work is polished or stable enough for a larger audience.
+- **Gather qualitative feedback** from early adopters *instead of* (or before) running a Nimbus experiment.
+- **Explore experimental ideas** without disrupting the baseline user experience.
+- **Showcase contributor improvements** to Firefox and foster relationships with code contributors.
+
+## Is Firefox Labs right for what I'm building?
+
+Labs is integrated into Nimbus (**Desktop-only** for now). In the product lifecycle, Labs fits into the Incubation/Early Stage phase: if a product team is developing a new feature, Labs can serve as the first stage of product development through Nimbus.
+
+However, Labs is **not built** to gather statistically significant insights like other Nimbus experiments do. Instead, Labs is built to:
+
+- Gather feedback from early adopters *before* you launch a Nimbus experiment or rollout (or *instead* of running one).
+- Observe the behavior of the early adopter population via feature-level dashboards (Nimbus will not provide in-depth feature-level dashboards for Labs features).
+
+### Labs vs. Experiments and Rollouts
+
+| Scenario | Labs | Experiment / Rollout |
+| :--- | :---: | :---: |
+| "We want this feature for everyone, but we're figuring out a few things and don't want to turn it on for everyone yet." | ✅ | |
+| "We want to expose this feature to a representative sample and evaluate usage/engagement." | | ✅ |
+| "We've done internal QA, but want a short smoke test to a few hundred thousand users before going bigger." | | ✅ (Rollout) |
+| "We're okay if testers tend to be early adopters and more technical." | ✅ | |
+| "We want qualitative feedback to fine-tune the next iterations of our feature." | ✅ | |
+| "We want to observe quantitative engagement metrics and the causal effects of a feature." | | ✅ |
+| "We want to set expectations that the project isn't finished, but signal it's usable enough to test." | ✅ | |
+| "We're ready to roll out the feature to lots of users." | | ✅ (Rollout) |
+| Feature exposure can be targeted by region, locale, release train, and more. | ✅ | ✅ |
+| A user proactively chooses to opt into an early version of a feature in Settings. | ✅ | |
+| A user may be enrolled as part of a select group/branch (unless they've opted out of telemetry). | | ✅ |
+| A user can directly share feedback via a dedicated Connect thread. | ✅ | |
+| User behavior can be observed via a feature-level dashboard. | ✅ | |
+| User engagement can be observed through a traditional Nimbus dashboard. | | ✅ |
+
+
+## Getting started
+
+### Before you begin
+
+**The feature experience you're offering doesn't have to be perfect!** Labs is an external Foxfooding channel. Think of it as opening your feature up as a demo for an early access, open beta playtest — it's okay if it's incomplete or buggy. You're getting this draft version to users faster so you can get qualitative feedback earlier.
+
+Although you can technically launch a Labs recipe anytime your MVP code is ready to use, you must land your strings according to the release schedule. These strings make up your feature's Labs entry title and description that appear on `about:preferences#experimental`. In particular, **[String Freeze](https://firefox-source-docs.mozilla.org/contributing/pocket-guide-shipping-firefox.html)** occurs on the Friday of Nightly Week 4 — after that point, string additions or changes are not allowed so localizers can finish translations before Merge Day. **Please factor in String Freeze, Soft Code Freeze, and Merge when considering your project timelines.** For example, if you don't get this early-stage work landed before 150 merges to Beta, you won't be able to use your feature with Firefox Labs on Release 150 without uplifts.
+
+If you have the strings and feature work available in Nightly, you can use Labs on Nightly instead. Same for Beta. While the audiences for both aren't Release-minded, you can still get your feature out to a subset of users early and get qualitative feedback.
+
+### What we ask of you
+
+1. Walk through the checklist below to learn about the process.
+2. Come with a clear plan (or at least a clear hypothesis) with questions you'd like Labs testers to answer, and start filling out a [Labs Experience Brief](https://docs.google.com/document/d/1-rRI-nOLCJsN13M6gkt22f3FO5lAdm7k2C7P1N5Ar08/edit).
+3. If you're planning to follow up with a Nimbus experiment, clarify which hypotheses you are looking to validate/refute. What you seek to learn from Labs will likely be different from an experiment.
+
+## Checklist: Getting your feature on Labs
+
+### 1. Determine fit
+
+Review the "Is Firefox Labs right for what I'm building?" section above to confirm Labs aligns with your goals.
+
+### 2. Chat with the Labs team (optional)
+
+Reach out in **#firefox-labs** on Slack to discuss your feature, preliminary timeline, and early access/GTM goals. Topics to cover:
+
+- When you expect your feature will be code-complete as a Labs prototype (early-stage, but ready for a small group of users to opt into).
+- Whether you're planning another Nimbus delivery (e.g., experiment or rollout with randomized enrollment).
+- When you expect your feature to be ready to ship to the Release population.
+
+### 3. Submit a Labs Experience Brief
+
+If your goals align with what Labs can offer, fill out and submit a [Labs Experience Brief](https://docs.google.com/document/d/1-rRI-nOLCJsN13M6gkt22f3FO5lAdm7k2C7P1N5Ar08/edit).
+
+### 4. Join #firefox-labs
+
+Join the **#firefox-labs** Slack channel for your dedicated thread/canvas.
+
+### 5. Attend a kick-off meeting (optional)
+
+Join a Labs experience kick-off meeting coordinated via **#firefox-labs**. Consider inviting your principal engineer and UX designer.
+
+### 6. Set things up for the Nimbus team
+
+- **Add your feature to the Nimbus feature manifest.** You can frontload this entry with placeholders if the feature work isn't complete. See [Feature Definition](/technical-reference/feature-definition) for details.
+- **Land Fluent ID strings** for the title and description of the feature in [`features.ftl`](https://searchfox.org/mozilla-central/source/toolkit/locales/en-US/toolkit/firefoxlabs/features.ftl). ([Example bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1950407))
+  - **(Optional)** If you wish to add a Connect post link placeholder such as hyperlinked "Share feedback" text in the description, include an `<a>` with no `href` in the string.
+- **Land the actual implementation** of the prototype.
+
+### 7. Self-test QA (strongly encouraged)
+
+Please self-test QA your feature at the UX level. If you plan to share the Labs experience with multiple locales, please arrange for l10n.
+
+### 8. Set up a Connect feedback post (optional)
+
+Want to add a direct link to your Connect feedback post from Labs? Draft the post and coordinate in **#firefox-labs** to keep it hidden until your planned Labs launch. Make sure the strings you land in-tree include a link, even if it's a placeholder for now.
+
+### 9. Configure the rollout on Experimenter
+
+1. Pick the **Labs section** you want to house your feature (e.g., "Customize Browsing").
+2. Go to [Experimenter](https://experimenter.services.mozilla.com/nimbus/) and select **Create Experiment** to create a Nimbus recipe.
+3. For easier tracking, **title the beginning of your Nimbus recipe** with `[Firefox Labs]` and clarify which channel this experience is on (e.g., `[Firefox Labs] Link Previews (Nightly)`).
+4. **Choose the channel** you want this Labs experience to launch with (e.g., Nightly). As a best practice, select one channel per recipe.
+
+#### Configure the Branches section
+
+5. **Classify your recipe as a rollout.** Experimenter will automatically enable the "Prevent enrollment if users have changed any prefs" setting for all rollouts.
+
+6. **Check the "Is this a Firefox Labs rollout?" checkbox** on the Branches page. This will reveal several additional fields:
+
+   - **Title (Fluent ID)** *(required)* — The Fluent ID for your feature's title in Labs (e.g., the ID you landed in `features.ftl`). Firefox resolves this to localized text in `about:preferences#experimental`.
+   - **Description (Fluent ID)** *(required)* — The Fluent ID for your feature's description.
+   - **Description Links (JSON)** *(optional)* — A JSON object that maps link names to URLs, enabling clickable links inside your description. For example, if your Fluent description string contains `<a data-l10n-name="connect-link">Share feedback</a>`, provide:
+     ```json
+     {
+       "connect-link": "https://connect.mozilla.org/t5/your-post/..."
+     }
+     ```
+     All values must be HTTP(S) URLs.
+   - **Firefox Labs Group** *(required)* — Which section your feature appears under in Labs. Available groups:
+
+     | Group | Minimum Firefox Version |
+     | :--- | :--- |
+     | Customize Browsing | 137 |
+     | Webpage Display | 137 |
+     | Developer Tools | 137 |
+     | Productivity | 143 |
+
+     New groups can be added, but they must ride the release trains — a new group won't be available on Release until the version it was added in reaches Release.
+
+   - **Requires restart** *(optional)* — Check this if the feature requires a Firefox restart to take effect after the user opts in.
+
+:::note
+When you add your feature to the Nimbus feature manifest, you can pull in the latest changes immediately from `FeatureManifest.yaml`. However, automated Experimenter syncs with the latest Nightly updates [require approval](https://github.com/mozilla/experimenter/pull/12274) before features show up in the Experimenter feature config. Once approved, the change should be available within an hour.
+:::
+
+### 10. Launch
+
+Send your Labs experience to review and launch your Nimbus recipe on Experimenter. If you wrote a Labs Connect post, coordinate in **#firefox-labs** to publish it publicly.
+
+## Graduating a Labs feature
+
+When a Labs feature is ready to become a default part of Firefox, you need to "graduate" it — stop new users from opting in via Labs while the feature ships as a built-in default on the next train.
+
+Unlike regular rollouts, Labs rollouts support **ending enrollment**. This allows you to close opt-ins for your Labs experience while keeping existing opted-in users enrolled until the feature ships natively. To end enrollment, use the "End Enrollment" button on your rollout's summary page in Experimenter. This goes through the standard review and approval flow.
+
+Once the feature has shipped as a default in a new Firefox version, you can fully end the Labs rollout.
+
+## Marketing your Labs feature
+
+If you currently have a feature being previewed in Labs, please avoid promoting any public interaction with your feature outside of Labs (such as an isolated try-build or add-on). If you need to promote the feature apart from Labs due to a special case, please consult in **#firefox-labs** first, and *then* the Nimbus team if needed.
+
+Available marketing channels through the standard Labs process:
+
+- A dedicated **Mozilla Connect** post for your Labs feature
+- [**Skylight messaging**](https://mozilla-hub.atlassian.net/wiki/spaces/FPS/pages/555319399/Messaging+System+Improvements) (in-product announcements)
+- **Release notes** (`#release-notes`)
+- **Firefox Socials** content (`#social-requests`)
+
+## FAQ
+
+See the [Firefox Labs FAQ](/faq/firefox-labs) for common questions about telemetry, marketing, running experiments alongside Labs, and more.
+
+## Further reading
+
+- [Early Access Opt-in](https://docs.google.com/document/d/1jNC2U39BhtmnHRNT4Csc7WvIG7ops3p4XuaCIMhlMQI/edit#heading=h.rlaew8j3mttt)
+- [Ways to ship a change to Firefox](https://docs.google.com/document/d/13EU2B4hqt9x7z4g5ApF0AEWMPBpFPnrSf6dQ6kuEePM/edit#heading=h.b49vdikc5pel)
+- [RFC: Firefox Labs x Nimbus](https://docs.google.com/document/d/1Nl5-bhhQBkStS7qzrY-o6btjJ0HLjdERrLt9p03ZSB8/edit) (engineering document for Nimbus hookup)
