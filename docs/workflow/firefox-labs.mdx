@@ -55,7 +55,7 @@ However, Labs is **not built** to gather statistically significant insights like
 
 **The feature experience you're offering doesn't have to be perfect!** Labs is an external Foxfooding channel. Think of it as opening your feature up as a demo for an early access, open beta playtest — it's okay if it's incomplete or buggy. You're getting this draft version to users faster so you can get qualitative feedback earlier.
 
-Although you can technically launch a Labs recipe anytime your MVP code is ready to use, you must land your strings according to the release schedule. These strings make up your feature's Labs entry title and description that appear on `about:preferences#experimental`. **Please factor in key release cycle milestones like Soft Freeze and Merge when considering your project timelines.** For example, if you don't get this early-stage work in before 150 Merge, you won't be able to use Labs on Release 150.
+Although you can technically launch a Labs recipe anytime your MVP code is ready to use, you must land your strings according to the release schedule. These strings make up your feature's Labs entry title and description that appear on `about:preferences#experimental`. **Please factor in key release cycle milestones like Soft Freeze and Merge when considering your project timelines.** For example, if you don't get this early-stage work landed before 150 merges to Beta, you won't be able to use your feature with Firefox Labs on Release 150 without uplifts.
 
 If you have the strings and feature work available in Nightly, you can use Labs on Nightly instead. Same for Beta. While the audiences for both aren't Release-minded, you can still get your feature out to a subset of users early and get qualitative feedback.
 
@@ -71,9 +71,9 @@ If you have the strings and feature work available in Nightly, you can use Labs 
 
 Review the "Is Firefox Labs right for what I'm building?" section above to confirm Labs aligns with your goals.
 
-### 2. Chat with the Labs PM (optional)
+### 2. Chat with the Labs team (optional)
 
-Reach out to the Labs Product Manager to discuss your feature, preliminary timeline, and early access/GTM goals. Topics to cover:
+Reach out in **#firefox-labs** on Slack to discuss your feature, preliminary timeline, and early access/GTM goals. Topics to cover:
 
 - When you expect your feature will be code-complete as a Labs prototype (early-stage, but ready for a small group of users to opt into).
 - Whether you're planning another Nimbus delivery (e.g., experiment or rollout with randomized enrollment).
@@ -85,11 +85,11 @@ If your goals align with what Labs can offer, fill out and submit a [Labs Experi
 
 ### 4. Join #firefox-labs
 
-Join the **#firefox-labs** Slack channel for your dedicated thread/canvas set up by the Labs PM.
+Join the **#firefox-labs** Slack channel for your dedicated thread/canvas.
 
 ### 5. Attend a kick-off meeting (optional)
 
-Join a Labs experience kick-off meeting coordinated by the Labs PM. Consider inviting your principal engineer and UX designer.
+Join a Labs experience kick-off meeting coordinated via **#firefox-labs**. Consider inviting your principal engineer and UX designer.
 
 ### 6. Set things up for the Nimbus team
 
@@ -104,7 +104,7 @@ Please self-test QA your feature at the UX level. If you plan to share the Labs 
 
 ### 8. Set up a Connect feedback post (optional)
 
-Want to add a direct link to your Connect feedback post from Labs? Draft the post with the Labs PM, who will keep it hidden until your planned Labs launch. Make sure the strings you land in-tree include a link, even if it's a placeholder for now.
+Want to add a direct link to your Connect feedback post from Labs? Draft the post and coordinate in **#firefox-labs** to keep it hidden until your planned Labs launch. Make sure the strings you land in-tree include a link, even if it's a placeholder for now.
 
 ### 9. Configure the rollout on Experimenter
 
@@ -137,6 +137,8 @@ Want to add a direct link to your Connect feedback post from Labs? Draft the pos
      | Developer Tools | 137 |
      | Productivity | 143 |
 
+     New groups can be added, but they must ride the release trains — a new group won't be available on Release until the version it was added in reaches Release.
+
    - **Requires restart** *(optional)* — Check this if the feature requires a Firefox restart to take effect after the user opts in.
 
 :::note
@@ -145,7 +147,7 @@ When you add your feature to the Nimbus feature manifest, you can pull in the la
 
 ### 10. Launch
 
-Send your Labs experience to review and launch your Nimbus recipe on Experimenter. If you wrote a Labs Connect post, have the Labs PM publish it publicly.
+Send your Labs experience to review and launch your Nimbus recipe on Experimenter. If you wrote a Labs Connect post, coordinate in **#firefox-labs** to publish it publicly.
 
 ## Graduating a Labs feature
 
@@ -157,7 +159,7 @@ Once the feature has shipped as a default in a new Firefox version, you can full
 
 ## Marketing your Labs feature
 
-If you currently have a feature being previewed in Labs, please avoid promoting any public interaction with your feature outside of Labs (such as an isolated try-build or add-on). If you need to promote the feature apart from Labs due to a special case, please consult the Labs PM first, and *then* the Nimbus team if needed.
+If you currently have a feature being previewed in Labs, please avoid promoting any public interaction with your feature outside of Labs (such as an isolated try-build or add-on). If you need to promote the feature apart from Labs due to a special case, please consult in **#firefox-labs** first, and *then* the Nimbus team if needed.
 
 Available marketing channels through the standard Labs process:
 
