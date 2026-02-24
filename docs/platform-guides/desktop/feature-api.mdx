@@ -75,9 +75,16 @@ After adding the feature a build step is required to update the appropriate head
 # Our feature name
 aboutwelcome:
   description: The about:welcome page
+  owner: user@mozilla.com
+  hasExposure: true
+  exposureDescription: >
+    Recorded when the about:welcome page is first shown to the user.
   # Include this if you need synchronous access / very early access at startup
   # or if you are registering this to use for platform experiments.
   isEarlyStartup: true
+  # Set to true to allow a client to be enrolled in multiple experiments/rollouts
+  # for this feature simultaneously. See "Co-enrolling Features" docs.
+  # allowCoenrollment: false
   variables:
     # Additional (optional) values that we can control
     # The name of these variables is up to you
@@ -216,6 +223,10 @@ NimbusFeatures.myFeature.recordExposureEvent();
 
 // Only sends once per session, even if this function is called multiple times
 NimbusFeatures.myFeature.recordExposureEvent({ once: true });
+
+// For co-enrolling features, you must specify which enrollment to record exposure for:
+NimbusFeatures.myFeature.recordExposureEvent({ slug: "experiment-slug" });
+NimbusFeatures.myFeature.recordExposureEvent({ once: true, slug: "experiment-slug" });
 ```
 
 </TabItem>
@@ -305,7 +316,7 @@ NimbusFeatures::OnUpdate("aboutwelcome"_ns, "skipFocus"_ns,
 </TabItem>
 </Tabs>
 
-### `off()`
+### `offUpdate()`
 
 Stop listening for changes.
 
@@ -342,25 +353,67 @@ NimbusFeatures::OffUpdate("aboutwelcome"_ns, "skipFocus"_ns,
 </TabItem>
 </Tabs>
 
-## Experiment Metadata
+### `getEnrollmentMetadata()`
 
-If you need to know whether an experiment is active or get access to the experiment or branch identifier (for example, to report in `utm_params`), you can use `ExperimentAPI.getExperimentMetaData`:
+`getEnrollmentMetadata(enrollmentType?: EnrollmentType): { slug: string, branch: string, isRollout: boolean } | null` (JS Only)
+
+Returns metadata about the active enrollment for this feature, or `null` if there is no active enrollment.
+
+The optional `enrollmentType` parameter controls what kind of enrollment to look for:
+
+- **No argument** (default) — returns the active experiment if one exists, otherwise falls back to the active rollout.
+- **`EnrollmentType.EXPERIMENT`** — returns only an active experiment enrollment, or `null`.
+- **`EnrollmentType.ROLLOUT`** — returns only an active rollout enrollment, or `null`.
 
 ```js
-const lazy = {}
-ChromeUtils.defineESModuleGetters(lazy, {
-  NimbusFeatures: "resource://nimbus/ExperimentAPI.sys.mjs",
-});
+// EnrollmentType is exported from the same module as NimbusFeatures:
+// ChromeUtils.defineESModuleGetters(lazy, {
+//   EnrollmentType: "resource://nimbus/ExperimentAPI.sys.mjs",
+// });
 
-const data = lazy.ExperimentAPI.getExperimentMetaData({ featureId: "myFeature" });
+const data = NimbusFeatures.myFeature.getEnrollmentMetadata();
 
-// If there is no experiment, data will be null.
-const slug = data?.slug;
-const branchSlug = data?.branch?.slug;
-
-if (experimentSlug && branchSlug) {
+// If there is no enrollment, data will be null.
+if (data) {
   sendSomeTelemetry(
-    `The experiment identifier is ${slug} and the branch identifier is ${branchSlug}`,
+    `Enrolled in ${data.slug}, branch: ${data.branch}, isRollout: ${data.isRollout}`,
   );
+}
+
+// Query for a specific enrollment type:
+const rollout = NimbusFeatures.myFeature.getEnrollmentMetadata(lazy.EnrollmentType.ROLLOUT);
+```
+
+:::note
+This method throws for [co-enrolling features](/technical-reference/fml/coenrolling-features). Use `getAllEnrollmentMetadata()` instead.
+:::
+
+### `getAllEnrollments()`
+
+`getAllEnrollments(): { meta: { slug, branch, isRollout }, value: object }[]` (JS Only)
+
+Returns an array of all active enrollments for this feature, each with metadata and the resolved feature variable values. This is the primary data access method for [co-enrolling features](/technical-reference/fml/coenrolling-features) where a client may be enrolled in multiple experiments and/or rollouts for the same feature simultaneously.
+
+For non-co-enrolling features, this also works but will return at most two entries (one experiment and one rollout).
+
+```js
+const enrollments = NimbusFeatures.myFeature.getAllEnrollments();
+
+for (const { meta, value } of enrollments) {
+  console.log(`${meta.slug} (branch: ${meta.branch}):`, value);
+}
+```
+
+### `getAllEnrollmentMetadata()`
+
+`getAllEnrollmentMetadata(): { slug: string, branch: string, isRollout: boolean }[]` (JS Only)
+
+Returns metadata for all active enrollments for this feature, without the resolved feature values. Use this when you only need enrollment identifiers (e.g., for telemetry) and not the feature configuration.
+
+```js
+const enrollments = NimbusFeatures.myFeature.getAllEnrollmentMetadata();
+
+for (const { slug, branch, isRollout } of enrollments) {
+  sendSomeTelemetry(`Enrolled in ${slug}, branch: ${branch}`);
 }
 ```
