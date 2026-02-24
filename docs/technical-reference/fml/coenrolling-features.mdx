@@ -10,10 +10,13 @@ A feature which allows co-enrollment allows a client to be enrolled in any numbe
 **Features supporting co-enrollment**
 
 * [Messaging](/messaging/desktop/mobile-messaging) (Fenix, Firefox iOS, Focus for Android, Focus for iOS)
+* Firefox Desktop — any feature with `allowCoenrollment: true` in [FeatureManifest.yaml](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.yaml) (e.g., `prefFlips`)
 
 ## How to define a co-enrolling feature
 
-A feature can be marked as allowing co-enrollment with a boolean flag in its feature definition in a Feature Manifest. For example, in your `messaging.fml.yaml` file:
+A feature can be marked as allowing co-enrollment with a boolean flag in its feature definition in a Feature Manifest.
+
+**Mobile (FML):** In your `.fml.yaml` file:
 
 ```yaml
 features:
@@ -28,7 +31,18 @@ features:
         default: {}
 ```
 
-Once your messaging feature is defined as a co-enrolling feature, a client can be enrolled in any number of messaging experiments/rollouts.
+**Desktop:** In `FeatureManifest.yaml`:
+
+```yaml
+prefFlips:
+  description: Pref flips for incident response
+  allowCoenrollment: true
+  variables:
+    prefs:
+      type: json
+```
+
+Once your feature is defined as a co-enrolling feature, a client can be enrolled in any number of experiments/rollouts for that feature.
 
 ## Recording exposure
 
@@ -55,6 +69,21 @@ val slug = message.data.experiment ?: return message
 
 messagingFeature.recordExperimentExposure(slug)
 ```
+
+### Desktop
+
+On Desktop, co-enrolling features use the `{slug}` option on `recordExposureEvent()`:
+
+```js
+NimbusFeatures.myFeature.recordExposureEvent({ slug: "experiment-slug" });
+```
+
+Standard per-feature methods like `getVariable()` and `getAllVariables()` throw for co-enrolling features. Instead, use these APIs:
+
+- **`getAllEnrollments()`** — returns `Array<{ meta: { slug, branch, isRollout }, value: object }>` with both metadata and resolved feature values for each enrollment.
+- **`getAllEnrollmentMetadata()`** — returns `Array<{ slug, branch, isRollout }>` (metadata only).
+
+See the [Desktop Feature API reference](/platform-guides/desktop/feature-api) for full details.
 
 ## Other things to note about co-enrollment
 
