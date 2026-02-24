@@ -80,8 +80,8 @@ NimbusFeatures.myFeature.recordExposureEvent({ slug: "experiment-slug" });
 
 Standard per-feature methods like `getVariable()` and `getAllVariables()` throw for co-enrolling features. Instead, use these APIs:
 
-- **`getAllEnrollments()`** — returns `Array<{ meta: { slug, branch, isRollout }, value: object }>` with both metadata and resolved feature values for each enrollment.
-- **`getAllEnrollmentMetadata()`** — returns `Array<{ slug, branch, isRollout }>` (metadata only).
+- **`getAllEnrollments()`** — returns `{ meta: { slug, branch, isRollout }, value: object }[]` with both metadata and resolved feature values for each enrollment.
+- **`getAllEnrollmentMetadata()`** — returns `{ slug, branch, isRollout }[]` (metadata only).
 
 See the [Desktop Feature API reference](/platform-guides/desktop/feature-api) for full details.
 

@@ -355,17 +355,22 @@ NimbusFeatures::OffUpdate("aboutwelcome"_ns, "skipFocus"_ns,
 
 ### `getEnrollmentMetadata()`
 
-`getEnrollmentMetadata(enrollmentType?: "experiment" | "rollout"): { slug: string, branch: string, isRollout: boolean } | null` (JS Only)
+`getEnrollmentMetadata(enrollmentType?: EnrollmentType): { slug: string, branch: string, isRollout: boolean } | null` (JS Only)
 
 Returns metadata about the active enrollment for this feature, or `null` if there is no active enrollment.
 
 The optional `enrollmentType` parameter controls what kind of enrollment to look for:
 
 - **No argument** (default) — returns the active experiment if one exists, otherwise falls back to the active rollout.
-- **`"experiment"`** — returns only an active experiment enrollment, or `null`.
-- **`"rollout"`** — returns only an active rollout enrollment, or `null`.
+- **`EnrollmentType.EXPERIMENT`** — returns only an active experiment enrollment, or `null`.
+- **`EnrollmentType.ROLLOUT`** — returns only an active rollout enrollment, or `null`.
 
 ```js
+// EnrollmentType is exported from the same module as NimbusFeatures:
+// ChromeUtils.defineESModuleGetters(lazy, {
+//   EnrollmentType: "resource://nimbus/ExperimentAPI.sys.mjs",
+// });
+
 const data = NimbusFeatures.myFeature.getEnrollmentMetadata();
 
 // If there is no enrollment, data will be null.
@@ -376,7 +381,7 @@ if (data) {
 }
 
 // Query for a specific enrollment type:
-const rollout = NimbusFeatures.myFeature.getEnrollmentMetadata("rollout");
+const rollout = NimbusFeatures.myFeature.getEnrollmentMetadata(lazy.EnrollmentType.ROLLOUT);
 ```
 
 :::note
@@ -385,9 +390,9 @@ This method throws for [co-enrolling features](/technical-reference/fml/coenroll
 
 ### `getAllEnrollments()`
 
-`getAllEnrollments(): Array<{ meta: { slug, branch, isRollout }, value: object }>` (JS Only)
+`getAllEnrollments(): { meta: { slug, branch, isRollout }, value: object }[]` (JS Only)
 
-Returns an array of all active enrollments for this feature, each with metadata and the resolved feature variable values. This is the primary data access method for [co-enrolling features](/technical-reference/fml/coenrolling-features) where a client may be enrolled in multiple experiments or rollouts for the same feature simultaneously.
+Returns an array of all active enrollments for this feature, each with metadata and the resolved feature variable values. This is the primary data access method for [co-enrolling features](/technical-reference/fml/coenrolling-features) where a client may be enrolled in multiple experiments and/or rollouts for the same feature simultaneously.
 
 For non-co-enrolling features, this also works but will return at most two entries (one experiment and one rollout).
 
@@ -401,7 +406,7 @@ for (const { meta, value } of enrollments) {
 
 ### `getAllEnrollmentMetadata()`
 
-`getAllEnrollmentMetadata(): Array<{ slug: string, branch: string, isRollout: boolean }>` (JS Only)
+`getAllEnrollmentMetadata(): { slug: string, branch: string, isRollout: boolean }[]` (JS Only)
 
 Returns metadata for all active enrollments for this feature, without the resolved feature values. Use this when you only need enrollment identifiers (e.g., for telemetry) and not the feature configuration.
 
