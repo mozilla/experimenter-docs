@@ -160,6 +160,132 @@ FxNimbus.features.appMenu.recordExposure()
 > The user is exposed to the hamburger menu icon every time the toolbar is shown, but the menu items only when the menu is opened.
 > This would suggest that the hamburger menu icon needs to be specified in a different feature, e.g. the `toolbar` feature.
 
+For [co-enrolling features](/technical-reference/fml/coenrolling-features), you must specify which experiment the exposure is for:
+
+<Tabs
+  defaultValue="swift"
+  values={[
+    { label: "Swift", value: "swift" },
+    { label: "Kotlin", value: "kotlin" },
+  ]
+}>
+<TabItem value="swift">
+
+```swift
+FxNimbus.shared.features.messaging.recordExperimentExposure(slug)
+```
+
+</TabItem>
+<TabItem value="kotlin">
+
+```kotlin
+FxNimbus.features.messaging.recordExperimentExposure(slug)
+```
+
+</TabItem>
+</Tabs>
+
+### Reporting malformed configuration
+
+If your app detects that a feature configuration from an experiment is invalid, you can report it as telemetry. The `partId` parameter identifies which part of the configuration is malformed.
+
+<Tabs
+  defaultValue="swift"
+  values={[
+    { label: "Swift", value: "swift" },
+    { label: "Kotlin", value: "kotlin" },
+  ]
+}>
+<TabItem value="swift">
+
+```swift
+FxNimbus.shared.features.newtab.recordMalformedConfiguration(partId: "invalid-card")
+```
+
+</TabItem>
+<TabItem value="kotlin">
+
+```kotlin
+FxNimbus.features.newtab.recordMalformedConfiguration(partId = "invalid-card")
+```
+
+</TabItem>
+</Tabs>
+
+### Getting the JSON representation
+
+You can get the raw JSON representation of a feature's configuration with `toJSONObject()`:
+
+<Tabs
+  defaultValue="swift"
+  values={[
+    { label: "Swift", value: "swift" },
+    { label: "Kotlin", value: "kotlin" },
+  ]
+}>
+<TabItem value="swift">
+
+```swift
+let json = FxNimbus.shared.features.newtab.toJSONObject()
+```
+
+</TabItem>
+<TabItem value="kotlin">
+
+```kotlin
+val json = FxNimbus.features.newtab.toJSONObject()
+```
+
+</TabItem>
+</Tabs>
+
+### Testing with hardcoded values
+
+Each feature holder provides testing methods to inject values directly, without a running Nimbus SDK:
+
+<Tabs
+  defaultValue="swift"
+  values={[
+    { label: "Swift", value: "swift" },
+    { label: "Kotlin", value: "kotlin" },
+  ]
+}>
+<TabItem value="swift">
+
+```swift
+// Inject a hardcoded configuration for testing
+FxNimbus.shared.features.newtab.withCachedValue(myTestConfig)
+
+// Check if running under test
+if FxNimbus.shared.features.newtab.isUnderTest() {
+    // skip network calls, etc.
+}
+```
+
+</TabItem>
+<TabItem value="kotlin">
+
+```kotlin
+// Inject a hardcoded configuration for testing
+FxNimbus.features.newtab.withCachedValue(myTestConfig)
+
+// Check if running under test
+if (FxNimbus.features.newtab.isUnderTest()) {
+    // skip network calls, etc.
+}
+```
+
+</TabItem>
+</Tabs>
+
+Available testing methods:
+- **`withCachedValue(value)`** — overwrite the cached configuration with a test value.
+- **`withInitializer(create)`** — change how `Variables` are mapped to the feature object (clears cache).
+- **`withSdk(getSdk)`** — reset the SDK connection (clears cache).
+- **`isUnderTest()`** — returns `true` when the SDK is a `HardcodedNimbusFeatures` instance.
+
+See the [Android integration guide](/platform-guides/android/integration#unit-and-ui-testing-with-hardcodednimbusfeatures) for a complete testing example using `HardcodedNimbusFeatures`.
+
 ### Identifier cases
 
 All the examples below use `kebab-case` for identifiers. When these identifiers are used to generate code, they are transformed to the language-specific casing. For example, a feature is specified in the FML as being called `spotlight-search`, but would be referred to in Swift as `spotlightSearch`.
