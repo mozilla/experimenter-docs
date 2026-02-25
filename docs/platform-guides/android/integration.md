@@ -220,6 +220,55 @@ Adding the `usePreviewCollection` flag allows the builder to configure a `Nimbus
         }.build(appInfo)
 ```
 
+### Connecting to the Recorded Targeting Context
+
+The `recordedContext` builder option connects the Nimbus SDK to a `RecordedContext` implementation for behavioral targeting and Glean recording. This replaces the older `customTargetingAttributes` approach for providing targeting attributes.
+
+```kotlin
+    return NimbusBuilder(context).apply {
+        // …
+        recordedContext = RecordedNimbusContext(isFirstRun = isAppFirstRun)
+        // …
+    }.build(appInfo)
+```
+
+See [Recording Targeting Context](/advanced/recording-targeting-context) for details on implementing the `RecordedContext` trait.
+
+### Reporting malformed feature configuration
+
+If your app detects that a feature configuration from an experiment is invalid or malformed, you can report it as telemetry using `recordMalformedConfiguration`:
+
+```kotlin
+FxNimbus.features.myFeature.recordMalformedConfiguration(partId = "invalid-field")
+```
+
+This sends a `malformedConfiguration` Glean event identifying the feature and the specific part that was invalid.
+
+## Unit and UI testing with `HardcodedNimbusFeatures`
+
+The `HardcodedNimbusFeatures` class lets you inject feature configurations directly for unit and UI testing, without a running Nimbus SDK or network connection:
+
+```kotlin
+val hardcodedNimbus = HardcodedNimbusFeatures(testContext,
+    "my-feature" to JSONObject("""{"enabled": true, "title": "Hello"}""")
+)
+hardcodedNimbus.connectWith(FxNimbus)
+
+// Access feature values as normal — they'll use the hardcoded config
+val config = FxNimbus.features.myFeature.value()
+
+// Test assertions
+assertTrue(hardcodedNimbus.isExposed("my-feature"))
+assertEquals(1, hardcodedNimbus.getExposureCount("my-feature"))
+assertFalse(hardcodedNimbus.isMalformed("my-feature"))
+```
+
+Key test methods:
+- `isExposed(featureId)` — whether `recordExposureEvent` was called
+- `getExposureCount(featureId)` — number of exposure events recorded
+- `isMalformed(featureId)` — whether `recordMalformedConfiguration` was called
+- `hasFeature(featureId)` — whether the feature was provided to the constructor
+
 ## A complete `NimbusBuilder` example
 
 ```kotlin
@@ -232,6 +281,8 @@ Adding the `usePreviewCollection` flag allows the builder to configure a `Nimbus
         usePreviewCollection = context.settings().nimbusUsePreview
         isFirstRun = isAppFirstRun
         sharedPreferences = context.settings().preferences
+        recordedContext = RecordedNimbusContext(isFirstRun = isAppFirstRun)
+        featureManifest = FxNimbus
         // Optional callbacks.
         onCreateCallback = { nimbus ->
             // called when nimbus is set up
