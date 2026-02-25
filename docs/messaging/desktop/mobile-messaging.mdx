@@ -536,6 +536,73 @@ Each of the following events is emitted— via Glean— at certain points while 
 
 Each message has a `message-key` extra.
 
+## SDK Helper API
+
+The Nimbus SDK provides a `createMessageHelper()` method that returns a combined helper for evaluating JEXL targeting expressions and performing string substitution. This is the core API used by the messaging system implementation.
+
+<Tabs
+  defaultValue="kotlin"
+  values={[
+    { label: "Kotlin", value: "kotlin" },
+    { label: "Swift", value: "swift" },
+  ]
+}>
+<TabItem value="kotlin">
+
+```kotlin
+val helper = nimbus.createMessageHelper()
+
+// Evaluate a JEXL targeting expression
+val isEligible = helper.evalJexl("'app_opened'|eventCountNonZero('Days', 28, 0) >= 21")
+
+// Format a string template with substitution
+val formatted = helper.stringFormat("Hello {username}, welcome to {app_name}!")
+
+// Generate or retrieve a UUID for a template (stable per template string)
+val uuid = helper.getUuid("survey-{uuid}")
+
+// Clean up native resources when done
+helper.destroy()
+```
+
+</TabItem>
+<TabItem value="swift">
+
+```swift
+let helper = nimbus.createMessageHelper()
+
+// Evaluate a JEXL targeting expression
+let isEligible = helper.evalJexl(expression: "'app_opened'|eventCountNonZero('Days', 28, 0) >= 21")
+
+// Format a string template with substitution
+let formatted = helper.stringFormat(template: "Hello {username}, welcome to {app_name}!")
+
+// Generate or retrieve a UUID for a template (stable per template string)
+let uuid = helper.getUuid(template: "survey-{uuid}")
+
+// Clean up native resources when done
+helper.destroy()
+```
+
+</TabItem>
+</Tabs>
+
+The helper implements `NimbusMessagingHelperInterface`, which combines:
+- **`NimbusTargetingHelperInterface`** — `evalJexl(expression)` for targeting evaluation
+- **`NimbusStringHelperInterface`** — `stringFormat(template)` and `getUuid(template)` for string substitution
+
+You can optionally pass additional context attributes when creating the helper:
+
+```kotlin
+val helper = nimbus.createMessageHelper(additionalContext = JSONObject().apply {
+    put("current_tab_url", currentUrl)
+})
+```
+
+:::note
+Call `destroy()` when done with the helper to free the backing Rust native object. Call `clearCache()` to reset the JEXL evaluation cache if the targeting context has changed.
+:::
+
 ## Extending the System
 
 Much of the system relies on Nimbus [merging together JSON objects](/technical-reference/fml/growable-collections). We have seen this in the `messages` object which can contain messages from the default configuration, rollouts, and experiments.
