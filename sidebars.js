@@ -83,6 +83,7 @@ module.exports = {
           type: "category",
           label: "Desktop",
           items: [
+            "platform-guides/desktop/desktop-feature-manifest",
             "platform-guides/desktop/desktop-feature-api",
             "platform-guides/desktop/desktop-pref-experiments",
             "platform-guides/desktop/onboarding-feature-desktop",
