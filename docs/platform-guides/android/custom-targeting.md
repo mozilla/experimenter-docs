@@ -5,7 +5,7 @@ slug: /platform-guides/android/custom-targeting
 ---
 
 :::warning DEPRECATED
-**This method of adding new targeting attributes is deprecated. Please use the method described in the [Recorded Targeting Context doc](/advanced/recording-targeting-context#adding-new-fields).**
+**This method of adding new targeting attributes is deprecated.** Use the `recordedContext` NimbusBuilder option instead — see the [integration guide](/platform-guides/android/integration#connecting-to-the-recorded-targeting-context) and the [Recorded Targeting Context doc](/advanced/recording-targeting-context#adding-new-fields) for details.
 :::
 
 ## Adding New Targeting Attributes to Android

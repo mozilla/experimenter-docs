@@ -40,6 +40,15 @@ This disqualifies existing enrollments. and breaks any connection with experimen
 
 [nimbus-cli]: https://github.com/mozilla/application-services/tree/main/components/support/nimbus-cli
 
+### Disabling Experiment Fetch
+
+For QA testing, you can disable fetching of experiments from Remote Settings. This is used by the `nimbus-cli` tooling and is not intended for end users.
+
+```kotlin
+nimbus.setFetchEnabled(false) // disable fetching
+nimbus.isFetchEnabled()       // check current state
+```
+
 ### Preview Collection
 
 To allow testing of experiments before they are published, the client should allow configuring the Nimbus startup to use the `preview-collection`.

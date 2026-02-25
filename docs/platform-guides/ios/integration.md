@@ -184,6 +184,16 @@ To connect the `NimbusInterface` object to the command line, we need to feed the
         .build(appInfo: appInfo)
 ```
 
+### Reporting malformed feature configuration
+
+If your app detects that a feature configuration from an experiment is invalid or malformed, you can report it as telemetry using `recordMalformedConfiguration`:
+
+```swift
+AppConfig.shared.features.newtab.recordMalformedConfiguration(partId: "invalid-card")
+```
+
+This sends a `malformedConfiguration` Glean event identifying the feature and the specific part that was invalid.
+
 ## A complete `NimbusBuilder` example
 
 ```swift
