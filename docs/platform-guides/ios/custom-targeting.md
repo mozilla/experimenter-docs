@@ -6,7 +6,7 @@ slug: /platform-guides/ios/custom-targeting
 ## Adding New Targeting Attributes to iOS
 
 :::warning DEPRECATED
-**This method of adding new targeting attributes is deprecated. Please use the method described in the [Recorded Targeting Context doc](/advanced/recording-targeting-context#adding-new-fields).**
+**This method of adding new targeting attributes is deprecated.** Use the `recordedContext` NimbusBuilder option instead — see the [integration guide](/platform-guides/ios/integration#connecting-to-the-recorded-targeting-context) and the [Recorded Targeting Context doc](/advanced/recording-targeting-context#adding-new-fields) for details.
 :::
 
 This page demonstrates how to add new targeting attributes to iOS, enabling experiment creators more specific targeting.
