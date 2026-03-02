@@ -246,7 +246,7 @@ This sends a `malformedConfiguration` Glean event identifying the feature and th
 
 ## Unit and UI testing with `HardcodedNimbusFeatures`
 
-The `HardcodedNimbusFeatures` class lets you inject feature configurations directly for unit and UI testing, without a running Nimbus SDK or network connection:
+The `HardcodedNimbusFeatures` class lets you inject feature configurations directly for unit and UI testing, without needing to run the Nimbus SDK or connect to the network:
 
 ```kotlin
 val hardcodedNimbus = HardcodedNimbusFeatures(testContext,
@@ -254,7 +254,7 @@ val hardcodedNimbus = HardcodedNimbusFeatures(testContext,
 )
 hardcodedNimbus.connectWith(FxNimbus)
 
-// Access feature values as normal — they'll use the hardcoded config
+// Access feature values as normal — it will use the hardcoded config.
 val config = FxNimbus.features.myFeature.value()
 
 // Test assertions
