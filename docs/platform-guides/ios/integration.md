@@ -184,6 +184,20 @@ To connect the `NimbusInterface` object to the command line, we need to feed the
         .build(appInfo: appInfo)
 ```
 
+### Connecting to the Recorded Targeting Context
+
+The `recordedContext` builder option connects the Nimbus SDK to a `RecordedContext` implementation for behavioral targeting and Glean recording. This replaces the older `customTargetingAttributes` approach for providing targeting attributes.
+
+```swift
+    return NimbusBuilder(dbPath: dbPath)
+        // …
+        .with(recordedContext: RecordedNimbusContext(isFirstRun: isFirstRun))
+        // …
+        .build(appInfo: appSettings)
+```
+
+See [Recording Targeting Context](/advanced/recording-targeting-context) for details on implementing the `RecordedContext` protocol.
+
 ## A complete `NimbusBuilder` example
 
 ```swift
@@ -203,10 +217,7 @@ public static var nimbus: NimbusInterface = {
     // thinks it is.
     let appSettings = NimbusAppSettings(
         appName: "example-app",
-        channel: "release",
-        customTargetingAttributes: [
-            "is_first_run": isFirstRun,
-        ]
+        channel: "release"
     )
 
     let errorReporter: NimbusErrorReporter = { err in
@@ -229,6 +240,7 @@ public static var nimbus: NimbusInterface = {
         .with(errorReporter: errorReporter)
         .with(initialExperiments: Bundle.main.url(forResource: "initial_experiments", withExtension: "json"))
         .isFirstRun(isFirstRun)
+        .with(recordedContext: RecordedNimbusContext(isFirstRun: isFirstRun))
         .with(bundles: bundles)
         .with(userDefaults: UserDefaults.standard)
         .with(featureManifest: AppConfig.shared)

@@ -10,17 +10,23 @@ Required user interface components for apps integrating with the Nimbus SDK.
 
 Currently Nimbus provides no user-interface components of its own, though provides API to connect to existing settings screens.
 
-## Global Opt-Out/Opt-In for Experiments
+## Opt-Out/Opt-In Controls
 
 The settings page should include a `Studies` toggle, which allows users to opt-in or opt-out of experiments. The example from Firefox for iOS is shown:
 
 <img src="/img/firefox-ios/studies-toggle.png" width="300px" />
 
-Toggling the `Studies` flag should set the `Nimbus` value for `globalUserParticipation`:
+Experiment participation and rollout participation are controlled separately:
 
 ```kotlin
-nimbus.globalUserParticipation = flag
+// Controls opt-in/out for experiments (not rollouts)
+nimbus.experimentParticipation = flag
+
+// Controls opt-in/out for rollouts (not experiments)
+nimbus.rolloutParticipation = flag
 ```
+
+When set to `false`, the user will be opted out of all active enrollments of that type and will not be enrolled in new ones. Toggling the `Studies` flag should set `experimentParticipation`.
 
 ## Resetting Telemetry Identifiers
 
