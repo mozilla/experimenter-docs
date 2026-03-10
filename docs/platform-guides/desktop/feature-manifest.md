@@ -6,7 +6,7 @@ slug: /platform-guides/desktop/feature-manifest
 
 # Desktop Feature Manifest Reference
 
-The desktop Nimbus Feature Manifest ([`FeatureManifest.yaml`](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.yaml)) defines every feature that can be configured by experiments and rollouts in Firefox Desktop. Each feature entry declares what variables it exposes, how those variables connect to Firefox preferences, and what telemetry it records.
+The desktop Nimbus Feature Manifest ([`FeatureManifest.yaml`](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.yaml)) defines every feature that can be configured by experiments and rollouts in Firefox Desktop. Each feature entry declares what variables it exposes, if those variables connect to Firefox prefs, and whether the feature supports exposure telemetry.
 
 After adding or modifying a feature in the manifest, a build step is required to update the generated header file.
 
@@ -49,8 +49,8 @@ If omitted, defaults to `["firefox-desktop"]`.
 
 The optional `schema` property points to a JSON Schema file that validates the combined feature configuration. It has two fields:
 
-- `uri` — a `resource://` URI that Firefox loads at runtime for client-side validation
-- `path` — a filesystem path (relative to the repo root) where Experimenter can find the schema
+- `uri` — a `resource://` or `moz-src://` URI that Firefox loads at runtime for client-side validation
+- `path` — a filesystem path (relative to the repository root) where Experimenter can find the schema
 
 ```yaml
 schema:
@@ -77,7 +77,11 @@ Each key under `variables` defines a configurable variable. Variables support th
 | `boolean` | `true` / `false` | No | |
 | `string` | Text values | Yes | |
 | `int` | Whole numbers | Yes | |
-| `json` | Arbitrary JSON objects/arrays | No | Stored as JSON strings in prefs |
+| `json` | Arbitrary JSON objects/arrays | No | Stored as stringified JSON if connected to a pref |
+
+:::note
+There is no `float` type. If you need floating-point values, use `string` and parse the value in your code.
+:::
 
 ### `fallbackPref` vs `setPref`
 
@@ -130,8 +134,6 @@ rankingMode:
     - random
   description: The ranking algorithm to use
 ```
-
-`enum` is not supported for `boolean` or `json` types.
 
 ## Examples
 
