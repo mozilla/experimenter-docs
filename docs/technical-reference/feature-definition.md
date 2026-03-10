@@ -4,7 +4,7 @@ slug: /technical-reference/feature-definition
 sidebar_position: 2
 ---
 
-In the Nimbus ecosystem, a **feature** is an area of code instrumented for experiments and remote configuration. It can be as small as a single function or as complex as a whole page. Some examples:
+In the experimentation ecosystem, experiment surfaces are described as features. A feature is an area of code instrumented with telemetry and accessible for remote configuration. It can be as small as a single function or as complex as a whole page. Some examples:
 
 - `aboutwelcome` — the about:welcome page in Desktop
 - `homescreen` — the homescreen page in Fenix
