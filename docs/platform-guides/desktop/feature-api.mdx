@@ -70,14 +70,23 @@ The Nimbus Feature API will return the correct configuration for a feature given
 To register a new feature, choose an identifier and add it to [FeatureManifest.yaml](https://searchfox.org/firefox-main/source/toolkit/components/nimbus/FeatureManifest.yaml). After adding the feature, a build step is required to update the generated header file.
 
 ```yaml
+# In FeatureManifest.yaml
+# Our feature name
 aboutwelcome:
   description: The about:welcome page
   owner: user@mozilla.com
   hasExposure: true
   exposureDescription: >
     Recorded when the about:welcome page is first shown to the user.
+  # Include this if you need synchronous access / very early access at startup
+  # or if you are registering this to use for platform experiments.
   isEarlyStartup: true
+  # Set to true to allow a client to be enrolled in multiple experiments/rollouts
+  # for this feature simultaneously. See "Co-enrolling Features" docs.
+  # allowCoenrollment: false
   variables:
+    # Additional (optional) values that we can control
+    # The name of these variables is up to you
     enabled:
       type: boolean
       fallbackPref: browser.aboutwelcome.enabled
