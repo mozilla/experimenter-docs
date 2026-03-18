@@ -371,7 +371,7 @@ First-run experiments target users during their very first Firefox session. Thes
 isFirstStartup
 ```
 
-See the [Onboarding Feature Guide](/platform-guides/desktop/onboarding-feature-desktop) for details on building first-run experiments.
+See the [Onboarding Feature Guide](/platform-guides/desktop/onboarding) for details on building first-run experiments.
 
 ## Common Targeting Patterns
 
@@ -507,4 +507,4 @@ See [Advanced Targeting](/advanced/custom-audiences) for more details on the pro
 - [Nimbus Developer Tools Guide](/resources/nimbus-devtools-guide) — JEXL debugger and experiment enrollment tools
 - [Advanced Targeting](/advanced/custom-audiences) — adding new targeting options
 - [Experiment Workflow](/workflow/experiments) — full experiment design process
-- [Onboarding Feature Guide](/platform-guides/desktop/onboarding-feature-desktop) — first-run experiments
+- [Onboarding Feature Guide](/platform-guides/desktop/onboarding) — first-run experiments
