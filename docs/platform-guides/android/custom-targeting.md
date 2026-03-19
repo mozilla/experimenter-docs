@@ -420,11 +420,27 @@ If your targeting requires a **new attribute** that doesn't exist yet:
 4. **Wait for the release train** — the attribute will be available starting in the Firefox for Android version that ships the change
 5. **Add the targeting config** to Experimenter's `constants.py` as above
 
-See [Recording Targeting Context](/advanced/recording-targeting-context) for more details on the process.
+See [Recording Targeting Context](/advanced/recording-targeting-context) and [Custom Audiences](/advanced/custom-audiences) for more details on the process.
+
+:::warning Legacy: customTargetingAttributes
+An older method of adding targeting attributes used the `customTargetingAttributes` parameter on `NimbusAppInfo`:
+
+```kotlin
+val appInfo = NimbusAppInfo(
+    appName = "fenix",
+    channel = BuildConfig.BUILD_TYPE,
+    customTargetingAttributes = mapOf(
+        "newTargetingAttributeName" to "targetingAttributeValue",
+    )
+)
+```
+
+**This approach is deprecated.** It only supports string key/value pairs and does not record values to Glean for population sizing. Use `RecordedNimbusContext` instead, as described above. See the [Recorded Targeting Context doc](/advanced/recording-targeting-context#adding-new-fields) for the current method.
+:::
 
 ## Further Reading
 
-
 - [Behavioral Targeting](/advanced/behavioral-targeting) — event query transforms and available events
 - [Recording Targeting Context](/advanced/recording-targeting-context) — how to add new recorded attributes
+- [Custom Audiences](/advanced/custom-audiences) — adding new targeting options to the Experimenter dropdown
 - [Nimbus Developer Tools Guide](/resources/nimbus-devtools-guide) — testing and debugging tools
