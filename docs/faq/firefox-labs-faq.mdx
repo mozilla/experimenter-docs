@@ -67,3 +67,25 @@ While Labs experiences may target 100%, users do not count as enrolled unless th
 ## What happens if I'm already enrolled in an experiment?
 
 You won't see the Labs experience affiliated with the same feature, since enrollment in an experiment takes precedence over a Labs experience.
+
+---
+
+## Can I run a rollout and a Labs experience at the same time?
+
+If you want to have a rollout and Labs experience on *non-overlapping*
+population segments, you **must** launch the rollout first. This will give the
+rollout priority and ensure users who are eligible for the rollout enroll and do
+not see the labs experience.
+
+If you want to have a rollout and Labs experience on *the same population*, you have two options:
+
+1. You can use different features, one for the rollout and one for the Labs experience.
+2. You can use a single co-enrolling feature. The feature must be configured
+   correctly to support multiple concurrent enrollments. See the docs on
+   [co-enrollment](/technical-reference/fml/coenrolling-features) for details on
+   how to set up your feature to support this.
+
+NB: If the Labs experience depends on rollout to function correctly, it should
+be noted that the required enrollments field does not distinguish between
+current and previous enrollment. If this is an issue, please drop by
+`#ask-experimenter` on Slack.
