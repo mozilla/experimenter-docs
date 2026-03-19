@@ -55,10 +55,10 @@ The targeting context for Firefox for Android is assembled from multiple sources
 
 | Attribute | Type | Description | Example |
 |-----------|------|-------------|---------|
-| `app_name` | `string` | Application name (always `"fenix"`) | `app_name == 'fenix'` |
-| `app_id` | `string` | Application package ID | `app_id == 'org.mozilla.firefox'` |
+| `app_name` | `string` | Application name (always `"fenix"`) | Set automatically, not typically used in targeting |
+| `app_id` | `string` | Application package ID (e.g., `org.mozilla.firefox`) | Set automatically, not typically used in targeting |
 | `app_version` | `string` | App version string (e.g., `"147.0"`) | `app_version\|versionCompare('134.!') >= 0` |
-| `channel` | `string` | Build channel (`release`, `beta`, `nightly`, `developer`) | Usually set via UI, not JEXL |
+| `channel` | `string` | Build channel (`release`, `beta`, `nightly`, `developer`) | Set via the Channel UI field |
 
 :::note
 Version targeting is typically set via the Min/Max Version UI fields (which generate `app_version|versionCompare('X.!') >= 0` for min and `app_version|versionCompare('X.*') <= 0` for max automatically).
@@ -94,9 +94,10 @@ Language and region targeting is typically set via the Experimenter UI fields (w
 | Attribute | Type | Description | Example |
 |-----------|------|-------------|---------|
 | `android_sdk_version` | `string` | Android API level as a string (e.g., `"33"` for Android 13) | `android_sdk_version\|versionCompare('33') >= 0` |
-| `device_manufacturer` | `string` | Device manufacturer (from `Build.MANUFACTURER`) | `device_manufacturer == 'Google'` |
-| `device_model` | `string` | Device model (from `Build.MODEL`) | `device_model == 'Pixel 8'` |
+| `is_phone` | `boolean` | Whether the device is a phone (not a tablet) | `is_phone` |
 | `is_large_device` | `boolean` | Whether the device has a large screen | `is_large_device` |
+| `device_manufacturer` | `string` | Device manufacturer (from `Build.MANUFACTURER`) | |
+| `device_model` | `string` | Device model (from `Build.MODEL`) | |
 | `architecture` | `string` | CPU architecture (e.g., `arm`, `x86`) | |
 
 ### Install Attribution (UTM)
@@ -136,14 +137,39 @@ Language and region targeting is typically set via the Experimenter UI fields (w
 && ('firefox@ghostery.com' in addon_ids) == false
 ```
 
+### Search Engine
+
+| Attribute | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `searchEngines` | `object` | Search engine information | |
+| `searchEngines.current` | `string` | Current default search engine identifier | `'google' in searchEngines.current` |
+
+**Common patterns:**
+
+```
+// Users with Google as default search engine
+'google' in searchEngines.current
+
+// Users with Bing as default
+searchEngines.current == 'bing'
+```
+
+### Home Page
+
+| Attribute | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `homePageSettings` | `object` | Home page configuration | |
+| `homePageSettings.isDefault` | `boolean` | Using the default home page | `homePageSettings.isDefault` |
+| `homePageSettings.isCustomUrl` | `boolean` | Using a custom URL as home page | `homePageSettings.isCustomUrl` |
+
 ### Experiment & Rollout Enrollment
 
 | Attribute | Type | Description | Example |
 |-----------|------|-------------|---------|
 | `is_already_enrolled` | `boolean` | Whether the client is already enrolled in this experiment | Used in sticky clauses |
-| `active_experiments` | `string[]` | Currently enrolled experiment slugs | `'my-experiment' in active_experiments` |
 | `enrollments` | `string[]` | All experiment enrollments (including past) | `('other-slug' in enrollments) == false` |
-| `enrollments_map` | `object` | Experiment slug → branch slug mapping | Used for branch-level exclusion |
+| `enrollments_map` | `object` | Experiment slug → branch slug mapping | `enrollments_map['other-slug'] == 'control'` |
+| `active_experiments` | `string[]` | Currently enrolled experiment slugs | |
 
 ### Additional Attributes (Messaging / Display Triggers)
 
@@ -151,11 +177,11 @@ These attributes are available from [`CustomAttributeProvider.kt`](https://searc
 
 | Attribute | Type | Description | Example |
 |-----------|------|-------------|---------|
-| `is_default_browser` | `boolean` | Whether Firefox is the default browser | `is_default_browser` |
-| `are_notifications_enabled` | `boolean` | Whether notification permissions are granted | `are_notifications_enabled` |
-| `search_widget_is_installed` | `boolean` | Whether the search widget is on the home screen | `search_widget_is_installed` |
-| `is_fxa_signed_in` | `boolean` | Whether the user is signed into Firefox Account | `is_fxa_signed_in` |
-| `fxa_connected_devices` | `number` | Number of connected FxA devices | `fxa_connected_devices >= 2` |
+| `is_default_browser` | `boolean` | Whether Firefox is the default browser | `is_default_browser == true && is_first_run` |
+| `are_notifications_enabled` | `boolean` | Whether notification permissions are granted | |
+| `search_widget_is_installed` | `boolean` | Whether the search widget is on the home screen | |
+| `is_fxa_signed_in` | `boolean` | Whether the user is signed into Firefox Account | |
+| `fxa_connected_devices` | `number` | Number of connected FxA devices | |
 | `date_string` | `string` | Current date as `yyyy-MM-dd` | |
 | `adjust_campaign` | `string` | Adjust campaign ID | |
 | `adjust_network` | `string` | Adjust network | |
@@ -375,6 +401,15 @@ number_of_app_launches <= 20
 
 // After 20 launches
 number_of_app_launches > 20
+```
+
+### Phone users
+
+```
+is_phone
+
+// Phone users who are existing (28+ days)
+is_phone && days_since_install >= 28
 ```
 
 ### Large screen devices
