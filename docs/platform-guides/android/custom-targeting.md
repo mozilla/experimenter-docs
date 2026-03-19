@@ -22,16 +22,6 @@ Both levels are combined into a single JEXL expression that the Nimbus SDK evalu
 3. For each experiment, the SDK evaluates the `targeting` JEXL expression against the current targeting context
 4. Clients that match targeting and fall into an eligible bucket are enrolled. Existing enrollments that no longer match targeting are unenrolled (unless protected by a [sticky clause](#sticky-targeting)).
 
-### How Targeting Differs from Desktop
-
-Firefox for Android uses the cross-platform **Nimbus SDK** (written in Rust), not the desktop-specific Nimbus client. Key differences:
-
-- **Channel** is determined by the app ID (e.g., `org.mozilla.firefox` for release, `org.mozilla.firefox_beta` for beta), not a `browserSettings.update.channel` attribute
-- **Version comparisons** use `app_version|versionCompare(...)` instead of `version|versionCompare(...)`
-- **Sticky targeting** uses `is_already_enrolled` instead of `experiment.slug in activeExperiments`
-- **Behavioral targeting** via event queries (e.g., `|eventCountNonZero`) is available — this is not available on desktop
-- **Language** filtering uses `language in [...]` (two-letter code extracted from locale)
-
 ## Basic Targeting (UI Fields)
 
 These are configured directly in the Experimenter audience form:
