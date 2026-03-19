@@ -20,8 +20,7 @@ Both levels are combined into a single JEXL expression that the Nimbus Desktop C
 1. Firefox starts up and initializes the Nimbus Desktop Client
 2. The client fetches experiment recipes from Remote Settings
 3. For each experiment, the client evaluates the `targeting` JEXL expression against the current targeting context
-4. Clients matching the targeting (and passing bucketing) are enrolled
-5. For **sticky** experiments, certain targeting expressions are wrapped in a sticky clause so that already-enrolled clients continue to match even if the underlying targeting context changes (see [Sticky Targeting](#sticky-targeting))
+4. Clients that match targeting and fall into an eligible bucket are enrolled. Existing enrollments that no longer match targeting are unenrolled (unless protected by a [sticky clause](#sticky-targeting)).
 
 ## Basic Targeting (UI Fields)
 
@@ -178,7 +177,11 @@ os.isMac
 
 | Attribute | Type | Description | Example |
 |-----------|------|-------------|---------|
-| `homePageSettings` | `object` | Home page configuration: `{isDefault, isCustomUrl, isLocked, isWebExt}` | `homePageSettings.isDefault` |
+| `homePageSettings` | `object` | Home page configuration (see sub-fields below) | `homePageSettings.isDefault` |
+| `homePageSettings.isDefault` | `boolean` | Using the default home page | `homePageSettings.isDefault` |
+| `homePageSettings.isCustomUrl` | `boolean` | Using a custom URL as home page | `!homePageSettings.isCustomUrl` |
+| `homePageSettings.isLocked` | `boolean` | Home page is locked by enterprise policy | `!homePageSettings.isLocked` |
+| `homePageSettings.isWebExt` | `boolean` | Home page is set by an extension | `!homePageSettings.isWebExt` |
 
 ### Add-ons & Extensions
 
@@ -279,6 +282,7 @@ Nimbus uses [mozjexl](https://github.com/mozilla/mozjexl), a Mozilla-extended ve
 | `/` | Divide | `(currentDate\|date - profileAgeCreated\|date) / 86400000` |
 | `%` | Modulus | |
 | `? :` | Ternary (conditional) | `('e6eb0d1e856335fc' in attachedFxAOAuthClients\|mapToProperty('id')) ? ... : ...` |
+| `intersect` | Array intersection (returns elements in both arrays) | `(blocklist intersect addonsInfo.addons\|keys)\|length > 0` |
 
 See the [mozjexl documentation](https://github.com/mozilla/mozjexl) for the full language specification.
 
