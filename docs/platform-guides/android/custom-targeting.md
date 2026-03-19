@@ -83,7 +83,6 @@ Version targeting is set via the Min/Max Version UI fields, which generate `app_
 |-----------|------|-------------|---------|
 | `language` | `string` | Two-letter language code extracted from locale (e.g., `en`) | `language in ['en', 'fr']` |
 | `region` | `string` | Country code extracted from locale (e.g., `US`) | `region in ['US', 'CA']` |
-| `locale` | `string` | Full locale tag (e.g., `en-US`) | Available in the targeting context but not used by the Experimenter UI |
 
 :::note
 Language and region targeting is set via the Experimenter UI fields, which generate `language in [...]` / `region in [...]` expressions.
