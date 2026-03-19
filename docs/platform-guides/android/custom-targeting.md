@@ -61,7 +61,7 @@ The targeting context for Firefox for Android is assembled from multiple sources
 | `channel` | `string` | Build channel (`release`, `beta`, `nightly`, `developer`) | Usually set via UI, not JEXL |
 
 :::note
-Version targeting is typically set via the Min/Max Version UI fields (which generate `app_version|versionCompare('X.!') >= 0` for min and `app_version|versionCompare('X.*') <= 0` for max automatically).
+Version targeting is typically set via the Min/Max Version UI fields (which generate `app_version|versionCompare('X.!') >= 0` for min and `app_version|versionCompare('X.*') <= 0` for max automatically). Version targeting expressions are only included for Firefox for Android version 98 and above — earlier versions did not support this feature in the Nimbus SDK.
 :::
 
 ### Install & Update
@@ -234,7 +234,27 @@ On Android, the sticky clause uses `is_already_enrolled`:
 (is_already_enrolled) || (<original expression>)
 ```
 
-The same sticky/non-sticky split applies as on desktop — the same sticky/non-sticky split described in the Sticky Targeting section of the Desktop Targeting Guide applies here.
+Not all parts of the targeting are wrapped in the sticky clause. Experimenter splits the expression into **sticky** and **non-sticky** parts:
+
+| Sticky (skipped for enrolled clients) | Non-sticky (always evaluated) |
+|---|---|
+| Advanced targeting config expression | Max version |
+| Min version | |
+| Languages / Countries | |
+| Excluded / Required experiments | |
+
+For example, a sticky Fenix experiment targeting new users on version 100+, English, in Canada would produce:
+
+```
+(app_version|versionCompare('101.*') <= 0)
+&& ((is_already_enrolled)
+    || ((days_since_install < 7)
+        && (app_version|versionCompare('100.!') >= 0)
+        && (language in ['en'])
+        && (region in ['CA'])))
+```
+
+An enrolled client will still be unenrolled if it updates past the max version, but won't be unenrolled if `days_since_install` exceeds 7.
 
 ## First-Run Targeting
 
