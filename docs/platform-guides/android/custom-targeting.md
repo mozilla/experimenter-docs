@@ -61,7 +61,7 @@ The targeting context for Firefox for Android is assembled from multiple sources
 | `channel` | `string` | Build channel (`release`, `beta`, `nightly`, `developer`) | Set via the Channel UI field |
 
 :::note
-Version targeting is typically set via the Min/Max Version UI fields (which generate `app_version|versionCompare('X.!') >= 0` for min and `app_version|versionCompare('X.*') <= 0` for max automatically).
+Version targeting is set via the Min/Max Version UI fields, which generate `app_version|versionCompare('X.!') >= 0` for min and `app_version|versionCompare('X.*') <= 0` for max.
 :::
 
 ### Install & Update
@@ -83,10 +83,10 @@ Version targeting is typically set via the Min/Max Version UI fields (which gene
 |-----------|------|-------------|---------|
 | `language` | `string` | Two-letter language code extracted from locale (e.g., `en`) | `language in ['en', 'fr']` |
 | `region` | `string` | Country code extracted from locale (e.g., `US`) | `region in ['US', 'CA']` |
-| `locale` | `string` | Full locale tag (e.g., `en-US`) | Available in the targeting context but not used by the Experimenter UI — use `language` instead |
+| `locale` | `string` | Full locale tag (e.g., `en-US`) | Available in the targeting context but not used by the Experimenter UI |
 
 :::note
-Language and region targeting is typically set via the Experimenter UI fields (which generate `language in [...]` / `region in [...]` expressions automatically), but can also be used directly in advanced targeting expressions.
+Language and region targeting is set via the Experimenter UI fields, which generate `language in [...]` / `region in [...]` expressions.
 :::
 
 ### Device & OS
