@@ -11,7 +11,7 @@ This guide covers how targeting works for Firefox for Android (Fenix) experiment
 When you create an experiment in Experimenter, you configure **who** should be enrolled. Targeting happens at two levels:
 
 1. **Basic targeting** (UI fields) — application, channel, Firefox version range, locale, country, language
-2. **Advanced targeting** — a [JEXL](https://github.com/mozilla/mozjexl) expression evaluated against the client's targeting context to filter users by install age, device properties, UTM attribution, and more
+2. **Advanced targeting** — a [JEXL](https://github.com/mozilla/jexl-rs) expression evaluated against the client's targeting context to filter users by install age, device properties, UTM attribution, and more
 
 Both levels are combined into a single JEXL expression that the Nimbus SDK evaluates on every Firefox for Android installation. If the expression evaluates to `true`, the client is eligible for enrollment.
 
@@ -185,7 +185,7 @@ Event queries let you target users based on their past behavior by querying the 
 |-----------|---------|-------------|
 | `\|eventSum(interval, bucket_count, starting_bucket)` | `number` | Sum of event counts over the interval |
 | `\|eventCountNonZero(interval, bucket_count, starting_bucket)` | `number` | Number of buckets with at least one event |
-| `\|eventAverage(interval, bucket_count, starting_bucket)` | `number` | Average events per bucket |
+| `\|eventAveragePerInterval(interval, bucket_count, starting_bucket)` | `number` | Average events per bucket |
 | `\|eventAveragePerNonZeroInterval(interval, bucket_count, starting_bucket)` | `number` | Average events per non-zero bucket |
 | `\|eventLastSeen(interval, starting_bucket)` | `number` | Buckets since the event last occurred |
 
@@ -211,18 +211,57 @@ The [`RecordedNimbusContext`](https://searchfox.org/mozilla-mobile/source/fenix/
 
 ## JEXL Expression Syntax
 
-Nimbus uses [mozjexl](https://github.com/mozilla/mozjexl), a Mozilla-extended version of JEXL. The standard operators (`&&`, `||`, `!`, `==`, `!=`, `<`, `>`, `<=`, `>=`, `in`) and arithmetic operators (`+`, `-`, `*`, `/`, `%`) are all available.
+Firefox for Android uses [jexl-rs](https://github.com/mozilla/jexl-rs), a Rust implementation of JEXL.
 
-### Key Filters
+### Operators
 
-Filters transform values using the pipe (`|`) syntax:
+| Operator | Description | Example |
+|----------|-------------|---------|
+| `&&` | Logical AND | `days_since_install >= 7 && days_since_update < 7` |
+| `\|\|` | Logical OR | `'uBlock0@raymondhill.net' in addon_ids \|\| 'firefox@ghostery.com' in addon_ids` |
+| `==` | Equality | `user_accepted_tou == false` |
+| `!=` | Inequality | `install_referrer_response_utm_source != ''` |
+| `<`, `>`, `<=`, `>=` | Comparison | `days_since_install < 7` |
+| `in` | Element in array, substring in string, or key in object | `'uBlock0@raymondhill.net' in addon_ids` |
+| `+` | Add / concatenate strings | |
+| `-` | Subtract | |
+| `*` | Multiply | |
+| `/` | Divide | |
+| `%` | Modulus | |
+| `? :` | Ternary (conditional) | `is_first_run ? 'new' : 'existing'` |
+
+:::warning No negation operator
+jexl-rs does **not** have a `!` (NOT) operator. To negate a condition, use `== false`:
+
+```
+// Correct
+user_accepted_tou == false
+('uBlock0@raymondhill.net' in addon_ids) == false
+
+// WRONG — will not parse
+!user_accepted_tou
+!('uBlock0@raymondhill.net' in addon_ids)
+```
+:::
+
+### Filters (Pipe Transforms)
+
+Filters transform values using the pipe (`|`) syntax. jexl-rs has no built-in transforms — all available transforms are registered by the Nimbus SDK:
 
 | Filter | Description | Example |
 |--------|-------------|---------|
-| `\|versionCompare` | Compare version strings | `android_sdk_version\|versionCompare('33') >= 0` |
+| `\|versionCompare` | Compare version strings (returns negative, 0, or positive) | `android_sdk_version\|versionCompare('33') >= 0` |
 | `\|eventCountNonZero` | Count non-zero event buckets | `'events.app_opened'\|eventCountNonZero('Days', 28, 0) >= 21` |
 | `\|eventSum` | Sum event counts over interval | `'events.app_opened'\|eventSum('Days', 7, 0)` |
+| `\|eventAveragePerInterval` | Average events per bucket | `'events.app_opened'\|eventAveragePerInterval('Days', 28, 0)` |
+| `\|eventAveragePerNonZeroInterval` | Average events per non-zero bucket | `'events.app_opened'\|eventAveragePerNonZeroInterval('Days', 28, 0)` |
 | `\|eventLastSeen` | Buckets since event last occurred | `'events.app_opened'\|eventLastSeen('Days', 0)` |
+| `\|preferenceIsUserSet` | True if a preference has been explicitly set by the user | Used for pref conflict checks |
+| `\|bucketSample` | Bucket-based sampling | Used internally for bucketing |
+
+:::note
+Transforms available on desktop (like `|date`, `|length`, `|keys`, `|preferenceValue`, `|regExpMatch`, `|mapToProperty`) are **not available** in jexl-rs. Only the transforms listed above can be used in Fenix targeting expressions.
+:::
 
 ## Sticky Targeting
 
