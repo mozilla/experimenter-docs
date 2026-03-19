@@ -256,7 +256,6 @@ Filters transform values using the pipe (`|`) syntax. jexl-rs has no built-in tr
 | `\|eventAveragePerInterval` | Average events per bucket | `'events.app_opened'\|eventAveragePerInterval('Days', 28, 0)` |
 | `\|eventAveragePerNonZeroInterval` | Average events per non-zero bucket | `'events.app_opened'\|eventAveragePerNonZeroInterval('Days', 28, 0)` |
 | `\|eventLastSeen` | Buckets since event last occurred | `'events.app_opened'\|eventLastSeen('Days', 0)` |
-| `\|preferenceIsUserSet` | True if a preference has been explicitly set by the user | Used for pref conflict checks |
 | `\|bucketSample` | Bucket-based sampling | Used internally for bucketing |
 
 :::note
