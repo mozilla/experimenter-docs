@@ -259,7 +259,7 @@ Filters transform values using the pipe (`|`) syntax. jexl-rs has no built-in tr
 | `\|bucketSample` | Bucket-based sampling | Used internally for bucketing |
 
 :::note
-Transforms available on desktop (like `|date`, `|length`, `|keys`, `|preferenceValue`, `|regExpMatch`, `|mapToProperty`) are **not available** in jexl-rs. Only the transforms listed above can be used in Fenix targeting expressions.
+jexl-rs has no built-in transforms. Only the transforms listed above (registered by the Nimbus SDK) can be used in Fenix targeting expressions.
 :::
 
 ## Sticky Targeting
