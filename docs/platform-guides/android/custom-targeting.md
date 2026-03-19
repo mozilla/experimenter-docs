@@ -28,11 +28,10 @@ These are configured directly in the Experimenter audience form:
 
 | Field | Description |
 |-------|-------------|
-| **Channel** | A single channel: `release`, `beta`, `nightly`, or `developer`. On mobile, channel is determined by the app ID, so each channel is a separate application. |
+| **Channel** | A single channel: `release`, `beta`, `nightly`, or `developer`. On mobile, channel is determined by the app ID (e.g., `org.mozilla.firefox` for release), so each channel is a separate application. |
 | **Min/Max Version** | Firefox version range (e.g., 134 to 140). Uses `app_version|versionCompare(...)` internally. |
-| **Locales** | Browser locale codes (e.g., `en-US`, `de`). Can include or exclude. |
-| **Languages** | Two-letter language codes (e.g., `en`, `de`). Can include or exclude. This is extracted from the locale. |
-| **Countries** | Country codes from the locale region (e.g., `US`, `DE`). Can include or exclude. |
+| **Languages** | Two-letter language codes (e.g., `en`, `de`). Can include or exclude. Extracted from the device locale. (Desktop uses full locale codes instead; mobile uses languages.) |
+| **Countries** | Country codes extracted from the locale region (e.g., `US`, `DE`). Can include or exclude. |
 | **Population %** | Percentage of eligible users to enroll (bucketing). |
 
 These fields are translated into JEXL conditions that are combined with any advanced targeting you specify.
@@ -78,16 +77,16 @@ Version targeting is typically set via the Min/Max Version UI fields (which gene
 `isFirstRun` (camelCase, string `"true"`/`"false"`) exists for backwards compatibility. Prefer `is_first_run` (snake_case, boolean) for new targeting.
 :::
 
-### Locale & Region
+### Language & Region
 
 | Attribute | Type | Description | Example |
 |-----------|------|-------------|---------|
-| `locale` | `string` | Full locale tag (e.g., `en-US`) | `locale in ['en-US', 'en-GB']` |
 | `language` | `string` | Two-letter language code extracted from locale (e.g., `en`) | `language in ['en', 'fr']` |
 | `region` | `string` | Country code extracted from locale (e.g., `US`) | `region in ['US', 'CA']` |
+| `locale` | `string` | Full locale tag (e.g., `en-US`) | Available in the targeting context but not used by the Experimenter UI for mobile — use `language` instead |
 
 :::note
-Locale, language, and region targeting is typically set via the Experimenter UI fields, but can also be used directly in advanced targeting expressions.
+Language and region targeting is typically set via the Experimenter UI fields (which generate `language in [...]` / `region in [...]` expressions automatically), but can also be used directly in advanced targeting expressions.
 :::
 
 ### Device & OS
