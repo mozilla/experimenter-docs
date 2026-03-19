@@ -30,7 +30,7 @@ These are configured directly in the Experimenter audience form:
 |-------|-------------|
 | **Channel** | A single channel: `release`, `beta`, `nightly`, or `developer`. On mobile, channel is determined by the app ID (e.g., `org.mozilla.firefox` for release), so each channel is a separate application. |
 | **Min/Max Version** | Firefox version range (e.g., 134 to 140). Uses `app_version|versionCompare(...)` internally. |
-| **Languages** | Two-letter language codes (e.g., `en`, `de`). Can include or exclude. Extracted from the device locale. (Desktop uses full locale codes instead; mobile uses languages.) |
+| **Languages** | Two-letter language codes (e.g., `en`, `de`). Can include or exclude. Extracted from the device locale. |
 | **Countries** | Country codes extracted from the locale region (e.g., `US`, `DE`). Can include or exclude. |
 | **Population %** | Percentage of eligible users to enroll (bucketing). |
 
@@ -61,7 +61,7 @@ The targeting context for Firefox for Android is assembled from multiple sources
 | `channel` | `string` | Build channel (`release`, `beta`, `nightly`, `developer`) | Usually set via UI, not JEXL |
 
 :::note
-Version targeting is typically set via the Min/Max Version UI fields (which generate `app_version|versionCompare('X.!') >= 0` for min and `app_version|versionCompare('X.*') <= 0` for max automatically). Version targeting expressions are only included for Firefox for Android version 98 and above — earlier versions did not support this feature in the Nimbus SDK.
+Version targeting is typically set via the Min/Max Version UI fields (which generate `app_version|versionCompare('X.!') >= 0` for min and `app_version|versionCompare('X.*') <= 0` for max automatically).
 :::
 
 ### Install & Update
@@ -83,7 +83,7 @@ Version targeting is typically set via the Min/Max Version UI fields (which gene
 |-----------|------|-------------|---------|
 | `language` | `string` | Two-letter language code extracted from locale (e.g., `en`) | `language in ['en', 'fr']` |
 | `region` | `string` | Country code extracted from locale (e.g., `US`) | `region in ['US', 'CA']` |
-| `locale` | `string` | Full locale tag (e.g., `en-US`) | Available in the targeting context but not used by the Experimenter UI for mobile — use `language` instead |
+| `locale` | `string` | Full locale tag (e.g., `en-US`) | Available in the targeting context but not used by the Experimenter UI — use `language` instead |
 
 :::note
 Language and region targeting is typically set via the Experimenter UI fields (which generate `language in [...]` / `region in [...]` expressions automatically), but can also be used directly in advanced targeting expressions.
@@ -168,7 +168,7 @@ Attributes from `CustomAttributeProvider` are evaluated at startup. Attributes t
 
 ## Behavioral Targeting (Event Queries)
 
-Firefox for Android supports **behavioral targeting** via event queries — this is a capability unique to the cross-platform Nimbus SDK and is **not available on desktop**.
+Firefox for Android supports **behavioral targeting** via event queries.
 
 Event queries let you target users based on their past behavior by querying the Nimbus event store. Events are bucketed by time interval.
 
@@ -211,11 +211,11 @@ The [`RecordedNimbusContext`](https://searchfox.org/mozilla-mobile/source/fenix/
 
 ## JEXL Expression Syntax
 
-Nimbus uses [mozjexl](https://github.com/mozilla/mozjexl). The same operators and syntax are available on all platforms — see the [Desktop Targeting Guide](https://github.com/mozilla/mozjexl) for the full JEXL reference.
+Nimbus uses [mozjexl](https://github.com/mozilla/mozjexl), a Mozilla-extended version of JEXL. The standard operators (`&&`, `||`, `!`, `==`, `!=`, `<`, `>`, `<=`, `>=`, `in`) and arithmetic operators (`+`, `-`, `*`, `/`, `%`) are all available.
 
-### Key Filters for Android
+### Key Filters
 
-In addition to the standard filters, the Nimbus SDK provides event query transforms for behavioral targeting:
+Filters transform values using the pipe (`|`) syntax:
 
 | Filter | Description | Example |
 |--------|-------------|---------|
@@ -407,11 +407,11 @@ You can test experiments using Preview mode:
 
 ### Common Mistakes
 
-- **Using `version` instead of `app_version`** — on Android, the version attribute is `app_version`, not `version`
+- **Using `version` instead of `app_version`** — the version attribute is `app_version`
 - **Using `isFirstRun` (string) instead of `is_first_run` (boolean)** — the camelCase form is legacy and compares as a string (`== 'true'`); prefer the snake_case boolean form
 - **First-run targeting with late-init attributes** — attributes like `are_notifications_enabled` or `is_default_browser` are not available at first startup
 - **Forgetting sticky enrollment** — if your targeting checks a changeable attribute (like `days_since_install`), mark the experiment as sticky
-- **Using desktop-style attribute names** — Android uses snake_case (`days_since_install`, `is_first_run`), not camelCase
+- **Using camelCase attribute names** — targeting attributes use snake_case (`days_since_install`, `is_first_run`)
 
 ## Adding New Targeting Options
 
