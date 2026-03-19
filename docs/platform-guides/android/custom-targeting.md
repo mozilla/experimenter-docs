@@ -95,8 +95,8 @@ Language and region targeting is set via the Experimenter UI fields, which gener
 | `android_sdk_version` | `string` | Android API level as a string (e.g., `"33"` for Android 13) | `android_sdk_version\|versionCompare('33') >= 0` |
 | `is_phone` | `boolean` | Whether the device is a phone (not a tablet) | `is_phone` |
 | `is_large_device` | `boolean` | Whether the device has a large screen | `is_large_device` |
-| `device_manufacturer` | `string` | Device manufacturer (from `Build.MANUFACTURER`) | |
-| `device_model` | `string` | Device model (from `Build.MODEL`) | |
+| `device_manufacturer` | `string` | Device manufacturer (from `Build.MANUFACTURER`). Common values: `samsung`, `Xiaomi`, `Google`, `motorola`, `OPPO`, `OnePlus` | `device_manufacturer == 'samsung'` |
+| `device_model` | `string` | Device model (from `Build.MODEL`). e.g., `SM-S928B`, `Pixel 8` | `device_model == 'SM-S928B'` |
 | `architecture` | `string` | CPU architecture (e.g., `arm`, `x86`) | |
 
 ### Install Attribution (UTM)
@@ -104,7 +104,7 @@ Language and region targeting is set via the Experimenter UI fields, which gener
 | Attribute | Type | Description | Example |
 |-----------|------|-------------|---------|
 | `install_referrer_response_utm_source` | `string` | UTM source from install referrer | `install_referrer_response_utm_source == 'eea-browser-choice'` |
-| `install_referrer_response_utm_medium` | `string` | UTM medium | |
+| `install_referrer_response_utm_medium` | `string` | UTM medium. Common values: `organic`, `cpc` | `install_referrer_response_utm_medium == 'organic'` |
 | `install_referrer_response_utm_campaign` | `string` | UTM campaign | |
 | `install_referrer_response_utm_term` | `string` | UTM term | |
 | `install_referrer_response_utm_content` | `string` | UTM content | |
