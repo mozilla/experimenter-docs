@@ -20,7 +20,7 @@ Both levels are combined into a single JEXL expression that the Nimbus Desktop C
 1. Firefox starts up and initializes the Nimbus Desktop Client
 2. The client fetches experiment recipes from Remote Settings
 3. For each experiment, the client evaluates the `targeting` JEXL expression against the current targeting context
-4. Clients that match targeting and fall into an eligible bucket are enrolled. Existing enrollments that no longer match targeting are unenrolled (unless protected by a [sticky clause](#sticky-targeting)).
+4. Clients that match targeting and fall into an eligible bucket are enrolled. Existing enrollments that no longer match targeting are unenrolled.
 
 ## Basic Targeting (UI Fields)
 
