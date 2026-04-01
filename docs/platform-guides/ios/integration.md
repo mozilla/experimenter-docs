@@ -215,28 +215,6 @@ let enabled = config.isEnabled
 AppConfig.shared.features.myFeature.recordExposure()
 ```
 
-The only contract callers must uphold is that the `getSdk` closure passed to `initialize()` must itself be thread-safe.
-
-### Lower-level `NimbusInterface` APIs
-
-If you need to call the `NimbusInterface` directly (most app code should not), be aware that some methods perform disk or network I/O and should not be called on the main thread:
-
-**Safe from any thread** (reads from the in-memory cache):
-- `getExperimentBranch()`
-- `getFeatureConfigVariablesJson()`
-- `recordExposureEvent()`
-- `recordMalformedConfiguration()`
-- `recordEvent()` / `recordPastEvent()`
-
-**Background thread only** (performs disk or network I/O):
-- `initialize()`
-- `fetchExperiments()` / `applyPendingExperiments()`
-- `getActiveExperiments()` / `getAvailableExperiments()` / `getExperimentBranches()`
-- `setExperimentsLocally()`
-- `optOut()` / `setExperimentParticipation()` / `setRolloutParticipation()`
-
-The SDK manages its own concurrency internally with dedicated serial dispatch for database I/O and network fetches, and dispatches observer callbacks on the main thread by default.
-
 ## A complete `NimbusBuilder` example
 
 ```swift
