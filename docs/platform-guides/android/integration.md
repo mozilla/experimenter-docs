@@ -244,6 +244,45 @@ FxNimbus.features.myFeature.recordMalformedConfiguration(partId = "invalid-field
 
 This sends a `malformedConfiguration` Glean event identifying the feature and the specific part that was invalid.
 
+## Thread Safety
+
+### FML-generated feature API
+
+The FML-generated feature API — `FeatureHolder<T>` — is **safe to call from any thread**. All public methods (`value()`, `recordExposure()`, `recordExperimentExposure()`, `toJSONObject()`, `recordMalformedConfiguration()`) are synchronized internally using a `ReentrantLock`, so callers do not need to provide their own synchronization.
+
+Under the hood, `value()` reads from an in-memory cache protected by a Rust `RwLock`, so it does not perform disk or network I/O. It is safe and fast to call from the main thread:
+
+```kotlin
+// Safe from any thread, including the main thread
+val config = FxNimbus.features.myFeature.value()
+val enabled = config.isEnabled
+
+// Also safe from any thread
+FxNimbus.features.myFeature.recordExposure()
+```
+
+The only contract callers must uphold is that the `getSdk` lambda passed to `initialize()` must itself be thread-safe.
+
+### Lower-level `NimbusInterface` APIs
+
+If you need to call the `NimbusInterface` directly (most app code should not), be aware that its methods have different threading requirements, indicated by annotations:
+
+**`@AnyThread`** — safe from any thread (reads from the in-memory cache):
+- `getExperimentBranch()`
+- `getFeatureConfigVariablesJson()`
+- `recordExposureEvent()`
+- `recordMalformedConfiguration()`
+- `recordEvent()` / `recordPastEvent()`
+
+**`@WorkerThread`** — must be called from a background thread (performs disk or network I/O):
+- `initialize()`
+- `fetchExperiments()` / `applyPendingExperiments()`
+- `getActiveExperiments()` / `getAvailableExperiments()` / `getExperimentBranches()`
+- `setExperimentsLocally()`
+- `optOut()` / `setExperimentParticipation()` / `setRolloutParticipation()`
+
+The SDK manages its own concurrency internally with two dedicated single-threaded executors (one for database I/O, one for network fetches) and dispatches observer callbacks on the main thread by default.
+
 ## Unit and UI testing with `HardcodedNimbusFeatures`
 
 The `HardcodedNimbusFeatures` class lets you inject feature configurations directly for unit and UI testing, without needing to run the Nimbus SDK or connect to the network:

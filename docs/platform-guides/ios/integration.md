@@ -198,6 +198,45 @@ The `recordedContext` builder option connects the Nimbus SDK to a `RecordedConte
 
 See [Recording Targeting Context](/advanced/recording-targeting-context) for details on implementing the `RecordedContext` protocol.
 
+## Thread Safety
+
+### FML-generated feature API
+
+The FML-generated feature API — `FeatureHolder<T>` — is **safe to use from any thread**. The generated manifest class is marked `@unchecked Sendable`, and all public methods (`value()`, `recordExposure()`, `recordExperimentExposure()`, `toJSONObject()`, `recordMalformedConfiguration()`) are synchronized internally, so callers do not need to provide their own synchronization.
+
+Under the hood, `value()` reads from an in-memory cache protected by a Rust `RwLock`, so it does not perform disk or network I/O. It is safe and fast to call from the main thread:
+
+```swift
+// Safe from any thread, including the main thread
+let config = AppConfig.shared.features.myFeature.value()
+let enabled = config.isEnabled
+
+// Also safe from any thread
+AppConfig.shared.features.myFeature.recordExposure()
+```
+
+The only contract callers must uphold is that the `getSdk` closure passed to `initialize()` must itself be thread-safe.
+
+### Lower-level `NimbusInterface` APIs
+
+If you need to call the `NimbusInterface` directly (most app code should not), be aware that some methods perform disk or network I/O and should not be called on the main thread:
+
+**Safe from any thread** (reads from the in-memory cache):
+- `getExperimentBranch()`
+- `getFeatureConfigVariablesJson()`
+- `recordExposureEvent()`
+- `recordMalformedConfiguration()`
+- `recordEvent()` / `recordPastEvent()`
+
+**Background thread only** (performs disk or network I/O):
+- `initialize()`
+- `fetchExperiments()` / `applyPendingExperiments()`
+- `getActiveExperiments()` / `getAvailableExperiments()` / `getExperimentBranches()`
+- `setExperimentsLocally()`
+- `optOut()` / `setExperimentParticipation()` / `setRolloutParticipation()`
+
+The SDK manages its own concurrency internally with dedicated serial dispatch for database I/O and network fetches, and dispatches observer callbacks on the main thread by default.
+
 ## A complete `NimbusBuilder` example
 
 ```swift
