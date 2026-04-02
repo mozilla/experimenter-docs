@@ -91,6 +91,7 @@ module.exports = {
             "platform-guides/desktop/preview",
             "platform-guides/desktop/desktop-incident-response",
             "platform-guides/desktop/desktop-enroll-locally",
+            "platform-guides/desktop/desktop-targeting",
             "platform-guides/desktop/desktop-targeting-debug"
           ]
         },
