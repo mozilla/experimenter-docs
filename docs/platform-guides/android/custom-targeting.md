@@ -1,26 +1,511 @@
 ---
 id: android-custom-targeting
-title: Custom Targeting
+title: Firefox for Android (Fenix) Targeting Guide
 slug: /platform-guides/android/custom-targeting
 ---
 
-:::warning DEPRECATED
-**This method of adding new targeting attributes is deprecated. Please use the method described in the [Recorded Targeting Context doc](/advanced/recording-targeting-context#adding-new-fields).**
+This guide covers how targeting works for Firefox for Android (Fenix) experiments and rollouts in Nimbus. It explains the available targeting attributes, how to write JEXL expressions, and how to test and debug your targeting.
+
+## How Targeting Works
+
+When you create an experiment in Experimenter, you configure **who** should be enrolled. Targeting happens at two levels:
+
+1. **Basic targeting** (UI fields) — application, channel, Firefox version range, locale, country, language
+2. **Advanced targeting** — a [JEXL](https://github.com/mozilla/jexl-rs) expression evaluated against the client's targeting context to filter users by install age, device properties, UTM attribution, and more
+
+Both levels are combined into a single JEXL expression that the Nimbus SDK evaluates on every Firefox for Android installation. If the expression evaluates to `true`, the client is eligible for enrollment.
+
+### Evaluation Flow
+
+1. Firefox for Android starts and initializes the Nimbus SDK
+2. The SDK fetches experiment recipes from Remote Settings
+3. For each experiment, the SDK evaluates the `targeting` JEXL expression against the current targeting context
+4. Clients that match targeting and fall into an eligible bucket are enrolled. Existing enrollments that no longer match targeting are unenrolled (unless protected by a [sticky clause](#sticky-targeting)).
+
+## Basic Targeting (UI Fields)
+
+These are configured directly in the Experimenter audience form:
+
+| Field | Description |
+|-------|-------------|
+| **Channel** | A single channel: `release`, `beta`, `nightly`, or `developer`. On mobile, channel is determined by the app ID (e.g., `org.mozilla.firefox` for release), so each channel is a separate application. |
+| **Min/Max Version** | Firefox version range (e.g., 134 to 140). Uses `app_version|versionCompare(...)` internally. |
+| **Languages** | Two-letter language codes (e.g., `en`, `de`). Can include or exclude. Extracted from the device locale. |
+| **Countries** | Country codes extracted from the locale region (e.g., `US`, `DE`). Can include or exclude. |
+| **Population %** | Percentage of eligible users to enroll (bucketing). |
+
+These fields are translated into JEXL conditions that are combined with any advanced targeting you specify.
+
+## Advanced Targeting
+
+Advanced targeting uses pre-defined configurations or custom JEXL expressions. In the Experimenter UI, you select from a dropdown of pre-defined targeting configs, each backed by a JEXL expression.
+
+These configs are defined in [`targeting/constants.py`](https://github.com/mozilla/experimenter/blob/main/experimenter/experimenter/targeting/constants.py) in the Experimenter repo. To add a new one, see [Adding New Targeting Options](#adding-new-targeting-options) below.
+
+## Targeting Attributes Reference
+
+The targeting context for Firefox for Android is assembled from multiple sources:
+
+1. **App context** — provided by the application at startup (app name, version, channel, device info)
+2. **Computed attributes** — calculated by the Nimbus SDK (days since install, language, region)
+3. **Recorded context** — app-specific attributes defined in [`RecordedNimbusContext.kt`](https://searchfox.org/mozilla-mobile/source/fenix/app/src/main/java/org/mozilla/fenix/experiments/RecordedNimbusContext.kt) that are recorded to Glean for population sizing
+4. **Custom attributes** — additional attributes from [`CustomAttributeProvider.kt`](https://searchfox.org/mozilla-mobile/source/fenix/app/src/main/java/org/mozilla/fenix/messaging/CustomAttributeProvider.kt), available at startup for experiment targeting
+
+### App & Version
+
+| Attribute | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `app_name` | `string` | Application name (always `"fenix"`) | Set automatically, not typically used in targeting |
+| `app_id` | `string` | Application package ID (e.g., `org.mozilla.firefox`) | Set automatically, not typically used in targeting |
+| `app_version` | `string` | App version string (e.g., `"147.0"`) | `app_version\|versionCompare('134.!') >= 0` |
+| `channel` | `string` | Build channel (`release`, `beta`, `nightly`, `developer`) | Set via the Channel UI field |
+
+:::note
+Version targeting is set via the Min/Max Version UI fields, which generate `app_version|versionCompare('X.!') >= 0` for min and `app_version|versionCompare('X.*') <= 0` for max.
 :::
 
-## Adding New Targeting Attributes to Android
-This page demonstrates how to add new targeting attributes to Android, enabling experiment creators more specific targeting.
-For more general documentation on targeting custom audiences, check out [the custom audiences docs](/advanced/custom-audiences)
+### Install & Update
 
-## Adding the Attribute to the Application
-The Nimbus SDK exposes a new `customTargetingAttributes` parameter in its initializer that is a `Map<String, String>` map. We can take advantage of this parameter to pass in new targeting attributes without modifying the Nimbus SDK at all.
+| Attribute | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `days_since_install` | `number` | Days since app was first installed | `days_since_install < 7` |
+| `days_since_update` | `number` | Days since last app update | `days_since_update < 7 && days_since_install >= 7` |
+| `is_first_run` | `boolean` | True during the app's first run | `is_first_run` |
+| `number_of_app_launches` | `number` | Total number of app launches | `number_of_app_launches <= 20` |
+
+:::note
+`isFirstRun` (camelCase, string `"true"`/`"false"`) exists for backwards compatibility. Prefer `is_first_run` (snake_case, boolean) for new targeting.
+:::
+
+### Language & Region
+
+| Attribute | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `language` | `string` | Two-letter language code extracted from locale (e.g., `en`) | `language in ['en', 'fr']` |
+| `region` | `string` | Country code extracted from locale (e.g., `US`) | `region in ['US', 'CA']` |
+
+:::note
+Language and region targeting is set via the Experimenter UI fields, which generate `language in [...]` / `region in [...]` expressions.
+:::
+
+### Device & OS
+
+| Attribute | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `android_sdk_version` | `string` | Android API level as a string (e.g., `"33"` for Android 13) | `android_sdk_version\|versionCompare('33') >= 0` |
+| `is_phone` | `boolean` | Whether the device is a phone (not a tablet) | `is_phone` |
+| `is_large_device` | `boolean` | Whether the device has a large screen | `is_large_device` |
+| `device_manufacturer` | `string` | Device manufacturer (from `Build.MANUFACTURER`). Common values: `samsung`, `Xiaomi`, `Google`, `motorola`, `OPPO`, `OnePlus` | `device_manufacturer == 'samsung'` |
+| `device_model` | `string` | Device model (from `Build.MODEL`). e.g., `SM-S928B`, `Pixel 8` | `device_model == 'SM-S928B'` |
+| `architecture` | `string` | CPU architecture (e.g., `arm`, `x86`) | |
+
+### Install Attribution (UTM)
+
+| Attribute | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `install_referrer_response_utm_source` | `string` | UTM source from install referrer | `install_referrer_response_utm_source == 'eea-browser-choice'` |
+| `install_referrer_response_utm_medium` | `string` | UTM medium. Common values: `organic`, `cpc` | `install_referrer_response_utm_medium == 'organic'` |
+| `install_referrer_response_utm_campaign` | `string` | UTM campaign | |
+| `install_referrer_response_utm_term` | `string` | UTM term | |
+| `install_referrer_response_utm_content` | `string` | UTM content | |
+
+### Terms of Use & Privacy
+
+| Attribute | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `user_accepted_tou` | `boolean` | Whether the user has accepted Terms of Use | `user_accepted_tou == false && days_since_install >= 28` |
+| `no_shortcuts_or_stories_opt_outs` | `boolean` | Whether the user has not opted out of sponsored shortcuts/stories | `no_shortcuts_or_stories_opt_outs == true` |
+| `tou_points` | `number` | Terms of Use experience points (scoring for ToU targeting tiers) | `tou_points == 0` |
+
+### Add-ons
+
+| Attribute | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `addon_ids` | `string[]` | List of installed add-on IDs | `'uBlock0@raymondhill.net' in addon_ids` |
+
+**Detecting ad blockers:**
+
+```
+// Has uBlock Origin installed
+'uBlock0@raymondhill.net' in addon_ids
+
+// Does NOT have any common ad blocker
+('uBlock0@raymondhill.net' in addon_ids) == false
+&& ('{d10d0bf8-f5b5-c8b4-a8b2-2b9879e08c5d}' in addon_ids) == false
+&& ('adguardadblocker@adguard.com' in addon_ids) == false
+&& ('firefox@ghostery.com' in addon_ids) == false
+```
+
+### Search Engine
+
+| Attribute | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `searchEngines` | `object` | Search engine information | |
+| `searchEngines.current` | `string` | Current default search engine identifier | `'google' in searchEngines.current` |
+
+**Common patterns:**
+
+```
+// Users with Google as default search engine
+'google' in searchEngines.current
+
+// Users with Bing as default
+searchEngines.current == 'bing'
+```
+
+### Home Page
+
+| Attribute | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `homePageSettings` | `object` | Home page configuration | |
+| `homePageSettings.isDefault` | `boolean` | Using the default home page | `homePageSettings.isDefault` |
+| `homePageSettings.isCustomUrl` | `boolean` | Using a custom URL as home page | `homePageSettings.isCustomUrl` |
+
+### Experiment & Rollout Enrollment
+
+| Attribute | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `is_already_enrolled` | `boolean` | Whether the client is already enrolled in this experiment | Used in sticky clauses |
+| `enrollments` | `string[]` | All experiment enrollments (including past) | `('other-slug' in enrollments) == false` |
+| `enrollments_map` | `object` | Experiment slug → branch slug mapping | `enrollments_map['other-slug'] == 'control'` |
+| `active_experiments` | `string[]` | Currently enrolled experiment slugs | |
+
+### Additional Attributes (Messaging / Display Triggers)
+
+These attributes are available from [`CustomAttributeProvider.kt`](https://searchfox.org/mozilla-mobile/source/fenix/app/src/main/java/org/mozilla/fenix/messaging/CustomAttributeProvider.kt) and are primarily used for messaging display triggers but can also be used in experiment targeting:
+
+| Attribute | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `is_default_browser` | `boolean` | Whether Firefox is the default browser | `is_default_browser == true && is_first_run` |
+| `are_notifications_enabled` | `boolean` | Whether notification permissions are granted | |
+| `search_widget_is_installed` | `boolean` | Whether the search widget is on the home screen | |
+| `is_fxa_signed_in` | `boolean` | Whether the user is signed into Firefox Account | |
+| `fxa_connected_devices` | `number` | Number of connected FxA devices | |
+| `date_string` | `string` | Current date as `yyyy-MM-dd` | |
+| `adjust_campaign` | `string` | Adjust campaign ID | |
+| `adjust_network` | `string` | Adjust network | |
+| `adjust_ad_group` | `string` | Adjust ad group | |
+| `adjust_creative` | `string` | Adjust creative | |
+
 :::warning
-A current limitation is that both the key and the value of the targeting attribute are **strings**. Please reach out to the Nimbus SDK team for any targeting attributes that require integer comparison, or any other richer `JEXL` expressions that cannot be done with strings.
+Attributes from `CustomAttributeProvider` are evaluated at startup. Attributes that require initialization after startup (like `are_notifications_enabled`) **cannot** reliably target first-run experiments — they will only be accurate from the second startup onward.
 :::
 
+## Behavioral Targeting (Event Queries)
 
-### How to Add a New Attribute
-In [NimbusSetup.kt](https://github.com/mozilla-mobile/fenix/blob/main/app/src/main/java/org/mozilla/fenix/experiments/NimbusSetup.kt#L61) `NimbusAppInfo` now optionally takes in a map `customTargetingAttributes` that will be used to add custom targeting. Simply add a new key-value pair to the map and it will be available for targeting. For example:
+Firefox for Android supports **behavioral targeting** via event queries.
+
+Event queries let you target users based on their past behavior by querying the Nimbus event store. Events are bucketed by time interval.
+
+### Available Events
+
+| Event | Description |
+|-------|-------------|
+| `events.app_opened` | Application opened |
+| `sync_auth.sign_in` | User signed into Sync |
+
+### Event Query Transforms
+
+| Transform | Returns | Description |
+|-----------|---------|-------------|
+| `\|eventSum(interval, bucket_count, starting_bucket)` | `number` | Sum of event counts over the interval |
+| `\|eventCountNonZero(interval, bucket_count, starting_bucket)` | `number` | Number of buckets with at least one event |
+| `\|eventAveragePerInterval(interval, bucket_count, starting_bucket)` | `number` | Average events per bucket |
+| `\|eventAveragePerNonZeroInterval(interval, bucket_count, starting_bucket)` | `number` | Average events per non-zero bucket |
+| `\|eventLastSeen(interval, starting_bucket)` | `number` | Buckets since the event last occurred |
+
+**Interval values:** `Minutes`, `Hours`, `Days`, `Weeks`, `Months`, `Years`
+
+**Examples from targeting configs:**
+
+```
+// Core active users: opened app at least 21 of the last 28 days
+'events.app_opened'|eventCountNonZero('Days', 28, 0) >= 21
+
+// Recently logged in: signed into Sync within the last 12 weeks
+'sync_auth.sign_in'|eventCountNonZero('Weeks', 12, 0) >= 1
+```
+
+### Pre-Computed Event Queries
+
+The [`RecordedNimbusContext`](https://searchfox.org/mozilla-mobile/source/fenix/app/src/main/java/org/mozilla/fenix/experiments/RecordedNimbusContext.kt) pre-computes one event query and makes it available as a simple numeric attribute:
+
+| Attribute | Type | Description | Equivalent Event Query |
+|-----------|------|-------------|----------------------|
+| `events.days_opened_in_last_28` | `number` | Days the app was opened in the last 28 days | `'events.app_opened'\|eventCountNonZero('Days', 28, 0)` |
+
+## JEXL Expression Syntax
+
+Firefox for Android uses [jexl-rs](https://github.com/mozilla/jexl-rs), a Rust implementation of JEXL.
+
+### Operators
+
+| Operator | Description | Example |
+|----------|-------------|---------|
+| `&&` | Logical AND | `days_since_install >= 7 && days_since_update < 7` |
+| `\|\|` | Logical OR | `'uBlock0@raymondhill.net' in addon_ids \|\| 'firefox@ghostery.com' in addon_ids` |
+| `==` | Equality | `user_accepted_tou == false` |
+| `!=` | Inequality | `install_referrer_response_utm_source != ''` |
+| `<`, `>`, `<=`, `>=` | Comparison | `days_since_install < 7` |
+| `in` | Element in array, substring in string, or key in object | `'uBlock0@raymondhill.net' in addon_ids` |
+| `+` | Add / concatenate strings | |
+| `-` | Subtract | |
+| `*` | Multiply | |
+| `/` | Divide | |
+| `%` | Modulus | |
+| `? :` | Ternary (conditional) | `is_first_run ? 'new' : 'existing'` |
+
+:::warning No negation operator
+jexl-rs does **not** have a `!` (NOT) operator. To negate a condition, use `== false`:
+
+```
+// Correct
+user_accepted_tou == false
+('uBlock0@raymondhill.net' in addon_ids) == false
+
+// WRONG — will not parse
+!user_accepted_tou
+!('uBlock0@raymondhill.net' in addon_ids)
+```
+:::
+
+### Filters (Pipe Transforms)
+
+Filters transform values using the pipe (`|`) syntax. jexl-rs has no built-in transforms — all available transforms are registered by the Nimbus SDK:
+
+| Filter | Description | Example |
+|--------|-------------|---------|
+| `\|versionCompare` | Compare version strings (returns negative, 0, or positive) | `android_sdk_version\|versionCompare('33') >= 0` |
+| `\|eventCountNonZero` | Count non-zero event buckets | `'events.app_opened'\|eventCountNonZero('Days', 28, 0) >= 21` |
+| `\|eventSum` | Sum event counts over interval | `'events.app_opened'\|eventSum('Days', 7, 0)` |
+| `\|eventAveragePerInterval` | Average events per bucket | `'events.app_opened'\|eventAveragePerInterval('Days', 28, 0)` |
+| `\|eventAveragePerNonZeroInterval` | Average events per non-zero bucket | `'events.app_opened'\|eventAveragePerNonZeroInterval('Days', 28, 0)` |
+| `\|eventLastSeen` | Buckets since event last occurred | `'events.app_opened'\|eventLastSeen('Days', 0)` |
+| `\|bucketSample` | Bucket-based sampling | Used internally for bucketing |
+
+:::note
+jexl-rs has no built-in transforms. Only the transforms listed above (registered by the Nimbus SDK) can be used in Fenix targeting expressions.
+:::
+
+## Sticky Targeting
+
+Targeting is re-evaluated periodically. If a targeting expression references attributes that can change, a client could be unenrolled. To prevent this, mark the experiment as using **sticky enrollment**.
+
+On Android, the sticky clause uses `is_already_enrolled`:
+
+```
+(is_already_enrolled) || (<original expression>)
+```
+
+Not all parts of the targeting are wrapped in the sticky clause. Experimenter splits the expression into **sticky** and **non-sticky** parts:
+
+| Sticky (skipped for enrolled clients) | Non-sticky (always evaluated) |
+|---|---|
+| Advanced targeting config expression | Max version |
+| Min version | |
+| Languages / Countries | |
+| Excluded / Required experiments | |
+
+For example, a sticky Fenix experiment targeting new users on version 100+, English, in Canada would produce:
+
+```
+(app_version|versionCompare('101.*') <= 0)
+&& ((is_already_enrolled)
+    || ((days_since_install < 7)
+        && (app_version|versionCompare('100.!') >= 0)
+        && (language in ['en'])
+        && (region in ['CA'])))
+```
+
+An enrolled client will still be unenrolled if it updates past the max version, but won't be unenrolled if `days_since_install` exceeds 7.
+
+## First-Run Targeting
+
+First-run experiments target users during their very first app session. These use `is_first_run` (or the legacy `isFirstRun == 'true'`).
+
+```
+// First-run targeting
+is_first_run
+
+// Legacy form (backwards compatibility)
+isFirstRun == 'true'
+
+// First-run on Android 13+ (API 33)
+(android_sdk_version|versionCompare('33') >= 0) && is_first_run
+
+// Combined first-run check (both forms for compatibility)
+(isFirstRun == 'true' || is_first_run == true) && days_since_install < 7
+```
+
+:::warning
+Custom attributes from `CustomAttributeProvider` that require initialization after startup (like `are_notifications_enabled`, `is_default_browser`) are **not available** for first-run targeting. Only attributes set before the Nimbus SDK initializes can be used.
+:::
+
+## Common Targeting Patterns
+
+### New users (installed less than 7 days ago)
+
+```
+days_since_install < 7
+```
+
+### Existing users (7+ days since install)
+
+```
+days_since_install >= 7
+```
+
+### Recently updated users (not new)
+
+```
+days_since_update < 7 && days_since_install >= 7
+```
+
+### Users in the first 2 weeks
+
+```
+days_since_install < 15
+```
+
+### Core active users (21+ days active in last 28)
+
+```
+'events.app_opened'|eventCountNonZero('Days', 28, 0) >= 21
+```
+
+### Recently logged into Sync
+
+```
+'sync_auth.sign_in'|eventCountNonZero('Weeks', 12, 0) >= 1
+```
+
+### Android version requirements
+
+```
+// Android 8.0+ (API 26)
+android_sdk_version|versionCompare('26') >= 0
+
+// Android 10+ (API 29)
+android_sdk_version|versionCompare('29') >= 0
+
+// Android 13+ (API 33)
+android_sdk_version|versionCompare('33') >= 0
+```
+
+### Early vs. later app launches
+
+```
+// First 20 launches
+number_of_app_launches <= 20
+
+// After 20 launches
+number_of_app_launches > 20
+```
+
+### Phone users
+
+```
+is_phone
+
+// Phone users who are existing (28+ days)
+is_phone && days_since_install >= 28
+```
+
+### Large screen devices
+
+```
+is_large_device
+```
+
+### EU DMA browser choice users
+
+```
+install_referrer_response_utm_source == 'eea-browser-choice'
+```
+
+### Terms of Use targeting
+
+```
+// Existing users who haven't accepted ToU
+user_accepted_tou == false && days_since_install >= 28
+
+// Users who accepted ToU
+user_accepted_tou == true
+
+// ToU experience point tiers
+tou_points == 0
+tou_points == 1
+tou_points > 1
+```
+
+### Ad blocker detection
+
+```
+// Has any common ad blocker
+'uBlock0@raymondhill.net' in addon_ids
+|| '{d10d0bf8-f5b5-c8b4-a8b2-2b9879e08c5d}' in addon_ids
+|| 'adguardadblocker@adguard.com' in addon_ids
+|| 'firefox@ghostery.com' in addon_ids
+```
+
+### Mutual exclusion with other experiments
+
+```
+('other-experiment-slug' in enrollments) == false
+```
+
+## Recorded Targeting Context (Telemetry)
+
+Firefox for Android records a snapshot of targeting attribute values via the `nimbus_system.recorded_nimbus_context` Glean metric, submitted in the `nimbus` ping. This is used for:
+
+- **Population sizing** — estimating how many clients match a targeting expression before launch
+- **Debugging** — verifying what attribute values a client had when targeting was evaluated
+
+The recording logic is in [`RecordedNimbusContext.kt`](https://searchfox.org/mozilla-mobile/source/fenix/app/src/main/java/org/mozilla/fenix/experiments/RecordedNimbusContext.kt). The recorded attributes include: `is_first_run`, `event_query_values.days_opened_in_last_28`, UTM parameters, `android_sdk_version`, `app_version`, `locale`, `days_since_install`, `days_since_update`, `language`, `region`, `device_manufacturer`, `device_model`, `user_accepted_tou`, `no_shortcuts_or_stories_opt_outs`, `addon_ids`, and `tou_points`.
+
+## Testing & Debugging
+
+### Nimbus DevTools
+
+The [Nimbus Developer Tools](https://github.com/mozilla-extensions/nimbus-devtools) can be used for testing targeting on Android via the Nimbus CLI or by connecting to Firefox for Android. See the [Nimbus Developer Tools Guide](/resources/nimbus-devtools-guide) for details.
+
+### Preview Mode
+
+You can test experiments using Preview mode:
+
+1. Set the experiment to Preview in Experimenter
+2. In Firefox for Android, navigate to `about:config` and enable the Nimbus preview collection
+3. The app will fetch and evaluate the preview recipe
+
+### Common Mistakes
+
+- **Using `version` instead of `app_version`** — the version attribute is `app_version`
+- **Using `isFirstRun` (string) instead of `is_first_run` (boolean)** — the camelCase form is legacy and compares as a string (`== 'true'`); prefer the snake_case boolean form
+- **First-run targeting with late-init attributes** — attributes like `are_notifications_enabled` or `is_default_browser` are not available at first startup
+- **Forgetting sticky enrollment** — if your targeting checks a changeable attribute (like `days_since_install`), mark the experiment as sticky
+- **Using camelCase attribute names** — targeting attributes use snake_case (`days_since_install`, `is_first_run`)
+
+## Adding New Targeting Options
+
+To add a new pre-defined targeting option to the Experimenter dropdown:
+
+1. **Add to `targeting/constants.py`** — create a new `NimbusTargetingConfig` instance with the JEXL expression, description, and `Application.FENIX.name` in `application_choice_names`
+2. **Test locally** — verify the JEXL expression evaluates correctly
+3. **Submit a PR** to `mozilla/experimenter` with the new config
+
+If your targeting requires a **new attribute** that doesn't exist yet:
+
+1. **Add the attribute** to [`RecordedNimbusContext.kt`](https://searchfox.org/mozilla-mobile/source/fenix/app/src/main/java/org/mozilla/fenix/experiments/RecordedNimbusContext.kt) — add the field, include it in `toJson()` (which makes it available in the targeting context), and include it in `record()` (which records it to Glean for population sizing)
+2. **Add a corresponding Glean metric** in the Fenix `metrics.yaml` for the recorded value
+3. **If the attribute is only needed at startup** (not for population sizing), add it to [`CustomAttributeProvider.kt`](https://searchfox.org/mozilla-mobile/source/fenix/app/src/main/java/org/mozilla/fenix/messaging/CustomAttributeProvider.kt) instead
+4. **Wait for the release train** — the attribute will be available starting in the Firefox for Android version that ships the change
+5. **Add the targeting config** to Experimenter's `constants.py` as above
+
+See [Recording Targeting Context](/advanced/recording-targeting-context) and [Custom Audiences](/advanced/custom-audiences) for more details on the process.
+
+:::warning Legacy: customTargetingAttributes
+An older method of adding targeting attributes used the `customTargetingAttributes` parameter on `NimbusAppInfo`:
+
 ```kotlin
 val appInfo = NimbusAppInfo(
     appName = "fenix",
@@ -31,14 +516,12 @@ val appInfo = NimbusAppInfo(
 )
 ```
 
-Note that since we need to add the targeting attributes on the client code, the attribute changes will have to ride the trains before they are available for targeting.
-
-## Adding the Attribute on Experimenter
-After the targeting attribute is ready on the app, you will need to modify experimenter to allow creating experiments that target the attribute you created. Follow the instructions on [the custom audiences page](/advanced/custom-audiences#how-to-add-a-new-custom-audience) to add the new targeting on experimenter.
-:::warning
-The targeting `JEXL` expression on experimenter **must** use the same name as the key given to the SDK. For example, if the app defines a key-value pair, with key `isFirstRun`. experimenter expression must use the same name (i.e `isFirstRun`).
+**This approach is deprecated.** It only supports string key/value pairs and does not record values to Glean for population sizing. Use `RecordedNimbusContext` instead, as described above. See the [Recorded Targeting Context doc](/advanced/recording-targeting-context#adding-new-fields) for the current method.
 :::
 
-## Example
-- Check out this PR for an example on how to add new targeting attributes for Android: https://github.com/mozilla-mobile/fenix/pull/20642
-- Check out this PR for an example on how to add new targeting attributes to experimenter: https://github.com/mozilla/experimenter/pull/6257
+## Further Reading
+
+- [Behavioral Targeting](/advanced/behavioral-targeting) — event query transforms and available events
+- [Recording Targeting Context](/advanced/recording-targeting-context) — how to add new recorded attributes
+- [Custom Audiences](/advanced/custom-audiences) — adding new targeting options to the Experimenter dropdown
+- [Nimbus Developer Tools Guide](/resources/nimbus-devtools-guide) — testing and debugging tools
