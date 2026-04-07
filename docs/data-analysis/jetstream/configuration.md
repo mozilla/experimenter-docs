@@ -276,6 +276,18 @@ data_source = "main"
 [metrics.ever_clicked_cows.statistics.binomial]
 ```
 
+### Common `select_expression` Patterns
+
+Here are the most common patterns for `select_expression`, depending on the type of metric you want to compute:
+
+- **Binary metric** (did the client do X at least once?): `COALESCE(LOGICAL_OR(condition), FALSE)` — use with `[statistics.binomial]`
+- **Count metric** (how many times did X happen?): `COALESCE(COUNTIF(condition), 0)` — use with `[statistics.bootstrap_mean]`
+- **Sum metric** (total value of X): `COALESCE(SUM(column), 0)` — use with `[statistics.bootstrap_mean]`
+
+:::tip
+To find the right BigQuery table and column names for your `from_expression` when defining a custom data source, see [Finding Telemetry in BigQuery](/data-analysis/data-topics/telemetry-discovery).
+:::
+
 ### Defining Data Sources
 
 Most of the regular data sources are already defined in mozanalysis. 

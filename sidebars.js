@@ -186,8 +186,7 @@ module.exports = {
             "data-analysis/jetstream/metrics",
             "data-analysis/jetstream/outcomes",
             "data-analysis/jetstream/statistics",
-            "data-analysis/jetstream/configuration",
-            "data-analysis/jetstream/configuration-walkthrough"
+            "data-analysis/jetstream/configuration"
           ]
         },
         "data-analysis/experiment-sizing",
