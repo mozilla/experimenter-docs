@@ -6,6 +6,10 @@ slug: /data-analysis/telemetry
 
 This section is an overview of Nimbus Telemetry intended for the analysis of experiments.
 
+:::tip Looking for product telemetry?
+This page covers Nimbus SDK lifecycle events (enrollment, exposure, etc.). To find product telemetry metrics in BigQuery for your experiment analysis, see [Finding Telemetry in BigQuery](/data-analysis/data-topics/telemetry-discovery).
+:::
+
 ## Standard Events
 
 The following events are sent during an experiment's lifecycle.

@@ -13,6 +13,31 @@ Jetstream writes analysis results and enrollments information to BigQuery. Stati
 
 The datasets that back the Experimenter results dashboards are available in BigQuery in the `mozanalysis` dataset in `moz-fx-data-experiments`. [Technical documentation][jetstream-dtmo] is available in the Mozilla data docs.
 
+:::tip
+For query examples and common patterns for working with these tables, see [Querying Experiment Data in BigQuery](/data-analysis/data-topics/querying-experiment-data).
+:::
+
+#### Results Table Schema
+
+The `statistics_*` tables contain the computed experiment results:
+
+| Column | Description |
+|--------|-------------|
+| `metric` | Metric name (e.g., `active_hours`, `days_of_use`) |
+| `statistic` | Statistical method (`binomial`, `mean`, `deciles`, etc.) |
+| `branch` | Branch name |
+| `comparison` | `NULL` (absolute), `difference`, or `relative_uplift` |
+| `comparison_to_branch` | Baseline branch for this comparison |
+| `point` | Point estimate |
+| `lower` | Lower bound of confidence interval |
+| `upper` | Upper bound of confidence interval |
+| `ci_width` | Confidence interval width (typically 0.95) |
+| `segment` | Segment name (`all` for full population) |
+| `analysis_basis` | `enrollments` or `exposures` |
+| `window_index` | Analysis window index (for daily/weekly periods) |
+
+The `enrollments_*` and `exposures_*` tables contain per-client raw metric data with columns: `client_id`, `branch`, `enrollment_date`, `exposure_date`, plus one column per metric and segment boolean columns.
+
 ### Monitoring Datasets
 
 Datasets used for monitoring the operation of Jetstream are part of the `monitoring` dataset in `moz-fx-data-experiments`.

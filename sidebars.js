@@ -186,7 +186,8 @@ module.exports = {
             "data-analysis/jetstream/metrics",
             "data-analysis/jetstream/outcomes",
             "data-analysis/jetstream/statistics",
-            "data-analysis/jetstream/configuration"
+            "data-analysis/jetstream/configuration",
+            "data-analysis/jetstream/configuration-walkthrough"
           ]
         },
         "data-analysis/experiment-sizing",
@@ -201,6 +202,8 @@ module.exports = {
             "data-analysis/data-topics/preenrollment_bias",
             "data-analysis/data-topics/population_representativeness",
             "data-analysis/telemetry",
+            "data-analysis/data-topics/telemetry-discovery",
+            "data-analysis/data-topics/querying-experiment-data",
             "data-analysis/validating-experiments"
           ]
         },
