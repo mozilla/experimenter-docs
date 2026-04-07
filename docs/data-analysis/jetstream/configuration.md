@@ -90,6 +90,10 @@ segments = ["is_regular_user_v3", "new_or_resurrected_v3"]
 
 # Nominal length of the enrollment period in days.
 # Mozanalysis will consider enrollment_period + 1 "dates" of enrollments.
+# If not set here, Jetstream resolves the enrollment period in this order:
+#   1. This TOML value (if set)
+#   2. Computed from (enrollment_end_date - start_date + 1) if enrollment has ended
+#   3. proposed_enrollment from the Experimenter API
 enrollment_period = 7
 
 # The name of the control branch.
@@ -302,7 +306,14 @@ Add a section that looks like:
 # FROM expression - often just a fully-qualified table name. Sometimes a subquery.
 from_expression = "(SELECT client_id, experiments, submission_date FROM my_cool_table)"
 
-# See https://mozilla.github.io/mozanalysis/api/metrics.html#mozanalysis.metrics.DataSource for details.
+# How experiment enrollment information is stored in this data source.
+# "native" — the data source has an experiments column with enrollment info
+#            (e.g., ping_info.experiments in Glean tables). Jetstream uses
+#            this column to filter to enrolled clients.
+# "none"   — the data source does NOT contain experiment enrollment info.
+#            Jetstream will join this data source with its own enrollment
+#            table to filter to enrolled clients. Use this for most custom
+#            data sources built from subqueries.
 experiments_column_type = "native"
 
 # Data sources can support aggregations on client_id and/or profile_group_id.

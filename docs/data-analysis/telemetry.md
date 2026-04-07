@@ -83,6 +83,47 @@ specific `reason` is included in the event's `extra` field.
 | ----------------------------------- | --------------------------------- | ------------------------------ |
 | `enroll_failed`                     | `enroll_failed`                   | `enroll_failed`                |
 
+### Enrollment Status
+
+A newer, richer form of enrollment telemetry that records the SDK's evaluation of **every recipe** each time it applies pending experiments. Unlike the older `enrollment`/`unenrollment` events (which only fire on state changes), `enrollment_status` gives a complete snapshot of why each recipe is or isn't enrolled.
+
+:::info
+`enrollment_status` is disabled by default and currently enabled via a rollout on Desktop and Fenix. Only clients enrolled in the enabling rollout emit these events.
+:::
+
+These events are sent via the `nimbus-targeting-context` ping, so they live in the `nimbus_targeting_context` table (not in `events_stream`).
+
+**Extra keys:**
+
+| Key | Type | Description |
+|-----|------|-------------|
+| `slug` | string | Experiment/rollout slug |
+| `status` | string | `Enrolled`, `NotEnrolled`, `Disqualified`, `WasEnrolled` |
+| `reason` | string | Why this status was assigned (see below) |
+| `branch` | string | Branch assigned (only when status is `Enrolled`) |
+| `error_string` | string | Error message (when reason is `Error`) |
+| `conflict_slug` | string | Conflicting experiment/rollout slug (when reason is `FeatureConflict`) |
+
+**Possible `reason` values:** `Qualified`, `NotTargeted`, `EnrollmentsPaused`, `NotSelected`, `Error`, `FeatureConflict`, `OptOut`, `OptIn`, `ChangedPref`, `UnenrolledInAnotherProfile`, `ForceEnrollment`
+
+**Example query** — check enrollment status distribution for a specific experiment:
+
+```sql
+SELECT
+  (SELECT value FROM UNNEST(e.extra) WHERE key = 'slug') AS slug,
+  (SELECT value FROM UNNEST(e.extra) WHERE key = 'status') AS status,
+  (SELECT value FROM UNNEST(e.extra) WHERE key = 'reason') AS reason,
+  COUNT(*) AS cnt
+FROM `mozdata.firefox_desktop.nimbus_targeting_context`,
+UNNEST(events) AS e
+WHERE DATE(submission_timestamp) = '2025-01-15'
+  AND e.category = 'nimbus_events'
+  AND e.name = 'enrollment_status'
+  AND (SELECT value FROM UNNEST(e.extra) WHERE key = 'slug') = 'my-experiment-slug'
+GROUP BY 1, 2, 3
+ORDER BY cnt DESC
+```
+
 ## Experiment Annotations
 
 In addition to the standard Nimbus events that are generated, Nimbus

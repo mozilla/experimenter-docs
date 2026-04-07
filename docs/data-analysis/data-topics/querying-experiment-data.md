@@ -22,7 +22,7 @@ Experiment slug hyphens are converted to underscores. For an experiment with slu
 | `{slug}_exposures_{period}` | `my_experiment_slug_exposures_weekly` | Per-client raw metric data (exposure basis) |
 | `enrollments_{slug}` | `enrollments_my_experiment_slug` | Base enrollment table |
 
-Available periods: `daily`, `weekly`, `overall_1`, `day_{N}`, `week_{N}`
+Available periods: `daily`, `weekly`, `overall_1`, `day_{N}`, `week_{N}`, `preenrollment_week_1`, `preenrollment_days28_1`
 
 ### Statistics Table Schema
 
