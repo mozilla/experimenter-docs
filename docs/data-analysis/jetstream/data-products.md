@@ -13,6 +13,31 @@ Jetstream writes analysis results and enrollments information to BigQuery. Stati
 
 The datasets that back the Experimenter results dashboards are available in BigQuery in the `mozanalysis` dataset in `moz-fx-data-experiments`. [Technical documentation][jetstream-dtmo] is available in the Mozilla data docs.
 
+:::tip
+For query examples and common patterns for working with these tables, see [Querying Experiment Data in BigQuery](/data-analysis/data-topics/querying-experiment-data).
+:::
+
+#### Results Table Schema
+
+The `statistics_*` tables contain the computed experiment results:
+
+| Column | Description |
+|--------|-------------|
+| `metric` | Metric name (e.g., `active_hours`, `days_of_use`) |
+| `statistic` | Statistical method (`binomial`, `mean`, `deciles`, etc.) |
+| `branch` | Branch name |
+| `comparison` | `NULL` (absolute), `difference`, or `relative_uplift` |
+| `comparison_to_branch` | Baseline branch for this comparison |
+| `point` | Point estimate |
+| `lower` | Lower bound of confidence interval |
+| `upper` | Upper bound of confidence interval |
+| `ci_width` | Confidence interval width (typically 0.95) |
+| `segment` | Segment name (`all` for full population) |
+| `analysis_basis` | `enrollments` or `exposures` |
+| `window_index` | Analysis window index (for daily/weekly periods) |
+
+The `enrollments_*` and `exposures_*` tables contain per-client raw metric data with columns: `client_id`, `branch`, `enrollment_date`, `exposure_date`, plus one column per metric and segment boolean columns.
+
 ### Monitoring Datasets
 
 Datasets used for monitoring the operation of Jetstream are part of the `monitoring` dataset in `moz-fx-data-experiments`.
@@ -30,9 +55,13 @@ The `logs` table has the following schema:
 | `message`               | `STRING`    | Log message                                           |
 | `log_level`             | `STRING`    | Log level: ERROR, WARNING                             |
 | `exception`             | `STRING`    | Raised exception object                               |
-| `filename`              | `STRING`    | Name the Jetstream code file the exception was raised |
-| `func_name`             | `STRING`    | Name the Jetstream function the exception was raised  |
-| `exception_type`        | `STRING`    | Class name the exception raised                       |
+| `exception_type`        | `STRING`    | Class name of the exception raised (see [Troubleshooting](/data-analysis/jetstream/troubleshooting#common-exception-types) for a guide) |
+| `filename`              | `STRING`    | Jetstream source file where the exception was raised  |
+| `func_name`             | `STRING`    | Jetstream function where the exception was raised     |
+| `metric`                | `STRING`    | Metric slug that failed (if applicable)               |
+| `statistic`             | `STRING`    | Statistic that failed (if applicable)                 |
+| `analysis_basis`        | `STRING`    | `enrollments` or `exposures`                          |
+| `segment`               | `STRING`    | Segment being computed when the error occurred        |
 
 #### Query Cost
 
@@ -42,15 +71,42 @@ The `query_cost_v1` table has the following schema:
 
 | Column name             | Type        | Description                                           |
 | ----------------------- | ----------- | ----------------------------------------------------- |
-| `submission_timestamp`  | `TIMESTAMP` | Timestamp of when the query was executed              |
+| `submission_timestamp`  | `TIMESTAMP` | Timestamp of when the query was executed (table is partitioned on this column) |
 | `destination_table`     | `STRING`    | Name of the table query was writing data to           |
 | `query`                 | `STRING`    | SQL of the executed query                             |
 | `total_bytes_processed` | `INT64`     | Number of bytes the query processed                   |
 | `cost_usd`              | `FLOAT`     | Cost of the query in USD based on [BigQuery pricing]  |
+| `experiment_slug`       | `STRING`    | Experiment slug the query was run for                 |
+| `total_slot_ms`         | `INT64`     | Total BigQuery slot milliseconds consumed             |
+| `duration_minutes`      | `FLOAT`     | Wall-clock duration of the query in minutes           |
+| `error_reason`          | `STRING`    | BigQuery error reason (if the query failed)           |
+| `error_message`         | `STRING`    | BigQuery error message (if the query failed)          |
+
+:::tip
+The `query_cost_v1` table is the best way to confirm whether Jetstream actually ran queries for a specific experiment on a given day. Query it by `experiment_slug` and `DATE(submission_timestamp)`.
+:::
 
 #### Experimenter Experiments
 
 For monitoring Nimbus experiments, some common failure cases are exposed as part of the [Experiments Enrollments dashboard](https://mozilla.cloud.looker.com/dashboards-next/216). These monitoring rules will require access to collected experiments enrollment data which is available in `monitoring.experimenter_experiments_v1`. This dataset is part of [bigquery-etl](https://github.com/mozilla/bigquery-etl/tree/main/sql/moz-fx-data-experiments/monitoring/experimenter_experiments_v1) and updated every 10 minutes by fetching data from the Experimenter API.
+
+Key columns in `experimenter_experiments_v1`:
+
+| Column name             | Type        | Description                                           |
+| ----------------------- | ----------- | ----------------------------------------------------- |
+| `normandy_slug`         | `STRING`    | Experiment slug (matches the slug in Experimenter)    |
+| `status`                | `STRING`    | Experiment status (Live, Complete, etc.)               |
+| `start_date`            | `DATE`      | Experiment start date                                 |
+| `end_date`              | `DATE`      | Experiment end date                                   |
+| `enrollment_end_date`   | `DATE`      | When enrollment ended                                 |
+| `proposed_enrollment`   | `INT64`     | Proposed enrollment period in days                    |
+| `reference_branch`      | `STRING`    | Name of the control/reference branch                  |
+| `is_high_population`    | `BOOL`      | Whether the experiment is marked as high-population   |
+| `branches`              | `STRING`    | JSON array of branch definitions                      |
+| `app_id`                | `STRING`    | Application identifier                                |
+| `app_name`              | `STRING`    | Application name                                      |
+| `channel`               | `STRING`    | Release channel                                       |
+| `is_rollout`            | `BOOL`      | Whether this is a rollout (excluded from Jetstream)   |
 
 ## GCS Data Export
 

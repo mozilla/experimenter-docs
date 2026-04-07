@@ -201,6 +201,8 @@ module.exports = {
             "data-analysis/data-topics/preenrollment_bias",
             "data-analysis/data-topics/population_representativeness",
             "data-analysis/telemetry",
+            "data-analysis/data-topics/telemetry-discovery",
+            "data-analysis/data-topics/querying-experiment-data",
             "data-analysis/validating-experiments"
           ]
         },
