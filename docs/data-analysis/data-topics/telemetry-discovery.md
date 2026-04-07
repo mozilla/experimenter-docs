@@ -104,8 +104,8 @@ The routing rules are:
 | Custom ping name (e.g., `newtab`) | Any | That ping's table (e.g., `firefox_desktop.newtab`) |
 | `events` | Event | `firefox_desktop.events` raw table, or query via `events_stream` |
 | `metrics` | Non-event | `firefox_desktop.metrics` |
-| *(omitted)* | Event | Built-in `events` ping → `events_stream` |
-| *(omitted)* | Non-event | Built-in `metrics` ping → `firefox_desktop.metrics` |
+| Not specified (default) | Event | Built-in `events` ping → `events_stream` |
+| Not specified (default) | Non-event | Built-in `metrics` ping → `firefox_desktop.metrics` |
 
 ## Events: Two Paths
 
