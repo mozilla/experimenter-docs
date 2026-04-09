@@ -453,7 +453,7 @@ Inactive enrollment records are **permanently deleted from the client's store af
 
 This means if experiment B's targeting depends on enrollment in experiment A via `enrollmentsMap`, and experiment A ends, you have a **12-month window** before clients start losing the enrollment record. After that point, clients will begin unenrolling from experiment B with `targeting-mismatch` as their `enrollmentsMap` entries for experiment A are cleaned up.
 
-If a long-term holdback is replaced by a successor (e.g., a 2025 holdback replaced by a 2026 holdback), update dependent targeting expressions to accept **both** holdbacks before the 12-month window expires:
+If a long-term holdback is replaced by a successor (e.g., a 2025 holdback replaced by a 2026 holdback), you cannot modify the targeting of already-launched experiments or rollouts. Instead, **clone the dependent experiment/rollout** with updated targeting that accepts both holdbacks, launch the clone, and then end the original:
 
 ```
 enrollmentsMap['long-term-holdback-2025h1-growth-desktop'] == 'delivery'
