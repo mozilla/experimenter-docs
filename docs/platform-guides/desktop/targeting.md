@@ -169,9 +169,9 @@ os.isMac
 
 | Attribute | Type | Description | Example |
 |-----------|------|-------------|---------|
-| `activeExperiments` | `string[]` | Currently enrolled experiment slugs | `'my-experiment' in activeExperiments` |
-| `activeRollouts` | `string[]` | Currently enrolled rollout slugs | `!('some-rollout' in activeRollouts)` |
-| `enrollmentsMap` | `array` | All enrollments as `{experimentSlug, branchSlug}` entries | Used for branch-level exclusion |
+| `activeExperiments` | `string[]` | Currently enrolled experiment slugs (active only) | `'my-experiment' in activeExperiments` |
+| `activeRollouts` | `string[]` | Currently enrolled rollout slugs (active only) | `!('some-rollout' in activeRollouts)` |
+| `enrollmentsMap` | `object` | Map of experiment/rollout slug → branch slug for all enrollments (active and inactive). See [enrollmentsMap details](#enrollmentsmap) below. | `enrollmentsMap['my-holdback'] == 'treatment'` |
 
 ### New Tab & Home Page
 
@@ -438,6 +438,36 @@ userMonthlyActivity|length >= 14 && userMonthlyActivity|length < 21
 ```
 !('other-experiment-slug' in activeExperiments)
 ```
+
+### Branch-level dependency with `enrollmentsMap` {#enrollmentsmap}
+
+`enrollmentsMap` is an object that maps experiment/rollout slugs to branch slugs. Unlike `activeExperiments` and `activeRollouts` (which only contain currently active enrollments), `enrollmentsMap` includes **both active and inactive** enrollment records. This makes it useful for targeting based on a client's enrollment history — for example, requiring that a client was previously enrolled in a specific branch of a holdback experiment.
+
+```
+// Require enrollment in the delivery branch of a holdback
+enrollmentsMap['long-term-holdback-2026-growth-desktop'] == 'delivery'
+```
+
+:::warning 12-Month Retention Limit
+Inactive enrollment records are **permanently deleted from the client's store after 12 months** (365.25 days), measured from the original enrollment date. Once deleted, the key is removed from `enrollmentsMap` and any targeting expression that references it will no longer match.
+
+This means if experiment B's targeting depends on enrollment in experiment A via `enrollmentsMap`, and experiment A ends, you have a **12-month window** before clients start losing the enrollment record. After that point, clients will begin unenrolling from experiment B with `targeting-mismatch` as their `enrollmentsMap` entries for experiment A are cleaned up.
+
+If a long-term holdback is replaced by a successor (e.g., a 2025 holdback replaced by a 2026 holdback), update dependent targeting expressions to accept **both** holdbacks before the 12-month window expires:
+
+```
+enrollmentsMap['long-term-holdback-2025h1-growth-desktop'] == 'delivery'
+|| enrollmentsMap['long-term-holdback-2026-growth-desktop'] == 'delivery'
+```
+:::
+
+**Key differences between enrollment attributes:**
+
+| Attribute | Includes Active | Includes Inactive | Provides Branch | Retention |
+|-----------|:-:|:-:|:-:|---|
+| `activeExperiments` | ✅ | ❌ | ❌ | Current session only |
+| `activeRollouts` | ✅ | ❌ | ❌ | Current session only |
+| `enrollmentsMap` | ✅ | ✅ | ✅ | 12 months from enrollment date |
 
 ## Recorded Targeting Context (Telemetry)
 
