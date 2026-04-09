@@ -449,7 +449,7 @@ enrollmentsMap['long-term-holdback-2026-growth-desktop'] == 'delivery'
 ```
 
 :::warning 12-Month Retention After Ending
-Enrollment records stay in `enrollmentsMap` **indefinitely while the experiment/rollout is live** — there is no time limit for active enrollments. The retention limit only applies after an experiment **ends**: once an enrollment becomes inactive, its record is permanently deleted from the client's store **12 months (365.25 days) after the original enrollment date**. Once deleted, the key is removed from `enrollmentsMap` and any targeting expression that references it will no longer match.
+Enrollment records stay in `enrollmentsMap` **indefinitely while the experiment/rollout is live** — there is no time limit for active enrollments. The retention limit only applies after an experiment **ends**: once an enrollment becomes inactive, its record is permanently deleted from the client's store **12 months (365.25 days) after the original enrollment date** (see [`_cleanupOldRecipes()`](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/lib/ExperimentStore.sys.mjs#390)). Once deleted, the key is removed from `enrollmentsMap` and any targeting expression that references it will no longer match.
 
 This means if experiment B's targeting depends on enrollment in experiment A via `enrollmentsMap`, and experiment A ends, you have a **12-month window** (from when each client originally enrolled in A) before clients start losing the record. After that point, clients will begin unenrolling from experiment B with `targeting-mismatch` as their `enrollmentsMap` entries for experiment A are cleaned up. Clients who enrolled earlier in experiment A's lifetime will be affected first.
 
