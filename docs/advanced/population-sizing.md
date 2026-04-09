@@ -71,6 +71,10 @@ The Glean dictionary can be searched for [available fields in Firefox Desktop](h
 
 ### Estimating for Firefox on Android and iOS
 
+:::warning
+As of Firefox 149 targeting context metrics on mobile have been moved from the `nimbus` table to the `nimbus_targeting_context` table.
+:::
+
 The following queries can be used to estimate available population for release channel experiments on Android and iOS, if not using Redash then `{{ sql_targeting_expression }}` should be replaced with the actual sql expression:
 
 For Android release channel:
@@ -80,20 +84,20 @@ For Android release channel:
 SELECT
   COUNT(DISTINCT client_info.client_id) AS available_weekly_population,
 FROM
-  `mozdata.fenix.nimbus`
+  `mozdata.fenix.nimbus_targeting_context`
 WHERE
   DATE(submission_timestamp) BETWEEN CURRENT_DATE - 7 AND CURRENT_DATE - 1
   AND ({{ sql_targeting_expression }})
 ```
 
-For iOS release the table is `mozdata.firefox_ios.nimbus`:
+For iOS release the table is `mozdata.firefox_ios.nimbus_targeting_context`:
 
 [iOS Redash Query](https://sql.telemetry.mozilla.org/queries/112919?p_sql_targeting_expression=TRUE)
 ```sql
 SELECT
   COUNT(DISTINCT client_info.client_id) AS available_weekly_population,
 FROM
-  `mozdata.firefox_ios.nimbus`
+  `mozdata.firefox_ios.nimbus_targeting_context`
 WHERE
   DATE(submission_timestamp) BETWEEN CURRENT_DATE - 7 AND CURRENT_DATE - 1
   AND ({{ sql_targeting_expression }})
