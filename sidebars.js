@@ -120,7 +120,8 @@ module.exports = {
           type: "category",
           label: "Web (Cirrus)",
           items: [
-            "platform-guides/web/web-integration"
+            "platform-guides/web/web-integration",
+            "platform-guides/web/onboarding-application-cirrus"
           ]
         },
         {
