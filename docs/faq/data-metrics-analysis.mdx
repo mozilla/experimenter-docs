@@ -36,20 +36,30 @@ After completing your experiment brief and defining your learning goals - attend
 ---
 
 ## Is there a straightforward way to get the results from an experiment programmatically? Like a JSON object or something that I could convert into a dataframe?
-**Yes.** Results are available in bigquery and GCS, though what you see in Experimenter has been transformed a bit.
+**Yes.** Results are available in BigQuery and GCS, though what you see in Experimenter has been transformed a bit.
 
-Daily, weekly and overall results are in this bucket as JSON (you may need to request permission to access this data):
+Daily, weekly and overall results are in GCS in [this bucket](https://console.cloud.google.com/storage/browser/mozanalysis/statistics) as JSON (you may need to request permission to access this data).
+The JSON files are named in the format `statistics_{slug_with_underscores}_[daily|weekly|overall].json`. Here are some examples:
 * https://storage.cloud.google.com/mozanalysis/statistics/statistics_device_migration_new_user_onboarding_pt_2_daily.json
-* https://console.cloud.google.com/storage/browser/_details/mozanalysis/statistics/statistics_device_migration_new_user_onboarding_pt_2_daily.json;tab=live_object?project=moz-fx-data-experiments
+* https://console.cloud.google.com/storage/browser/_details/mozanalysis/statistics/statistics_device_migration_new_user_onboarding_pt_2_daily.json
 
 Example query:
+**Pre-requisites**
+```python -m pip install mozilla-jetstream```
 
 ```
 from jetstream.bigquery_client import BigQueryClient
-PROJECT_ID = 'moz-fx-data-experiments'
-DATASET_ID = 'mozanalysis'
+
+# authenticate to bigquery
+from google.colab import auth
+
+auth.authenticate_user()
+
+PROJECT_ID = "moz-fx-data-experiments"
+DATASET_ID = "mozanalysis"
 client = BigQueryClient(PROJECT_ID, DATASET_ID)
-df = client.table_to_dataframe('statistics_<slug>_overall_1')
+slug_with_underscores = "device-migration-new-user-onboarding-pt-2".replace("-", "_")
+df = client.table_to_dataframe(f"statistics_{slug_with_underscores}_overall_1")
 ```
 
 If you already have `mozanalysis` set up, here's another example query:
