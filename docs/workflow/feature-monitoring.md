@@ -8,13 +8,13 @@ How to view Grafana dashboards for a feature's health and enrollment metrics on 
 
 ## What Is Feature Monitoring?
 
-Feature monitoring provides a Grafana dashboard that tracks the health and usage metrics for a specific Nimbus feature config across all live and completed experiments and rollouts. It is powered by metric definitions in [metric-hub](https://github.com/mozilla/metric-hub/blob/main/featmon/firefox_desktop.toml).
+Feature monitoring provides a Grafana dashboard that tracks the health and usage metrics for a specific Nimbus feature config across all live and completed **rollouts**. It is powered by metric definitions in [metric-hub](https://github.com/mozilla/metric-hub/blob/main/featmon/firefox_desktop.toml).
 
-Unlike experiment-level monitoring (which tracks a single experiment), feature monitoring shows aggregate data across all deliveries for a feature, making it easy to spot regressions or unexpected changes in feature behaviour.
+Unlike experiment-level monitoring (which tracks a single experiment), feature monitoring shows aggregate data across all rollouts for a feature, making it easy to spot regressions or unexpected changes in feature behaviour. Note that this is a **health monitoring** tool — it is not designed for statistical comparisons between branches or measuring experiment impact.
 
 ## How to Access It
 
-1. Go to the **Feature Health Dashboard** in Experimenter (the Features page).
+1. Go to the [**Feature Health Dashboard**](https://experimenter.services.mozilla.com/nimbus/features/) in Experimenter.
 2. Select an application and a feature config from the dropdowns.
 3. If the feature has monitoring configured in metric-hub, a **Open Grafana Dashboard** button appears in the Feature Monitoring card.
 4. Click the button to open the dashboard in a new tab.
