@@ -29,6 +29,25 @@ Errors can be viewed on the [Jetstream error dashboard] in Looker.
 
 Additionally, alerts can be set up in Looker to check for errors daily and sent an email if failures have been detected. To subscribe to these alerts, go to the [Jetstream error dashboard], click on the _Alerts_ (bell) icon on the _Critical Errors Last Run_ tiles and follow the "Error Count" alert.
 
+## Common Exception Types
+
+The `exception_type` field in the error logs (and the [Jetstream error dashboard]) indicates what went wrong. Here are the most common ones:
+
+| Exception | Meaning | What to Do |
+|---|---|---|
+| `EnrollmentNotCompleteException` | Enrollment hasn't ended yet | Normal — Jetstream retries daily until enrollment ends. No action needed. |
+| `EndedException` | Experiment `end_date` is in the past | Normal — the experiment is complete. |
+| `StatisticComputationException` | A specific statistic failed to compute | Check the `metric`, `statistic`, and `segment` fields in the log entry. This usually indicates a bug in the metric definition or incompatible data. |
+| `Exception` (BadRequest / timeout) | BigQuery query timed out or failed | The query may be too expensive. Try simplifying the SQL in the custom config, or use source tables instead of derived views. |
+| `ClassValidationError` | Invalid data from the Experimenter API for a slug | Usually caused by a stale or deleted experiment that still has a TOML config in metric-hub. Remove the orphaned config. |
+| `NoEnrollmentPeriodException` | No enrollment period could be determined | Set `enrollment_period` explicitly in the TOML config. |
+| `HighPopulationException` | Experiment is marked as high-population | Skipped by design — high-population experiments use a different analysis path. |
+| `RolloutSkipException` | The experiment is a rollout | Rollouts are excluded from Jetstream analysis by design. |
+
+:::tip
+`EnrollmentNotCompleteException` is the most common "error" and is **not a real problem** — it just means Jetstream checked the experiment and will try again tomorrow. Don't file a bug for it.
+:::
+
 ## Something Went Wrong, What Do I Do?
 
 1. Check the [Jetstream error dashboard] for more details on the error that occurred.
