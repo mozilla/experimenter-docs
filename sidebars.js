@@ -66,6 +66,7 @@ module.exports = {
         "workflow/risk-mitigation",
         "workflow/launching",
         "workflow/monitoring",
+        "workflow/feature-monitoring",
         "workflow/analyzing",
         "workflow/ending"
       ]
