@@ -233,6 +233,7 @@ module.exports = {
       label: "Messaging System",
       items: [
         "messaging/experiments-and-user-messaging",
+        "messaging/desktop/desktop-messaging",
         "messaging/desktop/messaging-surfaces",
         "messaging/desktop/display-logic",
         "messaging/desktop/message-configuration",

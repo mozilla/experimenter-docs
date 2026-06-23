@@ -4,7 +4,7 @@ title: For Contributors
 slug: /getting-started/for-contributors
 ---
 
-The Experimenter documentation hub is managed in the [mozilla/experimenter-docs](https://github.com/mozilla/experimenter-docs) repository. You will need a GitHub account to contribute, and if you are not already in the [Project Nimbus GitHub team](https://github.com/orgs/mozilla/teams/project-nimbus/members), you may need to request write access in the #nimbus-project Slack channel.
+The Experimenter documentation hub is managed in the [mozilla/experimenter-docs](https://github.com/mozilla/experimenter-docs) repository. You will need a GitHub account to contribute, and if you are not already in the [Project Nimbus GitHub team](https://github.com/orgs/mozilla/teams/project-nimbus/members), you may need to request write access in the #nimbus-dev Slack channel.
 
 :::info
 
