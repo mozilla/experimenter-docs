@@ -107,6 +107,14 @@ It is also possible to specifically include or exclude users into experiments ba
 Note that when using targeting or groups in this way the message **impressions** are removed once the message has been removed or the experiment has ended.
 :::
 
+:::info
+
+When re-running an experience, frequency caps and [blocks](/messaging/desktop/display-logic#blocking) are keyed on `message_id`. If you re-run an experiment (or convert it to a rollout) with a **new** `message_id`, users who already saw the message have no impression or block history under the new ID and may be shown it again, leading to duplicate messaging and message fatigue.
+
+To avoid this, reuse the same `message_id` so history carries over, and end the original experiment or rollout before launching the re-run (or ensure the audiences don't overlap). Note that because impressions are cleared once the original ends, a gap between the two can still re-expose users even with the same `message_id`.
+
+:::
+
 ### No Action to Block Message
 
 For the doorhanger template we had a built-in (into the message surface) button to block a message. For all other surfaces there is no way for the user to block a message from ever being shown. Usually campaigns have had a maximum of 1-2 impressions and it was not considered to add a block action. The benefit of blocking would be that we could group similar messages as part of a **"campaign"** (for example Mozilla VPN) and use the block signal as an indicator not to show future messages with similar content.

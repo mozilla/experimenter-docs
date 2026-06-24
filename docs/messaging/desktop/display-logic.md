@@ -23,6 +23,23 @@ The message will display when the user navigates to a URL that matches the provi
 
 The message will display when a preference has changed. Note that this does *not* trigger if the preference was already set to the desired value at startup.
 
+### `defaultBrowserCheck`
+
+The message will display when Firefox checks whether it is the default browser. This check runs both at startup and when a new tab is opened, so the trigger supplies a `source` value to tell the two apart:
+
+* `source == 'startup'` — the check ran during browser startup
+* `source == 'newtab'` — the check ran because the user opened a new tab
+
+A common pattern is to gate a default-browser message to new tabs only by combining the trigger with `source == 'newtab'` in your targeting. Pairing `defaultBrowserCheck` with `source == 'newtab'` is appropriate when you want the message to appear on the new tab page; use the new-tab feature-callout trigger (below) instead when you are rendering a feature callout anchored to new-tab UI. See the [complete trigger list](https://firefox-source-docs.mozilla.org/toolkit/components/messaging-system/docs/TriggerActionSchemas/index.html#available-trigger-actions) in Firefox source docs for the exact trigger names and the `source` values each one provides.
+
+:::warning
+
+You may notice `source == 'newtab'` appears to "fail" in the JEXL debugger. This is because `source` is part of the **trigger context** — it only exists when the trigger actually fires. The standalone JEXL debuggers (`about:asrouter` and Nimbus DevTools) evaluate targeting against your **client targeting context**, which does *not* include trigger-supplied variables like `source`.
+
+As a result, an expression referencing `source` evaluates against an unknown variable and returns an [empty result](/platform-guides/desktop/targeting-debug#targeting) (neither `true` nor `false`) in the debugger — even though it will work correctly at runtime when the trigger fires. This is expected: targeting that depends on trigger context must be verified through [force or natural enrollment](/messaging/desktop/desktop-messaging#testing-the-experiment), not the debugger.
+
+:::
+
 
 ## Targeting
 

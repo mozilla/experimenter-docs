@@ -86,6 +86,12 @@ The key is that the 'effective audience' (after all targeting criteria) doesn't 
 
 When creating the JSON for treatment branches, you can verify the changes by updating the experiment to Preview Mode and by selecting **Launch to Preview**. This will provide a link that will force enroll the user into the experiment. Alternatively, you can copy paste the JSON into `about:asrouter` to preview it.
 
+### Previewing in `about:asrouter`
+
+`about:asrouter` (the [ASRouter Devtools](https://firefox-source-docs.mozilla.org/browser/components/asrouter/docs/debugging-docs.html)) is the fastest way to iterate on a message's UI without enrolling. To enable it, set `browser.newtabpage.activity-stream.asrouter.devtoolsEnabled` to `true` in `about:config`, then open `about:asrouter`.
+
+Paste your message JSON into the editor to render it immediately and check the layout, copy, and buttons. You can also inspect the messages currently available to the client and the provider they came from, and reset a message's impressions and frequency-cap history (or block and unblock it) so you can re-test as if you had never seen it.
+
 ### Force Enrollment Testing
 
 To test the experiment using forced enrollment:
