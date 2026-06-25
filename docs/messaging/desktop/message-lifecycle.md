@@ -109,9 +109,15 @@ Note that when using targeting or groups in this way the message **impressions**
 
 :::info
 
-When re-running an experience, frequency caps and [blocks](/messaging/desktop/display-logic#blocking) are keyed on `message_id`. If you re-run an experiment (or convert it to a rollout) with a **new** `message_id`, users who already saw the message have no impression or block history under the new ID and may be shown it again, leading to duplicate messaging and message fatigue.
+When re-launching a message, frequency caps and [blocks](/messaging/desktop/display-logic#blocking) are keyed on `message_id`. If you re-run an experiment (or convert it to a rollout) with a **new** `message_id`, users who already saw the message have no impression or block history under the new ID and may be shown it again, leading to duplicate messaging and message fatigue.
 
 To avoid this, reuse the same `message_id` so history carries over, and end the original experiment or rollout before launching the re-run (or ensure the audiences don't overlap). Note that because impressions are cleared once the original ends, a gap between the two can still re-expose users even with the same `message_id`.
+
+:::
+
+:::info
+
+As of Firefox 152, message impressions are retained for 6 months after an experiment or rollout ends, rather than being cleared immediately. For audiences on Firefox 152+, this means you no longer need to end the original experiment or rollout (or avoid a gap) before launching the re-run. Reusing the same `message_id` carries history over. Conversely, if you *want* to show the message to those users again, you must use a **new** `message_id`.
 
 :::
 
