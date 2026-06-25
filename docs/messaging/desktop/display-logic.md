@@ -11,6 +11,12 @@ There are three types of display logic you should consider when using any of the
 * **Targeting**: For what kinds of users, or browser state, should the message be shown? (e.g. locale, country, prefs)
 * **Frequency and Blocking**: How many times should the message be shown, and in what conditions should it never be shown again?
 
+:::note
+
+The [Messaging System source docs](https://firefox-source-docs.mozilla.org/browser/components/asrouter/docs/index.html) are the most up-to-date reference for [triggers](https://firefox-source-docs.mozilla.org/toolkit/components/messaging-system/docs/TriggerActionSchemas/index.html) and [targeting attributes](https://firefox-source-docs.mozilla.org/browser/components/asrouter/docs/targeting-attributes.html). The examples below cover the most common cases. Check the source docs for the complete list and exact names.
+
+:::
+
 ## Triggers
 
 A trigger is a particular "event" (or set of events) that must occur for the message to be displayed. You can see a [complete list of triggers](https://firefox-source-docs.mozilla.org/toolkit/components/messaging-system/docs/TriggerActionSchemas/index.html#available-trigger-actions) in Firefox source docs, but here are some of the most common ones:
@@ -27,16 +33,16 @@ The message will display when a preference has changed. Note that this does *not
 
 The message will display when Firefox checks whether it is the default browser. This check runs both at startup and when a new tab is opened, so the trigger supplies a `source` value to tell the two apart:
 
-* `source == 'startup'` — the check ran during browser startup
-* `source == 'newtab'` — the check ran because the user opened a new tab
+* `source == 'startup'`: the check ran during browser startup
+* `source == 'newtab'`: the check ran because the user opened a new tab
 
 A common pattern is to gate a default-browser message to new tabs only by combining the trigger with `source == 'newtab'` in your targeting. Pairing `defaultBrowserCheck` with `source == 'newtab'` is appropriate when you want the message to appear on the new tab page; use the new-tab feature-callout trigger (below) instead when you are rendering a feature callout anchored to new-tab UI. See the [complete trigger list](https://firefox-source-docs.mozilla.org/toolkit/components/messaging-system/docs/TriggerActionSchemas/index.html#available-trigger-actions) in Firefox source docs for the exact trigger names and the `source` values each one provides.
 
 :::warning
 
-You may notice `source == 'newtab'` appears to "fail" in the JEXL debugger. This is because `source` is part of the **trigger context** — it only exists when the trigger actually fires. The standalone JEXL debuggers (`about:asrouter` and Nimbus DevTools) evaluate targeting against your **client targeting context**, which does *not* include trigger-supplied variables like `source`.
+You may notice `source == 'newtab'` appears to "fail" in the JEXL debugger. This is because `source` is part of the **trigger context**; it only exists when the trigger actually fires. The standalone JEXL debuggers (`about:asrouter` and nimbus-devtools) evaluate targeting against your **client targeting context**, which does *not* include trigger-supplied variables like `source`.
 
-As a result, an expression referencing `source` evaluates against an unknown variable and returns an [empty result](/platform-guides/desktop/targeting-debug#targeting) (neither `true` nor `false`) in the debugger — even though it will work correctly at runtime when the trigger fires. This is expected: targeting that depends on trigger context must be verified through [force or natural enrollment](/messaging/desktop/desktop-messaging#testing-the-experiment), not the debugger.
+As a result, an expression referencing `source` evaluates against an unknown variable and returns an [empty result](/platform-guides/desktop/targeting-debug#targeting) (neither `true` nor `false`) in the debugger, even though it will work correctly at runtime when the trigger fires. This is expected: targeting that depends on trigger context must be verified through [force or natural enrollment](/messaging/desktop/desktop-messaging#testing-the-experiment), not the debugger.
 
 :::
 

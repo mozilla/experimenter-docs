@@ -44,6 +44,6 @@ Some notes:
 
 :::info
 
-For messaging system experiments, ending an experiment or rollout **clears the message impression history** tied to it. If you plan to re-run the experience (for example, converting an experiment into a rollout), reuse the same `message_id` and avoid a gap between ending the original and launching the re-run — otherwise users who already saw the message may see it again. See [Re-running an experience](/messaging/desktop/message-lifecycle#history-state-of-past-experiments) for details.
+For messaging system experiments, ending an experiment or rollout **clears the message impression history** tied to it. If you plan to re-launch the message (for example, converting an experiment into a rollout), reuse the same `message_id` and avoid a gap between ending the original and launching the re-run, otherwise users who already saw the message may see it again. As of Firefox 152, impressions are instead retained for 6 months after ending, so for audiences on Firefox 152+ this gap no longer matters. See [Re-launching a message](/messaging/desktop/message-lifecycle#history-state-of-past-experiments) for details.
 
 :::

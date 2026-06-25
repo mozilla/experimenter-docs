@@ -23,20 +23,28 @@ Also review the [Getting Started guide](/getting-started/for-engineers) and [Wor
 
 - **[Skylight](https://fxms-skylight.netlify.app/)** - View live messaging experiments, rollouts, and dashboards
 - **[ASRouter Devtools](https://firefox-source-docs.mozilla.org/browser/components/asrouter/docs/debugging-docs.html)** - Preview and test message JSON
-- **[Nimbus DevTools Guide](/resources/nimbus-devtools-guide)** - Advanced testing and debugging
-- **[#omc](https://mozilla.enterprise.slack.com/archives/C90HG2UQH)** - Slack channel for messaging system questions and reviews
+- **[nimbus-devtools Guide](/resources/nimbus-devtools-guide)** - Advanced testing and debugging
+- **#omc** - Slack channel for messaging system questions and reviews
+
+The Firefox [Messaging System source docs](https://firefox-source-docs.mozilla.org/browser/components/asrouter/docs/index.html) are the most up-to-date reference for anything specific to the messaging system:
+
+- **[UI Templates](https://firefox-source-docs.mozilla.org/browser/components/asrouter/docs/#ui-templates)** - The different message surfaces (doorhangers, feature callouts, spotlights, etc.) and their schemas
+- **[Trigger Listeners](https://firefox-source-docs.mozilla.org/toolkit/components/messaging-system/docs/TriggerActionSchemas/index.html)** - The user actions that can cause a message to be shown
+- **[Targeting Attributes](https://firefox-source-docs.mozilla.org/browser/components/asrouter/docs/targeting-attributes.html)** - The client and browser state you can target against
+- **[Frequency Caps & Groups](https://firefox-source-docs.mozilla.org/browser/components/asrouter/docs/frequency-caps.html#message-groups)** - How often a message can be shown, and how to cap groups of messages together
+- **[Schemas](https://firefox-source-docs.mozilla.org/toolkit/components/messaging-system/docs/index.html)** - Message schema definitions
 
 ## Getting Started Workflow
 
-When an experiment is kicked-off, an [experiment brief](/workflow/overview) is created by a Product Manager, which will detail the experiment's hypothesis, design, content, targeting, and audience sizing.
+When an experiment is initiated, an [experiment brief](/workflow/overview) is created by a Product Manager, which will detail the experiment's hypothesis, design, content, targeting, and audience sizing.
 
-As an engineer, your goal will be to create the experiment in Experimenter and the applicable JSON for each treatment branch that matches the brief's design, content and targeting.
+As an engineer, your goal will be to create the experiment in Experimenter and the applicable JSON for each treatment branch that matches the brief's design, content, and targeting.
 
 At a high level, the following is how to configure the experiment:
 
 ### 1. Experiment Overview
 
-- Navigate to [https://experimenter.services.mozilla.com/nimbus/](https://experimenter.services.mozilla.com/nimbus/) and select **Create New**
+- Navigate to [https://experimenter.services.mozilla.com/nimbus/](https://experimenter.services.mozilla.com/nimbus/) and select **Create Experiment**
 - Add the public name which is visible to users in `about:studies` (this will also create the unique experiment slug)
 - Add the hypothesis as defined in the experiment brief
 - Set the application (typically Firefox Desktop)
@@ -56,31 +64,37 @@ An empty object for control will never trigger or go through ASRouter and won't 
 
 :::
 
-Ask in [#omc](https://mozilla.enterprise.slack.com/archives/C90HG2UQH) for review if you need clarification on multi-branch experiment setup.
+Ask in #omc for review if you need clarification on multi-branch experiment setup.
 
 ### 3. Select a Feature ID
 
 #### Holdback Experiments & Rollouts
 
-For rollouts and holdback experiments, you should pick up a placeholder Feature ID (`fxms-message`) that is not in use. See the [list of current messaging system feature IDs](https://experimenter.services.mozilla.com/nimbus/?status=Live#). You can verify what is in use by checking the Experimenter UI and filtering for the specific feature ID using the **All Features** dropdown on the left.
+For rollouts and holdback experiments, you should pick up a placeholder Feature ID (`fxms-message`) that is not in use. See the [list of current messaging system feature IDs](https://experimenter.services.mozilla.com/nimbus/?status=Live). You can verify what is in use by checking the Experimenter UI and filtering for the specific feature ID using the **All Features** dropdown on the left.
 
 #### Non-Holdback Experiments
 
 When picking a feature ID for a non-holdback experiment, you should first prefer to run it on the [feature that matches the surface](/messaging/desktop/desktop-messaging-surfaces) that your experiment is using (`spotlight`, `featureCallout`, `infobar`, `cfr`, etc.).
 
-If there are any other experiments using that feature ID that overlap in time with yours, you may still be able to use it, but ask in [#omc](https://mozilla.enterprise.slack.com/archives/C90HG2UQH) to verify.
+If there are any other experiments using that feature ID that overlap in time with yours, you may still be able to use it, but ask in #omc to verify.
 
 **Audience Overlap Considerations:**
 
-In the case of experiment targeting overlaps, for each segment that overlaps, you must ensure that the sum of all audience sizes, including the audience size of your experiment is no more than 100%. For example, if an experiment exists that uses the same targeting segment as yours is enrolling at 30%, your experiment may use that same feature ID at up to 70%, for a combined 100% of the population of that targeting segment.
+In the case of experiment targeting overlaps you must ensure that the sum of all audience sizes, including the audience size of your experiment, is no more than 100% for each segment that overlaps. For example, if an experiment exists that uses the same targeting segment as yours is enrolling at 30%, your experiment may use that same feature ID at up to 70%, for a combined 100% of the population of that targeting segment.
 
-If you are unable to use the feature that matches the surface of your message, reach out to [#omc](https://mozilla.enterprise.slack.com/archives/C90HG2UQH) or a data scientist to discuss other options.
+:::note
+
+Co-enrollment is supported for `fxms-message` feature IDs as of Firefox 152, so these audience-overlap constraints may not apply when targeting Firefox 152+.
+
+:::
+
+If you are unable to use the feature that matches the surface of your message, reach out to #omc or a data scientist to discuss other options.
 
 **Rollout Priority:**
 
 Experiments take priority over rollouts, so one option is to share an ID with an existing rollout. If all IDs are taken by an experiment, it may still be usable depending on audience overlap. Check whether the targeting populations intersect. If your experiment targets Germany and the existing one targets Canada, they don't share users and can safely reuse the same ID.
 
-The key is that the 'effective audience' (after all targeting criteria) doesn't overlap, not just that the IDs are "free." This also includes things like the channel, locales, and the enrollment %.
+The key is that the 'effective audience' (after all targeting criteria) doesn't overlap, not just that the IDs are "free." This also includes things like the channel, locales, and the audience percentage.
 
 ## Testing the Experiment
 
@@ -106,7 +120,7 @@ To test the experiment using forced enrollment:
 
 :::tip
 
-The [Nimbus Developer Tools](/resources/nimbus-devtools-guide) provide a faster way to force enroll — you can paste the experiment's `Recipe JSON` (or a feature configuration) directly instead of using the `about:studies` link.
+The [nimbus-devtools](/resources/nimbus-devtools-guide) extension provides a faster way to force enroll. You can paste the experiment's `Recipe JSON` (or a feature configuration) directly instead of using the `about:studies` link.
 
 :::
 
@@ -122,15 +136,9 @@ Force enrolling through Experimenter will preview the message-level targeting an
 
 To test experiment with natural enrollment on first startup:
 
-#### 1. Generate a Normandy ID
+#### 1. Generate Test IDs
 
-We first need to generate a normandy ID, which will later be passed into the `user.js` file. In `about:config` set `devtools.chrome.enabled` pref to `true`.
-
-In the browser console, paste the following (replacing `{YOUR_EXPERIMENT_SLUG}` with your experiment slug):
-
-```javascript
-await ChromeUtils.importESModule("resource://nimbus/lib/ExperimentManager.sys.mjs").ExperimentManager.generateTestIds((await (await fetch("https://firefox.settings.services.mozilla.com/v1/buckets/main-preview/collections/nimbuspreview/records/{YOUR_EXPERIMENT_SLUG}")).json()).data)
-```
+We first need to generate the test IDs that opt a profile into a specific branch, which will later be passed into the `user.js` file. Use [nimbus-devtools](/resources/nimbus-devtools-guide) to generate them: open the extension, go to the **Experiment Browser**, select your branch, then choose **Actions > Generate Test IDs**.
 
 This will return an object with the respective branch IDs, which can then be populated in your `user.js` file.
 
@@ -138,27 +146,22 @@ This will return an object with the respective branch IDs, which can then be pop
 
 - Open browser profile (`about:profiles`)
 - Create a new profile and create a `user.js` file in browser's profile folder (`../Firefox/Profiles`)
-- Fill it with the normandy ID generated above:
+- Fill it with the ID generated above:
 
 ```javascript title="user.js"
-/* This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-
-// Common preferences file used by both unittest and perf harnesses.
 /* globals user_pref */
 user_pref(
   "messaging-system.rsexperimentloader.collection_id",
   "nimbus-preview"
 );
-user_pref("app.normandy.user_id", "${GENERATED_BRANCH_NORMANY_ID_GOES_HERE}");
+user_pref("toolkit.telemetry.cachedProfileGroupID", "${GENERATED_BRANCH_ID_GOES_HERE}");
 user_pref("messaging-system.log", "all");
 user_pref("browser.ping-centre.log", true);
 ```
 
 :::tip
 
-Use "Show Finder" (for root directory) to get quick access to the folder. Also save the path to the profile for the next step.
+Use **Show in Finder** (macOS) or **Open Folder** (Windows) for quick access to the profile's root directory. Also save the path to the profile for the next step.
 
 :::
 
@@ -176,9 +179,11 @@ Run the appropriate Firefox build that matches the preview targeting (i.e. Night
 </TabItem>
 <TabItem value="windows" label="Windows">
 
-```bash
+```text
 "C:\Program Files\Mozilla Firefox\firefox.exe" --first-startup --profile "C:\Users\{username}\AppData\Roaming\Mozilla\Firefox\Profiles\{profileName}"
 ```
+
+Alternatively, if the profile is registered in `profiles.ini`, you can launch it by name with `-P profileName`.
 
 </TabItem>
 </Tabs>
@@ -207,15 +212,15 @@ Create a QA ticket in the Jira experiment FXE ticket (**Automation > Create QA w
 
 ### Launch Request
 
-When the experiment has received green from QA:
+When the experiment has received green from QA, review the [Ready to Launch Checklist](https://docs.google.com/document/d/1ENTerg6iDlkzDlr1lkgUteyCDLEbEAHOKvHhLjjwVGc/edit) to help verify and cover common issues, then:
 
 1. Select **"Request Launch"** in the experiment
-2. Copy the link into the [#omc](https://mozilla.enterprise.slack.com/archives/C90HG2UQH) Slack channel for review
+2. Copy the link into the #omc Slack channel for review
 3. Someone on the team will approve or request changes in the experiment
 
 :::info
 
-Whenever you are using messaging system, please leverage [#omc](https://mozilla.enterprise.slack.com/archives/C90HG2UQH) for an experiment reviewer/launch request rather than [#ask-experimenter](https://mozilla.enterprise.slack.com/archives/CF94YGE03).
+Whenever you are using messaging system, please leverage #omc for an experiment reviewer/launch request rather than #ask-experimenter.
 
 :::
 
@@ -225,7 +230,7 @@ After the experiment launches:
 
 1. Monitor the experiment Looker dashboard (found on the left-hand side of the experiment under **Links** > **"Live Monitoring Dashboard"**)
 2. Set reminders to check enrollment trends and anomalies. You can use: `/remind me to check experiment enrolments everyday at 1pm`
-3. If enrollment is trending towards the audience sizing, on the enrollment end date, manually end enrollment by requesting to end enrollment and linking the experiment into the [#omc](https://mozilla.enterprise.slack.com/archives/C90HG2UQH) Slack channel for review
+3. If enrollment is trending towards the audience sizing, on the enrollment end date, manually end enrollment by requesting to end enrollment and linking the experiment into the #omc Slack channel for review
 4. If enrollment is not trending towards the sizing, flag this with data science in the experiment Slack channel
 5. The experiment must also be manually ended once the observation period has concluded, following the same procedure as requesting launch and enrollment end
 
@@ -235,4 +240,4 @@ After the experiment launches:
 - [Experimenter Documentation](https://experimenter.info)
 - [Feature Monitoring](/feature-monitoring)
 - [Testing Guide](/workflow/testing)
-- [Nimbus DevTools Guide](/resources/nimbus-devtools-guide)
+- [nimbus-devtools Guide](/resources/nimbus-devtools-guide)
