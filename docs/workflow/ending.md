@@ -41,3 +41,9 @@ The process to end the experiment is similar to that of ending enrollment: press
 
 Some notes:
 * Automated analyses are based on the actual observation period (period between enrollment and experiment ending), not the planned period. So experiments that remain open past their scheduled end date will have more days worth of data included in their results.
+
+:::info
+
+For messaging system experiments, ending an experiment or rollout **clears the message impression history** tied to it. If you plan to re-launch the message (for example, converting an experiment into a rollout), reuse the same `message_id` and avoid a gap between ending the original and launching the re-run, otherwise users who already saw the message may see it again. As of Firefox 152, impressions are instead retained for 6 months after ending, so for audiences on Firefox 152+ this gap no longer matters. See [Re-launching a message](/messaging/desktop/message-lifecycle#history-state-of-past-experiments) for details.
+
+:::
