@@ -32,7 +32,7 @@ The survey sheet is shown after the user clicks “Continue” in the prompt, he
 To deploy a microsurvey, two feature configurations are required in Experimenter:
 
 1. Enable the `microsurveys` feature:
-**microsurveys Value** 
+> microsurveys Value
 ```json
 {
   "enabled": true
@@ -40,7 +40,7 @@ To deploy a microsurvey, two feature configurations are required in Experimenter
 ```
 
 2. Create a new `message` with the microsurvey content. The microsurvey content uses the existing [messaging framework](/messaging/desktop/mobile-messaging), with an extra field called `microsurvey-config` to control the survey, if you are not familiar please take a look at it first. For example:
-**messaging Value** 
+> messaging Value
 ```json
 {
   "messages": {
