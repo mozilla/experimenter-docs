@@ -29,7 +29,28 @@ The survey sheet is shown after the user clicks “Continue” in the prompt, he
 3. The question and options both can be customized.
 
 ## Survey JSON Recipe
-Microsurveys are built on top of the already existing [messaging framework](/messaging/desktop/mobile-messaging), with an extra field called `microsurvey-config`  to control the survey, if you are not familiar please take a look at it first.
+To deploy a microsurvey, two feature configurations are required in Experimenter:
+
+1. Enable the `microsurveys` feature:
+> microsurveys Value
+```json
+{
+  "enabled": true
+}
+```
+
+2. Create a new `message` with the microsurvey content. The microsurvey content uses the existing [messaging framework](/messaging/desktop/mobile-messaging), with an extra field called `microsurvey-config` to control the survey, if you are not familiar please take a look at it first. For example:
+> messaging Value
+```json
+{
+  "messages": {
+    "feature-print-microsurvey": {
+      "title": "microsurvey_prompt_printing_title"
+    }
+  }
+}
+
+```
 
 ## Customize the Prompt
 On the prompt, you can customize the title by using the same `title` field as normal message, for example:
@@ -66,8 +87,8 @@ For the question, just use the `text` field at the same level as the `title` one
 
 To customize answers and UTM parameters, we have to include the `microsurvey-config` field object. For the answers just include a field called `answers`. This is an array of each possible answer and it should contain two properties:
 
-1.  `text`, a string or bundled string of the text for the question
-2. `ordering` indicates the order of the answer in the answers. If no value is provided the default value will be 0. **Note**: The answers are displayed top to bottom e.g. 0 will be the first/top item, 1 will be next and so on. **Always** set either **ALL** the provided answers ordering or **NONE** else you may get unexpected ordering. If ALL answers are default (or manually set to 0), the ordering used will be the same as defined in the array.
+1.  `text`: A raw string containing the answer text (for example, `"It's great"`). Although bundled string resources were intended to be supported, a [known bug](https://bugzilla.mozilla.org/show_bug.cgi?id=2045036) currently prevents them from being resolved. **The experiment must provide the answer text directly.**
+~~2. `ordering`: Indicates the order of the answer in the answers. If no value is provided the default value will be 0. **Note**: The answers are displayed top to bottom e.g. 0 will be the first/top item, 1 will be next and so on. **Always** set either **ALL** the provided answers ordering or **NONE** else you may get unexpected ordering. If ALL answers are default (or manually set to 0), the ordering used will be the same as defined in the array.~~ > **As of [bug 2014170](https://bugzilla.mozilla.org/show_bug.cgi?id=2014170), item ordering is completely randomized.** Support for pinning items to specific positions is planned, but has not yet been implemented.
 
 ```json
 {
@@ -78,27 +99,27 @@ To customize answers and UTM parameters, we have to include the `microsurvey-con
         "utm-content": "homepage",
         "answers": [
           {
-            "text": "likert_scale_option_1",
+            "text": "your text goes here",
             "ordering": 0
           },
           {
-            "text": "likert_scale_option_2",
+            "text": "your text goes here",
             "ordering": 1
           },
           {
-            "text": "likert_scale_option_3",
+            "text": "your text goes here",
             "ordering": 2
           },
           {
-            "text": "likert_scale_option_4",
+            "text": "your text goes here",
             "ordering": 3
           },
           {
-            "text": "likert_scale_option_5",
+            "text": "your text goes here",
             "ordering": 4
           },
           {
-            "text": "likert_scale_option_6",
+            "text": "your text goes here",
             "ordering": 5
           }
         ]
