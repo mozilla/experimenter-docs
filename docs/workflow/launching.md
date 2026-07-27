@@ -8,7 +8,7 @@ How to request launch after QA and risk mitigation are complete.
 
 After your experiment has passed QA and you've mitigated the risks, you are ready to launch!
 
-Your experiment should be in [Preview mode](https://experimenter.info/previewing-experiments) - from the QA testing and/or your self-test.
+Your experiment should be in [Preview mode](/platform-guides/desktop/preview) - from the QA testing and/or your self-test.
 
 At this point you check off the questions accepting responsibility and verifying that you've completed the training, then click "Request Launch"
 
