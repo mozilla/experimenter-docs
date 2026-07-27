@@ -80,6 +80,7 @@ module.exports = {
       label: "Platform Guides",
       items: [
         "technical-reference/feature-definition",
+        "advanced/mobile-enrollment-state-machine",
         {
           type: "category",
           label: "Desktop",
@@ -251,7 +252,6 @@ module.exports = {
       label: "Advanced Topics",
       items: [
         "advanced/mobile-first-run-experiments",
-        "advanced/mobile-enrollment-state-machine",
         "advanced/notificationse",
         "advanced/warnings",
         "advanced/experimenter-state"
