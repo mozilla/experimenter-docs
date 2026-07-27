@@ -19,11 +19,11 @@ These steps only apply to Firefox Desktop Version 90+. You can find [instruction
 ## Self-Testing with Nimbus Dev Tools Add-on
 If you aren't a developer, don't let the "Dev Tools" or add-on scare you away.  This is the easier path!  
 
-Here is a 65 second video on [how to install Nimbus dev tools](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b7b2d02b-79ba-43a0-a708-b2a60107f0bf).  Watching the video takes half the time to getting Nimbus Dev Tools installed.  Here is the [link to docs on how to use Nimbus Dev Tools](https://experimenter.info/nimbus-devtools-guide#installation).  The very first link on that page is to the [Nimbus DevTools GitHub repository](https://github.com/mozilla-extensions/nimbus-devtools/releases), where you can find the one click XPI file install.
+Here is a 65 second video on [how to install Nimbus dev tools](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b7b2d02b-79ba-43a0-a708-b2a60107f0bf).  Watching the video takes half the time to getting Nimbus Dev Tools installed.  Here is the [link to docs on how to use Nimbus Dev Tools](/resources/nimbus-devtools-guide#installation).  The very first link on that page is to the [Nimbus DevTools GitHub repository](https://github.com/mozilla-extensions/nimbus-devtools/releases), where you can find the one click XPI file install.
 
 Here is a 5 minute video on [using Nimbus Dev Tools to test a simple experiment](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=98d797c3-35e2-413a-b68d-b2a5018b814e).  Watching this will show you how to verify simple experiments.  Here is the link to the [demo experiment used in the video](https://experimenter.services.mozilla.com/nimbus/training-only-for-dev-tools/summary), if you don't have one of your own that you want to test.
 
-Here is the link to the [DevTool user guide](https://experimenter.info/nimbus-devtools-guide/) 
+Here is the link to the [DevTool user guide](/resources/nimbus-devtools-guide) 
 
 ## How Do I Know If I Have a Simple Experiment
 There is a Miro flow that can [help determine if you have a good test case here](https://miro.com/app/board/uXjVK_27t2o=/?share_link_id=702720260336).  If it asks for a password - "patterns".  Reach out in #ask-experimenter if you are unsure and someone can help you determine the complexity. 

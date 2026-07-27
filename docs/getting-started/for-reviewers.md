@@ -10,7 +10,7 @@ If you are interested in learning more about your responsibilities, you can find
 
 ## Onboarding for New Authors/Owners (L2)
 
-In order to use the Nimbus platform to create and launch experiments, you will need to go through the [Experiment Owner onboarding process](https://experimenter.info/getting-started/for-experiment-owners). Please ask in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03) if you have any questions and for a shadow on the first experiments(s) you create.
+In order to use the Nimbus platform to create and launch experiments, you will need to go through the [Experiment Owner onboarding process](/getting-started/for-experiment-owners). Please ask in [#ask-experimenter](https://mozilla.slack.com/archives/CF94YGE03) if you have any questions and for a shadow on the first experiments(s) you create.
 
 ## Onboarding for New Reviewers (L3)
 

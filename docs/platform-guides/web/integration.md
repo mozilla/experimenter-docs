@@ -18,7 +18,7 @@ To integrate Nimbus (Cirrus) with your web application, these are high-level ste
 - Integrate [Glean](https://docs.telemetry.mozilla.org/concepts/glean/glean.html) on your web application.
 
 2. **FML**
-- Make [Feature Manifest Language (FML) configuration](https://experimenter.info/fml-spec#introducing-the-fml) available in your repository, for example:
+- Make [Feature Manifest Language (FML) configuration](/technical-reference/fml/fml-spec#introducing-the-fml) available in your repository, for example:
     ```
     about:
     description: Nimbus Feature Manifest for Experimenter Web testing

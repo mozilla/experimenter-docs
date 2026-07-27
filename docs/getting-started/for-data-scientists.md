@@ -11,7 +11,7 @@ Some other things you may be looking for are:
 
 * Documentation about using [Jetstream](/data-analysis/jetstream/overview), Mozilla's experiment analysis tool
 * Technical documentation about [datasets used in experimentation](https://docs.telemetry.mozilla.org/tools/experiments.html)
-* [Process documentation](https://experimenter.info/getting-started/for-experiment-owners) for the Mozilla data science organization
+* [Process documentation](/getting-started/for-experiment-owners) for the Mozilla data science organization
 
 ## What Is the Role of Experimentation at Mozilla?
 
@@ -22,7 +22,7 @@ This suite of experimentation tools is designed for product managers and other i
 ## Collaborating with Experiment Owners
 
 Data scientists support experiment owners in setting up and interpreting their experiments.
-[The Firefox experiment design process](https://experimenter.info/getting-started/for-experiment-owners) describes the process for both data scientists and stakeholders.
+[The Firefox experiment design process](/getting-started/for-experiment-owners) describes the process for both data scientists and stakeholders.
 
 Experiment owners come to [Office Hours](https://docs.google.com/document/d/1dH-aG8IsYtq6881_Q_cyEtmxli0bK7nuVcUD-5D7q-s/edit#) to talk to data scientists to:
 

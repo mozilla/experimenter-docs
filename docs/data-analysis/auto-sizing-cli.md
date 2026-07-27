@@ -23,7 +23,7 @@ firefox_desktop = ["active_hours"]
 ```
 A `parameters` section in the TOML file is used to define the data collection period for the analysis and the parameters used to calculate sample sizes. This section consists of two subsections: `parameters.sizing` and `parameters.dates`:
 1. `parameters.sizing`: Contains two tags, `power` and `effect_size`. These tags should contain lists of values for each parameter, and a sample size will be calculated for all metrics provided in the TOML file for each combination of power and effect size in those lists.
-2. `parameters.dates`: Contains the `start_date` (in "%Y-%m-%d" format, e.g. "2023-01-01"), `num_dates_enrollment`, and `analysis_length` values. For details on how those values are used to query historical data, see the [Mozanalysis documentation](https://experimenter.info/experiment-sizing).
+2. `parameters.dates`: Contains the `start_date` (in "%Y-%m-%d" format, e.g. "2023-01-01"), `num_dates_enrollment`, and `analysis_length` values. For details on how those values are used to query historical data, see the [Mozanalysis documentation](/data-analysis/experiment-sizing).
 
 ## CLI Commands
 

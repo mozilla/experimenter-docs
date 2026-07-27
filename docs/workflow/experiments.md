@@ -64,7 +64,7 @@ Before you build anything, decide how you'll know if your hypothesis is correct:
 
 - **Primary outcomes** — The key outcomes you're trying to move (e.g., bookmark usage, engagement, retention). You can select up to **two** primary outcomes per experiment.
 - **Secondary outcomes** — Additional outcomes you want to observe. These don't have a limit but can't overlap with primary outcomes.
-- **Guardrail metrics** — Metrics you don't want to regress (e.g., DAU, search count, ad clicks). These are [automatically included](https://experimenter.info/deep-dives/jetstream/metrics#how-do-i-add-a-metric-to-my-experiment) in analysis.
+- **Guardrail metrics** — Metrics you don't want to regress (e.g., DAU, search count, ad clicks). These are [automatically included](/data-analysis/jetstream/metrics#how-do-i-add-a-metric-to-my-experiment) in analysis.
 - **Feature-specific metrics** — Specific interactions you want to observe. Link to the relevant telemetry probes in the [Glean Dictionary](https://dictionary.telemetry.mozilla.org/).
 - **Segments** — Do you need to break results down by user type (new vs. existing), locale, or geography? Plan this upfront.
 
@@ -124,7 +124,7 @@ Once your design is validated:
 ## Launch, monitor, learn
 
 1. **Add sizing** information to your experiment if you haven't already.
-2. **Launch** by clicking [Launch](https://experimenter.info/launching) and requesting a reviewer in [`#ask-experimenter`](https://mozilla.slack.com/archives/CF94YGE03).
+2. **Launch** by clicking [Launch](/workflow/launching) and requesting a reviewer in [`#ask-experimenter`](https://mozilla.slack.com/archives/CF94YGE03).
 3. **Monitor** using [Live Monitoring](/workflow/monitoring) to verify your experiment is enrolling well. Check that you've hit your expected enrollment target before the enrollment period ends.
 4. **Wait for results** — Analysis begins automatically about a week after enrollment ends. Results will appear on the experiment's page in Experimenter with both overall and weekly breakdowns.
 5. **Record results** — Log your results and next steps in the experiment brief:

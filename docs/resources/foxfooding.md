@@ -27,7 +27,7 @@ Start by installing Nimbus Dev Tools.  If you aren't a developer, don't let the 
 
 ## If You Have Problems Installing Nimbus Dev Tools...
 - Here is a [65 second video on how to install Nimbus dev tools](https://mozilla.hosted.panopto.com/Panopto/Pages/Viewer.aspx?id=b7b2d02b-79ba-43a0-a708-b2a60107f0bf). Watching the video takes half the time to getting Nimbus Dev Tools installed. 
-- Here is the [link to docs on how to install Nimbus Dev Tools](https://experimenter.info/nimbus-devtools-guide#installation). 
+- Here is the [link to docs on how to install Nimbus Dev Tools](/resources/nimbus-devtools-guide#installation). 
 
 ## If You Have Questions How to Use Nimbus Dev Tools...
 

@@ -104,5 +104,5 @@ Paste your message JSON into the editor to render it immediately and check the l
 ## Additional Resources
 
 - [Messaging System Documentation](/messaging/overview)
-- [Experimenter Documentation](https://experimenter.info)
+- [Experimenter Documentation](/)
 - [nimbus-devtools Guide](/resources/nimbus-devtools-guide)

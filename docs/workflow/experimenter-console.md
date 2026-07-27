@@ -9,7 +9,7 @@ A guide to using the Experimenter console to create, configure, and manage your 
 - [Experimenter Console (Production)](https://experimenter.services.mozilla.com/)
 - [Experimenter Console (Stage)](https://stage.experimenter.nonprod.webservices.mozgcp.net/)
 
-For an overview of experiment lifecycle, [ See Experiment Workflow Overview ](https://experimenter.info/workflow/overview/#experimentation-workflow)
+For an overview of experiment lifecycle, [ See Experiment Workflow Overview ](/workflow/overview#experimentation-workflow)
 
 After you've prepared your experiment brief, entering the info into the [Nimbus/experimenter console](https://experimenter.services.mozilla.com/) should not take a long time. The role of experiment owner is most frequently played by a Product Manager, though others may act in this capacity.  Please follow the [Getting Started: Product Manager guidance](/getting-started/for-experiment-owners) before using Nimbus/experimenter for the first time.  If it is your first time - feel free to ask for a "shadow" in #ask-experimenter.  A "shadow" is an experienced experiment buddy to answer questions on zoom while you fill out your first experimenter form.
 
