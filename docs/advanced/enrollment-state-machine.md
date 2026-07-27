@@ -19,7 +19,7 @@ They are distinct codebases that implement the same model, and recent desktop wo
 
 Enrollment is not decided once. Every time the client syncs recipes from Remote Settings and applies them, it re-evaluates every recipe it currently knows about against the current client state. "Knows about" means both the recipes in the latest published list and the enrollment records the client has stored from previous syncs.
 
-The practical consequence: a client's status for a recipe can change on any sync, in either direction, without the client doing anything. A client that lost the bucketing roll yesterday can enroll today if a rollout was resized, and a client enrolled today can unenroll tomorrow if one of its targeting attributes drifts out of range (and the recipe is not sticky). There is no "decided once and frozen" state for a live recipe (the one exception is a recipe that has ended, covered under [Was Enrolled](#was-enrolled)).
+A client's status for a recipe can therefore change on any sync, in either direction, without the client doing anything. A client that lost the bucketing roll yesterday can enroll today if a rollout was resized, and a client enrolled today can unenroll tomorrow if one of its targeting attributes drifts out of range (and the recipe is not sticky). A live recipe's status is recomputed each sync; a client reaches a terminal state only when the recipe ends (see [Was Enrolled](#was-enrolled)).
 
 ## The evaluation sequence
 
