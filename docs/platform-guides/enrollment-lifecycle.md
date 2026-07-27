@@ -1,7 +1,7 @@
 ---
-id: mobile-enrollment-state-machine
+id: enrollment-lifecycle
 title: Enrollment Lifecycle
-slug: /advanced/enrollment-state-machine
+slug: /platform-guides/enrollment-lifecycle
 ---
 
 How the Nimbus client decides, on every sync, whether a client is enrolled in a recipe, which states an enrollment can be in, and what a change to a live recipe does to clients already evaluated against it.

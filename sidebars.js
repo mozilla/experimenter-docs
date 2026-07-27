@@ -80,7 +80,7 @@ module.exports = {
       label: "Platform Guides",
       items: [
         "technical-reference/feature-definition",
-        "advanced/mobile-enrollment-state-machine",
+        "platform-guides/enrollment-lifecycle",
         {
           type: "category",
           label: "Desktop",
