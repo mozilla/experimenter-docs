@@ -57,6 +57,7 @@ module.exports = {
           type: "category",
           label: "Testing & QA",
           items: [
+            "workflow/qa-requests",
             "workflow/testing",
             "platform-guides/desktop/desktop-feature-api-testing",
             "platform-guides/android/android-preview-testing",
