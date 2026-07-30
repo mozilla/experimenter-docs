@@ -28,7 +28,7 @@ Choose the guide for your platform:
 
 After landing a new feature, it is recommended to go through QA before running experiments or rollouts. This provides an extra layer of stability and can surface limitations early.
 
-- See [this document](https://docs.google.com/document/d/1oz1YyaaBI-oHUDsktWA-dLtX7WzhYqs7C121yOPKo2w/edit) for steps on how to file a QA request. Use the `Feature-Configuration` label in Jira. ([Example](https://mozilla-hub.atlassian.net/browse/QA-1785))
+- See [Requesting QA](/workflow/qa-requests#field-guidance-functional-feature) for steps on how to file a QA request. Use the `Feature-Configuration` label in Jira. ([Example](https://mozilla-hub.atlassian.net/browse/QA-1785))
 - If you have documentation about the feature's configuration, link it to the QA ticket — this helps with test plan and test case creation.
 
 Common questions QA will ask:
