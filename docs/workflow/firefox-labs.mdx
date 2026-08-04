@@ -4,6 +4,9 @@ title: Firefox Labs
 slug: /workflow/firefox-labs
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 # Firefox Labs
 
 :::tip
@@ -11,7 +14,7 @@ Have questions about Firefox Labs?
 Reach out in [`#firefox-labs`](https://mozilla.slack.com/archives/firefox-labs) or [`#ask-experimenter`](https://mozilla.slack.com/archives/CF94YGE03) on Slack.
 :::
 
-Firefox Labs is part of the [Nimbus platform](/) and is available on Nightly, Beta, and Release. It is a delivery mechanism that allows product development teams at Mozilla to expose feature opt-ins via a user-friendly interface in **Settings > Firefox Labs** (`about:preferences#experimental`).
+Firefox Labs is part of the [Nimbus platform](/) and is available on Nightly, Beta, and Release. It is a delivery mechanism that allows product development teams at Mozilla to expose feature opt-ins via a user-friendly interface in **Settings > Firefox Labs** (`about:preferences#experimental` on Desktop, or **Three-dot menu > Settings > Firefox Labs** on Android).
 
 Firefox Labs gives product development teams in Firefox an opportunity to:
 
@@ -22,7 +25,7 @@ Firefox Labs gives product development teams in Firefox an opportunity to:
 
 ## Is Firefox Labs right for what I'm building?
 
-Labs is integrated into Nimbus (**Desktop-only** for now). In the product lifecycle, Labs fits into the Incubation/Early Stage phase: if a product team is developing a new feature, Labs can serve as the first stage of product development through Nimbus.
+Labs is integrated into Nimbus on **Firefox Desktop** and **Firefox for Android**. In the product lifecycle, Labs fits into the Incubation/Early Stage phase: if a product team is developing a new feature, Labs can serve as the first stage of product development through Nimbus.
 
 However, Labs is **not built** to gather statistically significant insights like other Nimbus experiments do. Instead, Labs is built to:
 
@@ -94,9 +97,34 @@ Join a Labs experience kick-off meeting coordinated via **#firefox-labs**. Consi
 ### 6. Set things up for the Nimbus team
 
 - **Add your feature to the Nimbus feature manifest.** You can frontload this entry with placeholders if the feature work isn't complete. See [Feature Definition](/technical-reference/feature-definition) for details.
-- **Land Fluent ID strings** for the title and description of the feature in [`features.ftl`](https://searchfox.org/mozilla-central/source/toolkit/locales/en-US/toolkit/firefoxlabs/features.ftl). ([Example bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1950407))
-  - **(Optional)** If you wish to add a Connect post link placeholder such as hyperlinked "Share feedback" text in the description, include an `<a>` with no `href` in the string.
 - **Land the actual implementation** of the prototype.
+- **Land the title and description strings** for the feature (per platform, below):
+
+
+<Tabs
+  groupId="labs-platform"
+  defaultValue="desktop"
+  values={[
+    { label: "Firefox Desktop", value: "desktop" },
+    { label: "Firefox for Android", value: "android" },
+  ]
+}>
+<TabItem value="desktop">
+
+- Add a title and description Fluent resource to [`features.ftl`](https://searchfox.org/mozilla-central/source/toolkit/locales/en-US/toolkit/firefoxlabs/features.ftl) ([example bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1950407)).
+
+- **(Optional)** If you wish to add a Connect post link placeholder, such as a hyperlinked "Share feedback" text in the description, include an `<a>` with no `href` in the string. ([Example](https://searchfox.org/firefox-main/rev/ef112631e252adf60d44b980d46da56718f576f8/toolkit/locales/en-US/toolkit/firefoxlabs/features.ftl#114)) (See [Description Links (JSON)](#configure-the-branches-section) below for how it is connected.)
+
+</TabItem>
+
+<TabItem value="android">
+
+- Add a title and description Android string resource to [`strings.xml`](https://searchfox.org/mozilla-central/source/mobile/android/fenix/app/src/main/res/values/strings.xml) ([example bug](https://bugzilla.mozilla.org/show_bug.cgi?id=2059535)).
+
+- **(Optional)** If you wish to add a Connect post, the link text is fixed to "Share feedback". The Connect URL itself is set in Experimenter. (See [Feedback Link](#configure-the-branches-section) below for how it is connected.)
+
+</TabItem>
+</Tabs>
 
 ### 7. Self-test QA (strongly encouraged)
 
@@ -104,7 +132,7 @@ Please self-test QA your feature at the UX level. If you plan to share the Labs 
 
 ### 8. Set up a Connect feedback post (optional)
 
-Want to add a direct link to your Connect feedback post from Labs? Draft the post and coordinate in **#firefox-labs** to keep it hidden until your planned Labs launch. Make sure the strings you land in-tree include a link, even if it's a placeholder for now.
+Want to add a direct link to your Connect feedback post from Labs? Draft the post and coordinate in **#firefox-labs** to keep it hidden until your planned Labs launch. On Desktop, make sure the strings you land in-tree include a link placeholder.
 
 ### 9. Configure the rollout on Experimenter
 
@@ -119,30 +147,54 @@ Want to add a direct link to your Connect feedback post from Labs? Draft the pos
 
 6. **Check the "Is this a Firefox Labs rollout?" checkbox** on the Branches page. This will reveal several additional fields:
 
-   - **Title (Fluent ID)** *(required)* — The Fluent ID for your feature's title in Labs (e.g., the ID you landed in `features.ftl`). Firefox resolves this to localized text in `about:preferences#experimental`.
-   - **Description (Fluent ID)** *(required)* — The Fluent ID for your feature's description.
-   - **Description Links (JSON)** *(optional)* — A JSON object that maps link names to URLs, enabling clickable links inside your description. For example, if your Fluent description string contains `<a data-l10n-name="connect-link">Share feedback</a>`, provide:
-     ```json
-     {
-       "connect-link": "https://connect.mozilla.org/t5/your-post/..."
-     }
-     ```
-     All values must be HTTP(S) URLs.
-   - **Firefox Labs Group** *(required)* — Which section your feature appears under in Labs. Available groups:
+<Tabs
+  groupId="labs-platform"
+  defaultValue="desktop"
+  values={[
+    { label: "Firefox Desktop", value: "desktop" },
+    { label: "Firefox for Android", value: "android" },
+  ]
+}>
+<TabItem value="desktop">
 
-     | Group | Minimum Firefox Version |
-     | :--- | :--- |
-     | Customize Browsing | 137 |
-     | Webpage Display | 137 |
-     | Developer Tools | 137 |
-     | Productivity | 143 |
+ - **Title (Fluent ID)** *(required)* — The Fluent ID for your feature's title in Labs e.g., the ID you landed in [`features.ftl`](https://searchfox.org/firefox-main/source/toolkit/locales/en-US/toolkit/firefoxlabs/features.ftl) ([example](https://searchfox.org/firefox-main/rev/ef112631e252adf60d44b980d46da56718f576f8/toolkit/locales/en-US/toolkit/firefoxlabs/features.ftl#97)). This text will be resolved to localized text in `about:preferences#experimental` on Desktop.
+ - **Description (Fluent ID)** *(required)* — The Fluent ID for your feature's description.
+ - **Description Links (JSON)** *(optional)* — A JSON object that maps link names to URLs, enabling clickable links inside your description. For example, if your Fluent description string contains `<a data-l10n-name="connect-link">Share feedback</a>`, provide:
+  ```json
+  {
+    "connect-link": "https://connect.mozilla.org/t5/your-post/..."
+  }
+  ```
+ All values must be HTTP(S) URLs.
+ - **Firefox Labs Group** *(required)* — Which section your feature appears under in Labs. Available groups on Desktop:
 
-     New groups can be added, but they must ride the release trains — a new group won't be available on Release until the version it was added in reaches Release.
+  | Group | Minimum Firefox Version |
+  | :--- | :--- |
+  | Customize Browsing | 137 |
+  | Webpage Display | 137 |
+  | Developer Tools | 137 |
+  | Productivity | 143 |
 
-   - **Requires restart** *(optional)* — Check this if the feature requires a Firefox restart to take effect after the user opts in.
+  New groups can be added, but they must ride the release trains — a new group won't be available on Release until the version it was added in reaches Release.
+
+- **Requires restart** *(optional)* — Check this if the feature requires a Firefox restart to take effect after the user opts in.
+
+
+</TabItem>
+<TabItem value="android">
+
+
+ - **Title (Resource ID)** *(required)* — The slug resource ID for your feature's title in Labs. e.g., the ID you landed in [`strings.xml`](https://searchfox.org/mozilla-central/source/mobile/android/fenix/app/src/main/res/values/strings.xml) ([example bug](https://bugzilla.mozilla.org/show_bug.cgi?id=2059535)). This text will be resolved to localized text in **Firefox Labs** on Android.
+ - **Description (Resource ID)** *(required)* — The resource ID for your feature's description.
+ - **Feedback Link** *(optional)* — The link to Mozilla Connect for feedback. e.g., `https://connect.mozilla.org/t5/your-post/`. Will render "Share Feedback" on Android. All values must be HTTP(S) URLs.
+ - **Firefox Labs Group** *(not available)* — Not available on Android.
+ - **Requires restart** *(optional)* — Check this if the feature requires a Firefox restart to take effect after the user opts in.
+
+</TabItem>
+</Tabs>
 
 :::note
-When you add your feature to the Nimbus feature manifest, you can pull in the latest changes immediately from `FeatureManifest.yaml`. However, automated Experimenter syncs with the latest Nightly updates [require approval](https://github.com/mozilla/experimenter/pull/12274) before features show up in the Experimenter feature config. Once approved, the change should be available within an hour.
+When you add your feature to the Nimbus feature manifest, you can pull in the latest changes immediately from [`FeatureManifest.yaml`](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/FeatureManifest.yaml) (Firefox Desktop) or [`nimbus.fml.yaml`](https://searchfox.org/mozilla-central/source/mobile/android/fenix/app/nimbus.fml.yaml) (Firefox for Android). However, automated Experimenter syncs with the latest Nightly updates [require approval](https://github.com/mozilla/experimenter/pull/12274) before features show up in the Experimenter feature config. Once approved, the change should be available within an hour.
 :::
 
 ### 10. Launch
