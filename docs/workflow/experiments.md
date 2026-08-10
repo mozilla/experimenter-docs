@@ -118,7 +118,7 @@ Once your design is validated:
 
 1. **Enable your feature for experimentation** using the [Nimbus feature API](/technical-reference/feature-definition). If your feature supports it, add an [exposure event](/advanced/feature-variables#recording-exposure-events) so analysis can distinguish users who actually encountered the change from those who were enrolled but never saw it.
 2. **Write your experiment** in [Experimenter](https://experimenter.services.mozilla.com/nimbus/) and link to your experiment brief.
-3. **QA your experiment** by putting it into [Preview](/workflow/testing) and either self-testing or filing a [QA Jira ticket](https://mozilla-hub.atlassian.net/secure/CreateIssueDetails!init.jspa?pid=10212&issuetype=11290).
+3. **QA your experiment** by putting it into [Preview](/workflow/testing) and either self-testing or [filing a QA Jira ticket](/workflow/qa-requests).
 4. **Review risks** — experiments make remote changes to the experience of live users, often millions of people. Experimenter will ask you to assess risk in several categories: brand risk, messaging risk, partner-related risk, revenue impact, and AI/ML risk. Review and mitigate [risks](/workflow/risk-mitigation) before you launch.
 
 ## Launch, monitor, learn
