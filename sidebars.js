@@ -148,6 +148,7 @@ module.exports = {
             "technical-reference/fml/fml-paths",
             "technical-reference/fml/fml-imports",
             "technical-reference/fml/fml-cli",
+            "technical-reference/fml/fml-lint",
             "technical-reference/fml/coenrolling-features",
             "technical-reference/fml/feature-metadata",
             "technical-reference/fml/using-prefs",
