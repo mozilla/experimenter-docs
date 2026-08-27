@@ -11,40 +11,6 @@ Population sizing can be estimated using targeting context metrics available for
 This page covers how to estimate the number of clients that match a particular targeting expression, not how to decide how many enrolled clients an experiment might need.
 :::
 
-## Automatic Population Sizing in Experimenter
-
-For Firefox Desktop Draft experiments, Experimenter automatically estimates the eligible client population and displays it on the **Audience** page — no manual SQL required.
-
-### How it works
-
-Once per day, a BigQuery ETL job:
-
-1. Fetches all Draft Desktop experiments from the Experimenter API where the targeting has changed since the last estimate
-2. Translates each experiment's JEXL targeting expression into BigQuery SQL
-3. Runs a `COUNTIF` against [`firefox_desktop.nimbus_targeting_context`](https://dictionary.telemetry.mozilla.org/apps/firefox_desktop?page=1&search=nimbus_targeting) using a 7-day rolling window and a 10% client sample (scaled ×10)
-4. Writes the result back so Experimenter can display it on the Audience page
-
-The estimate refreshes automatically whenever the targeting expression changes.
-
-### Reading the estimate
-
-On the Audience page you will see:
-
-- **Estimated Eligible Clients** — the number of Desktop clients matching your targeting expression in the past 7 days
-- **Projected Enrollments** — eligible clients × population percent, giving the expected experiment size
-- **Warnings** — targeting attributes that could not be translated to SQL (e.g. event-based conditions). When warnings are present, the eligible count is a lower bound — the true population may be larger
-
-:::warning
-If warnings are shown, review them carefully. Attributes listed there were excluded from the count. Check the [manual sizing queries](#estimating-for-desktop) below to see if a more complete estimate is possible.
-:::
-
-### Limitations
-
-- **Desktop only for now.** Mobile (Fenix and iOS) automatic sizing is coming in a follow-up.
-- **7-day window.** The estimate reflects clients active in the last week. Very new targeting attributes may not yet have sufficient data.
-- **10% sample.** The count is derived from a 10% client sample and multiplied by 10, so very small populations (< ~1 000 clients) will have high relative uncertainty.
-- **Draft only.** The estimate is only computed and displayed for experiments in Draft status.
-
 ### Accuracy
 
 Population sizing accuracy of the queries below was investigated in [EXP-6101](https://mozilla-hub.atlassian.net/browse/EXP-6101), and the `(estimated population from preceding week)/(observed population)` ratios were in the following ranges for recent experiments run on Firefox versions that had been out for at least one week:
