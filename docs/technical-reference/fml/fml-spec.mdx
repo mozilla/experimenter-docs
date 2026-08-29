@@ -788,3 +788,7 @@ A feature which allows co-enrollment allows a client to be enrolled in any numbe
 ### Feature variables configured by preferences
 
 Some feature variables may be optionally driven by preferences (`UserDefaults` or `SharedPrefences`). There are some restrictions and nuances here, so see [the documentation for more information](/technical-reference/fml/using-prefs).
+
+### Excusing a feature from a lint
+
+`nimbus-fml lint` checks features against a set of conventions for metadata, descriptions, naming and feature design. A `no-lint` list, on a feature or at the top level of the file, excuses it from the lints it names. See [Linting](/technical-reference/fml/fml-lint).

@@ -97,6 +97,18 @@ Validating manifest for different channels:
 ✅ developer...........valid
 ```
 
+Validation only asks whether the manifest can generate working code. Feature metadata such as `meta-bug`, `documentation` and `contacts` is checked by [`nimbus-fml lint`](/technical-reference/fml/fml-lint).
+
+## Linting a manifest file
+
+```
+% nimbus-fml lint <INPUT>
+```
+
+This checks the manifest against a set of conventions for metadata, descriptions, naming and feature design, and reports what it finds as warnings. Linting does not affect code generation. `--error-on-warning` makes findings fail the run, for use in CI.
+
+See [Linting](/technical-reference/fml/fml-lint) for the output, the full list of lints, and how to silence one.
+
 ## Re-write a complicated distributed manifest into a single file
 
 The FML spec allows you to [import and include dependencies' manifests](/technical-reference/fml/fml-imports). This is convenient for engineers to place the feature manifest close to where the feature code lives.
