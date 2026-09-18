@@ -58,15 +58,18 @@ Alternatively, you can run your own query for unenrollment events. For example, 
 ```sql
 SELECT
     submission_date,
-    mozfun.map.get_key(event_map_values, 'branch') as branch,
-    mozfun.map.get_key(event_map_values, 'reason') as reason,
+    mozfun.map.get_key(event.extra, 'branch') as branch,
+    mozfun.map.get_key(event.extra, 'reason') as reason,
     COUNT(*) AS events
-FROM telemetry.events
+FROM `moz-fx-data-shared-prod.org_mozilla_firefox_live.events_v1` l
+    INNER JOIN UNNEST(l.events) AS event
+        ON event.category = 'nimbus_events'
+        AND event.name = 'unenrollment'
 WHERE
-    event_category = 'normandy'
-    AND event_method = 'unenroll'
-    AND event_string_value = 'YOUR_EXPERIMENT_SLUG'
-    AND submission_date >= '2021-8-10'
+    mozfun.map.get_key(event.extra, 'value') = 'YOUR_EXPERIMENT_SLUG'
+    AND submission_date >= '2026-8-10'
 GROUP BY 1, 2, 3
 ORDER BY events DESC
 ```
+
+(See [Glean dictionary](https://dictionary.telemetry.mozilla.org/apps/fenix/metrics/nimbus_events_unenrollment))
