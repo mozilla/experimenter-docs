@@ -1,0 +1,198 @@
+---
+id: fml-lint
+title: Linting
+slug: /technical-reference/fml/fml-lint
+sidebar_position: 5
+---
+
+[`nimbus-fml validate`](/technical-reference/fml/fml-cli#validating-a-manifest-file) checks that a manifest can generate working code. `nimbus-fml lint` checks it against a set of conventions for metadata, descriptions, naming and feature design.
+
+Findings are warnings. Linting does not affect code generation, and does not fail the run unless configured to.
+
+## Running the linter
+
+```sh
+% nimbus-fml lint <INPUT>
+```
+
+For a feature like this:
+
+```yaml
+features:
+  searchSuggestions:
+    description: Search suggestions
+    variables:
+      hide-sponsored:
+        description: TODO
+        type: Boolean
+        default: false
+      searchSuggestions-mode:
+        description: The mode used to rank suggestions before they are shown.
+        type: String
+        default: frecency
+```
+
+the linter reports:
+
+```
+feature `searchSuggestions`
+  ⚠️ COMMON_PREFIX             `searchSuggestions-mode` repeats the name of the feature it belongs to; rename it to `mode`
+  ⚠️ FEATURE_NAME_CASING       `searchSuggestions` isn't kebab-case; rename it to `search-suggestions`
+  ⚠️ MISSING_CONTACTS          No `contacts`
+  ⚠️ MISSING_DOCUMENTATION     No `documentation`
+  ⚠️ MISSING_ENABLED_VARIABLE  This feature has no boolean `enabled` variable
+  ⚠️ MISSING_META_BUG          No `meta-bug`
+  ⚠️ NEGATED_BOOLEAN           `hide-sponsored` is a boolean named with `hide`
+  ⚠️ STRINGLY_TYPED            `searchSuggestions-mode` is a `String`, but its name suggests it is one of a fixed set of values
+  ⚠️ TERSE_DESCRIPTION         The description of this feature is only 2 words: `Search suggestions`
+  ⚠️ TERSE_DESCRIPTION         The description of `hide-sponsored` is only 1 word: `TODO`
+  ⚠️ TODO_IN_DESCRIPTION       The description of `hide-sponsored` is still marked `todo`
+  ⚠️ VARIABLE_NAME_CASING      `searchSuggestions-mode` isn't kebab-case; rename it to `search-suggestions-mode`
+```
+
+Findings are grouped under the feature, object or enum they are about, or under `this manifest` when they are about the file as a whole. Below them, the linter prints what to do about each lint that fired, once per lint rather than once per finding.
+
+The file being linted and everything it [includes](/technical-reference/fml/fml-imports) are checked. Pass `--include-imports` to also lint the features of imported manifests.
+
+A manifest has to be valid before it can be linted: if `nimbus-fml validate` would reject it, `nimbus-fml lint` exits with that error rather than reporting findings.
+
+## The lints
+
+To list them from the command line, with their categories and default levels:
+
+```sh
+% nimbus-fml lint --list
+```
+
+### Metadata
+
+Metadata gives experiment owners and QA somewhere to start with a feature they haven't met before. See [Feature Metadata](/technical-reference/fml/feature-metadata).
+
+| Lint | Checks that |
+| --- | --- |
+| `MISSING_META_BUG` | Features say where bugs against them are filed. |
+| `MISSING_DOCUMENTATION` | Features link to at least one document describing them. |
+| `MISSING_CONTACTS` | Features name at least one person to ask about them. |
+| `INVALID_CONTACT` | Contacts are email addresses. |
+
+### Descriptions
+
+Descriptions appear in Experimenter alongside the feature and each of its variables.
+
+| Lint | Checks that |
+| --- | --- |
+| `MISSING_DESCRIPTION` | Everything in a manifest has a description. |
+| `TERSE_DESCRIPTION` | Descriptions say more than the name already does. |
+| `TODO_IN_DESCRIPTION` | Descriptions aren't left as placeholders. |
+
+### Naming
+
+Feature ids, variable names and enum variants are entered by hand when configuring an experiment.
+
+| Lint | Checks that |
+| --- | --- |
+| `FEATURE_NAME_CASING` | Feature ids are kebab-case. |
+| `VARIABLE_NAME_CASING` | Variable and field names are kebab-case. |
+| `TYPE_NAME_CASING` | Objects and enums are UpperCamelCase. |
+| `ENUM_VARIANT_CASING` | Enum variants are kebab-case. |
+| `COMMON_PREFIX` | Variables don't repeat the name of the feature they belong to. |
+| `TYPE_IN_NAME` | Variable names don't repeat the name of their type. |
+| `NEGATED_BOOLEAN` | Booleans are named for what is true, not what is false. |
+
+### Feature design
+
+| Lint | Checks that |
+| --- | --- |
+| `NO_VARIABLES` | Features have something an experiment can change. |
+| `MISSING_ENABLED_VARIABLE` | Features have a boolean `enabled` variable, so they can be switched off remotely. |
+| `TOO_MANY_VARIABLES` | Features have at most 25 variables. |
+| `STRINGLY_TYPED` | Values with a fixed set of options are enums rather than strings, and maps are not `Map<String, String>`. |
+| `DEEP_NESTING` | A variable's value is at most 3 levels deep. |
+| `TRIVIAL_ENUM` | Enums have more than one variant. |
+| `UNUSED_TYPE` | Objects and enums are used by at least one feature. |
+
+### The lints themselves
+
+| Lint | Checks that |
+| --- | --- |
+| `UNKNOWN_LINT` | A `no-lint` list names lints that exist. |
+
+## Silencing a lint
+
+A lint can be switched off for a single feature with a `no-lint` list:
+
+```yaml
+features:
+  search-suggestions:
+    description: The list of suggestions shown under the address bar as the user types.
+    no-lint:
+      - MISSING_ENABLED_VARIABLE
+    variables:
+      # ...
+```
+
+or for a whole file with a top level `no-lint` list:
+
+```yaml
+no-lint:
+  - MISSING_META_BUG
+features:
+  # ...
+```
+
+A top level list covers everything the file defines, including the features of the files it [includes](/technical-reference/fml/fml-imports). An included file may carry its own list, which applies wherever it is included.
+
+`nimbus-fml lint` reports how many findings were silenced this way, so that a manifest cannot quietly opt out of everything:
+
+```
+✅ No lint findings
+ℹ️ 1 finding silenced by `no-lint`
+```
+
+A `no-lint` entry naming a lint that does not exist is reported as `UNKNOWN_LINT`, whether it is on a feature or at the top level of a file.
+
+:::caution
+A manifest using `no-lint` fails to parse with an `unknown field` error on versions of `nimbus-fml` that predate the linter. Upgrade any pinned version before adding `no-lint` to a manifest.
+:::
+
+## Using the linter in CI
+
+`nimbus-fml lint` exits 0 when all findings are warnings. Two flags change that:
+
+- `--error-on-warning` makes any finding fail the run.
+- `--deny LINT_NAME` makes one lint an error and leaves the rest as warnings. Repeatable.
+
+`--allow LINT_NAME` switches a lint off for a single run without changing the manifest. Repeatable.
+
+`no-lint` wins over `--deny`: a lint a feature or file has excused itself from stays silent even when the run denies it. Use `--allow` and `--deny` to choose which lints a run enforces, and `no-lint` to record the exceptions that outlive it.
+
+To enforce a subset of the lints on a manifest that does not yet pass all of them:
+
+```sh
+% nimbus-fml lint --deny MISSING_ENABLED_VARIABLE --deny NEGATED_BOOLEAN <INPUT>
+```
+
+## Machine readable output
+
+```sh
+% nimbus-fml lint --json <INPUT>
+```
+
+```json
+{
+  "errors": 0,
+  "warnings": 1,
+  "suppressed": 2,
+  "subjects": 1,
+  "findings": [
+    {
+      "lint": "MISSING_ENABLED_VARIABLE",
+      "level": "warning",
+      "subject": "feature `homescreen`",
+      "message": "This feature has no boolean `enabled` variable"
+    }
+  ]
+}
+```
+
+`subjects` is the number of features, objects and enums with findings. A finding carries a `module` when it came from an imported manifest, and a `member` when it is about a variable, field or variant rather than the feature itself.

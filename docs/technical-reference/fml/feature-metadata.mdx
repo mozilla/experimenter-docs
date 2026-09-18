@@ -66,7 +66,7 @@ Minimally, QA documentation should include:
 - how to manipulate the app/feature/configuration so it emits the exposure event for an experiment,
 - how to manipulate the app/feature/configuration so each event listed in the `events` section is emitted.
 
-If this list is empty, then `nimbus-fml validate` will warn that the feature is missing documentation.
+If this list is empty, `nimbus-fml lint` reports [`MISSING_DOCUMENTATION`](/technical-reference/fml/fml-lint).
 
 ## `contacts`
 
@@ -76,13 +76,13 @@ These should have valid Jira accounts and will be attached to QA tickets filed f
 
 This is to ensure fast turn around of experiments and resolving question that arise in these QA tickets.
 
-If this list is empty, then `nimbus-fml validate` will warn that the feature is missing contacts.
+If this list is empty, `nimbus-fml lint` reports [`MISSING_CONTACTS`](/technical-reference/fml/fml-lint). An entry that isn't an email address is reported as `INVALID_CONTACT`.
 
 ## `meta-bug`
 
 This is a URL where bugs should be filed against the feature. This may be a metabug for the feature, or an Epic, or a Jira `CreateIssue.jspx` link. The primary function of this URL is a place where QA can file bugs found with this feature, on an ongoing basis.
 
-If this is missing, then `nimbus-fml validate` will warn that the feature is missing a meta-bug.
+If this is missing, `nimbus-fml lint` reports [`MISSING_META_BUG`](/technical-reference/fml/fml-lint).
 
 ## `events`
 
