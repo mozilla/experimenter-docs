@@ -57,7 +57,7 @@ Alternatively, you can run your own query for unenrollment events. For example, 
 
 ```sql
 SELECT
-    submission_date,
+    submission_timestamp,
     mozfun.map.get_key(event.extra, 'branch') as branch,
     mozfun.map.get_key(event.extra, 'reason') as reason,
     COUNT(*) AS events
@@ -67,7 +67,7 @@ FROM `moz-fx-data-shared-prod.org_mozilla_firefox_live.events_v1` l
         AND event.name = 'unenrollment'
 WHERE
     mozfun.map.get_key(event.extra, 'value') = 'YOUR_EXPERIMENT_SLUG'
-    AND submission_date >= '2026-8-10'
+    AND submission_timestamp >= '2026-8-10'
 GROUP BY 1, 2, 3
 ORDER BY events DESC
 ```
