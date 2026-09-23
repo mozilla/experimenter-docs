@@ -30,6 +30,18 @@ a week after the enrollment period ends.
 Typically, that means results will begin to appear 
 two weeks after the day the experiment launches.
 
+## Which Experiments Does Jetstream Analyze?
+
+Jetstream runs daily and selects experiments to analyze based on these rules:
+
+1. Fetches all experiments from the Experimenter API
+2. Includes experiments that are **Live** or that **ended within the last 90 days**
+3. **Excludes rollouts** — rollouts are not analyzed by Jetstream
+4. **Excludes experiments with `skip = true`** in their [custom configuration](./configuration)
+5. Merges each experiment's config from three sources: Experimenter API data, custom TOML config (if any) in metric-hub, and platform defaults
+
+If your experiment ended more than 90 days ago, Jetstream will stop computing results for it. If you need results recomputed for an older experiment, you can trigger a manual rerun using the Jetstream CLI.
+
 ## Analysis Paradigm
 
 Experiments are analyzed using the concept of analysis windows. Analysis
