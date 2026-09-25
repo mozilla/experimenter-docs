@@ -12,9 +12,9 @@ A holdback keeps a slice of the population on the old experience after a feature
 so you can keep measuring the feature's impact over a long period. Unlike a normal
 experiment, a holdback enrolls continuously and does not have a planned end date.
 
-That continuous enrollment is what makes holdbacks awkward to analyze. Jetstream expects
+That continuous enrollment is what makes holdbacks difficult to analyze. Jetstream expects
 an enrollment period followed by an observation period, and a holdback never closes
-enrollment, so there is no window to analyze. Historically the way round this was to
+enrollment, so there is no window to analyze. Historically the workaround was to
 hand-write `enrollment_period` and `end_date` into the experiment's Jetstream config and
 update them by hand whenever you wanted fresher numbers.
 
@@ -79,7 +79,8 @@ dates first.
 
 Once the flag is on, Experimenter owns the enrollment and end dates. Anything in the
 experiment's Jetstream config that sets them will override what Experimenter sends and
-pin the analysis back to a fixed window, which quietly defeats the flag.
+pin the analysis back to a fixed window, which disables the flag's behavior
+without any warning.
 
 That means, in the experiment's `.toml` in
 [metric-hub](https://github.com/mozilla/metric-hub/tree/main/jetstream):
