@@ -38,7 +38,16 @@ Each weekly rerun pushes the window out by another 7 days, so the analysis cover
 time as the holdback runs and you get a cumulative read rather than a fixed snapshot.
 
 Jetstream computes only the **Overall** period for a flagged holdback. There are no
-weekly or 28-day breakdowns, because a holdback is long-running by nature.
+weekly or 28-day breakdowns, because a holdback is long-running by nature. If you want
+to see how an effect changes over time, for example a novelty effect that tapers off,
+that still needs a manual analysis.
+
+## It does not affect enrolled clients
+
+Setting the flag is an analysis-side change only. The recipe that clients fetch is built
+separately and contains none of this — no flag, no synthesized dates — so targeting,
+bucketing and enrollment are untouched, including for clients already in the holdback.
+Nothing about the experiment itself changes; only how its results are computed.
 
 ## When the first results appear
 
@@ -76,8 +85,12 @@ That means, in the experiment's `.toml` in
 [metric-hub](https://github.com/mozilla/metric-hub/tree/main/jetstream):
 
 - do not set `enrollment_period` or `end_date`
-- avoid a custom `enrollment_query` with a hard-coded date range, which caps enrollment in
-  SQL and has the same effect
+
+The rest of the config is fine to keep. A custom `enrollment_query`, for example,
+changes which rows the analysis reads, which is a normal thing to want and does not
+interfere with the flag. Do note that if such a query has a hard-coded date range, the
+set of enrolled clients stays fixed at that range: the window will keep moving forward
+but it will not pick up anyone who enrolled later.
 
 See [Jetstream configuration](/data-analysis/jetstream/configuration) for the config
 format itself.
