@@ -115,9 +115,9 @@ enrollment_query = """
 """
 
 # You can override either or both of the start_date and end_date.
-# In conjunction with a custom enrollment query, this can be useful for holdbacks,
-# since you don't really care about the period of time before your client upgrades
-# to the new version.
+# Do not set these on a holdback that has the is_holdback flag set: Experimenter
+# supplies the enrolment and end dates for those, and a value here overrides it.
+# See /workflow/holdbacks.
 start_date = "2020-01-01"
 end_date = "2020-12-31"
 

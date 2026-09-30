@@ -48,6 +48,11 @@ module.exports = {
               type: "doc",
               label: "Firefox Labs",
               id: "workflow/firefox-labs"
+            },
+            {
+              type: "doc",
+              label: "Holdbacks",
+              id: "workflow/holdbacks"
             }
           ]
         },
