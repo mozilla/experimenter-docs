@@ -523,8 +523,16 @@ To add a new pre-defined targeting option to the Experimenter dropdown:
 If your targeting requires a **new attribute** that doesn't exist yet, you'll need to:
 
 1. **Add the attribute** to the Nimbus targeting context in Firefox Desktop
-2. **Register it in the recorded targeting context** by adding an entry to `ATTRIBUTE_TRANSFORMS` in [`TargetingContextRecorder.sys.mjs`](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/lib/TargetingContextRecorder.sys.mjs) and a corresponding metric in [`metrics.yaml`](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/metrics.yaml) — this ensures it's available in telemetry for population sizing and analysis
-3. **If the attribute needs a new preference**, also add it to the `PREFS` list in `TargetingContextRecorder.sys.mjs`
+2. **Register it in the recorded targeting context** by adding an entry to `ATTRIBUTE_TRANSFORMS` in [`TargetingContextRecorder.sys.mjs`](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/lib/TargetingContextRecorder.sys.mjs).
+3. **Regsiter a corresponding metric** in [`metrics.yaml`](https://searchfox.org/mozilla-central/source/toolkit/components/nimbus/metrics.yaml) — this ensures it's available in telemetry for population sizing and analysis.
+4. **Wait for the Firefox train** — the attribute will be available starting in the Firefox version that ships the change
+5. **Add the targeting config** to Experimenter's `constants.py` as above
+
+If your targeting requires a **new pref** that is not yet recorded in the targeting context telemetry, you'll need to:
+
+1. **Add the preference** to the `PREFS` list in `TargetingContextRecorder.sys.mjs`
+2. **Add the pref** as a label to the [`nimbus_targeting_environment.pref_type_errors` metric](https://searchfox.org/firefox-main/rev/23fd2ecbdb459f63606a188fdea2d4dbee05507c/toolkit/components/nimbus/metrics.yaml#88)
+3. **Add the pref** to [`nimbus_targeting_environment.pref_values` metric](https://searchfox.org/firefox-main/rev/23fd2ecbdb459f63606a188fdea2d4dbee05507c/toolkit/components/nimbus/metrics.yaml#198); the pref name should be normalized so that all periods are replaced by double underscores.
 4. **Wait for the Firefox train** — the attribute will be available starting in the Firefox version that ships the change
 5. **Add the targeting config** to Experimenter's `constants.py` as above
 
