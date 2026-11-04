@@ -54,6 +54,45 @@ Experimenter will need to be re-deployed to pick up a new Outcome. Please ask in
 
 [Configuring Jetstream]: ./configuration
 
+## Choosing Analysis Periods
+
+By default, every metric defined in an Outcome is computed for the weekly and overall analysis windows.
+
+To control which analysis windows an Outcome's metrics are computed for,
+add top-level lists of metric slugs named after the analysis periods,
+just like the `[metrics]` section of a [custom experiment configuration](./configuration#metrics-section).
+The available periods are `daily`, `weekly`, `28_day`, `overall`, `preenrollment_weekly`, and `preenrollment_days28`.
+
+```toml
+friendly_name = "Picture in Picture"
+description = "Usage and engagement metrics for the video Picture-in-Picture feature."
+default_metrics = ["used_picture_in_picture"]
+
+daily = ["used_picture_in_picture"]
+weekly = ["used_picture_in_picture"]
+overall = ["used_picture_in_picture"]
+
+# Required for metrics whose statistics use covariate adjustment
+# with `period = "preenrollment_week"`
+preenrollment_weekly = ["used_picture_in_picture"]
+
+[metrics.used_picture_in_picture]
+# ...
+[metrics.used_picture_in_picture.statistics.linear_model_mean]
+[metrics.used_picture_in_picture.statistics.linear_model_mean.covariate_adjustment]
+period = "preenrollment_week"
+```
+
+:::caution
+If the outcome includes any analysis period list, the **default of weekly and overall no longer applies**:
+each metric is then computed **only** for the periods whose lists include it,
+so a metric that isn't listed anywhere won't be computed.
+:::
+
+If a metric uses [covariate adjustment](../data-topics/preenrollment_bias#covariate-adjustment--cuped),
+include it in the matching pre-enrollment list (`preenrollment_weekly` or `preenrollment_days28`)
+so the pre-enrollment values it adjusts against are computed.
+
 ## Parameterizing Outcomes
 
 It is also possible to parameterize `select_expression` in outcomes, values the parameters to be replaced with can then be specified in external jetstream config.

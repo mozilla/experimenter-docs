@@ -67,6 +67,7 @@ Lines starting with a `#` are comments and have no effect.
 This part of the configuration file lets you
 
 * specify the segments you wish to analyze,
+* add outcomes beyond those selected in Experimenter,
 * override some values from Experimenter, and
 * define an exposure signal for your experiment.
 
@@ -87,6 +88,11 @@ You can also override some values from Experimenter in the experiment section.
 # or (more commonly) use a value from mozanalysis.
 # The segment of all users is always computed.
 segments = ["is_regular_user_v3", "new_or_resurrected_v3"]
+
+# Slugs of outcomes (from the `jetstream/outcomes/` directory in metric-hub)
+# to compute for this experiment. These are added to any outcomes
+# selected in Experimenter (de-deduplicated).
+outcomes = ["networking", "page_load_performance"]
 
 # Nominal length of the enrollment period in days.
 # Mozanalysis will consider enrollment_period + 1 "dates" of enrollments.
@@ -348,8 +354,10 @@ Configuration files have a set of [`[metrics]` definitions](#defining-metrics) a
 A `friendly_name` and `description` are required at the top of the outcome snippet config file.
 
 Unlike experiment configurations, the `[metrics]` section does not specify the analysis windows metrics
-are computed for. Jetstream computes metrics defined in outcome snippets for weekly and overall
-analysis windows.
+are computed for. By default, Jetstream computes metrics defined in outcome snippets for weekly and overall
+analysis windows. To choose different windows, add top-level period lists (`daily`, `weekly`, `28_day`, `overall`,
+`preenrollment_weekly`, `preenrollment_days28`) to the outcome snippet; see
+[Choosing Analysis Periods](./outcomes#choosing-analysis-periods).
 
 `select_expression` in Outcomes supports parameterization. This enables Outcomes to be reused as values specified in an external jetstream config to be injected into the `select_expression`.
 Outcome snippets look, for example, like:
