@@ -34,7 +34,7 @@ Assuming you have been vouched for by a Nimbus administrator + a Product Owner (
 - Sign in. You should see a review request like this, if you don't refresh the page
   ![image](https://user-images.githubusercontent.com/1455535/144131521-8516e6e1-7208-47dc-8183-ac1054542007.png)
 - **CHECK TO MAKE SURE THE SLUG OF THE DIFF MATCHES THE CHANGE YOU ARE APPROVING** This is important!!
-- Press approve if everything looks good. If anything looks wrong, Reject and alert nimbus core team in #ask-experiments
+- Press approve if everything looks good. If anything looks wrong, Reject and alert nimbus core team in #ask-experimenter
 - Congrats, you have tested the workflow. You are now ready to review real experiments on production!
 
 ## Reviews
