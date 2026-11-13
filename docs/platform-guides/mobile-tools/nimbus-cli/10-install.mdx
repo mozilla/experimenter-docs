@@ -21,6 +21,19 @@ Ensure that `adb` is on your PATH. You may have to restart your shell.
 - Install Xcode.
 - Run `xcode-select --install`
 
+## Installing `nimbus-cli` with `mach`
+
+When working on Firefox for Android you can use it through `mach`, for example:
+
+```shell
+./mach android nimbus-cli --app fenix --channel developer list
+./mach android nimbus-cli --app fenix --channel developer enroll <experiment-slug> --branch <branch> --reset-app
+```
+
+`mach` downloads it into your state directory the first time you use it and checks daily for a newer version, so there is nothing to install.
+
+For more information on `mach android nimbus-cli` see: https://firefox-source-docs.mozilla.org/mobile/android/fenix.html#run-experiments-with-nimbus-cli
+
 ## Installing `nimbus-cli` on macOS or Linux
 
 Copy the following command, and paste it into a command line.
